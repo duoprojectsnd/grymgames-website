@@ -35,6 +35,7 @@ else:
 _cfg["aws_access_key_id"] = os.environ.get("AWS_ACCESS_KEY_ID", _cfg.get("aws_access_key_id", ""))
 _cfg["aws_secret_access_key"] = os.environ.get("AWS_SECRET_ACCESS_KEY", _cfg.get("aws_secret_access_key", ""))
 _cfg["aws_region"] = os.environ.get("AWS_REGION", _cfg.get("aws_region", "us-east-1"))
+_cfg["table_name"] = os.environ.get("TABLE_NAME", _cfg.get("table_name", "Users"))
 _cfg["steam_api_key"] = os.environ.get("STEAM_API_KEY", _cfg.get("steam_api_key", ""))
 _cfg["square_access_token"] = os.environ.get("SQUARE_ACCESS_TOKEN", _cfg.get("square_access_token", ""))
 _cfg["square_location_id"] = os.environ.get("SQUARE_LOCATION_ID", _cfg.get("square_location_id", ""))
