@@ -13,9 +13,23 @@ from boto3.dynamodb.types import TypeSerializer, TypeDeserializer
 from flask import Flask, redirect, request, session, jsonify, send_from_directory
 
 # ─── Config ───────────────────────────────────────────────────────────────────
+# Load Render secret file (config.env) into os.environ if it exists
+_secret_file = os.environ.get("SECRET_FILE_PATH", "/etc/secrets/config.env")
+if os.path.exists(_secret_file):
+    with open(_secret_file) as _sf:
+        for _line in _sf:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _v = _line.split("=", 1)
+                os.environ.setdefault(_k.strip(), _v.strip())
+
+# Load local config file if available (dev mode)
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "website_config.json")
-with open(CONFIG_PATH, encoding="utf-8") as f:
-    _cfg = json.load(f)
+if os.path.exists(CONFIG_PATH):
+    with open(CONFIG_PATH, encoding="utf-8") as f:
+        _cfg = json.load(f)
+else:
+    _cfg = {}
 
 # Override config with environment variables when deployed
 _cfg["aws_access_key_id"] = os.environ.get("AWS_ACCESS_KEY_ID", _cfg.get("aws_access_key_id", ""))
