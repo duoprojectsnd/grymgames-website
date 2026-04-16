@@ -206,7 +206,7 @@ def steam_callback():
             session["username"] = persona or steam_id
             session["is_new"] = False
 
-    return redirect("/welcome.html" if session.get("is_new") else "/?login=success")
+    return redirect("/welcome.html")
 
 
 @app.route("/auth/steam/logout")
