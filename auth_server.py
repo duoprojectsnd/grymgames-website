@@ -206,7 +206,7 @@ def steam_callback():
             session["username"] = persona or steam_id
             session["is_new"] = False
 
-    return redirect("/?login=success")
+    return redirect("/welcome.html" if session.get("is_new") else "/?login=success")
 
 
 @app.route("/auth/steam/logout")
@@ -245,6 +245,36 @@ def set_email():
     try:
         update_user_email(session["steam_id"], email)
         return jsonify({"ok": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/auth/claim-welcome-gift", methods=["POST"])
+def claim_welcome_gift():
+    """Award 500 gems (curr02) for providing email on first login."""
+    if "steam_id" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+    data = request.get_json(silent=True) or {}
+    email = data.get("email", "").strip()
+    if not email:
+        return jsonify({"error": "No email provided"}), 400
+    steam_id = session["steam_id"]
+    dynamo = _dynamo()
+    table = _cfg["table_name"]
+    key = {"steamID": {"S": steam_id}}
+    try:
+        update_user_email(steam_id, email)
+        raw = dynamo.get_item(TableName=table, Key=key).get("Item", {})
+        currencies_map = raw.get("Currencies", {}).get("M", {})
+        gem_key = "curr02" if "curr02" in currencies_map else "Curr02"
+        current = int(currencies_map.get(gem_key, {}).get("S", "0"))
+        dynamo.update_item(
+            TableName=table, Key=key,
+            UpdateExpression="SET Currencies.#gk = :nb",
+            ExpressionAttributeNames={"#gk": gem_key},
+            ExpressionAttributeValues={":nb": {"S": str(current + 500)}},
+        )
+        return jsonify({"ok": True, "gems": current + 500})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

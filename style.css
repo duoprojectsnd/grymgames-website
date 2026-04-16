@@ -216,6 +216,32 @@ a {
   border-color: var(--gold);
 }
 
+/* Gift hint tooltip pointing at Login */
+.nav__gift-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(212, 168, 83, 0.12);
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  border-radius: 4px;
+  color: var(--gold);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  animation: giftPulse 2s ease-in-out infinite;
+}
+.nav__gift-arrow {
+  color: var(--gold);
+  flex-shrink: 0;
+}
+@keyframes giftPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 .nav__profile {
   position: relative;
   display: flex;
@@ -3752,4 +3778,25 @@ a {
     border-right: none;
     border-bottom: 1px solid var(--border);
   }
+}
+
+/* ═══ MOBILE: Simplified landing — hide heavy sections, keep hero + CTA ═══ */
+@media (max-width: 768px) {
+  /* Hide shop link in nav */
+  .nav__links-vertical a[href="/shop.html"] { display: none; }
+  
+  /* Hide gift hint on mobile (clutters nav) */
+  .nav__gift-hint { display: none; }
+
+  /* Hide non-essential sections */
+  .welcome-showcase,
+  .about-banner,
+  .factions,
+  .features-carousel,
+  .section--classes,
+  .combat-showcase,
+  .cinematic-divider,
+  .corruption,
+  .section--founder,
+  .footer__links { display: none !important; }
 }

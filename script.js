@@ -172,6 +172,8 @@
         if (data.logged_in) {
           loginBtn.style.display = 'none';
           profileMenu.style.display = '';
+          const giftHint = document.getElementById('giftHint');
+          if (giftHint) giftHint.style.display = 'none';
           profileBtnName.textContent = data.username || data.steam_id;
           profileName.textContent = data.username || data.steam_id;
           if (data.avatar) {
