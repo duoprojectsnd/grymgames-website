@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKUBI — Character Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background: #0a0908; min-height: 100vh; }
+
+    .profile-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 40px 100px;
+    }
+
+    .profile-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9a8e7a;
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.3s;
+    }
+    .profile-back:hover { color: #d4a853; }
+
+    /* ── Hero Card ── */
+    .profile-hero {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 36px 40px;
+      background: linear-gradient(135deg, #141210 0%, #1a1714 100%);
+      border: 1px solid rgba(212, 168, 83, 0.15);
+      border-radius: 6px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.3), transparent);
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid rgba(212, 168, 83, 0.4);
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 0 30px rgba(212, 168, 83, 0.1);
+    }
+
+    .profile-identity { flex: 1; }
+
+    .profile-username {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #d6c8a8;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .profile-subtitle {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+      color: #9a8e7a;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .profile-level-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border: 1px solid rgba(212, 168, 83, 0.3);
+      border-radius: 6px;
+      background: rgba(212, 168, 83, 0.05);
+      flex-shrink: 0;
+    }
+    .profile-level-badge__label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #d4a853;
+      margin-bottom: 2px;
+    }
+    .profile-level-badge__value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #d6c8a8;
+    }
+
+    /* ── Stats Grid ── */
+    .profile-section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #d4a853;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(212, 168, 83, 0.1);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      padding: 20px;
+      background: #141210;
+      border: 1px solid rgba(200, 170, 120, 0.1);
+      border-radius: 4px;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .stat-card:hover {
+      border-color: rgba(212, 168, 83, 0.3);
+    }
+
+    .stat-card__value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #d6c8a8;
+      margin-bottom: 4px;
+    }
+
+    .stat-card__label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9a8e7a;
+    }
+
+    /* ── All Stats Table ── */
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .stats-table tr {
+      border-bottom: 1px solid rgba(200, 170, 120, 0.06);
+    }
+    .stats-table tr:hover {
+      background: rgba(212, 168, 83, 0.03);
+    }
+    .stats-table td {
+      padding: 10px 16px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+    }
+    .stats-table td:first-child {
+      color: #9a8e7a;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      width: 40%;
+    }
+    .stats-table td:last-child {
+      color: #d6c8a8;
+      text-align: right;
+    }
+
+    .profile-banned {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(248, 81, 73, 0.15);
+      border: 1px solid rgba(248, 81, 73, 0.4);
+      border-radius: 2px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #f85149;
+      margin-left: 12px;
+    }
+
+    .profile-loading {
+      text-align: center;
+      padding: 100px 0;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      color: #9a8e7a;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 600px) {
+      .profile-hero { flex-direction: column; text-align: center; padding: 28px 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .profile-page { padding: 40px 20px 80px; }
+      .profile-forging { flex-direction: column; align-items: center; }
+    }
+
+    /* ── Forging Skill Circle ── */
+    .profile-forging {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 40px;
+      padding: 28px 36px;
+      background: linear-gradient(135deg, #141210 0%, #1a1714 100%);
+      border: 1px solid rgba(232, 147, 50, 0.15);
+      border-radius: 6px;
+    }
+
+    .forging-circle {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+
+    .forging-ring {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .forging-ring__bg {
+      fill: none;
+      stroke: rgba(232, 147, 50, 0.1);
+      stroke-width: 6;
+    }
+
+    .forging-ring__fill {
+      fill: none;
+      stroke: #e89332;
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 326.73;
+      stroke-dashoffset: 326.73;
+      transition: stroke-dashoffset 1s ease;
+      filter: drop-shadow(0 0 6px rgba(232, 147, 50, 0.4));
+    }
+
+    .forging-circle__inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .forging-circle__icon {
+      font-size: 1.2rem;
+      margin-bottom: 2px;
+    }
+
+    .forging-circle__level {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #e89332;
+    }
+
+    .forging-info__title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #e89332;
+      margin-bottom: 4px;
+    }
+
+    /* ── Currency Orbs ── */
+    .currency-orbs {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-left: auto;
+    }
+
+    .currency-orb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-orb__icon {
+      font-size: 1rem;
+      text-shadow: 0 0 8px currentColor;
+    }
+
+    .currency-orb__icon--blue { color: #4ea8ee; }
+    .currency-orb__icon--red { color: #e85454; }
+    .currency-orb__icon--purple {
+      color: #c577f5;
+      text-shadow: 0 0 10px rgba(180,100,255,0.6), 0 0 20px rgba(180,100,255,0.3);
+      animation: purpleGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes purpleGlow {
+      from { text-shadow: 0 0 10px rgba(180,100,255,0.5), 0 0 20px rgba(180,100,255,0.25); }
+      to   { text-shadow: 0 0 14px rgba(180,100,255,0.7), 0 0 28px rgba(180,100,255,0.35), 0 0 4px rgba(255,255,255,0.15); }
+    }
+
+    .currency-orb__value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .currency-orb__value--blue { color: #4ea8ee; }
+    .currency-orb__value--red { color: #e85454; }
+    .currency-orb__value--purple { color: #c577f5; }
+
+    .forging-info__exp {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+      color: #9a8e7a;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-page">
+    <a href="/" class="profile-back">← Back to Home</a>
+
+    <div id="profileLoading" class="profile-loading">Loading profile…</div>
+    <div id="profileContent" style="display:none;">
+
+      <!-- Hero Card -->
+      <div class="profile-hero">
+        <img class="profile-avatar" id="pAvatar" src="" alt="" />
+        <div class="profile-identity">
+          <div class="profile-username" id="pUsername"></div>
+          <div class="profile-subtitle" id="pSubtitle"></div>
+        </div>
+        <div class="profile-level-badge">
+          <span class="profile-level-badge__label">Level</span>
+          <span class="profile-level-badge__value" id="pLevel"></span>
+        </div>
+      </div>
+
+      <!-- Forging Skill + Currencies -->
+      <div class="profile-forging" id="forgingSection" style="display:none;">
+        <div class="forging-circle" id="forgingCircle">
+          <svg class="forging-ring" viewBox="0 0 120 120">
+            <circle class="forging-ring__bg" cx="60" cy="60" r="52" />
+            <circle class="forging-ring__fill" id="forgingRing" cx="60" cy="60" r="52" />
+          </svg>
+          <div class="forging-circle__inner">
+            <span class="forging-circle__icon">⚒</span>
+            <span class="forging-circle__level" id="forgingLevel"></span>
+          </div>
+        </div>
+        <div class="forging-info">
+          <div class="forging-info__title">Forging Skill</div>
+        </div>
+        <div class="currency-orbs" id="currencyOrbs"></div>
+      </div>
+
+      <!-- Key Stats -->
+      <div class="profile-section-title">Overview</div>
+      <div class="stats-grid" id="statsGrid"></div>
+
+    </div>
+  </div>
+
+  <script>
+    const HIGHLIGHT_STATS = [
+      { key: 'MMR',               label: 'MMR' },
+      { key: 'Default_Character', label: 'Character' },
+      { key: 'Alliance',          label: 'Alliance' },
+    ];
+
+    const SKIP_KEYS = ['Username', 'Level', 'SteamName'];
+
+    fetch('/auth/profile')
+      .then(r => {
+        if (!r.ok) { window.location.href = '/?login=required'; throw new Error(); }
+        return r.json();
+      })
+      .then(data => {
+        document.getElementById('profileLoading').style.display = 'none';
+        document.getElementById('profileContent').style.display = '';
+
+        // Hero
+        const avatar = document.getElementById('pAvatar');
+        if (data.avatar) { avatar.src = data.avatar; avatar.alt = data.username; }
+        else { avatar.style.display = 'none'; }
+
+        const nameEl = document.getElementById('pUsername');
+        nameEl.textContent = data.username;
+        if (data.ban_status && data.ban_status.toLowerCase() === 'true') {
+          const badge = document.createElement('span');
+          badge.className = 'profile-banned';
+          badge.textContent = 'BANNED';
+          nameEl.appendChild(badge);
+        }
+
+        document.getElementById('pSubtitle').textContent =
+          data.default_character + '  •  ' + data.alliance + '  •  Steam ID: ' + data.steam_id;
+        document.getElementById('pLevel').textContent = data.level;
+
+        // Forging Skill
+        const forgingLvl = data.stat['ForgingSkillLevel'];
+        if (forgingLvl !== undefined) {
+          document.getElementById('forgingSection').style.display = '';
+          document.getElementById('forgingLevel').textContent = forgingLvl;
+          // Fill ring fully based on level (cap at 100)
+          const progress = Math.min(parseInt(forgingLvl) / 100, 1);
+          const circumference = 326.73;
+          const ring = document.getElementById('forgingRing');
+          setTimeout(() => {
+            ring.style.strokeDashoffset = circumference * (1 - progress);
+          }, 100);
+        }
+
+        // Key stat cards
+        const grid = document.getElementById('statsGrid');
+        HIGHLIGHT_STATS.forEach(s => {
+          let val = data.stat[s.key] ?? '—';
+          let style = '';
+          if (s.key === 'Alliance') {
+            const v = String(val).toLowerCase();
+            if (v === 'blue' || v === '1') {
+              val = '🚩 ' + val;
+              style = 'color:#4ea8ee; border-color:rgba(78,168,238,0.3); background:rgba(78,168,238,0.08);';
+            } else if (v === 'red' || v === '2') {
+              val = '🚩 ' + val;
+              style = 'color:#e85454; border-color:rgba(232,84,84,0.3); background:rgba(232,84,84,0.08);';
+            }
+          }
+          grid.innerHTML += `
+            <div class="stat-card" style="${style}">
+              <div class="stat-card__value" ${style ? 'style="color:inherit"' : ''}>${val}</div>
+              <div class="stat-card__label">${s.label}</div>
+            </div>`;
+        });
+
+        // Currencies → orbs in forging bar
+        const CURR_ORB = {
+          curr01: { circle: 'blue',   value: 'blue',   label: 'Curr01' },
+          curr02: { circle: 'red',    value: 'red',    label: 'Curr02' },
+          curr03: { circle: 'purple', value: 'purple', label: 'Curr03' },
+          Curr01: { circle: 'blue',   value: 'blue',   label: 'Curr01' },
+          Curr02: { circle: 'red',    value: 'red',    label: 'Curr02' },
+          Curr03: { circle: 'purple', value: 'purple', label: 'Curr03' },
+        };
+        if (data.currencies && Object.keys(data.currencies).length) {
+          const orbContainer = document.getElementById('currencyOrbs');
+          Object.entries(data.currencies).forEach(([k, v]) => {
+            const s = CURR_ORB[k] || { circle: 'blue', value: 'blue' };
+            orbContainer.innerHTML += `
+              <div class="currency-orb">
+                <span class="currency-orb__icon currency-orb__icon--${s.circle}">✦</span>
+                <span class="currency-orb__value currency-orb__value--${s.value}">${Number(v).toLocaleString()}</span>
+              </div>`;
+          });
+        }
+
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

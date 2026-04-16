@@ -1,0 +1,3 @@
+ApplicationID: sandbox-sq0idb-jjgSqFyxYFVD39Fvhsyqcg
+AccessToken: EAAAlxcpAe7GiFi-GpZvP_FITj7sE9zsExlN-Gyj54ZR4eW0zk3PYEvwf2TWMMT1
+LocationID: L15YP5GDCHM0C

@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: grymgames-website
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn auth_server:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SITE_URL
+        value: https://www.grymgames.net
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: us-east-1
+      - key: STEAM_API_KEY
+        sync: false
+      - key: SQUARE_ACCESS_TOKEN
+        sync: false
+      - key: SQUARE_LOCATION_ID
+        sync: false
+      - key: SQUARE_APPLICATION_ID
+        sync: false
+      - key: SQUARE_ENVIRONMENT
+        value: sandbox

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OKUBI — Pathfinder</title>
+  <meta name="description" content="The Pathfinder is a precision-based ranged combatant who dominates from a distance. Masters of the bow and aerial mobility, Pathfinders rain death from abo" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root {
+      --bg: #001a0a;
+      --bg-elevated: #062210;
+    }
+    .class-detail-hero__bg {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-elevated) 40%, var(--bg) 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="../assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links-horizontal">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#classes" class="active">Classes</a></li>
+        <li><a href="../index.html#features">Features</a></li>
+        <li><a href="../index.html#combat">Combat</a></li>
+        <li><a href="../index.html#world">World</a></li>
+        <li><a href="../index.html#community">Community</a></li>
+        <li><a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank">Steam</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ CLASS DETAIL HERO ═══ -->
+  <section class="class-detail-hero">
+    <div class="class-detail-hero__bg"></div>
+    <div class="class-detail-hero__overlay"></div>
+    <div class="class-detail-hero__inner">
+      <div class="class-detail-hero__content">
+        <a href="../index.html#classes" class="class-detail__back">← All Archetypes</a>
+        <p class="section__eyebrow">Ranged DPS</p>
+        <h1 class="class-detail-hero__title">Pathfinder</h1>
+        <p class="class-detail-hero__desc">The Pathfinder is a precision-based ranged combatant who dominates from a distance. Masters of the bow and aerial mobility, Pathfinders rain death from above while staying out of reach.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB BAR ═══ -->
+  <div class="class-tabs">
+    <button class="class-tabs__btn class-tabs__btn--active" data-tab="overview">Overview</button>
+    <button class="class-tabs__btn" data-tab="lore">Lore</button>
+    <button class="class-tabs__btn" data-tab="abilities">Ability</button>
+  </div>
+
+  <!-- ═══ TAB: OVERVIEW ═══ -->
+  <section class="class-tab-panel class-tab-panel--active" data-panel="overview">
+    <div class="container">
+      <div class="overview-panel">
+        <div class="radar-chart" data-stats="5,6,3,9,5"></div>
+        <div class="overview-panel__stats">
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Role</span>
+            <span class="overview-panel__stat-value">Ranged DPS</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Difficulty</span>
+            <span class="overview-panel__stat-value">Medium</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Playstyle</span>
+            <span class="overview-panel__stat-value">Kite & Strike</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: LORE ═══ -->
+  <section class="class-tab-panel" data-panel="lore">
+    <div class="container">
+      <div class="lore-panel">
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">Eyes Above the Canopy</h3>
+          <p class="lore-panel__text">Pathfinders were once the silent scouts of the Winged Legions — cartographers of the sky who mapped the invisible currents between floating islands. They learned to read the wind like a language, to strike from angles no ground-fighter could anticipate. When the corruption fractured the airways, the Pathfinders became the only ones who could navigate the chaos.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="pathfinder-lore-1">Pathfinder Concept Art</div>
+        </div>
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">The Horizon's Edge</h3>
+          <p class="lore-panel__text">A Pathfinder's bow is more than a weapon — it is an extension of their sight. Arrows imbued with wind magic can curve around obstacles, pierce through barriers, and rain down from impossible heights. In the arenas, they are the unseen hunters: by the time you hear the arrow, it's already too late.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="pathfinder-lore-2">Pathfinder In Combat</div>
+        </div>
+        <div class="lore-panel__block lore-panel__block--closing">
+          <p class="lore-panel__quote">"The sky has no walls. From up here, everything is a target."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: ABILITIES ═══ -->
+  <section class="class-tab-panel" data-panel="abilities">
+    <section class="spell-showcase" id="spellShowcase">
+      <div class="spell-showcase__bg" id="spellBg" style="background: linear-gradient(135deg, #001a0a 0%, #0a0908 50%, #001a0a 100%)"></div>
+      <div class="spell-showcase__inner">
+        <div class="spell-showcase__preview">
+          <div class="spell-showcase__video-placeholder" id="spellVideo" data-slot="pathfinder-spell-VIDEO">Spell Preview</div>
+        </div>
+        <div class="spell-showcase__details">
+          <p class="spell-showcase__spell-type" id="spellType">Offensive</p>
+          <h2 class="spell-showcase__spell-name" id="spellName">Piercing Shot</h2>
+          <p class="spell-showcase__spell-desc" id="spellDesc">Fire a charged arrow that penetrates through all enemies in a line, dealing massive damage. Charge time of 1.5 seconds increases damage by up to 200%.</p>
+          <div class="spell-bar" id="spellBar">
+            <div class="spell-bar__slot spell-bar__slot--active" data-spell="0"><div class="spell-bar__orb">🏹</div><span class="spell-bar__key">Q</span></div>
+            <div class="spell-bar__slot" data-spell="1"><div class="spell-bar__orb">🦅</div><span class="spell-bar__key">E</span></div>
+            <div class="spell-bar__slot" data-spell="2"><div class="spell-bar__orb">🪤</div><span class="spell-bar__key">F</span></div>
+            <div class="spell-bar__slot" data-spell="3"><div class="spell-bar__orb">👁️</div><span class="spell-bar__key">C</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="4"><div class="spell-bar__orb">🌧️</div><span class="spell-bar__key">1</span></div>
+            <div class="spell-bar__slot" data-spell="5"><div class="spell-bar__orb">💨</div><span class="spell-bar__key">2</span></div>
+            <div class="spell-bar__slot" data-spell="6"><div class="spell-bar__orb">☠️</div><span class="spell-bar__key">3</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="7"><div class="spell-bar__orb">🌪️</div><span class="spell-bar__key">R</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <script>
+  (function() {
+    const spells = [
+      { name: 'Piercing Shot', type: 'Offensive', desc: 'Fire a charged arrow that penetrates through all enemies in a line, dealing massive damage. Charge time of 1.5 seconds increases damage by up to 200%.' },
+      { name: 'Aerial Strike', type: 'Mobility', desc: 'Take flight and dive toward a target location, releasing a volley of arrows on impact. Enemies in the landing zone take damage and are slowed by 40%.' },
+      { name: 'Trap Mastery', type: 'Utility', desc: 'Place an invisible trap that activates when an enemy steps on it, rooting them for 3 seconds and dealing damage over time. Can hold up to 3 charges.' },
+      { name: 'Eagle Eye', type: 'Debuff', desc: 'Mark a target for 10 seconds, revealing them through walls and increasing all damage they take by 20%. Marked targets cannot stealth.' },
+      { name: 'Volley', type: 'AoE', desc: 'Launch a rain of arrows into the sky that fall on a target area, dealing continuous damage for 4 seconds. Movement speed in the area is reduced by 60%.' },
+      { name: 'Wind Walk', type: 'Mobility', desc: 'Dash backward 10 meters while leaving a decoy at your previous position. The decoy attracts enemy attacks for 3 seconds before exploding.' },
+      { name: 'Poison Arrow', type: 'DoT', desc: 'Fire a poison-tipped arrow that deals moderate initial damage and applies a potent poison lasting 8 seconds. Poisoned targets have their healing reduced by 50%.' },
+      { name: 'Storm of Arrows', type: 'Ultimate', desc: 'Channel the wind to hover in place and unleash an unending barrage of arrows for 5 seconds, targeting all enemies within 25 meters. Each arrow deals moderate damage and has a 10% chance to critically strike.' },
+    ];
+    const slots = document.querySelectorAll('.spell-bar__slot');
+    const spellName = document.getElementById('spellName');
+    const spellDesc = document.getElementById('spellDesc');
+    const spellType = document.getElementById('spellType');
+    const spellVideo = document.getElementById('spellVideo');
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        const idx = parseInt(slot.dataset.spell);
+        const spell = spells[idx];
+        slots.forEach(s => s.classList.remove('spell-bar__slot--active'));
+        slot.classList.add('spell-bar__slot--active');
+        spellName.textContent = spell.name;
+        spellDesc.textContent = spell.desc;
+        spellType.textContent = spell.type;
+        spellVideo.textContent = spell.name + ' Preview';
+      });
+    });
+  })();
+  </script>
+
+  <!-- ═══ CLASS NAV (Prev / Next) ═══ -->
+  <section class="class-detail-nav">
+    <a href="guardian.html" class="class-detail-nav__link class-detail-nav__link--prev">
+      <span class="class-detail-nav__label">Previous</span>
+      <span class="class-detail-nav__name">Guardian</span>
+    </a>
+    <a href="../index.html#classes" class="class-detail-nav__link class-detail-nav__link--all">
+      All Classes
+    </a>
+    <a href="invoker.html" class="class-detail-nav__link class-detail-nav__link--next">
+      <span class="class-detail-nav__label">Next</span>
+      <span class="class-detail-nav__name">Invoker</span>
+    </a>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">OKUBI</span>
+          <p class="footer__tagline">Forge Your Own Myth</p>
+        </div>
+        <div class="footer__links">
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#combat">Combat</a>
+          <a href="../index.html#community">Community</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 OKUBI. All rights reserved. Powered by Unreal Engine 5.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

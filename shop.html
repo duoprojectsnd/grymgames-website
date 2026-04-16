@@ -1,0 +1,2952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKUBI — Item Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0908;
+      --surface: #141210;
+      --surface-2: #1a1714;
+      --border: rgba(212, 168, 83, 0.15);
+      --border-hover: rgba(212, 168, 83, 0.35);
+      --gold: #d4a853;
+      --beige: #d6c8a8;
+      --muted: #9a8e7a;
+      --purple: #c577f5;
+      --purple-glow: rgba(180, 100, 255, 0.4);
+      --blue: #4ea8ee;
+      --red: #e85454;
+      --green: #4ec870;
+      --font-display: 'Orbitron', sans-serif;
+      --font-heading: 'Rajdhani', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--beige);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Top Bar ── */
+    .shop-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      height: 52px;
+      background: rgba(10, 9, 8, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .shop-bar__left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .shop-bar__back {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .shop-bar__back:hover { color: var(--gold); }
+
+    .shop-bar__title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--beige);
+    }
+
+    .shop-bar__wallet {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--purple);
+      padding: 6px 16px;
+      border: 1px solid rgba(180, 100, 255, 0.3);
+      border-radius: 4px;
+      background: rgba(180, 100, 255, 0.06);
+    }
+    .shop-bar__wallet-icon {
+      font-size: 0.9rem;
+      text-shadow: 0 0 8px var(--purple-glow);
+    }
+
+    .shop-bar__wallet {
+      margin-left: auto;
+    }
+
+    .shop-bar__right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .shop-bar__profile {
+      position: relative;
+      display: none;
+    }
+    .shop-bar__profile--active {
+      display: block;
+    }
+    .shop-bar__profile-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      padding: 0;
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .shop-bar__profile-btn:hover {
+      border-color: var(--border-hover);
+    }
+    .shop-bar__profile-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .shop-bar__profile-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      min-width: 160px;
+      z-index: 200;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    .shop-bar__profile-dropdown--open {
+      display: block;
+    }
+    .shop-bar__profile-name {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--beige);
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+    .shop-bar__profile-link {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 0;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .shop-bar__profile-link:hover {
+      color: var(--gold);
+    }
+
+    /* ── Category Tabs (separate bar below top bar) ── */
+    .shop-tabs-bar {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 40px;
+      height: 48px;
+      background: rgba(10, 9, 8, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .shop-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .shop-search {
+      position: absolute;
+      right: 40px;
+    }
+    .shop-search__input {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--beige);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212, 168, 83, 0.15);
+      border-radius: 3px;
+      padding: 10px 38px 10px 16px;
+      width: 260px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .shop-search__input::placeholder {
+      color: var(--muted);
+      opacity: 0.6;
+    }
+    .shop-search__input:focus {
+      border-color: rgba(212, 168, 83, 0.4);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 0 12px rgba(212, 168, 83, 0.08);
+      width: 320px;
+    }
+    .shop-search__icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .shop-tab {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .shop-tab:hover {
+      color: var(--beige);
+      background: rgba(212, 168, 83, 0.06);
+    }
+    .shop-tab--active {
+      color: var(--gold);
+      border-color: rgba(212, 168, 83, 0.3);
+      background: rgba(212, 168, 83, 0.08);
+    }
+    .shop-tab--disabled {
+      color: rgba(255,255,255,0.3);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .shop-tab--gems {
+      position: relative;
+      overflow: visible;
+      background: linear-gradient(135deg, rgba(100,40,160,0.4), rgba(160,60,200,0.25), rgba(80,180,220,0.2), rgba(140,50,180,0.4));
+      background-size: 400% 400%;
+      animation: vpPearlescent 4s ease infinite;
+      border: 1px solid rgba(180, 100, 240, 0.45);
+      color: #d9b3ff;
+      text-shadow: 0 0 8px rgba(180, 100, 240, 0.4);
+      box-shadow: 0 0 12px rgba(160, 80, 220, 0.15), inset 0 0 12px rgba(160, 80, 220, 0.08);
+    }
+    .shop-tab--gems:hover {
+      border-color: rgba(200, 120, 255, 0.7);
+      color: #e8ccff;
+      text-shadow: 0 0 14px rgba(200, 120, 255, 0.6);
+      box-shadow: 0 0 20px rgba(160, 80, 220, 0.3), inset 0 0 16px rgba(160, 80, 220, 0.12);
+    }
+    .shop-tab--gems.shop-tab--active {
+      border-color: rgba(200, 120, 255, 0.8);
+      color: #f0ddff;
+      text-shadow: 0 0 16px rgba(200, 120, 255, 0.7);
+      box-shadow: 0 0 24px rgba(160, 80, 220, 0.35), inset 0 0 18px rgba(160, 80, 220, 0.15);
+    }
+    @keyframes vpPearlescent {
+      0%   { background-position: 0% 50%; }
+      25%  { background-position: 100% 0%; }
+      50%  { background-position: 100% 100%; }
+      75%  { background-position: 0% 100%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* NEW badge */
+    .vp-tab-badge {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      font-family: var(--font-heading);
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #fff;
+      background: linear-gradient(135deg, #e74c3c, #ff6b6b);
+      padding: 2px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
+      animation: vpBadgePulse 2s ease infinite;
+      z-index: 5;
+      pointer-events: none;
+    }
+    @keyframes vpBadgePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.85; }
+    }
+
+    /* Floating stars */
+    .vp-tab-stars {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      border-radius: 3px;
+    }
+    .vp-tab-star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #e0c0ff;
+      border-radius: 50%;
+      box-shadow: 0 0 4px rgba(200, 140, 255, 0.8);
+      animation: vpStarFloat linear infinite;
+      opacity: 0;
+    }
+    .vp-tab-star:nth-child(1) { left: 10%; animation-duration: 2.5s; animation-delay: 0s; }
+    .vp-tab-star:nth-child(2) { left: 30%; animation-duration: 3s; animation-delay: 0.7s; width: 2px; height: 2px; }
+    .vp-tab-star:nth-child(3) { left: 55%; animation-duration: 2.8s; animation-delay: 1.4s; }
+    .vp-tab-star:nth-child(4) { left: 75%; animation-duration: 3.2s; animation-delay: 0.3s; width: 2px; height: 2px; }
+    .vp-tab-star:nth-child(5) { left: 90%; animation-duration: 2.6s; animation-delay: 1.8s; }
+    @keyframes vpStarFloat {
+      0%   { bottom: -4px; opacity: 0; transform: scale(0.5); }
+      20%  { opacity: 1; transform: scale(1); }
+      80%  { opacity: 0.7; }
+      100% { bottom: calc(100% + 4px); opacity: 0; transform: scale(0.3); }
+    }
+
+    /* Click burst on button */
+    .vp-tab-burst {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10;
+      font-size: 1.4rem;
+      color: #e0c0ff;
+      text-shadow: 0 0 20px rgba(180, 100, 240, 0.9), 0 0 40px rgba(140, 60, 200, 0.6);
+      opacity: 0;
+      animation: vpBurst 0.7s ease-out forwards;
+    }
+    @keyframes vpBurst {
+      0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.3); }
+      40%  { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); }
+    }
+
+    /* Screen glow overlay */
+    .vp-screen-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 40%, rgba(140, 60, 220, 0.18) 0%, rgba(100, 40, 180, 0.08) 40%, transparent 70%);
+      opacity: 0;
+      animation: vpScreenGlow 1.4s ease-out forwards;
+    }
+    @keyframes vpScreenGlow {
+      0%   { opacity: 0; }
+      25%  { opacity: 1; }
+      70%  { opacity: 0.6; }
+      100% { opacity: 0; }
+    }
+
+    /* Card light-up pulse */
+    .vp-card--lit {
+      animation: vpCardLightUp 1.4s ease-out forwards;
+    }
+    @keyframes vpCardLightUp {
+      0%   { box-shadow: 0 0 0 rgba(160, 80, 240, 0); filter: brightness(1); }
+      25%  { box-shadow: 0 0 30px rgba(160, 80, 240, 0.5), 0 0 60px rgba(140, 60, 220, 0.2); filter: brightness(1.25); }
+      70%  { box-shadow: 0 0 15px rgba(160, 80, 240, 0.2); filter: brightness(1.1); }
+      100% { box-shadow: 0 0 0 rgba(160, 80, 240, 0); filter: brightness(1); }
+    }
+
+    /* ── VP Detail Page ── */
+    .vp-detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--bg);
+      overflow-y: auto;
+    }
+    .vp-detail-overlay--active { display: block; }
+    .vp-detail__back {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      z-index: 205;
+      background: rgba(20, 18, 16, 0.75);
+      border: 1px solid var(--border);
+      color: var(--beige);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .vp-detail__back:hover {
+      color: var(--gold);
+      border-color: rgba(212, 168, 83, 0.4);
+      background: rgba(20, 18, 16, 0.9);
+    }
+    .vp-detail__layout {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 60px 80px;
+      gap: 60px;
+      min-height: 100vh;
+      align-items: flex-start;
+    }
+    .vp-detail__visual {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 420px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .vp-detail__visual-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      opacity: 0.4;
+    }
+    .vp-detail__visual-icon {
+      position: relative;
+      z-index: 1;
+      font-size: 6rem;
+      text-shadow: 0 0 40px rgba(200, 140, 255, 0.5);
+      animation: vpDetailFloat 3s ease-in-out infinite;
+    }
+    @keyframes vpDetailFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .vp-detail__info {
+      flex: 1;
+      padding-top: 20px;
+    }
+    .vp-detail__badge {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+    .vp-detail__name {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--beige);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    .vp-detail__subtitle {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .vp-detail__desc {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+    .vp-detail__price-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .vp-detail__price {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--beige);
+    }
+    .vp-detail__price-per {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+    .vp-detail__buy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, #7b2ff2, #9b59b6, #7b2ff2);
+      background-size: 200% 200%;
+      animation: vpBuyShimmer 3s ease infinite;
+      border: none;
+      border-radius: 5px;
+      padding: 16px 48px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(123, 47, 242, 0.3);
+      margin-bottom: 32px;
+      min-width: 260px;
+    }
+    .vp-detail__buy-btn:hover {
+      box-shadow: 0 6px 30px rgba(123, 47, 242, 0.5);
+      transform: translateY(-2px);
+    }
+    .vp-detail__buy-btn:active {
+      transform: translateY(0);
+    }
+    @keyframes vpBuyShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .vp-detail__meta {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    .vp-detail__meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding: 6px 0;
+      max-width: 320px;
+    }
+    .vp-detail__meta-label { opacity: 0.6; }
+    .vp-detail__meta-value { color: var(--beige); }
+    .vp-detail__status {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      min-height: 24px;
+      margin-bottom: 16px;
+    }
+
+    /* ── Page Layout ── */
+    .shop-page {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 112px 40px 100px;
+    }
+
+    /* ── Section Headers ── */
+    .shop-section {
+      margin-bottom: 48px;
+    }
+
+    .shop-section__header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .shop-section__title {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .shop-section__line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(212, 168, 83, 0.25), transparent);
+    }
+
+    .shop-section__badge {
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      padding: 3px 10px;
+      border: 1px solid rgba(78, 200, 112, 0.3);
+      border-radius: 2px;
+      background: rgba(78, 200, 112, 0.08);
+    }
+
+    /* ── Featured Carousel ── */
+    .shop-featured-carousel {
+      position: relative;
+    }
+
+    .shop-grid--featured {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .shop-grid--featured .shop-card {
+      grid-column: span 2;
+    }
+
+    .shop-featured-arrow {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: rgba(212, 168, 83, 0.2);
+      cursor: pointer;
+      transition: all 0.4s;
+      z-index: 10;
+      border-radius: 4px;
+    }
+    .shop-featured-arrow svg {
+      width: 36px;
+      height: 36px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.3s;
+    }
+    .shop-featured-arrow:hover {
+      color: var(--gold);
+    }
+    .shop-featured-arrow--left {
+      left: -70px;
+    }
+    .shop-featured-arrow--left:hover {
+      background: linear-gradient(270deg, transparent, rgba(212, 168, 83, 0.1));
+    }
+    .shop-featured-arrow--left:hover svg { transform: translateX(-3px); }
+    .shop-featured-arrow--right {
+      right: -70px;
+    }
+    .shop-featured-arrow--right:hover {
+      background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.1));
+    }
+    .shop-featured-arrow--right:hover svg { transform: translateX(3px); }
+    .shop-featured-arrow:disabled {
+      opacity: 0.1;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .shop-featured-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .shop-featured-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+      opacity: 0.3;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .shop-featured-dot--active {
+      opacity: 1;
+      background: var(--gold);
+      box-shadow: 0 0 6px rgba(212, 168, 83, 0.4);
+    }
+
+    /* ── Standard Grid (portrait 9:16 cards) ── */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    /* ── Item Card ── */
+    .shop-card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .shop-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 168, 83, 0.06);
+    }
+    .shop-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.2), transparent);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .shop-card:hover::before { opacity: 1; }
+
+    /* Rarity glow */
+    .shop-card--mythic    { --rarity: #e85454; --rarity-bg: rgba(50, 10, 10, 0.92); }
+    .shop-card--legendary { --rarity: #d4a853; --rarity-bg: rgba(40, 30, 10, 0.92); }
+    .shop-card--epic      { --rarity: #c577f5; --rarity-bg: rgba(35, 15, 50, 0.92); }
+    .shop-card--rare      { --rarity: #4ea8ee; --rarity-bg: rgba(12, 25, 45, 0.92); }
+    .shop-card--uncommon  { --rarity: #4ec870; --rarity-bg: rgba(10, 30, 15, 0.92); }
+    .shop-card--common    { --rarity: #9a8e7a; --rarity-bg: rgba(20, 18, 14, 0.92); }
+
+    .shop-card__image {
+      position: relative;
+      width: 100%;
+      height: 336px;
+      background: radial-gradient(ellipse at center, rgba(20, 18, 16, 0.5) 0%, var(--surface) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Featured cards: same height as standard, just wider */
+
+    .shop-card__image::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(transparent, var(--rarity-bg, rgba(10,9,8,0.95)));
+      pointer-events: none;
+    }
+
+    /* Rarity strip at top of image */
+    .shop-card__rarity-strip {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--rarity);
+      box-shadow: 0 0 12px var(--rarity);
+    }
+
+    .shop-card__placeholder {
+      font-size: 2.875rem;
+      opacity: 0.3;
+    }
+
+    .shop-grid--featured .shop-card__placeholder {
+      font-size: 4.6rem;
+    }
+
+    /* Tag (NEW / SALE / LIMITED) */
+    .shop-card__tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-family: var(--font-display);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      z-index: 2;
+    }
+    .shop-card__tag--new {
+      color: var(--green);
+      background: rgba(78, 200, 112, 0.15);
+      border: 1px solid rgba(78, 200, 112, 0.3);
+    }
+    .shop-card__tag--sale {
+      color: var(--red);
+      background: rgba(232, 84, 84, 0.15);
+      border: 1px solid rgba(232, 84, 84, 0.3);
+    }
+    .shop-card__tag--limited {
+      color: var(--gold);
+      background: rgba(212, 168, 83, 0.15);
+      border: 1px solid rgba(212, 168, 83, 0.3);
+    }
+
+    .shop-card__info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 18px 18px;
+      z-index: 2;
+    }
+
+    .shop-card__name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--beige);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .shop-card__type {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+
+    .shop-card__price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .shop-card__price {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--purple);
+    }
+    .shop-card__price-icon {
+      text-shadow: 0 0 8px var(--purple-glow);
+    }
+
+    .shop-card__price--old {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .shop-card__buy {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--gold), #b8903e);
+      border: none;
+      border-radius: 3px;
+      padding: 6px 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    .shop-card:hover .shop-card__buy {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .shop-card__buy:hover {
+      background: linear-gradient(135deg, #e4b863, #c89e4e);
+      box-shadow: 0 4px 16px rgba(212, 168, 83, 0.3);
+    }
+
+    .shop-card__owned {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      opacity: 0.7;
+    }
+
+    /* ── Featured card tweaks ── */
+    .shop-grid--featured .shop-card__info {
+      padding: 20px 24px 24px;
+    }
+    .shop-grid--featured .shop-card__name {
+      font-size: 1.2rem;
+    }
+    .shop-grid--featured .shop-card__price {
+      font-size: 1rem;
+    }
+
+    /* ── Purchase Modal ── */
+    .shop-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .shop-modal-overlay--active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    /* ── Item Detail Page ── */
+    .item-detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 190;
+      background: var(--bg);
+      overflow-y: auto;
+    }
+    .item-detail-overlay--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    .item-detail__bg {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 55%;
+      z-index: 0;
+    }
+    .item-detail__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .item-detail__bg-fallback {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center top, rgba(60, 40, 20, 0.3) 0%, var(--bg) 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      opacity: 0.15;
+    }
+    .item-detail__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, rgba(10,9,8,0.7) 30%, rgba(10,9,8,0.2) 60%, transparent 100%);
+    }
+    .item-detail__bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 40%);
+      z-index: 1;
+    }
+    .item-detail__close {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      z-index: 195;
+      background: rgba(20, 18, 16, 0.75);
+      border: 1px solid var(--border);
+      color: var(--beige);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .item-detail__close:hover {
+      color: var(--gold);
+      border-color: rgba(212, 168, 83, 0.4);
+      background: rgba(20, 18, 16, 0.9);
+    }
+    .item-detail__content {
+      position: relative;
+      z-index: 1;
+      max-width: none;
+      margin: 0;
+      padding: 160px 40px 80px 360px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .item-detail__rarity-tag {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+    .item-detail__rarity-tag--legendary {
+      color: #f5c542;
+      background: rgba(245, 197, 66, 0.12);
+      border: 1px solid rgba(245, 197, 66, 0.25);
+    }
+    .item-detail__rarity-tag--epic {
+      color: #c577f5;
+      background: rgba(197, 119, 245, 0.12);
+      border: 1px solid rgba(197, 119, 245, 0.25);
+    }
+    .item-detail__rarity-tag--rare {
+      color: #4ea8ee;
+      background: rgba(78, 168, 238, 0.12);
+      border: 1px solid rgba(78, 168, 238, 0.25);
+    }
+    .item-detail__rarity-tag--common {
+      color: #9a8e7a;
+      background: rgba(154, 142, 122, 0.12);
+      border: 1px solid rgba(154, 142, 122, 0.25);
+    }
+    .item-detail__name {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--beige);
+      margin-bottom: 12px;
+    }
+    .item-detail__type {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .item-detail__desc {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: rgba(214, 200, 168, 0.75);
+      max-width: 600px;
+      margin-bottom: 48px;
+    }
+    .item-detail__price-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .item-detail__price {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .item-detail__price-icon {
+      text-shadow: 0 0 10px var(--purple-glow);
+    }
+    .item-detail__price--old {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--muted);
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    .item-detail__buy-btn {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 64px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid var(--gold);
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--gold), #b8903e);
+      transition: all 0.3s;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .item-detail__buy-btn:hover {
+      background: linear-gradient(135deg, #e4b863, #c89e4e);
+      box-shadow: 0 4px 20px rgba(212, 168, 83, 0.35);
+    }
+    .item-detail__buy-btn--owned {
+      background: transparent;
+      color: var(--green);
+      border-color: var(--green);
+      cursor: default;
+      opacity: 0.7;
+    }
+    .item-detail__buy-btn--owned:hover {
+      background: transparent;
+      box-shadow: none;
+    }
+    .item-detail__result {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      min-height: 28px;
+    }
+    .item-detail__result--success { color: var(--green); }
+    .item-detail__result--error   { color: var(--red); }
+
+    .item-detail__divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 60px 0 40px;
+    }
+    .item-detail__related-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .item-detail__related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 300px);
+      gap: 14px;
+    }
+    .item-detail__related-card {
+      width: 300px;
+      height: 150px;
+      background: rgba(20, 18, 16, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .item-detail__related-card:hover {
+      border-color: var(--border-hover);
+      background: rgba(30, 26, 20, 0.7);
+    }
+    .item-detail__related-icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+    .item-detail__related-name {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--beige);
+      margin-bottom: 4px;
+    }
+    .item-detail__related-type {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .shop-modal {
+      background: linear-gradient(160deg, var(--surface) 0%, var(--surface-2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+    .shop-modal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.3), transparent);
+    }
+
+    .shop-modal__icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .shop-modal__title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--beige);
+      margin-bottom: 8px;
+    }
+
+    .shop-modal__desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .shop-modal__price {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--purple);
+      margin-bottom: 24px;
+    }
+    .shop-modal__price-icon {
+      text-shadow: 0 0 10px var(--purple-glow);
+    }
+
+    .shop-modal__actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .shop-modal__btn {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .shop-modal__btn--confirm {
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--gold), #b8903e);
+      border: 1px solid var(--gold);
+    }
+    .shop-modal__btn--confirm:hover {
+      background: linear-gradient(135deg, #e4b863, #c89e4e);
+      box-shadow: 0 4px 16px rgba(212, 168, 83, 0.3);
+    }
+    .shop-modal__btn--confirm:disabled {
+      background: rgba(100, 90, 70, 0.3);
+      color: var(--muted);
+      border-color: rgba(154, 142, 122, 0.2);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .shop-modal__btn--gems {
+      color: var(--purple);
+      background: rgba(180, 100, 255, 0.1);
+      border: 1px solid rgba(180, 100, 255, 0.4);
+    }
+    .shop-modal__btn--gems:hover {
+      background: rgba(180, 100, 255, 0.2);
+      box-shadow: 0 4px 16px rgba(180, 100, 255, 0.25);
+      color: #d9a0ff;
+    }
+    .shop-modal__btn--cancel {
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid rgba(154, 142, 122, 0.3);
+    }
+    .shop-modal__btn--cancel:hover {
+      color: var(--beige);
+      border-color: rgba(154, 142, 122, 0.5);
+    }
+
+    .shop-modal__result {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-top: 16px;
+      display: none;
+    }
+    .shop-modal__result--success { color: var(--green); }
+    .shop-modal__result--error   { color: var(--red); }
+
+    /* ── Loading ── */
+    .shop-loading {
+      text-align: center;
+      padding: 120px 0;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Empty State ── */
+    .shop-empty {
+      text-align: center;
+      padding: 80px 0;
+      color: var(--muted);
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Sets Layout ── */
+    .shop-sets-wrapper {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      transition: background 0.6s ease;
+      pointer-events: none;
+    }
+
+    .shop-sets {
+      display: flex;
+      gap: 0;
+      position: relative;
+    }
+
+    .shop-sets__sidebar {
+      position: sticky;
+      top: 100px;
+      width: 48px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      align-self: flex-start;
+      height: calc(100vh - 100px);
+      padding: 8px 0;
+      margin-right: 60px;
+      margin-left: -108px;
+    }
+
+    .shop-sets__sidebar-pip {
+      width: 4px;
+      flex: 1;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.08);
+      cursor: pointer;
+      transition: all 0.4s;
+      border: none;
+      position: relative;
+    }
+    .shop-sets__sidebar-pip::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-heading);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .shop-sets__sidebar-pip:hover::after {
+      opacity: 1;
+    }
+    .shop-sets__sidebar-pip--active {
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .shop-sets__content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .shop-set-block {
+      padding: 60px 40px;
+      margin-bottom: 0;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shop-set-block__name {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    .shop-set-block__layout {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .shop-set-block__featured {
+      grid-row: 1 / 2;
+      grid-column: 1 / 3;
+    }
+    .shop-set-block__featured .shop-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .shop-set-block__featured .shop-card__image {
+      flex: 1;
+      height: auto;
+    }
+
+    .shop-set-block__items {
+      display: contents;
+    }
+
+    /* First 2 items beside the bundle in row 1 */
+    .shop-set-block__items > .shop-card:nth-child(1) {
+      grid-row: 1;
+      grid-column: 3 / 4;
+    }
+    .shop-set-block__items > .shop-card:nth-child(2) {
+      grid-row: 1;
+      grid-column: 4 / 5;
+    }
+    /* Remaining 4 items in row 2 */
+    .shop-set-block__items > .shop-card:nth-child(n+3) {
+      grid-row: 2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .shop-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .shop-grid { grid-template-columns: repeat(2, 1fr); }
+      .shop-grid--featured { grid-template-columns: 1fr; }
+      .shop-grid--featured .shop-card { grid-column: span 1; }
+      .shop-page { padding: 24px 20px 80px; }
+      .shop-bar { padding: 12px 20px; }
+      .shop-tabs { flex-wrap: wrap; padding: 12px 20px; }
+    }
+
+    /* ── Login Modal ── */
+    .login-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-modal-overlay--active {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .login-modal {
+      background: linear-gradient(160deg, var(--surface) 0%, var(--surface-2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 48px 40px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+    }
+    .login-modal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 168, 83, 0.3), transparent);
+    }
+
+    .login-modal__icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
+
+    .login-modal__title {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--beige);
+      margin-bottom: 10px;
+    }
+
+    .login-modal__desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .login-modal__steam-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, #1b2838, #2a475e);
+      border: 1px solid rgba(102, 192, 244, 0.3);
+      border-radius: 4px;
+      padding: 12px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .login-modal__steam-btn:hover {
+      background: linear-gradient(135deg, #2a475e, #3a6a8e);
+      border-color: rgba(102, 192, 244, 0.5);
+      box-shadow: 0 4px 20px rgba(102, 192, 244, 0.15);
+    }
+
+    .login-modal__steam-logo {
+      width: 20px;
+      height: 20px;
+    }
+
+    .login-modal__close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 1.2rem;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .login-modal__close:hover { color: var(--beige); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="shop-bar">
+    <div class="shop-bar__left">
+      <a href="/" class="shop-bar__back">&larr; Back to Home</a>
+      <span class="shop-bar__title">Item Shop</span>
+    </div>
+    <div class="shop-bar__right">
+      <div class="shop-bar__wallet" id="wallet">
+        <span class="shop-bar__wallet-icon">✦</span>
+        <span id="walletAmount">&mdash;</span>
+      </div>
+      <div class="shop-bar__profile" id="shopProfile">
+        <button class="shop-bar__profile-btn" id="shopProfileBtn">
+          <img id="shopProfileAvatar" src="" alt="" />
+        </button>
+        <div class="shop-bar__profile-dropdown" id="shopProfileDropdown">
+          <span class="shop-bar__profile-name" id="shopProfileName"></span>
+          <a href="/profile.html" class="shop-bar__profile-link">Character</a>
+          <a href="/auth/steam/logout" class="shop-bar__profile-link">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Tabs Bar -->
+  <div class="shop-tabs-bar">
+    <div class="shop-tabs">
+      <!-- <button class="shop-tab shop-tab--disabled" data-cat="all">All</button> -->
+      <button class="shop-tab" data-cat="outfits">Outfits</button>
+      <button class="shop-tab shop-tab--disabled" data-cat="weapon-skins">Weapon Skins</button>
+      <button class="shop-tab shop-tab--disabled" data-cat="pets">Pets</button>
+      <button class="shop-tab shop-tab--disabled" data-cat="emotes">Emotes</button>
+      <button class="shop-tab shop-tab--disabled" data-cat="accessories">Accessories</button>
+      <button class="shop-tab shop-tab--disabled" data-cat="sets">Sets</button>
+      <button class="shop-tab shop-tab--disabled" data-cat="account">Account</button>
+      <button class="shop-tab shop-tab--gems shop-tab--active" data-cat="gems" id="vpTab">
+        <span class="vp-tab-stars"><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span></span>
+        Void Pearls
+        <span class="vp-tab-badge">New!</span>
+      </button>
+    </div>
+    <div class="shop-search">
+      <input type="text" class="shop-search__input" id="shopSearch" placeholder="Search items..." />
+      <span class="shop-search__icon">&#128269;</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="shop-page">
+    <div id="shopLoading" class="shop-loading">Loading shop…</div>
+    <div id="shopContent" style="display:none;"></div>
+  </div>
+
+  <!-- Purchase Modal -->
+  <div class="shop-modal-overlay" id="purchaseModal">
+    <div class="shop-modal">
+      <div class="shop-modal__icon" id="modalIcon">⚔</div>
+      <div class="shop-modal__title" id="modalTitle">—</div>
+      <div class="shop-modal__desc" id="modalDesc">—</div>
+      <div class="shop-modal__price">
+        <span class="shop-modal__price-icon">✦</span>
+        <span id="modalPrice">0</span>
+      </div>
+      <div class="shop-modal__actions" id="modalActions">
+        <button class="shop-modal__btn shop-modal__btn--confirm" id="modalConfirm">Purchase</button>
+        <button class="shop-modal__btn shop-modal__btn--cancel" id="modalCancel">Cancel</button>
+      </div>
+      <div class="shop-modal__result" id="modalResult"></div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+
+  <!-- VP Detail Page -->
+  <div class="vp-detail-overlay" id="vpDetailOverlay">
+    <button class="vp-detail__back" id="vpDetailBack">← Back to Shop</button>
+    <div class="vp-detail__layout">
+      <div class="vp-detail__visual" id="vpDetailVisual">
+        <div class="vp-detail__visual-glow" id="vpDetailGlow"></div>
+        <div class="vp-detail__visual-icon" id="vpDetailIcon"></div>
+      </div>
+      <div class="vp-detail__info">
+        <div class="vp-detail__badge" id="vpDetailBadge"></div>
+        <div class="vp-detail__name" id="vpDetailName"></div>
+        <div class="vp-detail__subtitle" id="vpDetailSubtitle"></div>
+        <div class="vp-detail__desc" id="vpDetailDesc"></div>
+        <div class="vp-detail__price-box">
+          <div class="vp-detail__price" id="vpDetailPrice"></div>
+          <div class="vp-detail__price-per" id="vpDetailPricePer"></div>
+        </div>
+        <div class="vp-detail__status" id="vpDetailStatus"></div>
+        <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Buy Now</button>
+        <div class="vp-detail__meta">
+          <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Currency</span><span class="vp-detail__meta-value">Void Pearls</span></div>
+          <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Platform</span><span class="vp-detail__meta-value">All Platforms</span></div>
+          <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Refund Type</span><span class="vp-detail__meta-value">Non-Refundable</span></div>
+          <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Developer</span><span class="vp-detail__meta-value">OKUBI Studios</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Item Detail Page -->
+  <div class="item-detail-overlay" id="itemDetailOverlay">
+    <div class="item-detail__bg" id="itemDetailBg"></div>
+    <button class="item-detail__close" id="itemDetailClose">← Back to Shop</button>
+    <div class="item-detail__content">
+      <div id="itemDetailRarity"></div>
+      <div class="item-detail__name" id="itemDetailName"></div>
+      <div class="item-detail__type" id="itemDetailType"></div>
+      <div class="item-detail__desc" id="itemDetailDesc"></div>
+      <div class="item-detail__price-row" id="itemDetailPriceRow"></div>
+      <div id="itemDetailBuyWrap"></div>
+      <div class="item-detail__result" id="itemDetailResult"></div>
+      <div class="item-detail__divider"></div>
+      <div class="item-detail__related-title" id="itemDetailRelatedTitle"></div>
+      <div class="item-detail__related-grid" id="itemDetailRelatedGrid"></div>
+    </div>
+  </div>
+
+  <div class="login-modal-overlay" id="loginModal">
+    <div class="login-modal">
+      <button class="login-modal__close" id="loginModalClose">✕</button>
+      <div class="login-modal__icon">🔒</div>
+      <div class="login-modal__title">Login Required</div>
+      <div class="login-modal__desc">Sign in with your Steam account to purchase items and manage your inventory.</div>
+      <a href="/auth/steam/login" class="login-modal__steam-btn">
+        <svg class="login-modal__steam-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.04 2 11.04c0 3.15 1.74 5.91 4.35 7.52l3.14-1.3a2.91 2.91 0 0 1 1.19-.25c.14 0 .28.01.42.03l2.7-3.88v-.06a3.87 3.87 0 0 1 3.87-3.87 3.87 3.87 0 0 1 3.87 3.87 3.87 3.87 0 0 1-3.87 3.87h-.09l-3.82 2.75c.01.1.02.2.02.3a2.9 2.9 0 0 1-2.9 2.9 2.93 2.93 0 0 1-2.85-2.33L3.27 19.6C5.47 21.14 8.6 22 12 22c5.52 0 10-3.58 10-8.96C22 6.04 17.52 2 12 2z"/></svg>
+        Sign in with Steam
+      </a>
+    </div>
+  </div>
+
+  <script>
+    /* ── Shop Item Catalog ── */
+    const SHOP_ITEMS = [
+      // ── Featured (16:9 banner cards) ──
+      {
+        id: 'outfit001',
+        name: 'Shadow Sovereign',
+        type: 'Outfit • Full Set',
+        category: 'outfits',
+        rarity: 'legendary',
+        price: 4800,
+        icon: '👑',
+        tag: 'limited',
+        image: 'assets/home/reaper.png',
+        desc: 'A legendary outfit imbued with shadow essence. Dark plates shift like living darkness, leaving trails of void energy.',
+        featured: true,
+      },
+      {
+        id: 'weap01001',
+        name: 'Crimson Eclipse',
+        type: 'Weapon Skin • Greatsword',
+        category: 'weapon-skins',
+        rarity: 'legendary',
+        price: 2500,
+        icon: '⚔',
+        tag: 'new',
+        desc: 'A blade wreathed in crimson flame. The edge glows with ancient runes that pulse with each swing.',
+        featured: true,
+      },
+
+      // ── Weapon Skins ──
+      {
+        id: 'weap01002',
+        name: 'Void Fang',
+        type: 'Weapon Skin • Dagger',
+        category: 'weapon-skins',
+        rarity: 'epic',
+        price: 1800,
+        icon: '🗡',
+        tag: null,
+        desc: 'Twin daggers that phase through reality. Translucent purple blades leave afterimages with each strike.',
+        featured: false,
+      },
+      {
+        id: 'weap01003',
+        name: 'Frostbite Edge',
+        type: 'Weapon Skin • Sword',
+        category: 'weapon-skins',
+        rarity: 'rare',
+        price: 1200,
+        icon: '❄',
+        tag: null,
+        desc: 'A crystalline blade of eternal ice. Freezing mist trails from its edge.',
+        featured: false,
+      },
+
+      // ── Outfits ──
+      {
+        id: 'outfit002',
+        name: 'Infernal Warden',
+        type: 'Outfit • Full Set',
+        category: 'outfits',
+        rarity: 'epic',
+        price: 3200,
+        salePrice: 2400,
+        icon: '🔥',
+        tag: 'sale',
+        image: 'assets/home/guardian.png',
+        desc: 'Volcanic obsidian plates with molten veins. Embers drift from the pauldrons.',
+        featured: false,
+      },
+      {
+        id: 'outfit003',
+        name: 'Celestial Guard',
+        type: 'Outfit • Chest',
+        category: 'outfits',
+        rarity: 'rare',
+        price: 1600,
+        icon: '✨',
+        tag: null,
+        image: 'assets/home/berserker.png',
+        desc: 'Radiant chest plate with celestial engravings that glow under moonlight.',
+        featured: false,
+      },
+      {
+        id: 'outfit004',
+        name: 'Stormforged Aegis',
+        type: 'Outfit • Full Set',
+        category: 'outfits',
+        rarity: 'epic',
+        price: 2800,
+        icon: '⚡',
+        tag: 'new',
+        image: 'assets/home/pathfinder.png',
+        desc: 'Lightning-tempered plates that crackle with storm energy. Thunder rolls with every step.',
+        featured: false,
+      },
+      {
+        id: 'outfit005',
+        name: 'Voidborn Carapace',
+        type: 'Outfit • Full Set',
+        category: 'outfits',
+        rarity: 'legendary',
+        price: 5200,
+        icon: '🌀',
+        tag: null,
+        image: 'assets/home/tempest.png',
+        desc: 'Armor forged from the void itself. Reality warps around the wearer, bending light and shadow.',
+        featured: false,
+      },
+
+      // ── Pets ──
+      {
+        id: 'pet01001',
+        name: 'Ember Wyrm',
+        type: 'Pet • Dragon',
+        category: 'pets',
+        rarity: 'legendary',
+        price: 5500,
+        icon: '🐉',
+        tag: 'new',
+        desc: 'A miniature fire dragon that perches on your shoulder. Breathes tiny embers when idle.',
+        featured: true,
+      },
+      {
+        id: 'pet01002',
+        name: 'Void Sprite',
+        type: 'Pet • Spirit',
+        category: 'pets',
+        rarity: 'epic',
+        price: 3000,
+        icon: '👻',
+        tag: null,
+        desc: 'A ghostly wisp that orbits your character, leaving faint trails of spectral light.',
+        featured: false,
+      },
+
+      // ── Emotes ──
+      {
+        id: 'emote01001',
+        name: 'Victory Roar',
+        type: 'Emote • Celebration',
+        category: 'emotes',
+        rarity: 'rare',
+        price: 800,
+        icon: '🎭',
+        tag: null,
+        desc: 'Raise your weapon to the sky with a thunderous war cry. Lightning strikes behind you.',
+        featured: false,
+      },
+      {
+        id: 'emote01002',
+        name: 'Shadow Step',
+        type: 'Emote • Taunt',
+        category: 'emotes',
+        rarity: 'epic',
+        price: 1200,
+        icon: '💀',
+        tag: null,
+        desc: 'Dissolve into shadow and reappear behind an invisible opponent with arms crossed.',
+        featured: true,
+      },
+
+      // ── Accessories (Arms, Face, Wings) ──
+      {
+        id: 'acc01001',
+        name: 'Seraph Wings',
+        type: 'Accessory • Wings',
+        category: 'accessories',
+        rarity: 'legendary',
+        price: 6000,
+        icon: '🕊',
+        tag: 'limited',
+        desc: 'Ethereal golden wings that unfurl during combat. Feathers dissolve into light particles.',
+        featured: true,
+      },
+      {
+        id: 'acc01002',
+        name: 'Demon Horns',
+        type: 'Accessory • Face',
+        category: 'accessories',
+        rarity: 'epic',
+        price: 1500,
+        icon: '😈',
+        tag: null,
+        desc: 'Twisted obsidian horns that curve from the temples. Faint red glow at the base.',
+        featured: false,
+      },
+      {
+        id: 'acc01003',
+        name: 'Runic Gauntlets',
+        type: 'Accessory • Arms',
+        category: 'accessories',
+        rarity: 'rare',
+        price: 1400,
+        icon: '🦾',
+        tag: 'new',
+        desc: 'Armored gauntlets etched with glowing runes. Energy crackles between the fingers.',
+        featured: false,
+      },
+    ];
+
+    /* ── Sets catalog ── */
+    const SHOP_SETS = [
+      {
+        id: 'set-shadow',
+        name: 'Shadow Sovereign Set',
+        gradient: 'linear-gradient(135deg, rgba(60, 20, 80, 0.25) 0%, rgba(10, 10, 15, 0.95) 100%)',
+        color: '#9b59b6',
+        featured: {
+          id: 'setbundle01', name: 'Shadow Sovereign Bundle', type: 'Set • Complete Collection',
+          category: 'sets', rarity: 'legendary', price: 9800, icon: '👑',
+          tag: 'limited', desc: 'The complete Shadow Sovereign collection. Includes armor, weapon, wings, and exclusive emote.', featured: true,
+        },
+        items: [
+          { id: 'sets01001', name: 'Shadow Plate', type: 'Set Piece • Armor', category: 'sets', rarity: 'legendary', price: 4800, icon: '🛡', tag: null, image: 'assets/home/reaper.png', desc: 'Full shadow armor set with living darkness particles.', featured: false },
+          { id: 'sets01002', name: 'Umbral Blade', type: 'Set Piece • Weapon', category: 'sets', rarity: 'epic', price: 2500, icon: '⚔', tag: null, desc: 'A void-forged greatsword that absorbs light around it.', featured: false },
+          { id: 'sets01003', name: 'Shadow Wings', type: 'Set Piece • Wings', category: 'sets', rarity: 'legendary', price: 3500, icon: '🦇', tag: null, desc: 'Wings of pure shadow that trail dark mist.', featured: false },
+          { id: 'sets01004', name: 'Void Whisper', type: 'Set Piece • Emote', category: 'sets', rarity: 'epic', price: 1200, icon: '💀', tag: null, desc: 'Dissolve into shadow particles and reform with a menacing pose.', featured: false },
+          { id: 'sets01005', name: 'Shadow Veil', type: 'Set Piece • Face', category: 'sets', rarity: 'rare', price: 900, icon: '🎭', tag: null, desc: 'A spectral mask that shifts between solid and translucent.', featured: false },
+          { id: 'sets01006', name: 'Umbral Claws', type: 'Set Piece • Arms', category: 'sets', rarity: 'rare', price: 800, icon: '🦾', tag: null, desc: 'Gauntlets dripping with void energy that trail shadow wisps.', featured: false },
+        ]
+      },
+      {
+        id: 'set-infernal',
+        name: 'Infernal Warden Set',
+        gradient: 'linear-gradient(135deg, rgba(120, 30, 10, 0.25) 0%, rgba(10, 10, 15, 0.95) 100%)',
+        color: '#e74c3c',
+        featured: {
+          id: 'setbundle02', name: 'Infernal Warden Bundle', type: 'Set • Complete Collection',
+          category: 'sets', rarity: 'legendary', price: 8500, icon: '🔥',
+          tag: 'sale', desc: 'The full Infernal Warden collection. Volcanic obsidian armor, molten weapon, ember pet, and war cry emote.', featured: true,
+        },
+        items: [
+          { id: 'sets02001', name: 'Magma Cuirass', type: 'Set Piece • Armor', category: 'sets', rarity: 'epic', price: 3200, salePrice: 2400, icon: '🔥', tag: 'sale', image: 'assets/home/guardian.png', desc: 'Obsidian plates with molten veins. Embers drift from pauldrons.', featured: false },
+          { id: 'sets02002', name: 'Cinder Maul', type: 'Set Piece • Weapon', category: 'sets', rarity: 'epic', price: 2200, icon: '🔨', tag: null, desc: 'A massive war hammer wreathed in perpetual flame.', featured: false },
+          { id: 'sets02003', name: 'Ember Familiar', type: 'Set Piece • Pet', category: 'sets', rarity: 'rare', price: 1800, icon: '🐉', tag: 'new', desc: 'A tiny lava salamander that leaves smoldering footprints.', featured: false },
+          { id: 'sets02004', name: 'Inferno Roar', type: 'Set Piece • Emote', category: 'sets', rarity: 'epic', price: 1000, icon: '🎭', tag: null, desc: 'Erupt in volcanic fury with lava fountains erupting around you.', featured: false },
+          { id: 'sets02005', name: 'Molten Mask', type: 'Set Piece • Face', category: 'sets', rarity: 'rare', price: 850, icon: '😈', tag: null, desc: 'A mask of cooling magma with glowing cracks revealing fire beneath.', featured: false },
+          { id: 'sets02006', name: 'Cinder Bracers', type: 'Set Piece • Arms', category: 'sets', rarity: 'rare', price: 750, icon: '🦾', tag: null, desc: 'Arm guards that leave smoldering embers in your wake.', featured: false },
+        ]
+      },
+      {
+        id: 'set-celestial',
+        name: 'Celestial Ascendant Set',
+        gradient: 'linear-gradient(135deg, rgba(20, 60, 120, 0.25) 0%, rgba(10, 10, 15, 0.95) 100%)',
+        color: '#3498db',
+        featured: {
+          id: 'setbundle03', name: 'Celestial Ascendant Bundle', type: 'Set • Complete Collection',
+          category: 'sets', rarity: 'legendary', price: 11000, icon: '✨',
+          tag: 'new', desc: 'The ultimate divine collection. Radiant armor, starlight bow, seraph wings, and celestial dance emote.', featured: true,
+        },
+        items: [
+          { id: 'sets03001', name: 'Starweave Mantle', type: 'Set Piece • Armor', category: 'sets', rarity: 'legendary', price: 4500, icon: '✨', tag: null, image: 'assets/home/berserker.png', desc: 'Robes woven from condensed starlight. Constellations orbit the wearer.', featured: false },
+          { id: 'sets03002', name: 'Astral Longbow', type: 'Set Piece • Weapon', category: 'sets', rarity: 'epic', price: 2800, icon: '🏹', tag: null, desc: 'A bow strung with threads of pure light. Arrows leave comet trails.', featured: false },
+          { id: 'sets03003', name: 'Halo Crown', type: 'Set Piece • Accessory', category: 'sets', rarity: 'epic', price: 2000, icon: '👼', tag: null, desc: 'A floating ring of divine light that hovers above the head.', featured: false },
+          { id: 'sets03004', name: 'Celestial Dance', type: 'Set Piece • Emote', category: 'sets', rarity: 'rare', price: 1100, icon: '🎭', tag: null, desc: 'Summon orbiting stars that spiral around you in a divine dance.', featured: false },
+          { id: 'sets03005', name: 'Starfall Wings', type: 'Set Piece • Wings', category: 'sets', rarity: 'legendary', price: 4000, icon: '🕊', tag: 'new', desc: 'Translucent wings of crystallized starlight that leave comet trails.', featured: false },
+          { id: 'sets03006', name: 'Nova Gauntlets', type: 'Set Piece • Arms', category: 'sets', rarity: 'epic', price: 1600, icon: '🦾', tag: null, desc: 'Arm wraps channeling supernova energy with pulsing light veins.', featured: false },
+        ]
+      },
+      {
+        id: 'set-stormforged',
+        name: 'Stormforged Vanguard Set',
+        gradient: 'linear-gradient(135deg, rgba(20, 120, 100, 0.25) 0%, rgba(10, 10, 15, 0.95) 100%)',
+        color: '#1abc9c',
+        featured: {
+          id: 'setbundle04', name: 'Stormforged Vanguard Bundle', type: 'Set • Complete Collection',
+          category: 'sets', rarity: 'legendary', price: 9200, icon: '⚡',
+          tag: 'new', desc: 'The complete Stormforged collection. Lightning-tempered armor, thunderbolt spear, storm wings, and war cry emote.', featured: true,
+        },
+        items: [
+          { id: 'sets04001', name: 'Stormforged Aegis', type: 'Set Piece • Armor', category: 'sets', rarity: 'epic', price: 2800, icon: '⚡', tag: 'new', image: 'assets/home/pathfinder.png', desc: 'Lightning-tempered plates that crackle with storm energy.', featured: false },
+          { id: 'sets04002', name: 'Thunderbolt Spear', type: 'Set Piece • Weapon', category: 'sets', rarity: 'epic', price: 2400, icon: '🔱', tag: null, desc: 'A javelin of condensed lightning. Strikes arc between nearby foes.', featured: false },
+          { id: 'sets04003', name: 'Gale Wings', type: 'Set Piece • Wings', category: 'sets', rarity: 'legendary', price: 3800, icon: '🌪', tag: null, desc: 'Wings forged from living storms. Gale-force winds trail behind you.', featured: false },
+          { id: 'sets04004', name: 'Thunder Clap', type: 'Set Piece • Emote', category: 'sets', rarity: 'rare', price: 1000, icon: '🎭', tag: null, desc: 'Clap your hands to summon a deafening thunderclap and lightning flash.', featured: false },
+          { id: 'sets04005', name: 'Storm Visor', type: 'Set Piece • Face', category: 'sets', rarity: 'rare', price: 900, icon: '⛈', tag: null, desc: 'A helm visor with crackling electric arcs across the surface.', featured: false },
+          { id: 'sets04006', name: 'Tempest Vambraces', type: 'Set Piece • Arms', category: 'sets', rarity: 'rare', price: 800, icon: '🦾', tag: null, desc: 'Forearm guards that discharge static sparks with every movement.', featured: false },
+        ]
+      },
+      {
+        id: 'set-voidborn',
+        name: 'Voidborn Dominion Set',
+        gradient: 'linear-gradient(135deg, rgba(80, 10, 60, 0.25) 0%, rgba(10, 10, 15, 0.95) 100%)',
+        color: '#8e44ad',
+        featured: {
+          id: 'setbundle05', name: 'Voidborn Dominion Bundle', type: 'Set • Complete Collection',
+          category: 'sets', rarity: 'legendary', price: 12000, icon: '🌀',
+          tag: 'limited', desc: 'The ultimate void collection. Reality-warping armor, dimensional rift blade, abyssal wings, and cosmic collapse emote.', featured: true,
+        },
+        items: [
+          { id: 'sets05001', name: 'Voidborn Carapace', type: 'Set Piece • Armor', category: 'sets', rarity: 'legendary', price: 5200, icon: '🌀', tag: null, image: 'assets/home/tempest.png', desc: 'Armor forged from the void itself. Reality warps around the wearer.', featured: false },
+          { id: 'sets05002', name: 'Rift Cleaver', type: 'Set Piece • Weapon', category: 'sets', rarity: 'legendary', price: 3200, icon: '⚔', tag: null, desc: 'A blade that tears rifts in space with every swing.', featured: false },
+          { id: 'sets05003', name: 'Abyssal Wings', type: 'Set Piece • Wings', category: 'sets', rarity: 'legendary', price: 4200, icon: '🦇', tag: 'limited', desc: 'Wings of compressed void energy. Stars flicker within their darkness.', featured: false },
+          { id: 'sets05004', name: 'Cosmic Collapse', type: 'Set Piece • Emote', category: 'sets', rarity: 'epic', price: 1400, icon: '🎭', tag: null, desc: 'Reality folds inward around you before exploding outward in void particles.', featured: false },
+          { id: 'sets05005', name: 'Abyss Gaze', type: 'Set Piece • Face', category: 'sets', rarity: 'epic', price: 1100, icon: '👁', tag: null, desc: 'A helmet with a single void eye that peers into other dimensions.', featured: false },
+          { id: 'sets05006', name: 'Void Grips', type: 'Set Piece • Arms', category: 'sets', rarity: 'epic', price: 950, icon: '🦾', tag: null, desc: 'Gauntlets that distort space around the hands, bending nearby light.', featured: false },
+        ]
+      },
+    ];
+
+    let playerItems = {};
+    let playerCurr03 = 0;
+    let currentCategory = 'gems';
+    let searchQuery = '';
+    let isLoggedIn = false;
+
+    // Handle payment redirect (legacy) and claim pending VP orders
+    (function checkPaymentResult() {
+      const params = new URLSearchParams(window.location.search);
+      const payment = params.get('payment');
+      if (payment === 'success') {
+        const pearls = params.get('pearls') || '';
+        showPaymentBanner('success', pearls);
+        window.history.replaceState({}, '', '/shop.html');
+      } else if (payment === 'error') {
+        showPaymentBanner('error');
+        window.history.replaceState({}, '', '/shop.html');
+      }
+
+      // Auto-claim: check for pending VP order in localStorage
+      const pendingOrder = localStorage.getItem('pending_vp_order');
+      if (pendingOrder) {
+        claimPendingPearls(pendingOrder);
+      }
+    })();
+
+    function showPaymentBanner(type, pearls) {
+      const banner = document.createElement('div');
+      if (type === 'success') {
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999;padding:14px 40px;background:rgba(78,200,112,0.15);border-bottom:1px solid rgba(78,200,112,0.4);color:#4ec870;font-family:var(--font-heading);font-size:0.9rem;font-weight:600;letter-spacing:0.08em;text-align:center;animation:fadeIn 0.3s ease;';
+        banner.textContent = pearls ? `${parseInt(pearls).toLocaleString()} Void Pearls added to your account!` : 'Payment successful!';
+      } else {
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999;padding:14px 40px;background:rgba(232,84,84,0.15);border-bottom:1px solid rgba(232,84,84,0.4);color:#e85454;font-family:var(--font-heading);font-size:0.9rem;font-weight:600;letter-spacing:0.08em;text-align:center;animation:fadeIn 0.3s ease;';
+        banner.textContent = 'Payment could not be processed. Please try again.';
+      }
+      document.body.appendChild(banner);
+      setTimeout(() => banner.remove(), 6000);
+    }
+
+    function claimPendingPearls(orderId) {
+      fetch('/auth/claim-pearls', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: orderId }),
+      })
+        .then(r => r.json().then(d => ({ status: r.status, data: d })))
+        .then(({ status, data }) => {
+          if (data.success) {
+            // Pearls credited!
+            localStorage.removeItem('pending_vp_order');
+            showPaymentBanner('success', String(data.pearls));
+            // Refresh balance display
+            fetch('/auth/me').then(r => r.json()).then(u => {
+              if (u.currencies) {
+                const vpEl = document.getElementById('vpBalance');
+                if (vpEl) vpEl.textContent = parseInt(u.currencies.curr03 || u.currencies.Curr03 || 0).toLocaleString();
+              }
+            }).catch(() => {});
+          } else if (data.status === 'already_claimed') {
+            localStorage.removeItem('pending_vp_order');
+          } else if (data.status === 'pending') {
+            // Payment not done yet — keep in localStorage for next load
+            console.log('VP order still pending payment');
+          } else {
+            // Some other error — remove to avoid infinite retries
+            localStorage.removeItem('pending_vp_order');
+          }
+        })
+        .catch(() => {});
+    }
+
+    /* ── Render state ── */
+    let featuredPage = 0;
+    let featuredItems = [];
+
+    /* ── Init: load shop immediately, fetch user data in background ── */
+    try {
+      document.getElementById('shopLoading').style.display = 'none';
+      document.getElementById('shopContent').style.display = '';
+      renderShop();
+    } catch(e) {
+      document.getElementById('shopLoading').textContent = 'Error: ' + e.message;
+      document.getElementById('shopLoading').style.display = '';
+    }
+
+    // Try to load user data (non-blocking)
+    fetch('/auth/me')
+      .then(r => r.json())
+      .then(data => {
+        if (data.logged_in) {
+          isLoggedIn = true;
+          playerCurr03 = parseInt(data.curr03 || 0);
+          document.getElementById('walletAmount').textContent = playerCurr03.toLocaleString();
+          // Show profile button
+          if (data.avatar) {
+            document.getElementById('shopProfileAvatar').src = data.avatar;
+            document.getElementById('shopProfileName').textContent = data.username || '';
+            document.getElementById('shopProfile').classList.add('shop-bar__profile--active');
+          }
+          // Fetch owned items
+          return fetch('/auth/shop-data').then(r => r.json());
+        }
+        document.getElementById('walletAmount').textContent = '—';
+        return null;
+      })
+      .then(shopData => {
+        if (shopData && shopData.owned_items) {
+          playerItems = shopData.owned_items;
+          renderShop();
+        }
+      })
+      .catch(() => {});
+
+    /* ── Profile dropdown toggle ── */
+    document.getElementById('shopProfileBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.getElementById('shopProfileDropdown').classList.toggle('shop-bar__profile-dropdown--open');
+    });
+    document.addEventListener('click', () => {
+      document.getElementById('shopProfileDropdown').classList.remove('shop-bar__profile-dropdown--open');
+    });
+
+    /* ── Login Modal ── */
+    function showLoginModal() {
+      document.getElementById('loginModal').classList.add('login-modal-overlay--active');
+    }
+    document.getElementById('loginModalClose').addEventListener('click', () => {
+      document.getElementById('loginModal').classList.remove('login-modal-overlay--active');
+    });
+    document.getElementById('loginModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('login-modal-overlay--active');
+      }
+    });
+
+    /* ── Tab switching ── */
+    document.querySelectorAll('.shop-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        if (tab.classList.contains('shop-tab--disabled')) return;
+        document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('shop-tab--active'));
+        tab.classList.add('shop-tab--active');
+        currentCategory = tab.dataset.cat;
+        renderShop();
+      });
+    });
+
+    /* ── VP tab click burst ── */
+    document.getElementById('vpTab').addEventListener('click', () => {
+      const btn = document.getElementById('vpTab');
+      // Button burst
+      const burst = document.createElement('span');
+      burst.className = 'vp-tab-burst';
+      burst.textContent = '✦';
+      btn.appendChild(burst);
+      setTimeout(() => burst.remove(), 700);
+
+      // Screen glow
+      const glow = document.createElement('div');
+      glow.className = 'vp-screen-glow';
+      document.body.appendChild(glow);
+      setTimeout(() => glow.remove(), 1500);
+
+      // Light up VP cards
+      setTimeout(() => {
+        document.querySelectorAll('.vp-card').forEach(card => {
+          card.classList.add('vp-card--lit');
+          setTimeout(() => card.classList.remove('vp-card--lit'), 1500);
+        });
+      }, 100);
+    });
+
+    /* ── Search ── */
+    document.getElementById('shopSearch').addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      renderShop();
+    });
+
+
+    function renderShop() {
+      const container = document.getElementById('shopContent');
+
+      // Sets category uses a completely different layout
+      if (currentCategory === 'sets') {
+        renderSetsView(container);
+        return;
+      }
+
+      // Gems category
+      if (currentCategory === 'gems') {
+        container.innerHTML = `
+          <div style="max-width:1100px;margin:40px auto;text-align:center;">
+            <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--beige);margin-bottom:12px;">Get Void Pearls</h2>
+            <p style="color:var(--muted);font-size:0.95rem;margin-bottom:40px;line-height:1.7;">Void Pearls are the premium currency used to unlock exclusive skins, emotes, pets, and more. Choose a pack below.</p>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px;align-items:start;transform:scale(1.2);transform-origin:top center;margin-bottom:80px;">
+              <div class="shop-card shop-card--common vp-card" data-pack="vp300" style="cursor:pointer;">
+                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦</div></div>
+                <div class="shop-card__info" style="padding:16px 14px;">
+                  <div class="shop-card__name" style="font-size:1.05rem;">300 Void Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$2.99</span></div>
+                </div>
+              </div>
+              <div class="shop-card shop-card--uncommon vp-card" data-pack="vp800" style="cursor:pointer;">
+                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦</div><span class="shop-card__tag shop-card__tag--new">+14% Extra*</span></div>
+                <div class="shop-card__info" style="padding:16px 14px;">
+                  <div class="shop-card__name" style="font-size:1.05rem;">800 Void Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$6.99</span></div>
+                </div>
+              </div>
+              <div class="shop-card shop-card--rare vp-card" data-pack="vp1700" style="cursor:pointer;">
+                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦✦</div><span class="shop-card__tag shop-card__tag--new">+30% Extra*</span></div>
+                <div class="shop-card__info" style="padding:16px 14px;">
+                  <div class="shop-card__name" style="font-size:1.05rem;">1,700 Void Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$12.99</span></div>
+                </div>
+              </div>
+              <div class="shop-card shop-card--epic vp-card" data-pack="vp3500" style="cursor:pointer;">
+                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦✦✦</div><span class="shop-card__tag shop-card__tag--new">+40% Extra*</span></div>
+                <div class="shop-card__info" style="padding:16px 14px;">
+                  <div class="shop-card__name" style="font-size:1.05rem;">3,500 Void Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$24.99</span></div>
+                </div>
+              </div>
+              <div class="shop-card shop-card--mythic vp-card" data-pack="vp7500" style="cursor:pointer;">
+                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦✦✦✦</div><span class="shop-card__tag shop-card__tag--limited">+50% Extra*</span></div>
+                <div class="shop-card__info" style="padding:16px 14px;">
+                  <div class="shop-card__name" style="font-size:1.05rem;">7,500 Void Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$49.99</span></div>
+                </div>
+              </div>
+            </div>
+            <p style="color:rgba(255,255,255,0.3);font-size:0.72rem;margin-top:20px;line-height:1.5;text-align:left;max-width:1100px;">* Extra Void Pearls percentage shown as compared to price of 300 Void Pearls pack. Void Pearls packs are non-refundable.</p>
+            <div id="vpStatus" style="color:var(--muted);font-size:0.85rem;margin-top:12px;min-height:28px;"></div>
+          </div>
+        `;
+
+        // Attach click handlers to Void Pearl cards → open detail page
+        container.querySelectorAll('.vp-card').forEach(card => {
+          card.addEventListener('click', () => {
+            openVpDetail(card.dataset.pack);
+          });
+        });
+        return;
+      }
+
+      let items = currentCategory === 'all'
+        ? SHOP_ITEMS
+        : SHOP_ITEMS.filter(i => i.category === currentCategory);
+
+      if (searchQuery) {
+        items = items.filter(i => i.name.toLowerCase().includes(searchQuery));
+      }
+
+      if (!items.length) {
+        container.innerHTML = '<div class="shop-empty">No items found</div>';
+        return;
+      }
+
+      featuredItems = items.filter(i => i.featured);
+      const standard = items.filter(i => !i.featured);
+      featuredPage = 0;
+
+      let html = '';
+
+      if (featuredItems.length) {
+        const maxPage = Math.max(0, featuredItems.length - 2);
+        let dotsHTML = '';
+        if (maxPage > 0) {
+          dotsHTML = '<div class="shop-featured-dots" id="featuredDots">';
+          for (let i = 0; i <= maxPage; i++) {
+            dotsHTML += `<button class="shop-featured-dot${i === 0 ? ' shop-featured-dot--active' : ''}" data-page="${i}"></button>`;
+          }
+          dotsHTML += '</div>';
+        }
+
+        const visibleCards = featuredItems.slice(0, 2).map(i => cardHTML(i)).join('');
+
+        html += `
+          <div class="shop-section">
+            <div class="shop-section__header">
+              <span class="shop-section__title">Featured</span>
+              <div class="shop-section__line"></div>
+              <span class="shop-section__badge">Limited Time</span>
+            </div>
+            <div class="shop-featured-carousel">
+              <button class="shop-featured-arrow shop-featured-arrow--left" id="featuredPrev" disabled><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <div class="shop-grid--featured" id="featuredGrid">
+                ${visibleCards}
+              </div>
+              <button class="shop-featured-arrow shop-featured-arrow--right" id="featuredNext" ${featuredItems.length < 3 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+            ${dotsHTML}
+          </div>`;
+      }
+
+      if (standard.length) {
+        html += `
+          <div class="shop-section">
+            <div class="shop-section__header">
+              <span class="shop-section__title">Daily Rotation</span>
+              <div class="shop-section__line"></div>
+            </div>
+            <div class="shop-grid">
+              ${standard.map(i => cardHTML(i)).join('')}
+            </div>
+          </div>`;
+      }
+
+      container.innerHTML = html;
+      bindCardEvents(container);
+      bindCarouselEvents();
+    }
+
+    function updateFeaturedCarousel() {
+      const grid = document.getElementById('featuredGrid');
+      if (!grid) return;
+      const visible = featuredItems.slice(featuredPage, featuredPage + 2);
+      grid.innerHTML = visible.map(i => cardHTML(i)).join('');
+      bindCardEvents(grid);
+
+      const maxPage = Math.max(0, featuredItems.length - 2);
+      const prev = document.getElementById('featuredPrev');
+      const next = document.getElementById('featuredNext');
+      if (prev) prev.disabled = featuredPage <= 0;
+      if (next) next.disabled = featuredPage >= maxPage;
+
+      // Update dots
+      document.querySelectorAll('.shop-featured-dot').forEach(d => {
+        d.classList.toggle('shop-featured-dot--active', parseInt(d.dataset.page) === featuredPage);
+      });
+    }
+
+    function bindCarouselEvents() {
+      const prev = document.getElementById('featuredPrev');
+      const next = document.getElementById('featuredNext');
+      if (prev) prev.addEventListener('click', () => { featuredPage--; updateFeaturedCarousel(); });
+      if (next) next.addEventListener('click', () => { featuredPage++; updateFeaturedCarousel(); });
+      document.querySelectorAll('.shop-featured-dot').forEach(d => {
+        d.addEventListener('click', () => { featuredPage = parseInt(d.dataset.page); updateFeaturedCarousel(); });
+      });
+    }
+
+    function findItemById(id) {
+      const fromShop = SHOP_ITEMS.find(i => i.id === id);
+      if (fromShop) return fromShop;
+      for (const s of SHOP_SETS) {
+        const feat = Array.isArray(s.featured) ? s.featured[0] : s.featured;
+        if (feat.id === id) return feat;
+        const fromSet = s.items.find(i => i.id === id);
+        if (fromSet) return fromSet;
+      }
+      return null;
+    }
+
+    function bindCardEvents(container) {
+      container.querySelectorAll('[data-item-id]').forEach(card => {
+        card.addEventListener('click', () => {
+          const item = findItemById(card.dataset.itemId);
+          if (item) openItemDetail(item);
+        });
+      });
+    }
+
+    /* ── Find collection containing an item ── */
+    function findCollectionForItem(item) {
+      for (const s of SHOP_SETS) {
+        const feat = Array.isArray(s.featured) ? s.featured[0] : s.featured;
+        if (feat.id === item.id) return s;
+        if (s.items.some(i => i.id === item.id)) return s;
+      }
+      // Check if standalone armor matches a set by name pattern
+      for (const s of SHOP_SETS) {
+        const allSetItems = [Array.isArray(s.featured) ? s.featured[0] : s.featured, ...s.items];
+        if (allSetItems.some(i => i.name === item.name || i.image === item.image)) return s;
+      }
+      return null;
+    }
+
+    /* ── Item Detail Page ── */
+    function openItemDetail(item) {
+      const overlay = document.getElementById('itemDetailOverlay');
+      const bg = document.getElementById('itemDetailBg');
+      const result = document.getElementById('itemDetailResult');
+      result.textContent = '';
+      result.className = 'item-detail__result';
+
+      // Background
+      if (item.image) {
+        bg.innerHTML = `<img src="${item.image}" alt="" />`;
+      } else {
+        bg.innerHTML = `<div class="item-detail__bg-fallback">${item.icon}</div>`;
+      }
+
+      // Rarity tag
+      document.getElementById('itemDetailRarity').innerHTML =
+        `<span class="item-detail__rarity-tag item-detail__rarity-tag--${item.rarity}">${item.rarity}</span>`;
+
+      document.getElementById('itemDetailName').textContent = item.name;
+      document.getElementById('itemDetailType').textContent = item.type;
+      document.getElementById('itemDetailDesc').textContent = item.desc;
+
+      // Price
+      const effectivePrice = item.salePrice || item.price;
+      document.getElementById('itemDetailPriceRow').innerHTML = `
+        <span class="item-detail__price">
+          <span class="item-detail__price-icon">✦</span> ${effectivePrice.toLocaleString()}
+        </span>
+        ${item.salePrice ? `<span class="item-detail__price--old">${item.price.toLocaleString()}</span>` : ''}
+      `;
+
+      // Buy button
+      const owned = playerItems[item.id];
+      const buyWrap = document.getElementById('itemDetailBuyWrap');
+      if (owned) {
+        buyWrap.innerHTML = `<button class="item-detail__buy-btn item-detail__buy-btn--owned">Owned</button>`;
+      } else {
+        buyWrap.innerHTML = `<button class="item-detail__buy-btn" id="itemDetailBuyBtn">Purchase</button>`;
+        document.getElementById('itemDetailBuyBtn').addEventListener('click', () => {
+          if (!isLoggedIn) { showLoginModal(); return; }
+          openPurchaseModal(item);
+        });
+      }
+
+      // Related items from same collection
+      const collection = findCollectionForItem(item);
+      const relTitle = document.getElementById('itemDetailRelatedTitle');
+      const relGrid = document.getElementById('itemDetailRelatedGrid');
+      if (collection) {
+        relTitle.textContent = `From ${collection.name}`;
+        relGrid.innerHTML = `<div style="text-align:center;padding:30px 20px;color:var(--muted);font-family:var(--font-heading);font-size:0.85rem;letter-spacing:0.06em;opacity:0.6;">This section is currently in development.</div>`;
+      } else {
+        relTitle.textContent = '';
+        relGrid.innerHTML = '';
+      }
+
+      overlay.classList.add('item-detail-overlay--active');
+      overlay.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeItemDetail() {
+      document.getElementById('itemDetailOverlay').classList.remove('item-detail-overlay--active');
+      document.body.style.overflow = '';
+    }
+
+    /* ── VP Detail Page ── */
+    const VP_PACKS = {
+      vp300:  { name: '300 Void Pearls',   pearls: 300,   price: '$2.99',  bonus: '',              icons: '✦',     rarity: 'common',    badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(80,70,60,0.3), rgba(20,18,14,0.95))', color: '#9a8e7a', desc: 'A starter bundle of Void Pearls. Perfect for trying out a few items from the shop.' },
+      vp800:  { name: '800 Void Pearls',   pearls: 800,   price: '$6.99',  bonus: '+14% Extra*',  icons: '✦✦',    rarity: 'uncommon',  badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(20,60,30,0.3), rgba(10,18,12,0.95))', color: '#4ec870', desc: 'A solid pack of Void Pearls with 14% extra value. Enough to unlock a couple of your favorite skins.' },
+      vp1700: { name: '1,700 Void Pearls', pearls: 1700,  price: '$12.99', bonus: '+30% Extra*',  icons: '✦✦✦',   rarity: 'rare',      badgeText: 'Best Seller', badgeColor: '#e74c3c', gradient: 'linear-gradient(135deg, rgba(15,40,80,0.3), rgba(10,12,20,0.95))', color: '#4ea8ee', desc: 'Our most popular pack. 1,700 Void Pearls with 30% extra value. Unlock multiple premium items.' },
+      vp3500: { name: '3,500 Void Pearls', pearls: 3500,  price: '$24.99', bonus: '+40% Extra*',  icons: '✦✦✦✦',  rarity: 'epic',      badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(50,20,70,0.3), rgba(15,10,20,0.95))', color: '#c577f5', desc: 'A premium pack loaded with 3,500 Void Pearls — 40% extra value. Unlock entire armor sets and legendary items.' },
+      vp7500: { name: '7,500 Void Pearls', pearls: 7500,  price: '$49.99', bonus: '+50% Extra*',  icons: '✦✦✦✦✦', rarity: 'mythic',    badgeText: 'Best Value', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(60,15,15,0.3), rgba(18,10,10,0.95))', color: '#e85454', desc: 'The ultimate collection. 7,500 Void Pearls with 50% extra value — the absolute best for dedicated players.' },
+    };
+
+    let _vpBuyHandler = null;
+
+    function openVpDetail(packId) {
+      const pack = VP_PACKS[packId];
+      if (!pack) return;
+
+      document.getElementById('vpDetailGlow').style.background = pack.gradient;
+      document.getElementById('vpDetailIcon').textContent = pack.icons;
+      document.getElementById('vpDetailIcon').style.color = pack.color;
+      document.getElementById('vpDetailName').textContent = pack.name;
+      document.getElementById('vpDetailSubtitle').textContent = pack.bonus || 'Premium Currency';
+
+      const badge = document.getElementById('vpDetailBadge');
+      if (pack.badgeText) {
+        badge.textContent = pack.badgeText;
+        badge.style.background = pack.badgeColor;
+        badge.style.color = '#fff';
+        badge.style.display = '';
+      } else {
+        badge.style.display = 'none';
+      }
+
+      document.getElementById('vpDetailDesc').textContent = pack.desc;
+      document.getElementById('vpDetailPrice').textContent = pack.price;
+
+      const perPearl = (parseFloat(pack.price.replace('$','')) / pack.pearls * 100).toFixed(2);
+      document.getElementById('vpDetailPricePer').textContent = `${perPearl}¢ per pearl`;
+
+      const status = document.getElementById('vpDetailStatus');
+      status.textContent = '';
+
+      // Remove old handler, attach new
+      const btn = document.getElementById('vpDetailBuyBtn');
+      if (_vpBuyHandler) btn.removeEventListener('click', _vpBuyHandler);
+      _vpBuyHandler = () => {
+        if (!isLoggedIn) { showLoginModal(); return; }
+        btn.textContent = 'Processing...';
+        btn.style.pointerEvents = 'none';
+        status.textContent = 'Creating checkout...';
+        status.style.color = 'var(--beige)';
+
+        fetch('/auth/buy-pearls', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pack_id: packId }),
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.checkout_url) {
+              if (data.order_id) localStorage.setItem('pending_vp_order', data.order_id);
+              window.location.href = data.checkout_url;
+            } else {
+              status.textContent = data.error || 'Failed to create checkout';
+              status.style.color = 'var(--red)';
+              btn.textContent = 'Buy Now';
+              btn.style.pointerEvents = '';
+            }
+          })
+          .catch(() => {
+            status.textContent = 'Network error. Try again.';
+            status.style.color = 'var(--red)';
+            btn.textContent = 'Buy Now';
+            btn.style.pointerEvents = '';
+          });
+      };
+      btn.addEventListener('click', _vpBuyHandler);
+      btn.textContent = 'Buy Now';
+      btn.style.pointerEvents = '';
+
+      document.getElementById('vpDetailOverlay').classList.add('vp-detail-overlay--active');
+      document.getElementById('vpDetailOverlay').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVpDetail() {
+      document.getElementById('vpDetailOverlay').classList.remove('vp-detail-overlay--active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('vpDetailBack').addEventListener('click', closeVpDetail);
+
+    document.getElementById('itemDetailClose').addEventListener('click', closeItemDetail);
+    document.getElementById('itemDetailOverlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeItemDetail();
+    });
+
+    function purchaseFromDetail(item) {
+      const btn = document.getElementById('itemDetailBuyBtn');
+      const result = document.getElementById('itemDetailResult');
+      const price = item.salePrice || item.price;
+
+      if (playerCurr03 < price) {
+        result.className = 'item-detail__result item-detail__result--error';
+        result.textContent = 'Insufficient balance';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Processing…';
+      result.textContent = '';
+
+      fetch('/auth/shop-buy', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item_id: item.id }),
+      })
+        .then(r => {
+          if (!r.ok) return r.text().then(t => { throw new Error(`HTTP ${r.status}: ${t.slice(0,200)}`); });
+          return r.json();
+        })
+        .then(data => {
+          if (data.success) {
+            result.className = 'item-detail__result item-detail__result--success';
+            result.textContent = 'Purchase successful!';
+            playerCurr03 = data.new_balance;
+            document.getElementById('walletAmount').textContent = playerCurr03.toLocaleString();
+            playerItems[item.id] = '1';
+            setTimeout(() => {
+              closeItemDetail();
+              renderShop();
+            }, 1200);
+          } else {
+            result.className = 'item-detail__result item-detail__result--error';
+            result.textContent = data.error || 'Purchase failed';
+            btn.disabled = false;
+            btn.textContent = 'Purchase';
+          }
+        })
+        .catch((err) => {
+          result.className = 'item-detail__result item-detail__result--error';
+          result.textContent = err.message || 'Network error';
+          btn.disabled = false;
+          btn.textContent = 'Purchase';
+        });
+    }
+
+    /* ── Sets View ── */
+    function renderSetsView(container) {
+      let sets = SHOP_SETS;
+      if (searchQuery) {
+        sets = sets.filter(s =>
+          s.name.toLowerCase().includes(searchQuery) ||
+          s.featured.name.toLowerCase().includes(searchQuery) ||
+          s.items.some(i => i.name.toLowerCase().includes(searchQuery))
+        );
+      }
+      if (!sets.length) {
+        container.innerHTML = '<div class="shop-empty">No sets found</div>';
+        return;
+      }
+
+      const sidebarPips = sets.map((s, i) =>
+        `<button class="shop-sets__sidebar-pip${i === 0 ? ' shop-sets__sidebar-pip--active' : ''}" data-set-idx="${i}" data-label="${s.name}" style="background: ${i === 0 ? s.color : 'rgba(255,255,255,0.08)'}; color: ${s.color};"></button>`
+      ).join('');
+
+      const blocks = sets.map((s, i) => `
+        <div class="shop-set-block" data-set-idx="${i}">
+          <div class="shop-set-block__name">${s.name}</div>
+          <div class="shop-set-block__layout">
+            <div class="shop-set-block__featured">
+              ${cardHTML(Array.isArray(s.featured) ? s.featured[0] : s.featured)}
+            </div>
+            <div class="shop-set-block__items">
+              ${s.items.map(item => cardHTML(item)).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div class="shop-sets-wrapper" id="setsBgLayer"></div>
+        <div class="shop-sets">
+          <div class="shop-sets__sidebar" id="setsSidebar">${sidebarPips}</div>
+          <div class="shop-sets__content" id="setsContent">${blocks}</div>
+        </div>`;
+
+      bindCardEvents(container);
+      initSetsScrollSpy(sets);
+    }
+
+    function hexToRgb(hex) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return [r, g, b];
+    }
+
+    function lerpColor(c1, c2, t) {
+      return [
+        Math.round(c1[0] + (c2[0] - c1[0]) * t),
+        Math.round(c1[1] + (c2[1] - c1[1]) * t),
+        Math.round(c1[2] + (c2[2] - c1[2]) * t),
+      ];
+    }
+
+    function initSetsScrollSpy(sets) {
+      const blocks = document.querySelectorAll('.shop-set-block');
+      const pips = document.querySelectorAll('.shop-sets__sidebar-pip');
+      const bgLayer = document.getElementById('setsBgLayer');
+      const colors = sets.map(s => hexToRgb(s.color));
+
+      // Click pip to scroll to set
+      pips.forEach(pip => {
+        pip.addEventListener('click', () => {
+          const idx = parseInt(pip.dataset.setIdx);
+          blocks[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      function applyBg(rgb, t) {
+        // t: 0 = full color, 1 = transitioning out
+        const alpha = 0.35;
+        bgLayer.style.background = `
+          radial-gradient(ellipse 120% 80% at 50% 40%,
+            rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha}) 0%,
+            rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha * 0.6}) 30%,
+            rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha * 0.2}) 60%,
+            rgba(10,10,15,0.98) 100%)`;
+      }
+
+      // Set initial background
+      applyBg(colors[0]);
+
+      let activeIdx = 0;
+      let ticking = false;
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const viewBottom = window.innerHeight;
+
+          // Find which set's first row is fully visible
+          // Transition triggers when 100% of the next set's first row is on screen
+          let currentIdx = 0;
+
+          for (let i = blocks.length - 1; i >= 0; i--) {
+            const rect = blocks[i].getBoundingClientRect();
+            // First row is approximately the top 55% of the block (title + first grid row)
+            const firstRowBottom = rect.top + Math.min(rect.height * 0.55, 500);
+
+            if (firstRowBottom < viewBottom && rect.top < viewBottom * 0.7) {
+              currentIdx = i;
+              break;
+            }
+          }
+
+          // Calculate blend: only blend when the next set's first row starts appearing
+          let blendedColor = colors[currentIdx];
+
+          if (currentIdx < blocks.length - 1) {
+            const nextRect = blocks[currentIdx + 1].getBoundingClientRect();
+            const nextFirstRowBottom = nextRect.top + Math.min(nextRect.height * 0.55, 500);
+
+            if (nextRect.top < viewBottom) {
+              // Next set is entering screen — blend based on how revealed the first row is
+              const revealProgress = Math.max(0, Math.min(1, (viewBottom - nextRect.top) / (nextFirstRowBottom - nextRect.top)));
+              // Only start blending after first row is 100% revealed
+              if (revealProgress >= 1) {
+                blendedColor = colors[currentIdx + 1];
+                currentIdx = currentIdx + 1;
+              }
+            }
+          }
+
+          applyBg(blendedColor);
+
+          // Update pips
+          if (currentIdx !== activeIdx) {
+            activeIdx = currentIdx;
+            pips.forEach((p, i) => {
+              const isActive = i === currentIdx;
+              p.classList.toggle('shop-sets__sidebar-pip--active', isActive);
+              p.style.background = isActive ? sets[i].color : 'rgba(255,255,255,0.08)';
+            });
+          }
+
+          ticking = false;
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Cleanup when leaving sets view
+      const cleanupObserver = new MutationObserver(() => {
+        if (!document.getElementById('setsBgLayer')) {
+          window.removeEventListener('scroll', onScroll);
+          cleanupObserver.disconnect();
+        }
+      });
+      cleanupObserver.observe(container, { childList: true });
+    }
+
+    function getSetColorForItem(item) {
+      for (const s of SHOP_SETS) {
+        const feat = Array.isArray(s.featured) ? s.featured[0] : s.featured;
+        if (feat.id === item.id || s.items.some(i => i.id === item.id)) return s.color;
+        // Match standalone armors by image
+        if (item.image && [feat, ...s.items].some(i => i.image === item.image)) return s.color;
+      }
+      return null;
+    }
+
+    function hexToRgba(hex, alpha) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function cardHTML(item) {
+      const owned = playerItems[item.id];
+      const effectivePrice = item.salePrice || item.price;
+      const tagHTML = item.tag
+        ? `<div class="shop-card__tag shop-card__tag--${item.tag}">${item.tag}</div>`
+        : '';
+      const setColor = getSetColorForItem(item);
+      const bgStyle = setColor ? `style="--rarity-bg: ${hexToRgba(setColor, 0.92)}"` : '';
+
+      return `
+        <div class="shop-card shop-card--${item.rarity}" data-item-id="${item.id}" ${bgStyle}>
+          <div class="shop-card__image">
+            <div class="shop-card__rarity-strip"></div>
+            ${tagHTML}
+            ${item.image ? `<img src="${item.image}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:blur(0.3px);" />` : `<span class="shop-card__placeholder">${item.icon}</span>`}
+          </div>
+          <div class="shop-card__info">
+            <div class="shop-card__name">${item.name}</div>
+            <div class="shop-card__type">${item.type}</div>
+            <div class="shop-card__price-row">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span class="shop-card__price">
+                  <span class="shop-card__price-icon">✦</span> ${effectivePrice.toLocaleString()}
+                </span>
+                ${item.salePrice ? `<span class="shop-card__price--old">${item.price.toLocaleString()}</span>` : ''}
+              </div>
+              ${owned
+                ? '<span class="shop-card__owned">Owned</span>'
+                : '<button class="shop-card__buy">Purchase</button>'}
+            </div>
+          </div>
+        </div>`;
+    }
+
+    /* ── Purchase Modal ── */
+    function openPurchaseModal(item) {
+      if (!isLoggedIn) {
+        showLoginModal();
+        return;
+      }
+      const owned = playerItems[item.id];
+      if (owned) return;
+
+      const modal = document.getElementById('purchaseModal');
+      document.getElementById('modalIcon').textContent = item.icon;
+      document.getElementById('modalTitle').textContent = item.name;
+      document.getElementById('modalDesc').textContent = item.desc;
+      document.getElementById('modalPrice').textContent = (item.salePrice || item.price).toLocaleString();
+
+      const result = document.getElementById('modalResult');
+      result.style.display = 'none';
+
+      const actions = document.getElementById('modalActions');
+      const price = item.salePrice || item.price;
+      if (playerCurr03 < price) {
+        actions.innerHTML = `
+          <button class="shop-modal__btn shop-modal__btn--gems" id="modalGetGems">Get Void Pearls</button>
+          <button class="shop-modal__btn shop-modal__btn--cancel" id="modalCancelInsuf">Cancel</button>
+        `;
+        document.getElementById('modalGetGems').addEventListener('click', () => {
+          modal.classList.remove('shop-modal-overlay--active');
+          closeItemDetail();
+          document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('shop-tab--active'));
+          const gemsTab = document.querySelector('.shop-tab[data-cat="gems"]');
+          if (gemsTab) { gemsTab.classList.add('shop-tab--active'); }
+          currentCategory = 'gems';
+          renderShop();
+        });
+        document.getElementById('modalCancelInsuf').addEventListener('click', () => {
+          modal.classList.remove('shop-modal-overlay--active');
+        });
+      } else {
+        actions.innerHTML = `
+          <button class="shop-modal__btn shop-modal__btn--confirm" id="modalConfirm">Purchase</button>
+          <button class="shop-modal__btn shop-modal__btn--cancel" id="modalCancel">Cancel</button>
+        `;
+        document.getElementById('modalCancel').addEventListener('click', () => {
+          modal.classList.remove('shop-modal-overlay--active');
+        });
+        document.getElementById('modalConfirm').addEventListener('click', () => {
+          confirmPurchase(modal);
+        });
+      }
+      actions.style.display = 'flex';
+
+      modal.classList.add('shop-modal-overlay--active');
+      modal.dataset.itemId = item.id;
+    }
+
+    document.getElementById('purchaseModal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        e.currentTarget.classList.remove('shop-modal-overlay--active');
+      }
+    });
+
+    function confirmPurchase(modal) {
+      const itemId = modal.dataset.itemId;
+      const item = SHOP_ITEMS.find(i => i.id === itemId);
+      if (!item) return;
+
+      const price = item.salePrice || item.price;
+      const result = document.getElementById('modalResult');
+      const actions = document.getElementById('modalActions');
+
+      // Call purchase API
+      actions.style.display = 'none';
+      result.className = 'shop-modal__result';
+      result.textContent = 'Processing…';
+      result.style.display = 'block';
+
+      fetch('/auth/shop-buy', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item_id: itemId }),
+      })
+        .then(r => {
+          if (!r.ok) return r.text().then(t => { throw new Error(`HTTP ${r.status}: ${t.slice(0,200)}`); });
+          return r.json();
+        })
+        .then(data => {
+          if (data.success) {
+            result.className = 'shop-modal__result shop-modal__result--success';
+            result.textContent = 'Purchase successful!';
+            playerCurr03 = data.new_balance;
+            document.getElementById('walletAmount').textContent = playerCurr03.toLocaleString();
+            playerItems[itemId] = '1';
+            setTimeout(() => {
+              modal.classList.remove('shop-modal-overlay--active');
+              renderShop();
+            }, 1200);
+          } else {
+            result.className = 'shop-modal__result shop-modal__result--error';
+            result.textContent = data.error || 'Purchase failed';
+            actions.style.display = 'flex';
+          }
+        })
+        .catch((err) => {
+          result.className = 'shop-modal__result shop-modal__result--error';
+          result.textContent = err.message || 'Network error';
+          actions.style.display = 'flex';
+        });
+    }
+  </script>
+</body>
+</html>

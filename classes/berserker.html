@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OKUBI — Berserker</title>
+  <meta name="description" content="The Berserker is a fury-driven powerhouse who grows stronger the longer the fight goes on. Wielding massive axes and hammers, Berserkers overwhelm opponent" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root {
+      --bg: #1a1000;
+      --bg-elevated: #221806;
+    }
+    .class-detail-hero__bg {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-elevated) 40%, var(--bg) 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="../assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links-horizontal">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#classes" class="active">Classes</a></li>
+        <li><a href="../index.html#features">Features</a></li>
+        <li><a href="../index.html#combat">Combat</a></li>
+        <li><a href="../index.html#world">World</a></li>
+        <li><a href="../index.html#community">Community</a></li>
+        <li><a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank">Steam</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ CLASS DETAIL HERO ═══ -->
+  <section class="class-detail-hero">
+    <div class="class-detail-hero__bg"></div>
+    <div class="class-detail-hero__overlay"></div>
+    <div class="class-detail-hero__inner">
+      <div class="class-detail-hero__content">
+        <a href="../index.html#classes" class="class-detail__back">← All Archetypes</a>
+        <p class="section__eyebrow">Bruiser</p>
+        <h1 class="class-detail-hero__title">Berserker</h1>
+        <p class="class-detail-hero__desc">The Berserker is a fury-driven powerhouse who grows stronger the longer the fight goes on. Wielding massive axes and hammers, Berserkers overwhelm opponents with raw aggression and unstoppable momentum.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB BAR ═══ -->
+  <div class="class-tabs">
+    <button class="class-tabs__btn class-tabs__btn--active" data-tab="overview">Overview</button>
+    <button class="class-tabs__btn" data-tab="lore">Lore</button>
+    <button class="class-tabs__btn" data-tab="abilities">Ability</button>
+  </div>
+
+  <!-- ═══ TAB: OVERVIEW ═══ -->
+  <section class="class-tab-panel class-tab-panel--active" data-panel="overview">
+    <div class="container">
+      <div class="overview-panel">
+        <div class="radar-chart" data-stats="3,8,6,5,7"></div>
+        <div class="overview-panel__stats">
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Role</span>
+            <span class="overview-panel__stat-value">Bruiser</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Difficulty</span>
+            <span class="overview-panel__stat-value">Medium</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Playstyle</span>
+            <span class="overview-panel__stat-value">Sustained Brawler</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: LORE ═══ -->
+  <section class="class-tab-panel" data-panel="lore">
+    <div class="container">
+      <div class="lore-panel">
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">Children of the Storm</h3>
+          <p class="lore-panel__text">Born in the scorched highlands where lightning never ceases, the Berserkers are forged through endless conflict. Their clans worship the fury of the storm itself — each warrior branded at birth with marks that burn brighter with every battle. To fight is to pray, and to rage is to ascend. They know no retreat, only the next swing.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="berserker-lore-1">Berserker Concept Art</div>
+        </div>
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">The Fury Within</h3>
+          <p class="lore-panel__text">A Berserker's rage is not mere anger — it is a living force that courses through their veins like molten iron. The longer they fight, the more powerful they become, their bodies absorbing punishment that would fell lesser warriors. In the arenas of OKUBI, a wounded Berserker is the most dangerous opponent you'll ever face.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="berserker-lore-2">Berserker In Combat</div>
+        </div>
+        <div class="lore-panel__block lore-panel__block--closing">
+          <p class="lore-panel__quote">"Pain is fuel. Every scar is a trophy. Every wound, a reminder that I survived."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: ABILITIES ═══ -->
+  <section class="class-tab-panel" data-panel="abilities">
+    <section class="spell-showcase" id="spellShowcase">
+      <div class="spell-showcase__bg" id="spellBg" style="background: linear-gradient(135deg, #1a1000 0%, #0a0908 50%, #1a1000 100%)"></div>
+      <div class="spell-showcase__inner">
+        <div class="spell-showcase__preview">
+          <div class="spell-showcase__video-placeholder" id="spellVideo" data-slot="berserker-spell-VIDEO">Spell Preview</div>
+        </div>
+        <div class="spell-showcase__details">
+          <p class="spell-showcase__spell-type" id="spellType">Offensive</p>
+          <h2 class="spell-showcase__spell-name" id="spellName">Cleave</h2>
+          <p class="spell-showcase__spell-desc" id="spellDesc">Swing your massive axe in a devastating horizontal arc, dealing heavy damage to all enemies in front of you. Damage increases by 20% for each enemy hit.</p>
+          <div class="spell-bar" id="spellBar">
+            <div class="spell-bar__slot spell-bar__slot--active" data-spell="0">
+              <div class="spell-bar__orb">🪓</div>
+              <span class="spell-bar__key">Q</span>
+            </div>
+            <div class="spell-bar__slot" data-spell="1">
+              <div class="spell-bar__orb">💢</div>
+              <span class="spell-bar__key">E</span>
+            </div>
+            <div class="spell-bar__slot" data-spell="2">
+              <div class="spell-bar__orb">💥</div>
+              <span class="spell-bar__key">F</span>
+            </div>
+            <div class="spell-bar__slot" data-spell="3">
+              <div class="spell-bar__orb">🛡️</div>
+              <span class="spell-bar__key">C</span>
+            </div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="4">
+              <div class="spell-bar__orb">📣</div>
+              <span class="spell-bar__key">1</span>
+            </div>
+            <div class="spell-bar__slot" data-spell="5">
+              <div class="spell-bar__orb">🩸</div>
+              <span class="spell-bar__key">2</span>
+            </div>
+            <div class="spell-bar__slot" data-spell="6">
+              <div class="spell-bar__orb">🌋</div>
+              <span class="spell-bar__key">3</span>
+            </div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="7">
+              <div class="spell-bar__orb">⚡</div>
+              <span class="spell-bar__key">R</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <script>
+  (function() {
+    const spells = [
+      { name: 'Cleave', type: 'Offensive', desc: 'Swing your massive axe in a devastating horizontal arc, dealing heavy damage to all enemies in front of you. Damage increases by 20% for each enemy hit.' },
+      { name: 'Rage Buildup', type: 'Passive', desc: 'Every hit you land or receive builds Rage. At maximum Rage, your attacks deal 50% bonus damage and cannot be interrupted. Rage decays after 5 seconds of no combat.' },
+      { name: 'Ground Slam', type: 'AoE', desc: 'Leap into the air and slam your weapon into the ground, creating a shockwave that deals massive damage and knocks back all enemies within 8 meters.' },
+      { name: 'Unstoppable', type: 'Buff', desc: 'Enter a state of pure fury, becoming immune to all crowd control effects for 6 seconds. Movement speed increased by 30% and attacks generate double Rage.' },
+      { name: 'War Cry', type: 'Team Buff', desc: 'Let out a thunderous war cry that increases all allies attack damage by 20% for 10 seconds. Enemies within range are feared for 1.5 seconds.' },
+      { name: 'Frenzy', type: 'Sustain', desc: 'Enter a blood frenzy, gaining 25% lifesteal on all attacks for 8 seconds. Each kill extends the duration by 2 seconds and heals for 10% max health.' },
+      { name: 'Earthquake', type: 'AoE', desc: 'Channel for 2 seconds then unleash a devastating earthquake that deals continuous damage in a massive area for 5 seconds. Enemies are slowed by 50%.' },
+      { name: 'Berserker Rage', type: 'Ultimate', desc: 'Transform into an unstoppable berserker for 12 seconds. All damage increased by 60%, immune to CC, and basic attacks cleave in a wide arc. Killing an enemy fully heals you.' },
+    ];
+
+    const slots = document.querySelectorAll('.spell-bar__slot');
+    const spellName = document.getElementById('spellName');
+    const spellDesc = document.getElementById('spellDesc');
+    const spellType = document.getElementById('spellType');
+    const spellVideo = document.getElementById('spellVideo');
+
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        const idx = parseInt(slot.dataset.spell);
+        const spell = spells[idx];
+        slots.forEach(s => s.classList.remove('spell-bar__slot--active'));
+        slot.classList.add('spell-bar__slot--active');
+        spellName.textContent = spell.name;
+        spellDesc.textContent = spell.desc;
+        spellType.textContent = spell.type;
+        spellVideo.textContent = spell.name + ' Preview';
+      });
+    });
+  })();
+  </script>
+
+  <!-- ═══ CLASS NAV (Prev / Next) ═══ -->
+  <section class="class-detail-nav">
+    <a href="reaper.html" class="class-detail-nav__link class-detail-nav__link--prev">
+      <span class="class-detail-nav__label">Previous</span>
+      <span class="class-detail-nav__name">Reaper</span>
+    </a>
+    <a href="../index.html#classes" class="class-detail-nav__link class-detail-nav__link--all">
+      All Classes
+    </a>
+    <a href="guardian.html" class="class-detail-nav__link class-detail-nav__link--next">
+      <span class="class-detail-nav__label">Next</span>
+      <span class="class-detail-nav__name">Guardian</span>
+    </a>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">OKUBI</span>
+          <p class="footer__tagline">Forge Your Own Myth</p>
+        </div>
+        <div class="footer__links">
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#combat">Combat</a>
+          <a href="../index.html#community">Community</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 OKUBI. All rights reserved. Powered by Unreal Engine 5.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

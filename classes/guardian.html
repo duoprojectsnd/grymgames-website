@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OKUBI — Guardian</title>
+  <meta name="description" content="The Guardian is an unyielding fortress on the battlefield. Masters of shield and armor, Guardians protect allies and control the flow of combat through cro" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root {
+      --bg: #0a0a1a;
+      --bg-elevated: #101022;
+    }
+    .class-detail-hero__bg {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-elevated) 40%, var(--bg) 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="../assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links-horizontal">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#classes" class="active">Classes</a></li>
+        <li><a href="../index.html#features">Features</a></li>
+        <li><a href="../index.html#combat">Combat</a></li>
+        <li><a href="../index.html#world">World</a></li>
+        <li><a href="../index.html#community">Community</a></li>
+        <li><a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank">Steam</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ CLASS DETAIL HERO ═══ -->
+  <section class="class-detail-hero">
+    <div class="class-detail-hero__bg"></div>
+    <div class="class-detail-hero__overlay"></div>
+    <div class="class-detail-hero__inner">
+      <div class="class-detail-hero__content">
+        <a href="../index.html#classes" class="class-detail__back">← All Archetypes</a>
+        <p class="section__eyebrow">Tank</p>
+        <h1 class="class-detail-hero__title">Guardian</h1>
+        <p class="class-detail-hero__desc">The Guardian is an unyielding fortress on the battlefield. Masters of shield and armor, Guardians protect allies and control the flow of combat through crowd control and defensive mastery.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB BAR ═══ -->
+  <div class="class-tabs">
+    <button class="class-tabs__btn class-tabs__btn--active" data-tab="overview">Overview</button>
+    <button class="class-tabs__btn" data-tab="lore">Lore</button>
+    <button class="class-tabs__btn" data-tab="abilities">Ability</button>
+  </div>
+
+  <!-- ═══ TAB: OVERVIEW ═══ -->
+  <section class="class-tab-panel class-tab-panel--active" data-panel="overview">
+    <div class="container">
+      <div class="overview-panel">
+        <div class="radar-chart" data-stats="8,3,9,3,2"></div>
+        <div class="overview-panel__stats">
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Role</span>
+            <span class="overview-panel__stat-value">Tank</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Difficulty</span>
+            <span class="overview-panel__stat-value">Medium</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Playstyle</span>
+            <span class="overview-panel__stat-value">Protector</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: LORE ═══ -->
+  <section class="class-tab-panel" data-panel="lore">
+    <div class="container">
+      <div class="lore-panel">
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">The Eternal Shield</h3>
+          <p class="lore-panel__text">The Guardians are the last line of defense — an ancient order sworn to protect the realms from annihilation. Clad in living armor that grows stronger with each battle, they stand where others fall. Their shields are not merely weapons; they are relics passed down through generations, each one carrying the memory of every blow it has ever absorbed.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="guardian-lore-1">Guardian Concept Art</div>
+        </div>
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">Unbreakable Oath</h3>
+          <p class="lore-panel__text">To become a Guardian is to take an oath that transcends death itself. They channel the collective will of their fallen brothers into an impenetrable wall of steel and light. When a Guardian plants their feet and raises their shield, entire armies halt. Their presence alone changes the tide of war — not through destruction, but through the absolute refusal to yield.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="guardian-lore-2">Guardian In Combat</div>
+        </div>
+        <div class="lore-panel__block lore-panel__block--closing">
+          <p class="lore-panel__quote">"Behind me, you are safe. Before me, nothing passes."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: ABILITIES ═══ -->
+  <section class="class-tab-panel" data-panel="abilities">
+    <section class="spell-showcase" id="spellShowcase">
+      <div class="spell-showcase__bg" id="spellBg" style="background: linear-gradient(135deg, #0a0a1a 0%, #0a0908 50%, #0a0a1a 100%)"></div>
+      <div class="spell-showcase__inner">
+        <div class="spell-showcase__preview">
+          <div class="spell-showcase__video-placeholder" id="spellVideo" data-slot="guardian-spell-VIDEO">Spell Preview</div>
+        </div>
+        <div class="spell-showcase__details">
+          <p class="spell-showcase__spell-type" id="spellType">Offensive</p>
+          <h2 class="spell-showcase__spell-name" id="spellName">Shield Bash</h2>
+          <p class="spell-showcase__spell-desc" id="spellDesc">Slam your shield into the target, dealing moderate damage and stunning them for 1.5 seconds. Generates high threat and interrupts casting abilities.</p>
+          <div class="spell-bar" id="spellBar">
+            <div class="spell-bar__slot spell-bar__slot--active" data-spell="0"><div class="spell-bar__orb">🛡️</div><span class="spell-bar__key">Q</span></div>
+            <div class="spell-bar__slot" data-spell="1"><div class="spell-bar__orb">🔰</div><span class="spell-bar__key">E</span></div>
+            <div class="spell-bar__slot" data-spell="2"><div class="spell-bar__orb">😤</div><span class="spell-bar__key">F</span></div>
+            <div class="spell-bar__slot" data-spell="3"><div class="spell-bar__orb">🏰</div><span class="spell-bar__key">C</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="4"><div class="spell-bar__orb">💚</div><span class="spell-bar__key">1</span></div>
+            <div class="spell-bar__slot" data-spell="5"><div class="spell-bar__orb">⚙️</div><span class="spell-bar__key">2</span></div>
+            <div class="spell-bar__slot" data-spell="6"><div class="spell-bar__orb">✨</div><span class="spell-bar__key">3</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="7"><div class="spell-bar__orb">👑</div><span class="spell-bar__key">R</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <script>
+  (function() {
+    const spells = [
+      { name: 'Shield Bash', type: 'Offensive', desc: 'Slam your shield into the target, dealing moderate damage and stunning them for 1.5 seconds. Generates high threat and interrupts casting abilities.' },
+      { name: 'Shield Wall', type: 'Defensive', desc: 'Raise your shield to block all incoming frontal damage for 4 seconds. Allies directly behind you also receive 50% damage reduction.' },
+      { name: 'Taunt', type: 'Crowd Control', desc: 'Force all enemies within 10 meters to attack you for 4 seconds. Your armor is increased by 30% for the duration. Taunted enemies deal 15% less damage.' },
+      { name: 'Fortify', type: 'Defensive', desc: 'Brace yourself and reduce all incoming damage by 60% for 5 seconds. Cannot move during Fortify but reflects 20% of blocked damage back to attackers.' },
+      { name: 'Rallying Cry', type: 'Team Heal', desc: 'Let out an inspiring battle cry that heals all allies within 15 meters for 25% of their max health over 6 seconds and cleanses one debuff.' },
+      { name: 'Iron Skin', type: 'Buff', desc: 'Coat yourself in magical iron armor, absorbing the next 3 instances of damage completely. Lasts 10 seconds or until all charges are consumed.' },
+      { name: 'Consecration', type: 'AoE', desc: 'Sanctify the ground beneath you for 8 seconds. Allies standing in the area receive 20% damage reduction and heal for 3% max health per second.' },
+      { name: 'Last Stand', type: 'Ultimate', desc: 'Become invulnerable for 6 seconds and taunt all enemies within 20 meters. When Last Stand ends, release a shockwave dealing damage equal to 50% of all damage absorbed.' },
+    ];
+    const slots = document.querySelectorAll('.spell-bar__slot');
+    const spellName = document.getElementById('spellName');
+    const spellDesc = document.getElementById('spellDesc');
+    const spellType = document.getElementById('spellType');
+    const spellVideo = document.getElementById('spellVideo');
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        const idx = parseInt(slot.dataset.spell);
+        const spell = spells[idx];
+        slots.forEach(s => s.classList.remove('spell-bar__slot--active'));
+        slot.classList.add('spell-bar__slot--active');
+        spellName.textContent = spell.name;
+        spellDesc.textContent = spell.desc;
+        spellType.textContent = spell.type;
+        spellVideo.textContent = spell.name + ' Preview';
+      });
+    });
+  })();
+  </script>
+
+  <!-- ═══ CLASS NAV (Prev / Next) ═══ -->
+  <section class="class-detail-nav">
+    <a href="berserker.html" class="class-detail-nav__link class-detail-nav__link--prev">
+      <span class="class-detail-nav__label">Previous</span>
+      <span class="class-detail-nav__name">Berserker</span>
+    </a>
+    <a href="../index.html#classes" class="class-detail-nav__link class-detail-nav__link--all">
+      All Classes
+    </a>
+    <a href="pathfinder.html" class="class-detail-nav__link class-detail-nav__link--next">
+      <span class="class-detail-nav__label">Next</span>
+      <span class="class-detail-nav__name">Pathfinder</span>
+    </a>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">OKUBI</span>
+          <p class="footer__tagline">Forge Your Own Myth</p>
+        </div>
+        <div class="footer__links">
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#combat">Combat</a>
+          <a href="../index.html#community">Community</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 OKUBI. All rights reserved. Powered by Unreal Engine 5.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

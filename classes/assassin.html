@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OKUBI — Assassin</title>
+  <meta name="description" content="The Assassin is a shadow-dwelling predator who strikes from the unseen. Masters of stealth and precision, Assassins eliminate high-value targets before van" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #121212;
+    }
+    .class-detail-hero__bg {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-elevated) 40%, var(--bg) 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="../assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links-horizontal">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#classes" class="active">Classes</a></li>
+        <li><a href="../index.html#features">Features</a></li>
+        <li><a href="../index.html#combat">Combat</a></li>
+        <li><a href="../index.html#world">World</a></li>
+        <li><a href="../index.html#community">Community</a></li>
+        <li><a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank">Steam</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ CLASS DETAIL HERO ═══ -->
+  <section class="class-detail-hero">
+    <div class="class-detail-hero__bg"></div>
+    <div class="class-detail-hero__overlay"></div>
+    <div class="class-detail-hero__inner">
+      <div class="class-detail-hero__content">
+        <a href="../index.html#classes" class="class-detail__back">← All Archetypes</a>
+        <p class="section__eyebrow">Stealth DPS</p>
+        <h1 class="class-detail-hero__title">Assassin</h1>
+        <p class="class-detail-hero__desc">The Assassin is a shadow-dwelling predator who strikes from the unseen. Masters of stealth and precision, Assassins eliminate high-value targets before vanishing back into darkness.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB BAR ═══ -->
+  <div class="class-tabs">
+    <button class="class-tabs__btn class-tabs__btn--active" data-tab="overview">Overview</button>
+    <button class="class-tabs__btn" data-tab="lore">Lore</button>
+    <button class="class-tabs__btn" data-tab="abilities">Ability</button>
+  </div>
+
+  <!-- ═══ TAB: OVERVIEW ═══ -->
+  <section class="class-tab-panel class-tab-panel--active" data-panel="overview">
+    <div class="container">
+      <div class="overview-panel">
+        <div class="radar-chart" data-stats="3,7,2,9,10"></div>
+        <div class="overview-panel__stats">
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Role</span>
+            <span class="overview-panel__stat-value">Stealth DPS</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Difficulty</span>
+            <span class="overview-panel__stat-value">Very Hard</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Playstyle</span>
+            <span class="overview-panel__stat-value">Ambush Predator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: LORE ═══ -->
+  <section class="class-tab-panel" data-panel="lore">
+    <div class="container">
+      <div class="lore-panel">
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">Born in Shadow</h3>
+          <p class="lore-panel__text">The Assassins of OKUBI are remnants of an ancient guild that operated in the spaces between the floating islands — the "Hollow Corridors" where light never reaches. They learned to become one with the darkness, moving without sound, striking without warning. Their training begins in childhood, in lightless chambers where survival depends on senses beyond sight.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="assassin-lore-1">Assassin Concept Art</div>
+        </div>
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">The Silent Contract</h3>
+          <p class="lore-panel__text">Every Assassin carries a single mark carved into their blade — the name of their first kill. It serves as both a reminder and a promise: no target escapes, no contract goes unfulfilled. In the arenas, they are ghosts with daggers — appearing only for the killing blow before dissolving back into nothing.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="assassin-lore-2">Assassin In Combat</div>
+        </div>
+        <div class="lore-panel__block lore-panel__block--closing">
+          <p class="lore-panel__quote">"You won't see me. You won't hear me. You'll only know I was there when it's already over."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: ABILITIES ═══ -->
+  <section class="class-tab-panel" data-panel="abilities">
+    <section class="spell-showcase" id="spellShowcase">
+      <div class="spell-showcase__bg" id="spellBg" style="background: linear-gradient(135deg, #0a0a0a 0%, #0a0908 50%, #0a0a0a 100%)"></div>
+      <div class="spell-showcase__inner">
+        <div class="spell-showcase__preview">
+          <div class="spell-showcase__video-placeholder" id="spellVideo" data-slot="assassin-spell-VIDEO">Spell Preview</div>
+        </div>
+        <div class="spell-showcase__details">
+          <p class="spell-showcase__spell-type" id="spellType">Offensive</p>
+          <h2 class="spell-showcase__spell-name" id="spellName">Backstab</h2>
+          <p class="spell-showcase__spell-desc" id="spellDesc">Strike from behind for massive bonus damage. If used from stealth, damage is tripled and the target is silenced for 2 seconds. Has a very short cooldown.</p>
+          <div class="spell-bar" id="spellBar">
+            <div class="spell-bar__slot spell-bar__slot--active" data-spell="0"><div class="spell-bar__orb">🗡️</div><span class="spell-bar__key">Q</span></div>
+            <div class="spell-bar__slot" data-spell="1"><div class="spell-bar__orb">👤</div><span class="spell-bar__key">E</span></div>
+            <div class="spell-bar__slot" data-spell="2"><div class="spell-bar__orb">☠️</div><span class="spell-bar__key">F</span></div>
+            <div class="spell-bar__slot" data-spell="3"><div class="spell-bar__orb">🌑</div><span class="spell-bar__key">C</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="4"><div class="spell-bar__orb">💨</div><span class="spell-bar__key">1</span></div>
+            <div class="spell-bar__slot" data-spell="5"><div class="spell-bar__orb">🔪</div><span class="spell-bar__key">2</span></div>
+            <div class="spell-bar__slot" data-spell="6"><div class="spell-bar__orb">🤐</div><span class="spell-bar__key">3</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="7"><div class="spell-bar__orb">🌀</div><span class="spell-bar__key">R</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <script>
+  (function() {
+    const spells = [
+      { name: 'Backstab', type: 'Offensive', desc: 'Strike from behind for massive bonus damage. If used from stealth, damage is tripled and the target is silenced for 2 seconds. Has a very short cooldown.' },
+      { name: 'Stealth', type: 'Utility', desc: 'Vanish into the shadows, becoming invisible for 8 seconds. Your next attack from stealth deals 50% bonus damage. Taking damage breaks stealth.' },
+      { name: 'Poison Blade', type: 'DoT', desc: 'Coat your weapons in deadly poison for 12 seconds. Attacks apply a stacking poison that deals damage over time. At 5 stacks, the target is paralyzed for 1 second.' },
+      { name: 'Shadow Step', type: 'Mobility', desc: 'Teleport behind an enemy target from up to 20 meters away. Briefly become untargetable during the teleport. Your next attack within 2 seconds is guaranteed to critically strike.' },
+      { name: 'Smoke Bomb', type: 'Utility', desc: 'Throw a smoke bomb at your feet, creating a cloud that lasts 4 seconds. Inside the smoke, you are invisible and your dodge chance is increased by 80%.' },
+      { name: 'Fan of Knives', type: 'AoE', desc: 'Throw a fan of poisoned knives in all directions, hitting all enemies within 10 meters. Each knife applies your current poison effect and has a 30% chance to critically strike.' },
+      { name: 'Garrote', type: 'Crowd Control', desc: 'Grab an enemy from behind, strangling them for 3 seconds. The target is stunned and silenced. Can only be used from stealth or behind the target.' },
+      { name: 'Shadow Dance', type: 'Ultimate', desc: 'Enter a frenzied shadow state for 10 seconds. While active, you can use stealth abilities without breaking invisibility. All attacks from stealth deal double damage and cooldowns are halved.' },
+    ];
+    const slots = document.querySelectorAll('.spell-bar__slot');
+    const spellName = document.getElementById('spellName');
+    const spellDesc = document.getElementById('spellDesc');
+    const spellType = document.getElementById('spellType');
+    const spellVideo = document.getElementById('spellVideo');
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        const idx = parseInt(slot.dataset.spell);
+        const spell = spells[idx];
+        slots.forEach(s => s.classList.remove('spell-bar__slot--active'));
+        slot.classList.add('spell-bar__slot--active');
+        spellName.textContent = spell.name;
+        spellDesc.textContent = spell.desc;
+        spellType.textContent = spell.type;
+        spellVideo.textContent = spell.name + ' Preview';
+      });
+    });
+  })();
+  </script>
+
+  <!-- ═══ CLASS NAV (Prev / Next) ═══ -->
+  <section class="class-detail-nav">
+    <a href="invoker.html" class="class-detail-nav__link class-detail-nav__link--prev">
+      <span class="class-detail-nav__label">Previous</span>
+      <span class="class-detail-nav__name">Invoker</span>
+    </a>
+    <a href="../index.html#classes" class="class-detail-nav__link class-detail-nav__link--all">
+      All Classes
+    </a>
+    <a href="reaper.html" class="class-detail-nav__link class-detail-nav__link--next">
+      <span class="class-detail-nav__label">Next</span>
+      <span class="class-detail-nav__name">Reaper</span>
+    </a>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">OKUBI</span>
+          <p class="footer__tagline">Forge Your Own Myth</p>
+        </div>
+        <div class="footer__links">
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#combat">Combat</a>
+          <a href="../index.html#community">Community</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 OKUBI. All rights reserved. Powered by Unreal Engine 5.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

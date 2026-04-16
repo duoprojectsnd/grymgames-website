@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.env
+website_config.json
+Emails/
+_test_shop.js
+*.log

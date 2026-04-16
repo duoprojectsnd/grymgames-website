@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OKUBI — Invoker</title>
+  <meta name="description" content="The Invoker channels raw elemental power to devastate the battlefield. Masters of fire, ice, and lightning, Invokers control zones and unleash catastrophic" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    :root {
+      --bg: #0a001a;
+      --bg-elevated: #100622;
+    }
+    .class-detail-hero__bg {
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-elevated) 40%, var(--bg) 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <img src="../assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links-horizontal">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#classes" class="active">Classes</a></li>
+        <li><a href="../index.html#features">Features</a></li>
+        <li><a href="../index.html#combat">Combat</a></li>
+        <li><a href="../index.html#world">World</a></li>
+        <li><a href="../index.html#community">Community</a></li>
+        <li><a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank">Steam</a></li>
+      </ul>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ CLASS DETAIL HERO ═══ -->
+  <section class="class-detail-hero">
+    <div class="class-detail-hero__bg"></div>
+    <div class="class-detail-hero__overlay"></div>
+    <div class="class-detail-hero__inner">
+      <div class="class-detail-hero__content">
+        <a href="../index.html#classes" class="class-detail__back">← All Archetypes</a>
+        <p class="section__eyebrow">Caster</p>
+        <h1 class="class-detail-hero__title">Invoker</h1>
+        <p class="class-detail-hero__desc">The Invoker channels raw elemental power to devastate the battlefield. Masters of fire, ice, and lightning, Invokers control zones and unleash catastrophic spells from range.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB BAR ═══ -->
+  <div class="class-tabs">
+    <button class="class-tabs__btn class-tabs__btn--active" data-tab="overview">Overview</button>
+    <button class="class-tabs__btn" data-tab="lore">Lore</button>
+    <button class="class-tabs__btn" data-tab="abilities">Ability</button>
+  </div>
+
+  <!-- ═══ TAB: OVERVIEW ═══ -->
+  <section class="class-tab-panel class-tab-panel--active" data-panel="overview">
+    <div class="container">
+      <div class="overview-panel">
+        <div class="radar-chart" data-stats="7,8,2,3,9"></div>
+        <div class="overview-panel__stats">
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Role</span>
+            <span class="overview-panel__stat-value">Caster</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Difficulty</span>
+            <span class="overview-panel__stat-value">Hard</span>
+          </div>
+          <div class="overview-panel__stat">
+            <span class="overview-panel__stat-label">Playstyle</span>
+            <span class="overview-panel__stat-value">Zone Control</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: LORE ═══ -->
+  <section class="class-tab-panel" data-panel="lore">
+    <div class="container">
+      <div class="lore-panel">
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">Weavers of the Elements</h3>
+          <p class="lore-panel__text">Invokers are scholars who sought forbidden knowledge in the Arcane Spires — towers that pierce the boundary between the physical and elemental planes. Through decades of study and ritual scarring, they learned to channel raw elemental energy through their bodies. Fire, ice, and lightning bend to their will — but the power demands a price that few are willing to pay.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="invoker-lore-1">Invoker Concept Art</div>
+        </div>
+        <div class="lore-panel__block">
+          <h3 class="lore-panel__heading">The Elemental Triad</h3>
+          <p class="lore-panel__text">An Invoker's mastery lies in their ability to shift between three elemental attunements in the heat of combat. Fire brings devastation, ice brings control, and lightning brings precision. The greatest Invokers weave all three into a single, continuous assault — an ever-shifting storm that adapts to any threat and overwhelms any defense.</p>
+        </div>
+        <div class="lore-panel__divider"><span>⟐</span></div>
+        <div class="lore-panel__image-block">
+          <div class="lore-panel__image-placeholder" data-slot="invoker-lore-2">Invoker In Combat</div>
+        </div>
+        <div class="lore-panel__block lore-panel__block--closing">
+          <p class="lore-panel__quote">"The elements do not serve us. We merely convince them to destroy."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TAB: ABILITIES ═══ -->
+  <section class="class-tab-panel" data-panel="abilities">
+    <section class="spell-showcase" id="spellShowcase">
+      <div class="spell-showcase__bg" id="spellBg" style="background: linear-gradient(135deg, #0a001a 0%, #0a0908 50%, #0a001a 100%)"></div>
+      <div class="spell-showcase__inner">
+        <div class="spell-showcase__preview">
+          <div class="spell-showcase__video-placeholder" id="spellVideo" data-slot="invoker-spell-VIDEO">Spell Preview</div>
+        </div>
+        <div class="spell-showcase__details">
+          <p class="spell-showcase__spell-type" id="spellType">Offensive</p>
+          <h2 class="spell-showcase__spell-name" id="spellName">Chain Lightning</h2>
+          <p class="spell-showcase__spell-desc" id="spellDesc">Release a bolt of lightning that bounces between up to 5 enemies, dealing decreasing damage with each bounce. Has a 20% chance to stun each target for 0.5 seconds.</p>
+          <div class="spell-bar" id="spellBar">
+            <div class="spell-bar__slot spell-bar__slot--active" data-spell="0"><div class="spell-bar__orb">⚡</div><span class="spell-bar__key">Q</span></div>
+            <div class="spell-bar__slot" data-spell="1"><div class="spell-bar__orb">❄️</div><span class="spell-bar__key">E</span></div>
+            <div class="spell-bar__slot" data-spell="2"><div class="spell-bar__orb">🔥</div><span class="spell-bar__key">F</span></div>
+            <div class="spell-bar__slot" data-spell="3"><div class="spell-bar__orb">🔮</div><span class="spell-bar__key">C</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="4"><div class="spell-bar__orb">🛡️</div><span class="spell-bar__key">1</span></div>
+            <div class="spell-bar__slot" data-spell="5"><div class="spell-bar__orb">✨</div><span class="spell-bar__key">2</span></div>
+            <div class="spell-bar__slot" data-spell="6"><div class="spell-bar__orb">🧊</div><span class="spell-bar__key">3</span></div>
+            <div class="spell-bar__sep"></div>
+            <div class="spell-bar__slot" data-spell="7"><div class="spell-bar__orb">☄️</div><span class="spell-bar__key">R</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <script>
+  (function() {
+    const spells = [
+      { name: 'Chain Lightning', type: 'Offensive', desc: 'Release a bolt of lightning that bounces between up to 5 enemies, dealing decreasing damage with each bounce. Has a 20% chance to stun each target for 0.5 seconds.' },
+      { name: 'Frost Nova', type: 'Crowd Control', desc: 'Release a blast of freezing energy around you, dealing damage and freezing all enemies within 8 meters for 2.5 seconds. Frozen enemies take 30% more damage from the next hit.' },
+      { name: 'Fireball', type: 'AoE', desc: 'Hurl a massive fireball that explodes on impact, dealing heavy fire damage in a 6-meter radius. Enemies hit are ignited, taking additional burn damage over 4 seconds.' },
+      { name: 'Elemental Shift', type: 'Utility', desc: 'Switch between Fire, Ice, and Lightning attunement. Each element changes the properties of your basic attacks and modifies certain abilities.' },
+      { name: 'Arcane Barrier', type: 'Defensive', desc: 'Summon a magical barrier that absorbs damage equal to 40% of your max mana. While the barrier holds, your spell casting speed is increased by 25%.' },
+      { name: 'Blink', type: 'Mobility', desc: 'Instantly teleport to a target location within 15 meters. Leaves behind an arcane echo that explodes after 1.5 seconds, damaging nearby enemies.' },
+      { name: 'Ice Wall', type: 'Utility', desc: 'Conjure a wall of ice that blocks movement and projectiles for 5 seconds. Enemies that touch the wall are slowed by 70% for 3 seconds.' },
+      { name: 'Meteor Strike', type: 'Ultimate', desc: 'Call down a massive meteor from the sky after a 2-second delay. The meteor deals devastating damage in a large area and leaves burning ground for 6 seconds that damages and slows enemies.' },
+    ];
+    const slots = document.querySelectorAll('.spell-bar__slot');
+    const spellName = document.getElementById('spellName');
+    const spellDesc = document.getElementById('spellDesc');
+    const spellType = document.getElementById('spellType');
+    const spellVideo = document.getElementById('spellVideo');
+    slots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        const idx = parseInt(slot.dataset.spell);
+        const spell = spells[idx];
+        slots.forEach(s => s.classList.remove('spell-bar__slot--active'));
+        slot.classList.add('spell-bar__slot--active');
+        spellName.textContent = spell.name;
+        spellDesc.textContent = spell.desc;
+        spellType.textContent = spell.type;
+        spellVideo.textContent = spell.name + ' Preview';
+      });
+    });
+  })();
+  </script>
+
+  <!-- ═══ CLASS NAV (Prev / Next) ═══ -->
+  <section class="class-detail-nav">
+    <a href="pathfinder.html" class="class-detail-nav__link class-detail-nav__link--prev">
+      <span class="class-detail-nav__label">Previous</span>
+      <span class="class-detail-nav__name">Pathfinder</span>
+    </a>
+    <a href="../index.html#classes" class="class-detail-nav__link class-detail-nav__link--all">
+      All Classes
+    </a>
+    <a href="assassin.html" class="class-detail-nav__link class-detail-nav__link--next">
+      <span class="class-detail-nav__label">Next</span>
+      <span class="class-detail-nav__name">Assassin</span>
+    </a>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">OKUBI</span>
+          <p class="footer__tagline">Forge Your Own Myth</p>
+        </div>
+        <div class="footer__links">
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#combat">Combat</a>
+          <a href="../index.html#community">Community</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 OKUBI. All rights reserved. Powered by Unreal Engine 5.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
