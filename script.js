@@ -455,6 +455,14 @@
     // Also allow faction card clicks to trigger the same
     factionCards.forEach(card => {
       card.addEventListener('click', () => selectFaction(card.dataset.faction));
+      card.addEventListener('mouseenter', () => {
+        document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
+          .forEach(c => c.classList.add('faction-card--hovered'));
+      });
+      card.addEventListener('mouseleave', () => {
+        document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
+          .forEach(c => c.classList.remove('faction-card--hovered'));
+      });
     });
 
     // Default: select left side (umbra)
