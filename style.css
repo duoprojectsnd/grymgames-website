@@ -1122,17 +1122,21 @@ a {
   filter: drop-shadow(0 0 12px rgba(196,155,65,0.3));
 }
 .faction-card--sol.faction-card--hovered .faction-card__icon img,
-.faction-card--sol.faction-card--active .faction-card__icon img {
+.faction-card--sol.faction-card--active .faction-card__icon img,
+.faction-card--sol:hover .faction-card__icon img {
   filter: drop-shadow(0 0 30px rgba(240,208,96,0.7)) drop-shadow(0 0 60px rgba(196,155,65,0.4));
 }
 .faction-card--sol.faction-card--hovered,
-.faction-card--sol.faction-card--active { color: rgba(196,155,65,0.9); }
+.faction-card--sol.faction-card--active,
+.faction-card--sol:hover { color: rgba(196,155,65,0.9); }
 .faction-card--sol.faction-card--hovered .faction-card__icon,
-.faction-card--sol.faction-card--active .faction-card__icon {
+.faction-card--sol.faction-card--active .faction-card__icon,
+.faction-card--sol:hover .faction-card__icon {
   color: #f0d060;
   text-shadow: 0 0 50px rgba(240,208,96,0.8), 0 0 100px rgba(196,155,65,0.4);
 }
-.faction-card--sol.faction-card--active .faction-card__name {
+.faction-card--sol.faction-card--active .faction-card__name,
+.faction-card--sol:hover .faction-card__name {
   color: #f0d060;
 }
 
@@ -1146,17 +1150,21 @@ a {
   filter: drop-shadow(0 0 12px rgba(120,90,200,0.3));
 }
 .faction-card--umbra.faction-card--hovered .faction-card__icon img,
-.faction-card--umbra.faction-card--active .faction-card__icon img {
+.faction-card--umbra.faction-card--active .faction-card__icon img,
+.faction-card--umbra:hover .faction-card__icon img {
   filter: drop-shadow(0 0 30px rgba(168,128,255,0.7)) drop-shadow(0 0 60px rgba(120,90,200,0.4));
 }
 .faction-card--umbra.faction-card--hovered,
-.faction-card--umbra.faction-card--active { color: rgba(120,90,200,0.9); }
+.faction-card--umbra.faction-card--active,
+.faction-card--umbra:hover { color: rgba(120,90,200,0.9); }
 .faction-card--umbra.faction-card--hovered .faction-card__icon,
-.faction-card--umbra.faction-card--active .faction-card__icon {
+.faction-card--umbra.faction-card--active .faction-card__icon,
+.faction-card--umbra:hover .faction-card__icon {
   color: #a880ff;
   text-shadow: 0 0 50px rgba(168,128,255,0.8), 0 0 100px rgba(120,90,200,0.4);
 }
-.faction-card--umbra.faction-card--active .faction-card__name {
+.faction-card--umbra.faction-card--active .faction-card__name,
+.faction-card--umbra:hover .faction-card__name {
   color: #a880ff;
 }
 
