@@ -214,15 +214,21 @@ def steam_callback():
     if user:
         session["username"] = persona or user.get("Stat", {}).get("SteamName", steam_id)
         session["is_new"] = False
+        # Skip welcome page if gift already claimed
+        already_claimed = user.get("Stat", {}).get("WelcomeGiftClaimed") == "True"
     else:
         user = create_user_from_template(steam_id, persona=persona)
         if user:
             session["username"] = persona or steam_id
             session["is_new"] = True
+            already_claimed = False
         else:
             session["username"] = persona or steam_id
             session["is_new"] = False
+            already_claimed = False
 
+    if already_claimed:
+        return redirect("/")
     return redirect("/welcome")
 
 
