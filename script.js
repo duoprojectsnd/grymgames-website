@@ -9,6 +9,7 @@
   const nav = document.getElementById('nav');
   const floatingCta = document.getElementById('floatingCta');
   const ctaPlaceholder = document.getElementById('heroCtaPlaceholder');
+  const backToTop = document.getElementById('backToTop');
 
   const onScroll = () => {
     nav.classList.toggle('nav--scrolled', window.scrollY > 60);
@@ -18,9 +19,21 @@
       const placeholderBottom = ctaPlaceholder.getBoundingClientRect().bottom;
       floatingCta.classList.toggle('floating-cta--visible', placeholderBottom < 0);
     }
+
+    // Back to top button — show after scrolling 600px
+    if (backToTop) {
+      backToTop.classList.toggle('back-to-top--visible', window.scrollY > 600);
+    }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // ─── Back to Top Click ────────────────────────────────────────────────
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   // ─── Founder Section — Gold Glow on Scroll ───────────────────────────
   const founderSection = document.getElementById('founderSection');
@@ -116,44 +129,113 @@
     }, { passive: true });
   }
 
-  // ─── Features Carousel ─────────────────────────────────────────────────
-  const slides = document.querySelectorAll('.features-carousel__slide');
-  const dots = document.querySelectorAll('.features-carousel__dot');
-  const prevBtn = document.querySelector('.features-carousel__arrow--prev');
-  const nextBtn = document.querySelector('.features-carousel__arrow--next');
+  // ─── Feature Showcase (Dune-style) ──────────────────────────────────────
+  const showcaseBg     = document.getElementById('showcaseBg');
+  const showcaseTitle  = document.getElementById('showcaseTitle');
+  const showcaseDesc   = document.getElementById('showcaseDesc');
+  const showcaseGif    = document.getElementById('showcaseGif');
+  const showcasePrev   = document.getElementById('showcasePrev');
+  const showcaseNext   = document.getElementById('showcaseNext');
 
-  if (slides.length > 0) {
-    let current = 0;
-    let autoTimer = null;
+  if (showcaseBg) {
+    const scBase = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/';
+    const scSlides = [
+      {
+        title: 'Crafting',
+        desc: 'Forge powerful weapons, armor, and consumables from materials gathered across the world. Master recipes, refine your craft, and create gear worthy of legend.',
+        bg: scBase + '9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1771880532',
+      },
+      {
+        title: 'Dynamic World\nEvents',
+        desc: 'Unpredictable events erupt across the battlefield \u2014 meteor storms, power surges, and boss incursions. Adapt on the fly or be consumed by chaos.',
+        bg: scBase + '0af0df51dd6d49ad833d1c31da54951a4fd54024/ss_0af0df51dd6d49ad833d1c31da54951a4fd54024.1920x1080.jpg?t=1771880532',
+      },
+      {
+        title: 'Player-Driven\nEconomy',
+        desc: 'Trade crafted masterpieces, rare materials, and coveted gear in a fully player-driven marketplace. Supply and demand shape the world\u2019s economy.',
+        bg: scBase + 'ss_d5e9eacb3154eb00e00c06333f0508f95b6409a0.1920x1080.jpg?t=1771880532',
+      },
+      {
+        title: 'Arenas',
+        desc: 'Conquer diverse and treacherous PvP arenas where every battle is a step toward immortality. Crush your rivals and forge your name in ranked combat.',
+        bg: scBase + 'ss_73670356941113b15de99a947a8f5a78d330fc03.1920x1080.jpg?t=1771880532',
+      },
+      {
+        title: 'Planet\nIncursion',
+        desc: 'Hostile forces invade from distant planets, unleashing waves of enemies across the map. Rally your allies, repel the incursion, and claim powerful rewards.',
+        bg: scBase + '2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0/ss_2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0.1920x1080.jpg?t=1771880532',
+      },
+      {
+        title: 'Gathering',
+        desc: 'Explore the world to harvest rare resources, mine precious ores, and collect exotic materials. Every expedition fuels your crafting and trading ambitions.',
+        bg: scBase + '7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4/ss_7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4.1920x1080.jpg?t=1771880532',
+      },
+    ];
 
-    function goToSlide(idx) {
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      // Reset scale for Ken Burns effect
-      slides[current].querySelector('.features-carousel__bg').style.transform = '';
-      current = (idx + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
+    // Extra images for the GIF preview box (cycles randomly)
+    const scPreviews = [
+      scBase + '6aa4612bf582cd106b821c67c43e813867842ff4/ss_6aa4612bf582cd106b821c67c43e813867842ff4.1920x1080.jpg?t=1771880532',
+      scBase + '1e9896257594062dc094547c53bafe2594175ed6/ss_1e9896257594062dc094547c53bafe2594175ed6.1920x1080.jpg?t=1771880532',
+      scBase + 'ss_59483cb06c25df402b3ae31ce8a5a6549c85a165.1920x1080.jpg?t=1771880532',
+      scBase + 'ss_6777c5d4c980e785c6b9590cd3b2d8baf9fa2e3a.1920x1080.jpg?t=1771880532',
+      scBase + 'ss_58eac9c9aacc221dfe8cdfb19878cf7426bfea89.1920x1080.jpg?t=1771880532',
+      scBase + 'ss_e14ab091205790f9fb0b5ba56ea975b129d87251.1920x1080.jpg?t=1771880532',
+      scBase + 'ss_c4fb7988fb462a3d3169df0c43fee9ac96877032.1920x1080.jpg?t=1771880532',
+      scBase + 'ss_2d50b11c0265189ccafb7515d559c89c31df2931.1920x1080.jpg?t=1771880532',
+    ];
+
+    let scIndex = 0;
+    let scAutoTimer = null;
+
+    function scGoTo(idx) {
+      idx = ((idx % scSlides.length) + scSlides.length) % scSlides.length;
+      if (idx === scIndex && showcaseBg.style.backgroundImage) return;
+
+      // Fade out text
+      showcaseTitle.style.opacity = '0';
+      showcaseDesc.style.opacity = '0';
+
+      // Fade background
+      showcaseBg.classList.add('showcase__bg--fading');
+
+      setTimeout(function() {
+        scIndex = idx;
+        var slide = scSlides[scIndex];
+        showcaseBg.style.backgroundImage = "url('" + slide.bg + "')";
+        showcaseBg.classList.remove('showcase__bg--fading');
+        showcaseBg.classList.remove('showcase__bg--active');
+
+        // Update text (replace \n with <br>)
+        showcaseTitle.innerHTML = slide.title.replace(/\n/g, '<br>');
+        showcaseDesc.textContent = slide.desc;
+
+        showcaseTitle.style.opacity = '1';
+        showcaseDesc.style.opacity = '1';
+
+        // Ken Burns restart
+        void showcaseBg.offsetWidth;
+        showcaseBg.classList.add('showcase__bg--active');
+
+        // Cycle preview image randomly
+        var rnd = Math.floor(Math.random() * scPreviews.length);
+        showcaseGif.src = scPreviews[rnd];
+      }, 400);
     }
 
-    function nextSlide() { goToSlide(current + 1); }
-    function prevSlide() { goToSlide(current - 1); }
+    function scNext() { scGoTo(scIndex + 1); }
+    function scPrevFn() { scGoTo(scIndex - 1); }
 
-    function resetAuto() {
-      clearInterval(autoTimer);
-      autoTimer = setInterval(nextSlide, 6000);
+    function scResetAuto() {
+      clearInterval(scAutoTimer);
+      scAutoTimer = setInterval(scNext, 7000);
     }
 
-    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
-    if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAuto(); });
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        goToSlide(parseInt(dot.dataset.slide));
-        resetAuto();
-      });
-    });
+    if (showcaseNext) showcaseNext.addEventListener('click', function() { scNext(); scResetAuto(); });
+    if (showcasePrev) showcasePrev.addEventListener('click', function() { scPrevFn(); scResetAuto(); });
 
-    autoTimer = setInterval(nextSlide, 6000);
+    // Init first slide
+    scGoTo(0);
+    scResetAuto();
   }
 
   // ─── Auth: check login state ──────────────────────────────────────────
@@ -454,6 +536,70 @@
 
     // Default: select left side (umbra)
     selectFaction('umbra');
+  }
+
+  // ─── Screenshots Carousel ────────────────────────────────────────────
+  const ssImage = document.getElementById('ssImage');
+  const ssDots = document.getElementById('ssDots');
+  const ssArrowPrev = document.getElementById('ssArrowPrev');
+  const ssArrowNext = document.getElementById('ssArrowNext');
+
+  if (ssImage && ssDots) {
+    const ssBase = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/';
+    const ssScreenshots = [
+      '9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1771880532',
+      '0af0df51dd6d49ad833d1c31da54951a4fd54024/ss_0af0df51dd6d49ad833d1c31da54951a4fd54024.1920x1080.jpg?t=1771880532',
+      'ss_d5e9eacb3154eb00e00c06333f0508f95b6409a0.1920x1080.jpg?t=1771880532',
+      'ss_73670356941113b15de99a947a8f5a78d330fc03.1920x1080.jpg?t=1771880532',
+      '2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0/ss_2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0.1920x1080.jpg?t=1771880532',
+      '7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4/ss_7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4.1920x1080.jpg?t=1771880532',
+      '6aa4612bf582cd106b821c67c43e813867842ff4/ss_6aa4612bf582cd106b821c67c43e813867842ff4.1920x1080.jpg?t=1771880532',
+      '1e9896257594062dc094547c53bafe2594175ed6/ss_1e9896257594062dc094547c53bafe2594175ed6.1920x1080.jpg?t=1771880532',
+      'ss_59483cb06c25df402b3ae31ce8a5a6549c85a165.1920x1080.jpg?t=1771880532',
+      'ss_6777c5d4c980e785c6b9590cd3b2d8baf9fa2e3a.1920x1080.jpg?t=1771880532',
+      'ss_58eac9c9aacc221dfe8cdfb19878cf7426bfea89.1920x1080.jpg?t=1771880532',
+      'ss_e14ab091205790f9fb0b5ba56ea975b129d87251.1920x1080.jpg?t=1771880532',
+      'ss_c4fb7988fb462a3d3169df0c43fee9ac96877032.1920x1080.jpg?t=1771880532',
+      'ss_2d50b11c0265189ccafb7515d559c89c31df2931.1920x1080.jpg?t=1771880532',
+    ];
+
+    let ssIndex = 0;
+    let ssTimer = null;
+
+    ssScreenshots.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'screenshots-carousel__dot' + (i === 0 ? ' screenshots-carousel__dot--active' : '');
+      dot.addEventListener('click', () => ssGoTo(i));
+      ssDots.appendChild(dot);
+    });
+
+    function ssGoTo(idx) {
+      if (idx === ssIndex) return;
+      ssImage.classList.add('screenshots-carousel__img--fading');
+      setTimeout(() => {
+        ssIndex = idx;
+        ssImage.src = ssBase + ssScreenshots[ssIndex];
+        ssImage.alt = 'OKUBI Screenshot ' + (ssIndex + 1);
+        ssImage.classList.remove('screenshots-carousel__img--fading');
+        ssDots.querySelectorAll('.screenshots-carousel__dot').forEach((d, i) => {
+          d.classList.toggle('screenshots-carousel__dot--active', i === ssIndex);
+        });
+      }, 300);
+      ssResetTimer();
+    }
+
+    function ssNext() { ssGoTo((ssIndex + 1) % ssScreenshots.length); }
+    function ssPrev() { ssGoTo((ssIndex - 1 + ssScreenshots.length) % ssScreenshots.length); }
+
+    function ssResetTimer() {
+      clearInterval(ssTimer);
+      ssTimer = setInterval(ssNext, 7000);
+    }
+
+    if (ssArrowPrev) ssArrowPrev.addEventListener('click', ssPrev);
+    if (ssArrowNext) ssArrowNext.addEventListener('click', ssNext);
+
+    ssResetTimer();
   }
 
 })();

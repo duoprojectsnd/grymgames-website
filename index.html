@@ -38,13 +38,10 @@
       </a>
       <!-- Right-side vertical nav (Dune style) -->
       <ul class="nav__links-vertical" id="navVertical">
-        <li><a href="#about">About</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#factions">Factions</a></li>
-        <li><a href="#classes">Archetypes</a></li>
-        <li><a href="#combat">Combat</a></li>
-        <li><a href="#corruption">World</a></li>
-        <li><a href="#community">Community</a></li>
+        <li><a href="/news.html">Game Updates</a></li>
+        <li><a href="/universe.html">The Universe</a></li>
+        <li><a href="/roadmap.html">Roadmap</a></li>
+        <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank">Media Kit</a></li>
         <li><a href="/shop.html">Shop</a></li>
       </ul>
       <div class="nav__auth" id="navAuth">
@@ -79,7 +76,10 @@
   <!-- ═══ HERO ═══ -->
   <section class="hero" id="hero">
     <div class="hero__bg">
-      <img src="assets/home/hero.png" alt="OKUBI Hero" class="hero__bg-img" />
+      <picture>
+        <source srcset="assets/home/hero.webp" type="image/webp" />
+        <img src="assets/home/hero.png" alt="OKUBI Hero" class="hero__bg-img" />
+      </picture>
       <div class="hero__overlay"></div>
     </div>
 
@@ -105,9 +105,6 @@
 
     <!-- Bottom action bar -->
     <div class="hero__bottom-bar">
-      <a href="https://www.youtube.com" target="_blank" class="hero__bar-btn hero__bar-btn--outline">
-        <span class="hero__bar-icon">▶</span> Watch Trailer
-      </a>
       <div class="hero__bar-center-placeholder" id="heroCtaPlaceholder">
         <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="hero__bar-btn hero__bar-btn--gold">
           Wishlist Now
@@ -131,88 +128,46 @@
     </div>
   </section>
 
-  <!-- Floating CTA buttons -->
-  <div class="floating-cta" id="floatingCta">
-    <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="hero__bar-btn hero__bar-btn--gold">
-      Wishlist Now
-    </a>
-    <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="hero__bar-btn hero__bar-btn--outline-gold">
-      Kickstarter
-    </a>
-  </div>
+  <!-- Floating Playtest Status -->
+  <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="playtest-float" id="playtestFloat">
+    <img src="assets/okubi-logo.png" alt="OKUBI" class="playtest-float__logo" />
+    <span class="playtest-float__label">Playtest</span>
+    <span class="playtest-float__status playtest-float__status--live" id="playtestStatus">LIVE</span>
+  </a>
 
-  <!-- ═══ WELCOME SHOWCASE ═══ -->
-  <section class="welcome-showcase" id="welcomeShowcase">
-    <div class="welcome-showcase__bg">
-      <div class="welcome-showcase__bg-placeholder" data-slot="WELCOME-BG"></div>
-      <!-- Complex geometric wireframe backdrop -->
-      <div class="welcome-showcase__geo">
-        <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <radialGradient id="wgGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="rgba(212,168,83,0.06)"/>
-              <stop offset="100%" stop-color="transparent"/>
-            </radialGradient>
-          </defs>
-          <circle cx="600" cy="400" r="320" fill="url(#wgGlow)"/>
-          <!-- Outer hexagon -->
-          <polygon points="600,80 880,230 880,530 600,680 320,530 320,230" fill="none" stroke="rgba(212,168,83,0.07)" stroke-width="1"/>
-          <!-- Mid hexagon -->
-          <polygon points="600,140 820,260 820,500 600,620 380,500 380,260" fill="none" stroke="rgba(212,168,83,0.05)" stroke-width="0.8"/>
-          <!-- Inner hexagon -->
-          <polygon points="600,200 760,290 760,470 600,560 440,470 440,290" fill="none" stroke="rgba(212,168,83,0.06)" stroke-width="0.6"/>
-          <!-- Core hexagon -->
-          <polygon points="600,280 700,340 700,420 600,480 500,420 500,340" fill="none" stroke="rgba(212,168,83,0.08)" stroke-width="0.5"/>
-          <!-- Vertical axis -->
-          <line x1="600" y1="50" x2="600" y2="710" stroke="rgba(212,168,83,0.04)" stroke-width="0.5"/>
-          <!-- Horizontal axis -->
-          <line x1="280" y1="380" x2="920" y2="380" stroke="rgba(212,168,83,0.04)" stroke-width="0.5"/>
-          <!-- Diagonal lines connecting vertices -->
-          <line x1="320" y1="230" x2="880" y2="530" stroke="rgba(212,168,83,0.03)" stroke-width="0.5"/>
-          <line x1="880" y1="230" x2="320" y2="530" stroke="rgba(212,168,83,0.03)" stroke-width="0.5"/>
-          <line x1="600" y1="80" x2="320" y2="530" stroke="rgba(212,168,83,0.025)" stroke-width="0.5"/>
-          <line x1="600" y1="80" x2="880" y2="530" stroke="rgba(212,168,83,0.025)" stroke-width="0.5"/>
-          <line x1="600" y1="680" x2="320" y2="230" stroke="rgba(212,168,83,0.025)" stroke-width="0.5"/>
-          <line x1="600" y1="680" x2="880" y2="230" stroke="rgba(212,168,83,0.025)" stroke-width="0.5"/>
-          <!-- Concentric circles -->
-          <circle cx="600" cy="380" r="120" fill="none" stroke="rgba(212,168,83,0.04)" stroke-width="0.5"/>
-          <circle cx="600" cy="380" r="220" fill="none" stroke="rgba(212,168,83,0.03)" stroke-width="0.5"/>
-          <circle cx="600" cy="380" r="320" fill="none" stroke="rgba(212,168,83,0.025)" stroke-width="0.5"/>
-          <!-- Diamond at center -->
-          <polygon points="600,340 640,380 600,420 560,380" fill="none" stroke="rgba(212,168,83,0.1)" stroke-width="0.6"/>
-          <!-- Outer corner accents -->
-          <line x1="100" y1="100" x2="200" y2="100" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <line x1="100" y1="100" x2="100" y2="200" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <line x1="1100" y1="100" x2="1000" y2="100" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <line x1="1100" y1="100" x2="1100" y2="200" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <line x1="100" y1="700" x2="200" y2="700" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <line x1="100" y1="700" x2="100" y2="600" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <line x1="1100" y1="700" x2="1000" y2="700" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <line x1="1100" y1="700" x2="1100" y2="600" stroke="rgba(212,168,83,0.05)" stroke-width="0.5"/>
-          <!-- Radial tick marks -->
-          <line x1="600" y1="80" x2="600" y2="60" stroke="rgba(212,168,83,0.06)" stroke-width="0.5"/>
-          <line x1="880" y1="230" x2="896" y2="220" stroke="rgba(212,168,83,0.06)" stroke-width="0.5"/>
-          <line x1="880" y1="530" x2="896" y2="540" stroke="rgba(212,168,83,0.06)" stroke-width="0.5"/>
-          <line x1="600" y1="680" x2="600" y2="700" stroke="rgba(212,168,83,0.06)" stroke-width="0.5"/>
-          <line x1="320" y1="530" x2="304" y2="540" stroke="rgba(212,168,83,0.06)" stroke-width="0.5"/>
-          <line x1="320" y1="230" x2="304" y2="220" stroke="rgba(212,168,83,0.06)" stroke-width="0.5"/>
-        </svg>
-      </div>
-      <div class="welcome-showcase__overlay"></div>
-    </div>
-    <div class="welcome-showcase__side-img" data-slot="WELCOME-SIDE"></div>
+  <!-- ═══ FEATURE SHOWCASE (Dune-style) ═══ -->
+  <section class="showcase" id="features">
+    <!-- Geometric background pattern -->
+    <div class="showcase__geo"></div>
+    <!-- Full-bleed background image -->
+    <div class="showcase__bg" id="showcaseBg"></div>
+    <div class="showcase__overlay"></div>
 
-    <div class="welcome-showcase__content">
-      <div class="welcome-showcase__diamond">◆</div>
-      <h2 class="welcome-showcase__title">Welcome to<br>OKUBI</h2>
-      <p class="welcome-showcase__body">OKUBI is an Open World PvP Combat RPG where you can fully immerse yourself in a breathtaking world of aerial warfare. Alone or with friends, explore vast arenas, master your unique wings, forge legendary weapons, and unravel the mystery of the corruption that consumes the land.</p>
-      <div class="welcome-showcase__thumb">
-        <div class="media-placeholder" data-label="Gameplay Preview" data-slot="ABOUT-PREVIEW"></div>
-      </div>
+    <!-- Left-side content -->
+    <div class="showcase__content">
+      <div class="showcase__diamond"></div>
+      <h2 class="showcase__title" id="showcaseTitle">Crafting</h2>
+      <p class="showcase__desc" id="showcaseDesc">Forge powerful weapons, armor, and consumables from materials gathered across the world. Master recipes, refine your craft, and create gear worthy of legend.</p>
     </div>
-    <button class="welcome-showcase__arrow" aria-label="Next">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+
+    <!-- GIF preview — bottom left -->
+    <div class="showcase__preview" id="showcasePreview">
+      <img class="showcase__preview-img" id="showcaseGif" src="" alt="Preview" />
+    </div>
+
+    <!-- Navigation arrows — bottom right -->
+    <div class="showcase__nav">
+      <button class="showcase__arrow" id="showcasePrev" aria-label="Previous">‹</button>
+      <button class="showcase__arrow" id="showcaseNext" aria-label="Next">›</button>
+    </div>
+  </section>
+
+  <!-- ═══ OFFICIAL TRAILER ═══ -->
+  <section class="trailer-section" id="trailer">
+    <h2 class="trailer-section__heading">Official Trailer</h2>
+    <div class="trailer-section__embed">
+      <iframe src="https://www.youtube.com/embed/3uRD6CwtANs?vq=hd1080&hd=1&rel=0" title="OKUBI Official Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
   </section>
 
   <!-- ═══ ABOUT ═══ -->
@@ -229,308 +184,54 @@
     </div>
   </section>
 
-  <!-- ═══ FACTIONS ═══ -->
-  <section class="factions" id="factions">
-    <div class="factions__dim factions__dim--left" id="factions-dim-left"></div>
-    <div class="factions__dim factions__dim--right" id="factions-dim-right"></div>
-    <div class="factions__glow" id="factions-glow"></div>
-    <div class="factions__content-bg"></div>
-    <div class="factions__header" data-reveal>
-      <p class="factions__eyebrow">Pledge Your Allegiance</p>
-      <h2 class="factions__heading">Two Factions. One War.</h2>
-      <p class="factions__sub">Every warrior must choose a side. Your faction shapes your allies, your enemies, and your destiny.</p>
-    </div>
-
-    <!-- Faction icons -->
-    <div class="factions__grid">
-      <div class="faction-card faction-card--umbra faction-card--anim-left" data-faction="umbra" data-reveal>
-        <div class="faction-card__shape">
-          <div class="faction-card__icon"><img src="assets/home/faction2.png" alt="Umbra"></div>
-        </div>
-        <h3 class="faction-card__name">The Umbral Pact</h3>
-      </div>
-
-      <div class="factions__vs" data-reveal>
-        <div class="factions__vs-line"></div>
-      </div>
-
-      <div class="faction-card faction-card--sol faction-card--anim-right" data-faction="sol" data-reveal>
-        <div class="faction-card__shape">
-          <div class="faction-card__icon"><img src="assets/home/faction1.png" alt="Sol"></div>
-        </div>
-        <h3 class="faction-card__name">The Solari Covenant</h3>
-      </div>
-    </div>
-
-    <!-- Centered detail panel — switches content based on faction -->
-    <div class="faction-center-detail" id="faction-center-detail">
-      <div class="faction-center-detail__content" data-fcontent="umbra">
-        <h4 class="faction-center-detail__title faction-center-detail__title--perks">Perks</h4>
-        <div class="faction-center-detail__perks">
-          <div class="faction-center-detail__perk" data-tooltip="Strike from the shadows — bonus damage from stealth and ambush positions">🗡</div>
-          <div class="faction-center-detail__perk" data-tooltip="Establish hidden camps that grant fast travel and supply caches">🌀</div>
-          <div class="faction-center-detail__perk" data-tooltip="Gain power when fighting alone — solo kill bonuses and survival perks">💀</div>
-          <div class="faction-center-detail__perk" data-tooltip="Channel the Void to resist crowd control and corrupt enemy buffs">🌑</div>
-        </div>
-        <p class="faction-center-detail__quote">"We are the silence between heartbeats. We are the truth the light cannot reach."</p>
-      </div>
-      <div class="faction-center-detail__content" data-fcontent="sol">
-        <h4 class="faction-center-detail__title faction-center-detail__title--perks">Perks</h4>
-        <div class="faction-center-detail__perks">
-          <div class="faction-center-detail__perk" data-tooltip="Formation combat bonuses — increased damage and defense when near allies">⚔</div>
-          <div class="faction-center-detail__perk" data-tooltip="Build and upgrade strongholds that provide zone-wide defensive buffs">🏰</div>
-          <div class="faction-center-detail__perk" data-tooltip="Squad leaders grant passive buffs to nearby faction members">👑</div>
-          <div class="faction-center-detail__perk" data-tooltip="Harness solar energy to heal over time and cleanse debuffs">☀</div>
-        </div>
-        <p class="faction-center-detail__quote">"We are the dawn that never sets. We are the wall that never breaks."</p>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ═══ FEATURES ═══ -->
-  <section class="features-carousel" id="features">
-    <div class="features-carousel__dots">
-      <button class="features-carousel__dot active" data-slide="0"></button>
-      <button class="features-carousel__dot" data-slide="1"></button>
-      <button class="features-carousel__dot" data-slide="2"></button>
-      <button class="features-carousel__dot" data-slide="3"></button>
-      <button class="features-carousel__dot" data-slide="4"></button>
-      <button class="features-carousel__dot" data-slide="5"></button>
-    </div>
-
-    <button class="features-carousel__arrow features-carousel__arrow--prev" aria-label="Previous">‹</button>
-    <button class="features-carousel__arrow features-carousel__arrow--next" aria-label="Next">›</button>
-
-    <div class="features-carousel__track">
-
-      <div class="features-carousel__slide active">
-        <div class="features-carousel__bg" data-slot="FEAT-01" style="background-image: url(''); background-color: #161310;"></div>
-        <div class="features-carousel__overlay"></div>
-        <div class="features-carousel__content">
-          <h2 class="features-carousel__title">Crafting</h2>
-          <p class="features-carousel__desc">Forge powerful weapons, armor, and consumables from materials gathered across the world. Master recipes, refine your craft, and create gear worthy of legend.</p>
-        </div>
-      </div>
-
-      <div class="features-carousel__slide">
-        <div class="features-carousel__bg" data-slot="FEAT-02" style="background-image: url(''); background-color: #161310;"></div>
-        <div class="features-carousel__overlay"></div>
-        <div class="features-carousel__content">
-          <h2 class="features-carousel__title">Dynamic World Events</h2>
-          <p class="features-carousel__desc">Unpredictable events erupt across the battlefield — meteor storms, power surges, and boss incursions. Adapt on the fly or be consumed by chaos.</p>
-        </div>
-      </div>
-
-      <div class="features-carousel__slide">
-        <div class="features-carousel__bg" data-slot="FEAT-03" style="background-image: url(''); background-color: #161310;"></div>
-        <div class="features-carousel__overlay"></div>
-        <div class="features-carousel__content">
-          <h2 class="features-carousel__title">Player-Driven Economy</h2>
-          <p class="features-carousel__desc">Trade crafted masterpieces, rare materials, and coveted gear in a fully player-driven marketplace. Supply and demand shape the world's economy.</p>
-        </div>
-      </div>
-
-      <div class="features-carousel__slide">
-        <div class="features-carousel__bg" data-slot="FEAT-04" style="background-image: url(''); background-color: #161310;"></div>
-        <div class="features-carousel__overlay"></div>
-        <div class="features-carousel__content">
-          <h2 class="features-carousel__title">Arenas</h2>
-          <p class="features-carousel__desc">Conquer diverse and treacherous PvP arenas where every battle is a step toward immortality. Crush your rivals and forge your name in ranked combat.</p>
-        </div>
-      </div>
-
-      <div class="features-carousel__slide">
-        <div class="features-carousel__bg" data-slot="FEAT-05" style="background-image: url(''); background-color: #161310;"></div>
-        <div class="features-carousel__overlay"></div>
-        <div class="features-carousel__content">
-          <h2 class="features-carousel__title">Planet Incursion</h2>
-          <p class="features-carousel__desc">Hostile forces invade from distant planets, unleashing waves of enemies across the map. Rally your allies, repel the incursion, and claim powerful rewards.</p>
-        </div>
-      </div>
-
-      <div class="features-carousel__slide">
-        <div class="features-carousel__bg" data-slot="FEAT-06" style="background-image: url(''); background-color: #161310;"></div>
-        <div class="features-carousel__overlay"></div>
-        <div class="features-carousel__content">
-          <h2 class="features-carousel__title">Gathering</h2>
-          <p class="features-carousel__desc">Explore the world to harvest rare resources, mine precious ores, and collect exotic materials. Every expedition fuels your crafting and trading ambitions.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Spacer between factions and classes -->
-  <div class="readmore-bridge"></div>
-
-  <!-- ═══ CLASSES GRID ═══ -->
-  <section class="section section--classes" id="classes">
-    <p class="section__eyebrow section__eyebrow--center">Choose Your Path</p>
-    <h2 class="section__title section__title--center">Archetypes</h2>
-    <div class="classes-row">
-      <a href="classes/reaper.html" class="class-card" data-reveal>
-        <div class="class-card__img">
-          <img src="assets/home/reaper.png" alt="Reaper" class="class-card__image" />
-          <div class="class-card__img-overlay"></div>
-          <div class="class-card__weapon-icon"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M50 4c-1 0-2 .5-2.7 1.3L34 18.6l-4.3-4.3c-.8-.8-2-.8-2.8 0s-.8 2 0 2.8l1.5 1.5L8 39c-2.6 2.6-4 6-4 9.6V56l-2.7 2.7c-.8.8-.8 2 0 2.8.4.4.9.6 1.4.6s1-.2 1.4-.6L7 58h7.4c3.6 0 7-1.4 9.6-4l20.4-20.4 1.5 1.5c.4.4.9.6 1.4.6s1-.2 1.4-.6c.8-.8.8-2 0-2.8L44.4 28l13.3-13.3c.7-.7 1.3-1.7 1.3-2.7V6c0-1.1-.9-2-2-2h-7zM21.2 51.2c-1.9 1.9-4.4 2.8-7 2.8H8v-6.2c0-2.6 1-5.1 2.8-7L31.2 20.4l10.4 10.4L21.2 51.2z"/></svg></div>
-        </div>
-        <div class="class-card__info">
-          <h3 class="class-card__name">Reaper</h3>
-          <p class="class-card__role">Melee DPS</p>
-        </div>
-      </a>
-      <a href="classes/guardian.html" class="class-card" data-reveal>
-        <div class="class-card__img">
-          <img src="assets/home/guardian.png" alt="Guardian" class="class-card__image" />
-          <div class="class-card__img-overlay"></div>
-          <div class="class-card__weapon-icon"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M32 2C22 2 14 10 14 20v8h-2c-1.1 0-2 .9-2 2v28c0 1.1.9 2 2 2h40c1.1 0 2-.9 2-2V30c0-1.1-.9-2-2-2h-2v-8C50 10 42 2 32 2zm-4 50h-8V42h8v10zm8 0h-4V40c0-1.1-.9-2-2-2H22c-1.1 0-2 .9-2 2v12h-6V32h36v20h-14zM18 28v-8c0-7.7 6.3-14 14-14s14 6.3 14 14v8H18z"/><path d="M32 6l-2 30h4L32 6z"/></svg></div>
-        </div>
-        <div class="class-card__info">
-          <h3 class="class-card__name">Guardian</h3>
-          <p class="class-card__role">Tank</p>
-        </div>
-      </a>
-      <a href="classes/berserker.html" class="class-card" data-reveal>
-        <div class="class-card__img">
-          <img src="assets/home/berserker.png" alt="Berserker" class="class-card__image" />
-          <div class="class-card__img-overlay"></div>
-          <div class="class-card__weapon-icon"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M20 2L8 20l10 4-6 18 14-12-8-4L28 8zM44 2l10 18-10 4 6 18-14-12 8-4L36 8z"/><path d="M28 42h8v20h-8z"/></svg></div>
-        </div>
-        <div class="class-card__info">
-          <h3 class="class-card__name">Berserker</h3>
-          <p class="class-card__role">Bruiser</p>
-        </div>
-      </a>
-      <a href="classes/pathfinder.html" class="class-card" data-reveal>
-        <div class="class-card__img">
-          <img src="assets/home/pathfinder.png" alt="Pathfinder" class="class-card__image" />
-          <div class="class-card__img-overlay"></div>
-          <div class="class-card__weapon-icon"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M4 8c0 0 6 14 6 24s-2 20-2 20h4c0 0 4-10 4-20S12 8 12 8H4zM8 12c1.5 5 3.5 13 3.8 20H4.2C4.5 25 6.5 17 8 12z"/><path d="M10 2L8 8h4l-2-6zM56 30l-24-6v4H20v4h12v4l24-6z"/></svg></div>
-        </div>
-        <div class="class-card__info">
-          <h3 class="class-card__name">Pathfinder</h3>
-          <p class="class-card__role">Ranged DPS</p>
-        </div>
-      </a>
-
-      <a href="classes/tempest.html" class="class-card" data-reveal>
-        <div class="class-card__img">
-          <img src="assets/home/tempest.png" alt="Tempest" class="class-card__image" />
-          <div class="class-card__img-overlay"></div>
-          <div class="class-card__weapon-icon"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path d="M38 2L18 28h12L20 62l26-34H34L44 2H38zM28.5 24L40 8.5l-6 15.5h10L24.5 52l7-24H28.5z"/></svg></div>
-        </div>
-        <div class="class-card__info">
-          <h3 class="class-card__name">Tempest</h3>
-          <p class="class-card__role">Hybrid DPS</p>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- ═══ COMBAT SHOWCASE ═══ -->
-  <section class="combat-showcase" id="combat">
-    <div class="combat-showcase__bg">
-      <div class="combat-showcase__bg-placeholder" data-slot="COMBAT-BG"></div>
-      <div class="combat-showcase__overlay"></div>
-    </div>
-    <div class="combat-showcase__content" data-reveal>
-      <div class="combat-showcase__text">
-        <p class="combat-showcase__eyebrow">Master the Skies</p>
-        <h2 class="combat-showcase__title">Wings of War</h2>
-        <p class="combat-showcase__body">Every warrior in OKUBI is born with wings unique to their soul. No two sets are alike — forged from combat style, class affinity, and the choices you make on the battlefield.</p>
-        <p class="combat-showcase__body">Your wings evolve as you fight. Unlock devastating aerial combos, dive attacks, and sky-shattering ultimates. In OKUBI, the sky isn't the limit — it's the arena.</p>
-        <div class="combat-showcase__stats">
-          <div class="combat-showcase__stat">
-            <span class="combat-showcase__stat-num">6</span>
-            <span class="combat-showcase__stat-label">Wing Archetypes</span>
-          </div>
-          <div class="combat-showcase__stat">
-            <span class="combat-showcase__stat-num">∞</span>
-            <span class="combat-showcase__stat-label">Unique Variations</span>
-          </div>
-          <div class="combat-showcase__stat">
-            <span class="combat-showcase__stat-num">360°</span>
-            <span class="combat-showcase__stat-label">Aerial Freedom</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ CINEMATIC DIVIDER ═══ -->
-  <section class="cinematic-divider" id="cinematicDivider">
-    <div class="cinematic-divider__content">
-      <h2 class="cinematic-divider__text">⟐ Okubi is watching you... ⟐</h2>
-      <div class="cinematic-divider__cta">
-        <span class="cinematic-divider__readmore">Read More</span>
-        <svg class="cinematic-divider__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ CORRUPTION LORE ═══ -->
-  <section class="corruption" id="corruption">
-    <div class="corruption__inner" data-reveal>
-      <div class="corruption__icon">⟐</div>
-      <h2 class="corruption__title">The World is Dying</h2>
-      <div class="corruption__divider"></div>
-      <p class="corruption__body">A dark corruption spreads across the land, consuming everything in its path. Ancient forests wither, oceans turn black, and once-thriving civilizations crumble to dust. The entity known as <strong>OKUBI</strong> feeds on chaos — growing stronger with every battle, every betrayal, every fallen warrior.</p>
-      <p class="corruption__body">Only those brave enough to face the corruption head-on can hope to push it back. Rally your allies, purify the tainted zones, and reclaim what was lost. But beware — the deeper you venture, the more OKUBI whispers in your ear.</p>
-      </div>
-    </div>
-    <div class="corruption__tags">
-      <button class="corruption__tag corruption__tag--active" data-corruption="tainted">Tainted Zones</button>
-      <button class="corruption__tag" data-corruption="purification">Purification Raids</button>
-      <button class="corruption__tag" data-corruption="worldboss">World Boss Events</button>
-      <button class="corruption__tag" data-corruption="spread">Dynamic Corruption Spread</button>
-    </div>
-  </section>
-
-  <!-- ═══ CORRUPTION SHOWCASE (mirrored combat layout) ═══ -->
-  <section class="corruption-showcase">
-    <div class="corruption-showcase__bg">
-      <div class="corruption-showcase__bg-placeholder" data-slot="WORLD-BG" id="corruptionBg"></div>
-      <div class="corruption-showcase__overlay"></div>
-    </div>
-    <div class="corruption-showcase__content" data-reveal>
-      <div class="corruption-showcase__text" id="corruptionShowcase">
-        <p class="corruption-showcase__eyebrow">Tainted Zones</p>
-        <h2 class="corruption-showcase__title">Lands Beyond Saving</h2>
-        <p class="corruption-showcase__body">Regions consumed by OKUBI's influence twist into nightmarish landscapes. The ground pulses with dark energy, creatures mutate into abominations, and the very air corrodes your armor.</p>
-        <p class="corruption-showcase__body">Venture deep enough and the corruption begins to affect your character — warping abilities, distorting vision, and whispering promises of power.</p>
-        <div class="corruption-showcase__stats">
-          <div class="corruption-showcase__stat">
-            <span class="corruption-showcase__stat-num">12</span>
-            <span class="corruption-showcase__stat-label">Tainted Regions</span>
-          </div>
-          <div class="corruption-showcase__stat">
-            <span class="corruption-showcase__stat-num">5</span>
-            <span class="corruption-showcase__stat-label">Corruption Tiers</span>
-          </div>
-          <div class="corruption-showcase__stat">
-            <span class="corruption-showcase__stat-num">∞</span>
-            <span class="corruption-showcase__stat-label">Shifting Threats</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ FOUNDER CTA ═══ -->
-  <section class="section section--founder" id="founderSection">
+  <!-- ═══ LATEST NEWS ═══ -->
+  <section class="section section--news" id="news">
     <div class="container">
-      <div class="founder-banner" data-reveal>
-        <div class="founder-glow" id="founderGlow"></div>
-        <div class="founder-banner__content">
-          <p class="section__eyebrow">Limited Edition</p>
-          <h2 class="section__title">Become a Founder</h2>
-          <p class="section__body">Join the founding ranks of OKUBI and receive exclusive in-game rewards, early access, and a permanent mark in the game's history.</p>
-          <a href="/shop.html" class="btn btn--primary btn--lg">Browse the Shop</a>
+      <p class="section__eyebrow section__eyebrow--center">Stay Updated</p>
+      <h2 class="section__title section__title--center">Latest News</h2>
+      <div class="news-grid">
+        <a href="/article.html?slug=faction-war" class="news-card" data-reveal>
+          <div class="news-card__img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0/ss_2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0.1920x1080.jpg?t=1771880532');"></div>
+          <div class="news-card__body">
+            <span class="news-card__date">April 10, 2026</span>
+            <h3 class="news-card__title">Faction War Event: Umbra vs Sol</h3>
+            <p class="news-card__excerpt">The first server-wide faction war kicks off this weekend. Choose your side and fight for territory, exclusive rewards, and faction glory.</p>
+          </div>
+        </a>
+        <a href="/article.html?slug=new-class" class="news-card" data-reveal>
+          <div class="news-card__img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/0af0df51dd6d49ad833d1c31da54951a4fd54024/ss_0af0df51dd6d49ad833d1c31da54951a4fd54024.1920x1080.jpg?t=1771880532');"></div>
+          <div class="news-card__body">
+            <span class="news-card__date">April 5, 2026</span>
+            <h3 class="news-card__title">New Archetype Revealed: The Invoker</h3>
+            <p class="news-card__excerpt">Master the arcane arts with the Invoker — a ranged caster specializing in elemental devastation and crowd control.</p>
+          </div>
+        </a>
+        <a href="/article.html?slug=kickstarter-announce" class="news-card" data-reveal>
+          <div class="news-card__img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1771880532');"></div>
+          <div class="news-card__body">
+            <span class="news-card__date">March 28, 2026</span>
+            <h3 class="news-card__title">Kickstarter Campaign Announcement</h3>
+            <p class="news-card__excerpt">Our Kickstarter campaign is coming soon. Sign up to be notified and unlock an exclusive in-game weapon skin on day one.</p>
+          </div>
+        </a>
+      </div>
+      <div class="news-grid__cta">
+        <a href="/news.html" class="btn btn--primary btn--lg">All News</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SCREENSHOTS ═══ -->
+  <section class="section section--screenshots" id="screenshots">
+    <div class="container">
+      <h2 class="screenshots__heading">Screenshots</h2>
+      <div class="screenshots-carousel" id="screenshotCarousel">
+        <button class="screenshots-carousel__arrow screenshots-carousel__arrow--prev" id="ssArrowPrev" aria-label="Previous">‹</button>
+        <button class="screenshots-carousel__arrow screenshots-carousel__arrow--next" id="ssArrowNext" aria-label="Next">›</button>
+        <div class="screenshots-carousel__viewport">
+          <img class="screenshots-carousel__img" id="ssImage" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1771880532" alt="OKUBI Screenshot 1" />
         </div>
-        <div class="founder-banner__media">
-          <div class="media-placeholder" data-label="Founder's Bundle" data-slot="FOUNDER-IMG"></div>
-        </div>
+        <div class="screenshots-carousel__dots" id="ssDots"></div>
       </div>
     </div>
   </section>
@@ -573,10 +274,10 @@
           <p class="footer__tagline">Forge Your Own Myth</p>
         </div>
         <div class="footer__links">
-          <a href="#about">About</a>
-          <a href="#features">Features</a>
-          <a href="#combat">Combat</a>
-          <a href="#community">Community</a>
+          <a href="/#features">Features</a>
+          <a href="/roadmap.html">Roadmap</a>
+          <a href="/news.html">News</a>
+          <a href="/#community">Community</a>
         </div>
         <div class="footer__social">
           <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
@@ -627,20 +328,6 @@
     }
 
     /* ── Picsum images for all other slots ── */
-    .welcome-showcase__bg-placeholder {
-      background-image: url('https://picsum.photos/seed/okubi-welcome/1920/1080?grayscale') !important;
-      background-size: cover !important; background-position: center !important;
-      filter: brightness(0.3) contrast(1.2);
-    }
-    .welcome-showcase__side-img {
-      background-image: url('https://picsum.photos/seed/okubi-side-char/1200/900?grayscale') !important;
-      filter: brightness(0.45) contrast(1.1);
-    }
-    [data-slot="ABOUT-PREVIEW"] {
-      background-image: url('https://picsum.photos/seed/okubi-gameplay/800/450?grayscale') !important;
-      background-size: cover !important; background-position: center !important;
-      filter: brightness(0.5);
-    }
     [data-slot="FEAT-01"] { background-image: url('https://picsum.photos/seed/okubi-craft/1920/1080?grayscale') !important; background-size: cover !important; background-position: center !important; }
     [data-slot="FEAT-02"] { background-image: url('https://picsum.photos/seed/okubi-events/1920/1080?grayscale') !important; background-size: cover !important; background-position: center !important; }
     [data-slot="FEAT-03"] { background-image: url('https://picsum.photos/seed/okubi-economy/1920/1080?grayscale') !important; background-size: cover !important; background-position: center !important; }
@@ -668,6 +355,11 @@
     /* Dim the card icons so the bg shows through */
     .class-card__placeholder[data-slot] .class-card__icon { opacity: 0.6; text-shadow: 0 0 20px rgba(0,0,0,0.9); }
   </style>
+
+  <!-- ═══ BACK TO TOP ═══ -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
 
   <script src="script.js"></script>
 </body>

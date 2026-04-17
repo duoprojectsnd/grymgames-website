@@ -11,11 +11,13 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg: #0a0908;
-      --surface: #141210;
+      --surface: rgba(14, 12, 10, 0.85);
       --gold: #d4a853;
       --beige: #d6c8a8;
       --muted: #9a8e7a;
       --green: #4ec870;
+      --purple: #7b2ff2;
+      --purple-light: #9b59b6;
       --font-display: 'Orbitron', sans-serif;
       --font-heading: 'Rajdhani', sans-serif;
       --font-body: 'Inter', sans-serif;
@@ -29,111 +31,274 @@
       align-items: center;
       justify-content: center;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow: hidden;
     }
+    /* Hero background */
+    .hero-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      animation: heroZoomFade 1.8s ease-out forwards;
+    }
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      animation: heroZoom 2.5s ease-out 0.2s forwards;
+    }
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+    @keyframes heroZoomFade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(ellipse at center, rgba(10,9,8,0.5) 0%, rgba(10,9,8,0.85) 70%, rgba(10,9,8,0.95) 100%);
+    }
+    /* Diamond (losange) dark vignette in center for readability */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 80vh; height: 80vh;
+      transform: translate(-50%, -50%) rotate(45deg);
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, transparent 70%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
     .welcome {
+      position: relative;
+      z-index: 1;
       text-align: center;
-      max-width: 520px;
-      padding: 60px 40px;
-      background: var(--surface);
-      border: 1px solid rgba(212, 168, 83, 0.15);
-      border-radius: 8px;
+      width: 90%;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px;
+      animation: contentFadeUp 1s ease-out 0.4s both;
     }
+    @keyframes contentFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Green checkmark */
     .welcome__check {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 20px;
+      width: 64px; height: 64px;
       border-radius: 50%;
-      background: rgba(78, 200, 112, 0.1);
-      border: 2px solid var(--green);
+      background: linear-gradient(135deg, #4ec870, #3baa57);
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: 0 0 30px rgba(78, 200, 112, 0.35);
+      animation: checkPop 0.5s ease-out 0.8s both;
     }
-    .welcome__check svg { color: var(--green); }
+    .welcome__check svg {
+      width: 32px; height: 32px;
+      stroke: #fff;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @keyframes checkPop {
+      from { transform: scale(0); opacity: 0; }
+      60%  { transform: scale(1.15); opacity: 1; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
     .welcome__title {
       font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 800;
       color: var(--gold);
-      margin-bottom: 8px;
-      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 30px rgba(212, 168, 83, 0.3);
+      width: 60vw;
+      min-width: 300px;
+      transform: translateY(-12px);
     }
     .welcome__sub {
       font-family: var(--font-heading);
-      font-size: 1rem;
+      font-size: 1.15rem;
       color: var(--muted);
-      margin-bottom: 40px;
+      margin-bottom: 10px;
+      transform: translateY(-12px);
+    }
+    .welcome__gift-teaser {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      color: #c9a0ff;
+      margin-bottom: 32px;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 20px rgba(123, 47, 242, 0.4);
+      opacity: 0;
+      animation: teaserAppear 0.5s ease-out 1.2s forwards;
+    }
+    @keyframes teaserAppear {
+      from { opacity: 0; transform: translateY(12px) scale(0.9); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
     .welcome__gift-box {
-      background: rgba(212, 168, 83, 0.06);
-      border: 1px solid rgba(212, 168, 83, 0.2);
-      border-radius: 6px;
-      padding: 28px 24px;
-      margin-bottom: 20px;
+      background: none;
+      border: none;
+      border-radius: 10px;
+      padding: 32px 28px;
+      max-width: 440px;
+      width: 100%;
+      position: relative;
+      animation: giftBoxAppear 0.4s ease-out 1.5s both;
+    }
+    /* Purple glow POW — fades in fast, out slow */
+    .welcome__gift-box::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border-radius: 12px;
+      background: radial-gradient(ellipse at center, rgba(123, 47, 242, 0.6) 0%, rgba(155, 89, 182, 0.3) 40%, transparent 70%);
+      z-index: -1;
+      animation: purplePow 2s ease-out 2.3s both;
+      pointer-events: none;
+    }
+    @keyframes purplePow {
+      0%   { opacity: 0; transform: scale(0.8); }
+      15%  { opacity: 1; transform: scale(1.15); }
+      30%  { transform: scale(1.05); }
+      100% { opacity: 0; transform: scale(1.2); }
+    }
+    @keyframes giftBoxAppear {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
     .welcome__gem-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
+      font-size: 2.4rem;
+      margin-bottom: 10px;
     }
     .welcome__gem-title {
       font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 4px;
+      color: #c9a0ff;
+      margin-bottom: 6px;
+      text-shadow: 0 0 15px rgba(123, 47, 242, 0.4);
     }
     .welcome__gem-desc {
       font-size: 0.85rem;
       color: var(--muted);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .welcome__input {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 16px;
       background: rgba(10, 9, 8, 0.8);
-      border: 1px solid rgba(212, 168, 83, 0.25);
-      border-radius: 4px;
+      border: 1px solid rgba(123, 47, 242, 0.25);
+      border-radius: 5px;
       color: var(--beige);
       font-family: var(--font-body);
       font-size: 0.9rem;
       outline: none;
-      margin-bottom: 14px;
-      transition: border-color 0.3s;
+      margin-bottom: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      animation: inputAppear 0.35s ease-out 1.8s forwards, inputGlow 1.5s ease-in-out 1.8s forwards;
+    }
+    @keyframes inputAppear {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes inputGlow {
+      0%   { box-shadow: none; }
+      40%  { box-shadow: 0 0 20px rgba(123, 47, 242, 0.5), 0 0 40px rgba(123, 47, 242, 0.2); border-color: var(--purple); }
+      100% { box-shadow: none; border-color: rgba(123, 47, 242, 0.25); }
     }
     .welcome__input:focus {
-      border-color: var(--gold);
+      border-color: var(--purple);
+      box-shadow: 0 0 12px rgba(123, 47, 242, 0.2);
     }
     .welcome__input::placeholder {
       color: var(--muted);
     }
     .welcome__claim-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #d4a853, #b8912e);
+      width: 85%;
+      padding: 13px 16px;
+      background: linear-gradient(135deg, #7b2ff2, #9b59b6, #7b2ff2);
+      background-size: 200% 200%;
+      animation: vpBuyShimmer 3s ease infinite, btnAppear 0.35s ease-out 2.05s both;
       border: none;
-      border-radius: 4px;
-      color: #0a0908;
+      border-radius: 5px;
+      color: #fff;
       font-family: var(--font-heading);
       font-size: 1rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: opacity 0.3s;
+      transition: all 0.3s;
+      box-shadow: 0 4px 25px rgba(123, 47, 242, 0.35);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
     }
-    .welcome__claim-btn:hover { opacity: 0.85; }
+    @keyframes btnAppear {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .welcome__claim-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      animation: btnGlow 3s ease-in-out infinite;
+    }
+    .welcome__claim-btn:hover {
+      box-shadow: 0 6px 40px rgba(123, 47, 242, 0.55);
+      transform: translateY(-2px);
+    }
+    .welcome__claim-btn:active {
+      transform: translateY(0);
+    }
     .welcome__claim-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    @keyframes vpBuyShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes btnGlow {
+      0%, 100% { opacity: 0; transform: translate(0, 0); }
+      50% { opacity: 1; transform: translate(10%, 10%); }
     }
     .welcome__skip {
       display: inline-block;
-      margin-top: 18px;
+      margin-top: 24px;
       color: var(--muted);
       font-family: var(--font-heading);
       font-size: 0.85rem;
       text-decoration: none;
       transition: color 0.3s;
+      opacity: 0;
+      animation: skipAppear 0.35s ease-out 2.5s forwards;
+    }
+    @keyframes skipAppear {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
     .welcome__skip:hover { color: var(--beige); }
     .welcome__success {
@@ -142,26 +307,36 @@
       font-family: var(--font-heading);
       font-size: 1rem;
       font-weight: 600;
-      margin-top: 12px;
+      margin-top: 14px;
     }
     .welcome__error {
       display: none;
       color: #e85454;
       font-family: var(--font-heading);
       font-size: 0.85rem;
-      margin-top: 8px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 540px) {
+      .welcome { padding: 28px 12px; }
+      .welcome__title { font-size: clamp(1.4rem, 6vw, 2rem); width: 80vw; }
+      .welcome__check { width: 50px; height: 50px; }
+      .welcome__check svg { width: 26px; height: 26px; }
     }
   </style>
 </head>
 <body>
+  <div class="hero-bg">
+    <img src="assets/home/hero.png" alt="" />
+  </div>
+
   <div class="welcome">
     <div class="welcome__check">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="20 6 9 17 4 12"></polyline>
-      </svg>
+      <svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6" /></svg>
     </div>
     <h1 class="welcome__title">Login Successful!</h1>
     <p class="welcome__sub">Welcome to OKUBI, warrior.</p>
+    <p class="welcome__gift-teaser">Here's a gift!</p>
 
     <div class="welcome__gift-box" id="giftBox">
       <div class="welcome__gem-icon">💎</div>
@@ -171,9 +346,8 @@
       <button class="welcome__claim-btn" id="claimBtn">Claim 500 Void Pearls</button>
       <div class="welcome__error" id="errorMsg"></div>
       <div class="welcome__success" id="successMsg">Check your email to confirm and claim your gift!</div>
+      <a href="/" class="welcome__skip">Continue without claiming gift →</a>
     </div>
-
-    <a href="/" class="welcome__skip">Continue without claiming gift →</a>
   </div>
 
   <script>
@@ -182,13 +356,17 @@
     const successMsg = document.getElementById('successMsg');
     const errorMsg = document.getElementById('errorMsg');
 
+    let claiming = false;
     claimBtn.addEventListener('click', async () => {
+      if (claiming) return;
       const email = emailInput.value.trim();
-      if (!email || !email.includes('@')) {
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      if (!emailRe.test(email)) {
         errorMsg.textContent = 'Please enter a valid email.';
         errorMsg.style.display = 'block';
         return;
       }
+      claiming = true;
       claimBtn.disabled = true;
       errorMsg.style.display = 'none';
       try {
@@ -214,11 +392,13 @@
           errorMsg.textContent = data.error || 'Something went wrong.';
           errorMsg.style.display = 'block';
           claimBtn.disabled = false;
+          claiming = false;
         }
       } catch (e) {
         errorMsg.textContent = 'Network error. Try again.';
         errorMsg.style.display = 'block';
         claimBtn.disabled = false;
+        claiming = false;
       }
     });
   </script>

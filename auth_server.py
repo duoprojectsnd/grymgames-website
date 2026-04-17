@@ -165,6 +165,31 @@ def welcome_page():
     return send_from_directory(".", "welcome.html")
 
 
+@app.route("/news.html")
+def news_page():
+    return send_from_directory(".", "news.html")
+
+
+@app.route("/roadmap.html")
+def roadmap_page():
+    return send_from_directory(".", "roadmap.html")
+
+
+@app.route("/universe.html")
+def universe_page():
+    return send_from_directory(".", "universe.html")
+
+
+@app.route("/article.html")
+def article_page():
+    return send_from_directory(".", "article.html")
+
+
+@app.route("/classes.html")
+def classes_page():
+    return send_from_directory(".", "classes.html")
+
+
 @app.route("/auth/steam/login")
 def steam_login():
     """Redirect the user to Steam's OpenID login page."""
@@ -281,6 +306,8 @@ def claim_welcome_gift():
     email = data.get("email", "").strip()
     if not email:
         return jsonify({"error": "No email provided"}), 400
+    if not re.match(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$', email):
+        return jsonify({"error": "Invalid email format"}), 400
     steam_id = session["steam_id"]
     try:
         user = fetch_user(steam_id)

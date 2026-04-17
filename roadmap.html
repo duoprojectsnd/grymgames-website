@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OKUBI — Roadmap</title>
+  <meta name="description" content="OKUBI development roadmap — see what's coming next." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img src="assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links-vertical" id="navVertical">
+        <li><a href="/news.html">Game Updates</a></li>
+        <li><a href="/universe.html">The Universe</a></li>
+        <li><a href="/roadmap.html" class="nav__link--active">Roadmap</a></li>
+        <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank">Media Kit</a></li>
+        <li><a href="/shop.html">Shop</a></li>
+      </ul>
+      <div class="nav__auth" id="navAuth">
+        <a href="/auth/steam/login" class="nav__login-btn" id="loginBtn">
+          <svg class="nav__login-steam" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>
+          Login
+        </a>
+        <div class="nav__profile" id="profileMenu" style="display:none;">
+          <button class="nav__profile-btn" id="profileBtn">
+            <img class="nav__profile-avatar" id="profileAvatar" src="" alt="" />
+            <span id="profileBtnName"></span>
+          </button>
+          <span class="nav__profile-curr" id="profileCurr03"></span>
+          <div class="nav__profile-dropdown" id="profileDropdown">
+            <span class="nav__profile-name" id="profileName"></span>
+            <a href="/profile.html" class="nav__profile-link">Character</a>
+            <a href="/auth/steam/logout" class="nav__profile-logout">Logout</a>
+          </div>
+        </div>
+      </div>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ ROADMAP HERO ═══ -->
+  <section class="roadmap-hero">
+    <div class="roadmap-hero__content">
+      <p class="section__eyebrow section__eyebrow--center">Development</p>
+      <h1 class="roadmap-hero__title">2026 Roadmap</h1>
+      <p class="roadmap-hero__sub">Our vision for OKUBI's journey — from playtest to launch and beyond.</p>
+      <p class="roadmap-hero__disclaimer">Content and timing subject to change based on player feedback.</p>
+    </div>
+  </section>
+
+  <!-- ═══ ROADMAP TIMELINE ═══ -->
+  <section class="section section--roadmap">
+    <div class="roadmap-scroll">
+      <div class="roadmap">
+
+        <!-- Season bar -->
+        <div class="roadmap__seasons">
+          <div class="roadmap__season roadmap__season--winter">Winter</div>
+          <div class="roadmap__season roadmap__season--spring">Spring</div>
+          <div class="roadmap__season roadmap__season--summer">Summer</div>
+          <div class="roadmap__season roadmap__season--autumn">Autumn</div>
+        </div>
+
+        <!-- Timeline track -->
+        <div class="roadmap__track">
+          <div class="roadmap__line"></div>
+        </div>
+
+        <!-- Milestone columns -->
+        <div class="roadmap__columns">
+
+          <!-- Q1 — Closed Alpha -->
+          <div class="roadmap__col roadmap__col--done">
+            <div class="roadmap__col-header">
+              <span class="roadmap__version">v0.1</span>
+              <h3 class="roadmap__col-title">Closed Alpha</h3>
+            </div>
+            <ul class="roadmap__items">
+              <li class="roadmap__item roadmap__item--done">Core Combat System</li>
+              <li class="roadmap__item roadmap__item--done">3 Archetypes: Reaper, Guardian, Berserker</li>
+              <li class="roadmap__item roadmap__item--done">1 Arena Map</li>
+              <li class="roadmap__item roadmap__item--done">Basic Matchmaking</li>
+              <li class="roadmap__item roadmap__item--done">Steam Integration</li>
+              <li class="roadmap__item roadmap__item--done">Feedback &amp; Bug Tracking</li>
+            </ul>
+          </div>
+
+          <!-- Q1-Q2 — Open Playtest -->
+          <div class="roadmap__col roadmap__col--active">
+            <div class="roadmap__col-header">
+              <span class="roadmap__version">v0.3</span>
+              <h3 class="roadmap__col-title">Open Playtest</h3>
+              <span class="roadmap__badge">Current</span>
+            </div>
+            <ul class="roadmap__items">
+              <li class="roadmap__item roadmap__item--done">5 Archetypes Playable</li>
+              <li class="roadmap__item roadmap__item--done">Faction System: Umbra &amp; Sol</li>
+              <li class="roadmap__item roadmap__item--done">3 Arena Maps</li>
+              <li class="roadmap__item roadmap__item--done">Ranked Matchmaking &amp; MMR</li>
+              <li class="roadmap__item roadmap__item--progress">Crafting System</li>
+              <li class="roadmap__item roadmap__item--progress">Player-Driven Economy</li>
+              <li class="roadmap__item">Cosmetic Shop &amp; Void Pearls</li>
+              <li class="roadmap__item">Faction War Events</li>
+            </ul>
+          </div>
+
+          <!-- Q3 — Early Access -->
+          <div class="roadmap__col">
+            <div class="roadmap__col-header">
+              <span class="roadmap__version">v0.5</span>
+              <h3 class="roadmap__col-title">Early Access</h3>
+            </div>
+            <ul class="roadmap__items">
+              <li class="roadmap__item">6th Archetype: The Invoker</li>
+              <li class="roadmap__item">Corruption System &amp; Tainted Zones</li>
+              <li class="roadmap__item">World Boss Events</li>
+              <li class="roadmap__item">Purification Raids (PvE)</li>
+              <li class="roadmap__item">2 New Arena Maps</li>
+              <li class="roadmap__item">Guild System</li>
+              <li class="roadmap__item">Seasonal Battle Pass</li>
+            </ul>
+          </div>
+
+          <!-- Q3-Q4 — Major Update -->
+          <div class="roadmap__col">
+            <div class="roadmap__col-header">
+              <span class="roadmap__version">v0.8</span>
+              <h3 class="roadmap__col-title">The Convergence</h3>
+            </div>
+            <ul class="roadmap__items">
+              <li class="roadmap__item">Planet Incursion Mode</li>
+              <li class="roadmap__item">Dynamic Corruption Spread</li>
+              <li class="roadmap__item">Open World Zones</li>
+              <li class="roadmap__item">Housing &amp; Strongholds</li>
+              <li class="roadmap__item">Cross-Faction Events</li>
+              <li class="roadmap__item">Tournament System</li>
+            </ul>
+          </div>
+
+          <!-- Q4+ — Full Launch -->
+          <div class="roadmap__col">
+            <div class="roadmap__col-header">
+              <span class="roadmap__version">v1.0</span>
+              <h3 class="roadmap__col-title">Full Launch</h3>
+            </div>
+            <ul class="roadmap__items">
+              <li class="roadmap__item">Complete Story Campaign</li>
+              <li class="roadmap__item">All Archetypes Finalized</li>
+              <li class="roadmap__item">Competitive Ranked Seasons</li>
+              <li class="roadmap__item">Console Port Planning</li>
+              <li class="roadmap__item">Expansion Content Roadmap</li>
+              <li class="roadmap__item">Community Modding Tools</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">OKUBI</span>
+          <p class="footer__tagline">Forge Your Own Myth</p>
+        </div>
+        <div class="footer__links">
+          <a href="/#features">Features</a>
+          <a href="/roadmap.html">Roadmap</a>
+          <a href="/news.html">News</a>
+          <a href="/#community">Community</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 OKUBI. All rights reserved. Powered by Unreal Engine 5.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ BACK TO TOP ═══ -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- Floating Playtest Status -->
+  <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="playtest-float" id="playtestFloat">
+    <img src="assets/okubi-logo.png" alt="OKUBI" class="playtest-float__logo" />
+    <span class="playtest-float__label">Playtest</span>
+    <span class="playtest-float__status playtest-float__status--live" id="playtestStatus">LIVE</span>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
