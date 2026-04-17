@@ -216,31 +216,50 @@ a {
   border-color: var(--gold);
 }
 
-/* Gift hint tooltip pointing at Login */
-.nav__gift-hint {
+/* ─── Hero Gift Banner ─────────────────────────────────────────── */
+.hero__gift-banner {
+  position: absolute;
+  top: 90px;
+  right: 40px;
+  z-index: 10;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  background: rgba(212, 168, 83, 0.12);
-  border: 1px solid rgba(212, 168, 83, 0.3);
-  border-radius: 4px;
-  color: var(--gold);
+  gap: 10px;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, rgba(212,168,83,0.15), rgba(212,168,83,0.05));
+  border: 1px solid rgba(212,168,83,0.4);
+  border-radius: 6px;
+  backdrop-filter: blur(12px);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  animation: giftFloat 3s ease-in-out infinite;
+}
+.hero__gift-banner:hover {
+  transform: translateY(-2px);
+  border-color: rgba(212,168,83,0.7);
+  box-shadow: 0 0 20px rgba(212,168,83,0.3), 0 4px 20px rgba(0,0,0,0.3);
+}
+.hero__gift-icon {
+  font-size: 1.4rem;
+}
+.hero__gift-text {
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  animation: giftPulse 2s ease-in-out infinite;
-}
-.nav__gift-arrow {
   color: var(--gold);
-  flex-shrink: 0;
+  letter-spacing: 0.04em;
 }
-@keyframes giftPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+.hero__gift-text strong {
+  color: #f0d060;
 }
+@keyframes giftFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Gift hint in nav — removed, now in hero */
+.nav__gift-hint { display: none; }
 
 .nav__profile {
   position: relative;
@@ -3815,8 +3834,8 @@ a {
   /* Hide shop link in nav */
   .nav__links-vertical a[href="/shop.html"] { display: none; }
   
-  /* Hide gift hint on mobile (clutters nav) */
-  .nav__gift-hint { display: none; }
+  /* Hide gift banner on mobile */
+  .hero__gift-banner { display: none; }
 
   /* Hide non-essential sections */
   .welcome-showcase,
