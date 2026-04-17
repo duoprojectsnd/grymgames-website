@@ -112,11 +112,15 @@ def create_user_from_template(steam_id: str, persona: str = "", email: str = "")
 
 
 def update_user_email(steam_id: str, email: str):
+    user = fetch_user(steam_id)
+    info = user.get("Info", {}) if user else {}
+    info["email"] = email
     _dynamo().update_item(
         TableName=_cfg["table_name"],
         Key={"steamID": {"S": steam_id}},
-        UpdateExpression="SET Info.email = :e",
-        ExpressionAttributeValues={":e": {"S": email}},
+        UpdateExpression="SET #info = :i",
+        ExpressionAttributeNames={"#info": "Info"},
+        ExpressionAttributeValues={":i": _serializer.serialize(info)},
     )
 
 
