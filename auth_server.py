@@ -422,7 +422,7 @@ def _send_confirmation_email(to_email: str, confirm_url: str):
     msg.attach(MIMEText(html, "html"))
 
     ctx = ssl.create_default_context()
-    with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
+    with smtplib.SMTP("smtp.zohocloud.ca", 587, timeout=30) as server:
         server.ehlo()
         server.starttls(context=ctx)
         server.ehlo()
