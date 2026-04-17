@@ -1041,6 +1041,11 @@ a {
   cursor: pointer;
 }
 
+.faction-card__icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 .faction-card__name:hover {
   opacity: 0.85;
 }

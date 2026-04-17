@@ -436,20 +436,20 @@
     if (dimRight) {
       // dims are visual only, no click/hover
     }
-    // Faction card name clicks trigger selection
+    // Faction card name + icon clicks trigger selection
     factionCards.forEach(card => {
-      const nameEl = card.querySelector('.faction-card__name');
-      if (nameEl) {
-        nameEl.addEventListener('click', () => selectFaction(card.dataset.faction));
-        nameEl.addEventListener('mouseenter', () => {
+      const clickables = card.querySelectorAll('.faction-card__name, .faction-card__icon');
+      clickables.forEach(el => {
+        el.addEventListener('click', () => selectFaction(card.dataset.faction));
+        el.addEventListener('mouseenter', () => {
           document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
             .forEach(c => c.classList.add('faction-card--hovered'));
         });
-        nameEl.addEventListener('mouseleave', () => {
+        el.addEventListener('mouseleave', () => {
           document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
             .forEach(c => c.classList.remove('faction-card--hovered'));
         });
-      }
+      });
     });
 
     // Default: select left side (umbra)
