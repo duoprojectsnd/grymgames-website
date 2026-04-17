@@ -67,8 +67,8 @@ STEAM_OPENID_URL = "https://steamcommunity.com/openid/login"
 SITE_URL = os.environ.get("SITE_URL", "http://localhost:5000")
 
 # Gmail SMTP for confirmation emails
-GMAIL_USER = os.environ.get("EMAILUSERNAME", _cfg.get("gmail_user", ""))
-GMAIL_APP_PASSWORD = os.environ.get("APPEMAIL", _cfg.get("gmail_app_password", ""))
+GMAIL_USER = os.environ.get("APPUSERNAME", _cfg.get("gmail_user", ""))
+GMAIL_APP_PASSWORD = os.environ.get("APPPASSWORD", _cfg.get("gmail_app_password", ""))
 
 _serializer = TypeSerializer()
 _deserializer = TypeDeserializer()
