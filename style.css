@@ -883,7 +883,6 @@ a {
   background: linear-gradient(to left, rgba(6,5,7,0.85) 30%, transparent 100%);
 }
 .factions__dim--revealed { opacity: 0; pointer-events: none; }
-.factions__dim:not(.factions__dim--revealed):hover { opacity: 0.3; }
 
 /* Animated click invite chevrons */
 .factions__dim-cta {
@@ -1020,7 +1019,7 @@ a {
   max-width: 1100px;
   margin: 0 auto;
   position: relative;
-  z-index: 2;
+  z-index: 5;
 }
 
 /* Individual faction card */
