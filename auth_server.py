@@ -4,7 +4,9 @@ Handles Steam OpenID authentication and links Steam IDs to DynamoDB.
 Run: python auth_server.py
 """
 
-import os, json, copy, re, secrets
+import os, json, copy, re, secrets, smtplib, ssl, hashlib, time
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from decimal import Decimal
 from urllib.parse import urlencode, parse_qs
 import requests
@@ -64,9 +66,15 @@ def _sanitize(obj):
 STEAM_OPENID_URL = "https://steamcommunity.com/openid/login"
 SITE_URL = os.environ.get("SITE_URL", "http://localhost:5000")
 
+# Gmail SMTP for confirmation emails
+GMAIL_USER = os.environ.get("EMAILUSERNAME", _cfg.get("gmail_user", ""))
+GMAIL_APP_PASSWORD = os.environ.get("EMAILPASSWORD", _cfg.get("gmail_app_password", ""))
+
 _serializer = TypeSerializer()
 _deserializer = TypeDeserializer()
 
+# In-memory pending email confirmations: {token: {steam_id, email, ts}}
+_pending_confirms = {}
 
 # ─── DynamoDB helpers ─────────────────────────────────────────────────────────
 def _dynamo():
@@ -260,7 +268,7 @@ def set_email():
 
 @app.route("/auth/claim-welcome-gift", methods=["POST"])
 def claim_welcome_gift():
-    """Award 500 void pearls (curr03), mark in Stat."""
+    """Send confirmation email. Gift is awarded when email is confirmed."""
     if "steam_id" not in session:
         return jsonify({"error": "Not logged in"}), 401
     data = request.get_json(silent=True) or {}
@@ -269,35 +277,190 @@ def claim_welcome_gift():
         return jsonify({"error": "No email provided"}), 400
     steam_id = session["steam_id"]
     try:
-        update_user_email(steam_id, email)
         user = fetch_user(steam_id)
         if not user:
             return jsonify({"error": "User not found"}), 404
-
         stat = user.get("Stat", {})
         if stat.get("WelcomeGiftClaimed") == "True":
             return jsonify({"ok": True, "already_claimed": True})
 
-        currencies = user.get("Currencies", {})
-        current_pearls = int(currencies.get("curr03", currencies.get("Curr03", "0")))
-        new_pearls = current_pearls + 500
+        # Generate confirmation token
+        token = secrets.token_urlsafe(32)
+        _pending_confirms[token] = {
+            "steam_id": steam_id,
+            "email": email,
+            "ts": time.time(),
+        }
+        # Clean old tokens (>1 hour)
+        cutoff = time.time() - 3600
+        for k in list(_pending_confirms):
+            if _pending_confirms[k]["ts"] < cutoff:
+                del _pending_confirms[k]
 
-        currencies["curr03"] = str(new_pearls)
-        stat["WelcomeGiftClaimed"] = "True"
+        confirm_url = f"{SITE_URL}/auth/confirm-email?token={token}"
+        _send_confirmation_email(email, confirm_url)
+        return jsonify({"ok": True, "pending": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-        dynamo = _dynamo()
-        table = _cfg["table_name"]
-        key = {"steamID": {"S": steam_id}}
-        dynamo.update_item(
-            TableName=table, Key=key,
-            UpdateExpression="SET #curr = :c, #st = :s",
-            ExpressionAttributeNames={"#curr": "Currencies", "#st": "Stat"},
-            ExpressionAttributeValues={
-                ":c": _serializer.serialize(currencies),
-                ":s": _serializer.serialize(stat),
-            },
-        )
-        return jsonify({"ok": True, "pearls": new_pearls})
+
+def _send_confirmation_email(to_email: str, confirm_url: str):
+    """Send a styled confirmation email via Gmail SMTP."""
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = "OKUBI — Confirm Your Email"
+    msg["From"] = f"OKUBI <{GMAIL_USER}>"
+    msg["To"] = to_email
+
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKUBI — Confirm Your Email</title>
+  <style type="text/css">
+    body, table, td, a {{ -webkit-text-size-adjust: 100%%; -ms-text-size-adjust: 100%%; }}
+    body {{ margin: 0; padding: 0; width: 100% !important; }}
+    a {{ text-decoration: none; }}
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#08080c;">
+  <div style="display:none; max-height:0; overflow:hidden;">Confirm your email to claim 500 Void Pearls!</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#08080c;">
+    <tr>
+      <td align="center" style="padding: 24px 12px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#0e0e14; overflow:hidden;">
+          <!-- NEON BAR -->
+          <tr>
+            <td style="height:3px; background: linear-gradient(90deg, #d4a853, #f0d060, #d4a853); background-size: 300% 100%;"></td>
+          </tr>
+          <!-- LOGO -->
+          <tr>
+            <td align="center" style="padding: 40px 0 4px 0;">
+              <a href="https://grymgames.net" target="_blank"><img src="https://i.ibb.co/KzpCwCVR/okubi-logo.png" alt="OKUBI" width="120" style="display:block; width:120px; height:auto;" /></a>
+            </td>
+          </tr>
+          <!-- HEADLINE -->
+          <tr>
+            <td align="center" style="padding: 20px 32px 0 32px;">
+              <h1 style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:42px; font-weight:400; letter-spacing:0.04em; line-height:1.0; color:#ffffff; text-transform:uppercase;">
+                Confirm Your<br>
+                <span style="color:#d4a853;">Email Address</span>
+              </h1>
+            </td>
+          </tr>
+          <!-- SUBHEADLINE -->
+          <tr>
+            <td align="center" style="padding: 16px 40px 0 40px;">
+              <p style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:400; color:#9a9ab0; line-height:1.6;">
+                Click the button below to verify your email and claim your welcome gift of <strong style="color:#d4a853;">500 Void Pearls</strong>.
+              </p>
+            </td>
+          </tr>
+          <!-- REWARD BOX -->
+          <tr>
+            <td align="center" style="padding: 28px 40px 0 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="background:rgba(212,168,83,0.06); border:1px solid rgba(212,168,83,0.2); border-radius:8px;">
+                <tr>
+                  <td align="center" style="padding: 20px 40px;">
+                    <p style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:36px; color:#d4a853; line-height:1;">500</p>
+                    <p style="margin:4px 0 0 0; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:#9a9ab0;">Void Pearls</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- CTA BUTTON -->
+          <tr>
+            <td align="center" style="padding: 28px 40px 0 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="border-radius:6px; background:linear-gradient(135deg, #d4a853, #b8912e);">
+                    <a href="{confirm_url}" target="_blank" style="display:block; padding:18px 32px; font-family:'Bebas Neue',Impact,sans-serif; font-size:18px; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; color:#0a0908; text-decoration:none; text-align:center;">
+                      &#10003;&ensp;Confirm Email &amp; Claim Gift
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- SMALL PRINT -->
+          <tr>
+            <td align="center" style="padding: 20px 40px 0 40px;">
+              <p style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:11px; color:#4a4a5e; line-height:1.5;">
+                If the button doesn't work, copy and paste this link into your browser:
+              </p>
+              <p style="margin:6px 0 0 0; font-family:'Space Grotesk',sans-serif; font-size:11px; color:#d4a853; word-break:break-all;">
+                {confirm_url}
+              </p>
+            </td>
+          </tr>
+          <!-- FOOTER -->
+          <tr>
+            <td align="center" style="padding: 40px 32px 24px 32px; border-top: 1px solid #1a1a28;">
+              <p style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:11px; color:#3a3a4e;">
+                &copy; 2026 Grym Games &middot; OKUBI
+              </p>
+              <p style="margin:6px 0 0 0; font-family:'Space Grotesk',sans-serif; font-size:10px; color:#2a2a3a;">
+                If you didn't request this, you can safely ignore this email.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
+
+    msg.attach(MIMEText(html, "html"))
+
+    ctx = ssl.create_default_context()
+    with smtplib.SMTP("smtp.gmail.com", 587, timeout=30) as server:
+        server.ehlo()
+        server.starttls(context=ctx)
+        server.ehlo()
+        server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+        server.sendmail(GMAIL_USER, to_email, msg.as_string())
+
+
+@app.route("/auth/confirm-email")
+def confirm_email():
+    """Verify token from email link, save email + award gift."""
+    token = request.args.get("token", "")
+    pending = _pending_confirms.pop(token, None)
+    if not pending:
+        return redirect("/?error=invalid_or_expired_token")
+
+    steam_id = pending["steam_id"]
+    email = pending["email"]
+
+    try:
+        update_user_email(steam_id, email)
+        user = fetch_user(steam_id)
+        if user:
+            stat = user.get("Stat", {})
+            if stat.get("WelcomeGiftClaimed") != "True":
+                currencies = user.get("Currencies", {})
+                current_pearls = int(currencies.get("curr03", currencies.get("Curr03", "0")))
+                currencies["curr03"] = str(current_pearls + 500)
+                stat["WelcomeGiftClaimed"] = "True"
+                dynamo = _dynamo()
+                table = _cfg["table_name"]
+                key = {"steamID": {"S": steam_id}}
+                dynamo.update_item(
+                    TableName=table, Key=key,
+                    UpdateExpression="SET #curr = :c, #st = :s",
+                    ExpressionAttributeNames={"#curr": "Currencies", "#st": "Stat"},
+                    ExpressionAttributeValues={
+                        ":c": _serializer.serialize(currencies),
+                        ":s": _serializer.serialize(stat),
+                    },
+                )
+    except Exception:
+        pass
+
+    return redirect("/?confirmed=true")
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
