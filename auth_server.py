@@ -148,6 +148,11 @@ def index():
     return send_from_directory(".", "index.html")
 
 
+@app.route("/welcome")
+def welcome_page():
+    return send_from_directory(".", "welcome.html")
+
+
 @app.route("/auth/steam/login")
 def steam_login():
     """Redirect the user to Steam's OpenID login page."""
@@ -206,7 +211,7 @@ def steam_callback():
             session["username"] = persona or steam_id
             session["is_new"] = False
 
-    return redirect("/welcome.html")
+    return redirect("/welcome")
 
 
 @app.route("/auth/steam/logout")
@@ -251,7 +256,7 @@ def set_email():
 
 @app.route("/auth/claim-welcome-gift", methods=["POST"])
 def claim_welcome_gift():
-    """Award 500 gems (curr02) for providing email on first login."""
+    """Award 500 gems (curr02) + 500 void pearls (curr03), mark in Stat."""
     if "steam_id" not in session:
         return jsonify({"error": "Not logged in"}), 401
     data = request.get_json(silent=True) or {}
@@ -259,22 +264,39 @@ def claim_welcome_gift():
     if not email:
         return jsonify({"error": "No email provided"}), 400
     steam_id = session["steam_id"]
-    dynamo = _dynamo()
-    table = _cfg["table_name"]
-    key = {"steamID": {"S": steam_id}}
     try:
         update_user_email(steam_id, email)
-        raw = dynamo.get_item(TableName=table, Key=key).get("Item", {})
-        currencies_map = raw.get("Currencies", {}).get("M", {})
-        gem_key = "curr02" if "curr02" in currencies_map else "Curr02"
-        current = int(currencies_map.get(gem_key, {}).get("S", "0"))
+        user = fetch_user(steam_id)
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        stat = user.get("Stat", {})
+        if stat.get("WelcomeGiftClaimed") == "True":
+            return jsonify({"ok": True, "already_claimed": True})
+
+        currencies = user.get("Currencies", {})
+        current_gems = int(currencies.get("curr02", currencies.get("Curr02", "0")))
+        current_pearls = int(currencies.get("curr03", currencies.get("Curr03", "0")))
+        new_gems = current_gems + 500
+        new_pearls = current_pearls + 500
+
+        currencies["curr02"] = str(new_gems)
+        currencies["curr03"] = str(new_pearls)
+        stat["WelcomeGiftClaimed"] = "True"
+
+        dynamo = _dynamo()
+        table = _cfg["table_name"]
+        key = {"steamID": {"S": steam_id}}
         dynamo.update_item(
             TableName=table, Key=key,
-            UpdateExpression="SET Currencies.#gk = :nb",
-            ExpressionAttributeNames={"#gk": gem_key},
-            ExpressionAttributeValues={":nb": {"S": str(current + 500)}},
+            UpdateExpression="SET #curr = :c, #st = :s",
+            ExpressionAttributeNames={"#curr": "Currencies", "#st": "Stat"},
+            ExpressionAttributeValues={
+                ":c": _serializer.serialize(currencies),
+                ":s": _serializer.serialize(stat),
+            },
         )
-        return jsonify({"ok": True, "gems": current + 500})
+        return jsonify({"ok": True, "gems": new_gems, "pearls": new_pearls})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
