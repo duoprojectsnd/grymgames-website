@@ -68,7 +68,7 @@ SITE_URL = os.environ.get("SITE_URL", "http://localhost:5000")
 
 # Gmail SMTP for confirmation emails
 GMAIL_USER = os.environ.get("EMAILUSERNAME", _cfg.get("gmail_user", ""))
-GMAIL_APP_PASSWORD = os.environ.get("EMAILPASSWORD", _cfg.get("gmail_app_password", ""))
+GMAIL_APP_PASSWORD = os.environ.get("APPEMAIL", _cfg.get("gmail_app_password", ""))
 
 _serializer = TypeSerializer()
 _deserializer = TypeDeserializer()
