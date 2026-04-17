@@ -256,7 +256,7 @@ def set_email():
 
 @app.route("/auth/claim-welcome-gift", methods=["POST"])
 def claim_welcome_gift():
-    """Award 500 gems (curr02) + 500 void pearls (curr03), mark in Stat."""
+    """Award 500 void pearls (curr03), mark in Stat."""
     if "steam_id" not in session:
         return jsonify({"error": "Not logged in"}), 401
     data = request.get_json(silent=True) or {}
@@ -275,12 +275,9 @@ def claim_welcome_gift():
             return jsonify({"ok": True, "already_claimed": True})
 
         currencies = user.get("Currencies", {})
-        current_gems = int(currencies.get("curr02", currencies.get("Curr02", "0")))
         current_pearls = int(currencies.get("curr03", currencies.get("Curr03", "0")))
-        new_gems = current_gems + 500
         new_pearls = current_pearls + 500
 
-        currencies["curr02"] = str(new_gems)
         currencies["curr03"] = str(new_pearls)
         stat["WelcomeGiftClaimed"] = "True"
 
@@ -296,7 +293,7 @@ def claim_welcome_gift():
                 ":s": _serializer.serialize(stat),
             },
         )
-        return jsonify({"ok": True, "gems": new_gems, "pearls": new_pearls})
+        return jsonify({"ok": True, "pearls": new_pearls})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
