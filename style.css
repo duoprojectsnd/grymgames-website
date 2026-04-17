@@ -871,7 +871,7 @@ a {
   bottom: 0;
   width: 60%;
   z-index: 3;
-  cursor: pointer;
+  pointer-events: none;
   transition: opacity 0.6s ease;
 }
 .factions__dim--left {
@@ -1029,11 +1029,20 @@ a {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  cursor: pointer;
+  pointer-events: none;
   transition: filter 0.4s ease;
   background: none;
   border: none;
   padding: 20px;
+}
+
+.faction-card__name {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.faction-card__name:hover {
+  opacity: 0.85;
 }
 
 /* Slide in from left */
@@ -1181,6 +1190,20 @@ a {
 /* Clickable active state */
 .faction-card--active {
   transform: translateY(-4px);
+}
+.faction-card--active::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 10px auto 0;
+  background: var(--gold, #d4a853);
+  box-shadow: 0 0 8px rgba(212,168,83,0.6);
+}
+.faction-card--umbra.faction-card--active::after {
+  background: #a880ff;
+  box-shadow: 0 0 8px rgba(168,128,255,0.6);
 }
 
 /* ─── Faction Center Detail Panel ──────────────────────────────────── */

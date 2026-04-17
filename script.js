@@ -431,38 +431,25 @@
     }
 
     if (dimLeft) {
-      dimLeft.addEventListener('click', () => selectFaction('umbra'));
-      dimLeft.addEventListener('mouseenter', () => {
-        document.querySelectorAll('.faction-card[data-faction="umbra"]')
-          .forEach(c => c.classList.add('faction-card--hovered'));
-      });
-      dimLeft.addEventListener('mouseleave', () => {
-        document.querySelectorAll('.faction-card[data-faction="umbra"]')
-          .forEach(c => c.classList.remove('faction-card--hovered'));
-      });
+      // dims are visual only, no click/hover
     }
     if (dimRight) {
-      dimRight.addEventListener('click', () => selectFaction('sol'));
-      dimRight.addEventListener('mouseenter', () => {
-        document.querySelectorAll('.faction-card[data-faction="sol"]')
-          .forEach(c => c.classList.add('faction-card--hovered'));
-      });
-      dimRight.addEventListener('mouseleave', () => {
-        document.querySelectorAll('.faction-card[data-faction="sol"]')
-          .forEach(c => c.classList.remove('faction-card--hovered'));
-      });
+      // dims are visual only, no click/hover
     }
-    // Also allow faction card clicks to trigger the same
+    // Faction card name clicks trigger selection
     factionCards.forEach(card => {
-      card.addEventListener('click', () => selectFaction(card.dataset.faction));
-      card.addEventListener('mouseenter', () => {
-        document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
-          .forEach(c => c.classList.add('faction-card--hovered'));
-      });
-      card.addEventListener('mouseleave', () => {
-        document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
-          .forEach(c => c.classList.remove('faction-card--hovered'));
-      });
+      const nameEl = card.querySelector('.faction-card__name');
+      if (nameEl) {
+        nameEl.addEventListener('click', () => selectFaction(card.dataset.faction));
+        nameEl.addEventListener('mouseenter', () => {
+          document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
+            .forEach(c => c.classList.add('faction-card--hovered'));
+        });
+        nameEl.addEventListener('mouseleave', () => {
+          document.querySelectorAll(`.faction-card[data-faction="${card.dataset.faction}"]`)
+            .forEach(c => c.classList.remove('faction-card--hovered'));
+        });
+      }
     });
 
     // Default: select left side (umbra)
