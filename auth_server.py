@@ -340,9 +340,15 @@ def _send_confirmation_email(to_email: str, confirm_url: str):
           <tr>
             <td style="height:3px; background: linear-gradient(90deg, #d4a853, #f0d060, #d4a853); background-size: 300% 100%;"></td>
           </tr>
+          <!-- HERO IMAGE -->
+          <tr>
+            <td style="position:relative;">
+              <a href="{SITE_URL}" target="_blank"><img src="{SITE_URL}/assets/home/hero_email.jpg" alt="OKUBI" width="600" style="display:block; width:100%; height:auto;" /></a>
+            </td>
+          </tr>
           <!-- LOGO -->
           <tr>
-            <td align="center" style="padding: 40px 0 4px 0;">
+            <td align="center" style="padding: 24px 0 4px 0;">
               <a href="https://grymgames.net" target="_blank"><img src="https://i.ibb.co/KzpCwCVR/okubi-logo.png" alt="OKUBI" width="120" style="display:block; width:120px; height:auto;" /></a>
             </td>
           </tr>
