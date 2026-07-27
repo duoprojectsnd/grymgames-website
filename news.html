@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .news-layout { max-width: 100%; margin: 0 auto; padding: 80px 100px 100px; }
+    .news-layout { max-width: 100%; margin: 0 auto; padding: 80px 200px 200px; }
     /* Top row: featured left + 2 stacked right */
     .news-top { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px; }
     .news-top__featured {
@@ -98,6 +98,44 @@
     .news-loading {
       text-align: center; color: #888; padding: 120px 24px;
       font-family: 'Rajdhani', sans-serif; font-size: 1.1rem;
+    }
+
+    /* Older news list */
+    .news-older { margin-top: 60px; padding-top: 40px; border-top: 1px solid #1e1e30; }
+    .news-older__title {
+      font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #888;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px;
+    }
+    .news-older__item {
+      display: flex; gap: 24px; padding: 24px 0;
+      border-bottom: 1px solid #1a1a2a; cursor: pointer;
+      transition: background 0.15s; text-decoration: none;
+    }
+    .news-older__item:hover { background: rgba(255,255,255,0.02); }
+    .news-older__img {
+      width: 240px; height: 135px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+    }
+    .news-older__info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .news-older__item-title {
+      font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #f59e0b;
+      margin-bottom: 8px; line-height: 1.3;
+    }
+    .news-older__item-excerpt {
+      font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #999;
+      line-height: 1.5; margin-bottom: 8px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .news-older__item-date {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: #555;
+    }
+    @media (max-width: 900px) {
+      .news-layout { padding: 80px 40px 100px; }
+      .news-older__img { width: 160px; height: 90px; }
+    }
+    @media (max-width: 600px) {
+      .news-layout { padding: 80px 16px 60px; }
+      .news-older__item { flex-direction: column; gap: 12px; }
+      .news-older__img { width: 100%; height: 180px; }
     }
   </style>
 </head>
@@ -227,10 +265,13 @@
       });
       html += '</div></div>';
 
-      // Bottom grid (3 columns)
-      if (rest.length) {
+      // Bottom grid (first 3 after featured+side)
+      const gridItems = rest.slice(0, 3);
+      const olderItems = rest.slice(3);
+
+      if (gridItems.length) {
         html += '<div class="news-bottom">';
-        rest.forEach(item => {
+        gridItems.forEach(item => {
           html += `
             <a href="/article.html?slug=${item.slug}" class="news-grid-card">
               <img class="news-grid-card__img" src="${item.image || ''}" alt="" />
@@ -238,6 +279,25 @@
               <div class="news-grid-card__content">
                 <div class="news-grid-card__sub">${item.excerpt}</div>
                 <h3 class="news-grid-card__title">${item.title}</h3>
+              </div>
+            </a>
+          `;
+        });
+        html += '</div>';
+      }
+
+      // Older news (list style)
+      if (olderItems.length) {
+        html += '<div class="news-older">';
+        html += '<div class="news-older__title">Previous Updates</div>';
+        olderItems.forEach(item => {
+          html += `
+            <a href="/article.html?slug=${item.slug}" class="news-older__item">
+              <img class="news-older__img" src="${item.image || ''}" alt="" />
+              <div class="news-older__info">
+                <h3 class="news-older__item-title">${item.title}</h3>
+                <p class="news-older__item-excerpt">${item.excerpt}</p>
+                <span class="news-older__item-date">${item.displayDate || item.date}</span>
               </div>
             </a>
           `;
