@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>OKUBI — Events</title>
+  <meta name="description" content="Upcoming tournaments, seasonal events, and world events in OKUBI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ─── Events Page Specific ─────────────────────────────────────────── */
+    .events-hero {
+      min-height: 40vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 60px;
+      background: linear-gradient(180deg, #0a0a14 0%, #12121f 100%);
+    }
+    .events-hero__title {
+      font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 5vw, 3.2rem);
+      color: #fff; margin-bottom: 12px;
+    }
+    .events-hero__sub {
+      color: #888; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; max-width: 540px; margin: 0 auto;
+    }
+
+    /* Tabs */
+    .events-tabs {
+      display: flex; justify-content: center; gap: 8px; padding: 0 24px;
+      margin-bottom: 32px; flex-wrap: wrap;
+    }
+    .events-tabs__btn {
+      padding: 8px 20px; border-radius: 20px; border: 1px solid #333;
+      background: transparent; color: #aaa; font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .events-tabs__btn:hover { border-color: #666; color: #fff; }
+    .events-tabs__btn--active {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      border-color: transparent; color: #fff;
+    }
+
+    /* Featured event */
+    .events-featured {
+      max-width: 900px; margin: 0 auto 48px; padding: 0 24px;
+    }
+    .events-featured__card {
+      position: relative; border-radius: 16px; overflow: hidden;
+      background: #1a1a2e; border: 1px solid #2a2a40; cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .events-featured__card:hover { transform: translateY(-3px); }
+    .events-featured__card--tournament { border: 1px solid #3d2f0a; box-shadow: 0 0 30px rgba(245,158,11,0.1); }
+    .events-featured__card--seasonal { border: 1px solid #1a2d4a; box-shadow: 0 0 30px rgba(59,130,246,0.1); }
+    .events-featured__card--world { border: 1px solid #3d1515; box-shadow: 0 0 30px rgba(239,68,68,0.1); }
+    .events-featured__img {
+      width: 100%; height: 280px; object-fit: cover; display: block;
+    }
+    .events-featured__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,20,0.95) 0%, rgba(10,10,20,0.3) 60%, transparent 100%);
+    }
+    .events-featured__content {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 32px;
+    }
+    .events-featured__badge {
+      display: inline-block; padding: 4px 12px; border-radius: 4px;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;
+    }
+    .events-featured__title {
+      font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 8px;
+    }
+    .events-featured__date {
+      font-family: 'Rajdhani', sans-serif; color: #aaa; font-size: 0.9rem;
+    }
+    .events-featured__excerpt {
+      color: #999; font-family: 'Inter', sans-serif; font-size: 0.85rem; margin-top: 8px; line-height: 1.5;
+    }
+
+    /* Event list */
+    .events-list {
+      max-width: 900px; margin: 0 auto; padding: 0 24px 80px;
+    }
+    .events-list__item {
+      display: flex; gap: 20px; padding: 20px;
+      background: #12121f; border: 1px solid #1e1e30; border-radius: 12px;
+      margin-bottom: 12px; transition: border-color 0.2s, transform 0.15s; align-items: center;
+      cursor: pointer; text-decoration: none;
+    }
+    .events-list__item:hover { transform: translateY(-2px); }
+    /* Type-based panel colors */
+    .events-list__item--tournament { background: linear-gradient(135deg, #1a1708 0%, #1f1a0a 100%); border: 1px solid #3d2f0a; }
+    .events-list__item--tournament:hover { border-color: #f59e0b; box-shadow: 0 4px 20px rgba(245,158,11,0.15); }
+    .events-list__item--seasonal { background: linear-gradient(135deg, #0a1220 0%, #0c1a2e 100%); border: 1px solid #1a2d4a; }
+    .events-list__item--seasonal:hover { border-color: #3b82f6; box-shadow: 0 4px 20px rgba(59,130,246,0.15); }
+    .events-list__item--world { background: linear-gradient(135deg, #1a0a0a 0%, #200d0d 100%); border: 1px solid #3d1515; }
+    .events-list__item--world:hover { border-color: #ef4444; box-shadow: 0 4px 20px rgba(239,68,68,0.15); }
+    .events-list__img {
+      width: 120px; height: 80px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+    }
+    .events-list__info { flex: 1; min-width: 0; }
+    .events-list__top { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
+    .events-list__title {
+      font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: #fff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .events-list__badge {
+      display: inline-block; padding: 2px 8px; border-radius: 3px;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0;
+    }
+    .events-list__date {
+      font-family: 'Rajdhani', sans-serif; color: #666; font-size: 0.8rem; margin-bottom: 4px;
+    }
+    .events-list__excerpt {
+      color: #888; font-family: 'Inter', sans-serif; font-size: 0.8rem; line-height: 1.4;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .events-list__type {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; color: #555;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* Badge colors */
+    .badge--live { background: #16a34a; color: #fff; animation: pulse-badge 2s infinite; }
+    .badge--upcoming { background: #2563eb; color: #fff; }
+    .badge--ended { background: #374151; color: #9ca3af; }
+
+    @keyframes pulse-badge {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Type accent colors */
+    .type--tournament { color: #f59e0b; }
+    .type--seasonal { color: #3b82f6; }
+    .type--world { color: #ef4444; }
+
+    /* Empty state */
+    .events-empty {
+      text-align: center; color: #555; padding: 60px 24px;
+      font-family: 'Rajdhani', sans-serif; font-size: 1.1rem;
+    }
+
+    @media (max-width: 600px) {
+      .events-list__item { flex-direction: column; gap: 12px; }
+      .events-list__img { width: 100%; height: 140px; }
+      .events-featured__img { height: 200px; }
+      .event-detail__nav { flex-direction: column; }
+    }
+
+    /* ─── Event Detail View ────────────────────────────────────────────── */
+    .event-detail { display: none; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+    .event-detail--visible { display: block; }
+    .event-detail__back {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: #888; font-family: 'Rajdhani', sans-serif; font-size: 0.9rem;
+      cursor: pointer; border: none; background: none; padding: 8px 0; margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+    .event-detail__back:hover { color: #fff; }
+    .event-detail__hero {
+      width: 100%; height: 320px; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 24px;
+    }
+    .event-detail__hero img { width: 100%; height: 100%; object-fit: cover; }
+    .event-detail__hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,20,0.9) 0%, transparent 60%);
+    }
+    .event-detail__hero-content { position: absolute; bottom: 24px; left: 24px; right: 24px; }
+    .event-detail__title {
+      font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 8px;
+    }
+    .event-detail__meta {
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; color: #aaa;
+    }
+    .event-detail__body {
+      background: #12121f; border: 1px solid #1e1e30; border-radius: 12px; padding: 28px; margin-bottom: 20px;
+    }
+    .event-detail__excerpt {
+      color: #ccc; font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px;
+    }
+    .event-detail__content { color: #aaa; font-family: 'Inter', sans-serif; font-size: 0.9rem; line-height: 1.6; }
+    .event-detail__content h2 { color: #fff; font-family: 'Orbitron', sans-serif; font-size: 1rem; margin: 20px 0 8px; }
+    .event-detail__content p { margin-bottom: 10px; }
+    .event-detail__content ul { margin: 8px 0 16px 20px; }
+    .event-detail__content li { margin-bottom: 4px; }
+
+    /* Rewards panel — RPG style */
+    .event-detail__rewards {
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 100%);
+      border: 1px solid #2d1f4e; border-radius: 12px; padding: 28px; margin-bottom: 20px;
+      position: relative; overflow: hidden;
+    }
+    .event-detail__rewards::before {
+      content: ''; position: absolute; inset: 0; opacity: 0.03;
+      background: repeating-linear-gradient(45deg, #fff 0px, #fff 1px, transparent 1px, transparent 12px);
+    }
+    .event-detail__rewards-title {
+      font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #e2b33e; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .event-detail__rewards-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;
+    }
+    .reward-item {
+      background: #0d0d18; border-radius: 10px; padding: 12px; text-align: center;
+      border: 1px solid #222; transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .reward-item:hover { transform: translateY(-3px); }
+    /* Rarity borders and glow */
+    .reward-item--common { border-color: #666; }
+    .reward-item--uncommon { border-color: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.1); }
+    .reward-item--rare { border-color: #3b82f6; box-shadow: 0 0 8px rgba(59,130,246,0.15); }
+    .reward-item--epic { border-color: #a855f7; box-shadow: 0 0 12px rgba(168,85,247,0.2); }
+    .reward-item--mythic { border-color: #ef4444; box-shadow: 0 0 16px rgba(239,68,68,0.25); animation: mythic-glow 2s infinite; }
+    @keyframes mythic-glow {
+      0%, 100% { box-shadow: 0 0 12px rgba(239,68,68,0.25); }
+      50% { box-shadow: 0 0 20px rgba(245,158,11,0.35); }
+    }
+    .reward-item__img {
+      width: 56px; height: 56px; margin: 0 auto 8px; border-radius: 8px;
+      background: #1a1a2e; display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+    .reward-item__name {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 600; line-height: 1.2;
+    }
+    .reward-item__name--common { color: #aaa; }
+    .reward-item__name--uncommon { color: #4ade80; }
+    .reward-item__name--rare { color: #60a5fa; }
+    .reward-item__name--epic { color: #c084fc; }
+    .reward-item__name--mythic { color: #f87171; }
+    .reward-item__qty {
+      position: absolute; top: 6px; right: 8px;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 700;
+      color: #fff; background: rgba(0,0,0,0.6); padding: 1px 6px; border-radius: 3px;
+    }
+    .reward-item__rarity {
+      font-family: 'Inter', sans-serif; font-size: 0.6rem; color: #555;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;
+    }
+
+    /* Type-colored accent on detail */
+    .event-detail__body--tournament { background: linear-gradient(135deg, #1a1708 0%, #12121f 100%); border: 1px solid #3d2f0a; }
+    .event-detail__body--seasonal { background: linear-gradient(135deg, #0a1220 0%, #12121f 100%); border: 1px solid #1a2d4a; }
+    .event-detail__body--world { background: linear-gradient(135deg, #1a0a0a 0%, #12121f 100%); border: 1px solid #3d1515; }
+
+    /* Nav buttons */
+    .event-detail__nav {
+      display: flex; justify-content: space-between; gap: 12px; margin-top: 24px;
+    }
+    .event-detail__nav-btn {
+      padding: 10px 20px; border-radius: 8px; border: 1px solid #333;
+      background: #12121f; color: #aaa; font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .event-detail__nav-btn:hover { border-color: #666; color: #fff; }
+    .event-detail__nav-btn--disabled { opacity: 0.3; pointer-events: none; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img src="assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links-vertical" id="navVertical">
+        <li><a href="/news.html">Game Updates</a></li>
+        <li><a href="/events.html" class="nav__link--active">Events</a></li>
+        <li><a href="/universe.html">The Universe</a></li>
+        <li><a href="/roadmap.html">Roadmap</a></li>
+        <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank">Media Kit</a></li>
+        <li><a href="/shop.html">Shop</a></li>
+      </ul>
+      <div class="nav__auth" id="navAuth">
+        <a href="/auth/steam/login" class="nav__login-btn" id="loginBtn">
+          <svg class="nav__login-steam" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>
+          Login
+        </a>
+        <div class="nav__profile" id="profileMenu" style="display:none;">
+          <button class="nav__profile-btn" id="profileBtn">
+            <img class="nav__profile-avatar" id="profileAvatar" src="" alt="" />
+            <span id="profileBtnName"></span>
+          </button>
+          <span class="nav__profile-curr" id="profileCurr03"></span>
+          <div class="nav__profile-dropdown" id="profileDropdown">
+            <span class="nav__profile-name" id="profileName"></span>
+            <a href="/profile.html" class="nav__profile-link">Character</a>
+            <a href="/auth/steam/logout" class="nav__profile-logout">Logout</a>
+          </div>
+        </div>
+      </div>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ EVENTS HERO ═══ -->
+  <section class="events-hero">
+    <div>
+      <p class="section__eyebrow section__eyebrow--center">Compete & Explore</p>
+      <h1 class="events-hero__title">Events</h1>
+      <p class="events-hero__sub">Tournaments, seasonal celebrations, and world events — never miss a moment in OKUBI.</p>
+    </div>
+  </section>
+
+  <!-- ═══ FILTER TABS ═══ -->
+  <div class="events-tabs" id="eventsTabs">
+    <button class="events-tabs__btn events-tabs__btn--active" data-filter="all">All</button>
+    <button class="events-tabs__btn" data-filter="tournament">Tournaments</button>
+    <button class="events-tabs__btn" data-filter="seasonal">Seasonal</button>
+    <button class="events-tabs__btn" data-filter="world">World Events</button>
+  </div>
+
+  <!-- ═══ FEATURED EVENT ═══ -->
+  <div class="events-featured" id="eventsFeatured"></div>
+
+  <!-- ═══ EVENT LIST ═══ -->
+  <div class="events-list" id="eventsList"></div>
+
+  <!-- ═══ EVENT DETAIL VIEW ═══ -->
+  <div class="event-detail" id="eventDetail"></div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="footer__logo">OKUBI</span>
+          <p class="footer__tagline">Forge Your Own Myth</p>
+        </div>
+        <div class="footer__links">
+          <a href="/#features">Features</a>
+          <a href="/roadmap.html">Roadmap</a>
+          <a href="/news.html">News</a>
+          <a href="/events.html">Events</a>
+          <a href="/#community">Community</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://discord.gg/okubi" target="_blank" aria-label="Discord">💬</a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter">𝕏</a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 OKUBI. All rights reserved. Powered by Unreal Engine 5.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ BACK TO TOP ═══ -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- Floating Playtest Status -->
+  <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="playtest-float" id="playtestFloat">
+    <img src="assets/okubi-logo.png" alt="OKUBI" class="playtest-float__logo" />
+    <span class="playtest-float__label">Playtest</span>
+    <span class="playtest-float__status playtest-float__status--live" id="playtestStatus">LIVE</span>
+  </a>
+
+  <script src="script.js"></script>
+  <script>
+  (function() {
+    // ─── Mock Data (will be replaced by /api/events fetch) ──────────────
+    const MOCK_EVENTS = [
+      {
+        slug: 'arena-championship-s1',
+        type: 'tournament',
+        title: 'Arena Championship — Season 1',
+        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0/ss_2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0.1920x1080.jpg?t=1771880532',
+        startDate: '2026-08-01T18:00:00Z',
+        endDate: '2026-08-01T22:00:00Z',
+        excerpt: '32-player single elimination bracket. Top 4 earn exclusive skins and Void Pearls.',
+        rewards: [
+          { name: 'Champion Blade', rarity: 'mythic', qty: 1, icon: '⚔️' },
+          { name: 'Void Pearls', rarity: 'epic', qty: 5000, icon: '💎' },
+          { name: 'Void Pearls', rarity: 'rare', qty: 3000, icon: '💎' },
+          { name: 'Arena Trophy', rarity: 'epic', qty: 1, icon: '🏆' },
+          { name: 'Champion Title', rarity: 'rare', qty: 1, icon: '👑' }
+        ],
+        content: [
+          { type: 'heading', value: 'Format' },
+          { type: 'text', value: 'Single elimination, best of 3 rounds per match. 32 players, 5 rounds to the finals.' },
+          { type: 'heading', value: 'Rules' },
+          { type: 'list', value: ['No consumables allowed', 'All archetypes permitted', 'Standard arena ruleset', 'Matches streamed on Discord'] },
+          { type: 'heading', value: 'How to Enter' },
+          { type: 'text', value: 'Sign up in the #tournaments channel on Discord before August 1st at 5PM EST. First come, first served.' }
+        ]
+      },
+      {
+        slug: 'summer-inferno',
+        type: 'seasonal',
+        title: 'Summer Inferno Festival',
+        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/0af0df51dd6d49ad833d1c31da54951a4fd54024/ss_0af0df51dd6d49ad833d1c31da54951a4fd54024.1920x1080.jpg?t=1771880532',
+        startDate: '2026-07-20T00:00:00Z',
+        endDate: '2026-08-10T23:59:00Z',
+        excerpt: 'Limited-time fire-themed cosmetics, double XP weekends, and the Inferno Arena variant.',
+        rewards: [
+          { name: 'Inferno Greatsword', rarity: 'epic', qty: 1, icon: '🔥' },
+          { name: 'Flame Trail', rarity: 'rare', qty: 1, icon: '✨' },
+          { name: 'Ember Emote', rarity: 'uncommon', qty: 1, icon: '💃' },
+          { name: 'XP Boost Token', rarity: 'common', qty: 5, icon: '⚡' }
+        ],
+        content: [
+          { type: 'text', value: 'The Summer Inferno Festival brings the heat with exclusive fire-themed content available for a limited time.' },
+          { type: 'heading', value: 'Double XP Weekends' },
+          { type: 'text', value: 'Every weekend during the festival, earn double XP from all activities.' },
+          { type: 'heading', value: 'Inferno Arena' },
+          { type: 'text', value: 'A remixed arena with fire hazards, lava pits, and a shrinking safe zone. Available only during the event.' }
+        ]
+      },
+      {
+        slug: 'kraken-awakens',
+        type: 'world',
+        title: 'The Kraken Awakens',
+        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/ss_d5e9eacb3154eb00e00c06333f0508f95b6409a0.1920x1080.jpg?t=1771880532',
+        startDate: '2026-08-05T20:00:00Z',
+        endDate: '2026-08-05T21:30:00Z',
+        excerpt: 'A massive world boss emerges from the Void Sea. Rally 50 players to take it down for server-first rewards.',
+        rewards: [
+          { name: 'Kraken Slayer Title', rarity: 'mythic', qty: 1, icon: '🐙' },
+          { name: 'Tentacle Spine', rarity: 'epic', qty: 1, icon: '🦴' },
+          { name: 'Void Pearls', rarity: 'rare', qty: 2000, icon: '💎' },
+          { name: 'Kraken Scale', rarity: 'uncommon', qty: 3, icon: '🛡️' },
+          { name: 'Health Potion', rarity: 'common', qty: 10, icon: '🧪' }
+        ],
+        content: [
+          { type: 'text', value: 'The ancient Kraken rises from the depths of the Void Sea. This is a one-time server event — be there or miss it forever.' },
+          { type: 'heading', value: 'Boss Mechanics' },
+          { type: 'list', value: ['Phase 1: Tentacle attacks — dodge the sweep patterns', 'Phase 2: Ink cloud — reduced visibility, watch for grabs', 'Phase 3: Enrage — DPS race, all attacks deal double damage'] },
+          { type: 'heading', value: 'Requirements' },
+          { type: 'text', value: 'Minimum level 15. Recommended: full party of 5 with at least 1 healer. Up to 50 players can participate.' }
+        ]
+      },
+      {
+        slug: 'duos-tournament-w3',
+        type: 'tournament',
+        title: 'Duos Tournament — Week 3',
+        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/6aa4612bf582cd106b821c67c43e813867842ff4/ss_6aa4612bf582cd106b821c67c43e813867842ff4.1920x1080.jpg?t=1771880532',
+        startDate: '2026-08-08T19:00:00Z',
+        endDate: '2026-08-08T23:00:00Z',
+        excerpt: '2v2 bracket tournament. Bring your best partner and climb the leaderboard.',
+        rewards: [
+          { name: 'Duo Champions Title', rarity: 'epic', qty: 1, icon: '👑' },
+          { name: 'Void Pearls', rarity: 'rare', qty: 4000, icon: '💎' },
+          { name: 'Team Banner', rarity: 'uncommon', qty: 1, icon: '🚩' }
+        ],
+        content: [
+          { type: 'heading', value: 'Format' },
+          { type: 'text', value: '2v2 double elimination bracket. 16 teams max. Best of 3 per match.' },
+          { type: 'heading', value: 'Sign Up' },
+          { type: 'text', value: 'Register your duo in #tournaments on Discord. Both players must be present at start time.' }
+        ]
+      },
+      {
+        slug: 'christmas-2026',
+        type: 'seasonal',
+        title: 'Frostborn Celebration',
+        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4/ss_7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4.1920x1080.jpg?t=1771880532',
+        startDate: '2026-12-18T00:00:00Z',
+        endDate: '2027-01-05T23:59:00Z',
+        excerpt: 'Snow-covered arenas, holiday cosmetics, gift exchanges, and a special co-op boss fight.',
+        rewards: [
+          { name: 'Frostborn Armor', rarity: 'mythic', qty: 1, icon: '❄️' },
+          { name: 'Snowfall Effect', rarity: 'epic', qty: 1, icon: '🌨️' },
+          { name: 'Holiday Emotes', rarity: 'rare', qty: 3, icon: '🎄' },
+          { name: 'Gift Box', rarity: 'uncommon', qty: 10, icon: '🎁' },
+          { name: 'Candy Cane', rarity: 'common', qty: 25, icon: '🍬' }
+        ],
+        content: [
+          { type: 'text', value: 'Winter has come to OKUBI. All arenas are draped in snow and ice, with holiday decorations throughout.' },
+          { type: 'heading', value: 'Gift Exchange' },
+          { type: 'text', value: 'Send gifts to other players and receive mystery rewards in return. The more you give, the better your gifts become.' },
+          { type: 'heading', value: 'Frostborn Boss' },
+          { type: 'text', value: 'A special co-op boss fight against the Frost Warden. Defeat it to earn the full Frostborn armor set.' }
+        ]
+      },
+      {
+        slug: 'void-rift-incursion',
+        type: 'world',
+        title: 'Void Rift Incursion',
+        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/1e9896257594062dc094547c53bafe2594175ed6/ss_1e9896257594062dc094547c53bafe2594175ed6.1920x1080.jpg?t=1771880532',
+        startDate: '2026-07-25T18:00:00Z',
+        endDate: '2026-07-27T23:59:00Z',
+        excerpt: 'Void rifts have opened across all zones. Defeat waves of corrupted enemies for rare loot.',
+        rewards: [
+          { name: 'Corrupted Blade', rarity: 'epic', qty: 1, icon: '⚔️' },
+          { name: 'Void Shard', rarity: 'rare', qty: 50, icon: '🔮' },
+          { name: 'Void Pet Egg', rarity: 'epic', qty: 1, icon: '🥚' },
+          { name: 'Rift Fragment', rarity: 'uncommon', qty: 20, icon: '💠' },
+          { name: 'Mana Potion', rarity: 'common', qty: 15, icon: '🧪' }
+        ],
+        content: [
+          { type: 'text', value: 'Rifts have torn open across every zone in OKUBI. Corrupted enemies pour through in waves — survive and earn rare Void Shards.' },
+          { type: 'heading', value: 'How It Works' },
+          { type: 'list', value: ['Rifts appear every 30 minutes in random zones', 'Survive 5 waves to close the rift', 'Higher zones = harder enemies = better loot', 'Bonus shards for closing rifts with a full party'] },
+          { type: 'heading', value: 'Void Shard Shop' },
+          { type: 'text', value: 'Spend Void Shards at the temporary vendor for corrupted weapon skins, a void pet, and consumables.' }
+        ]
+      }
+    ];
+
+    // ─── State ────────────────────────────────────────────────────────────
+    const now = new Date();
+    let activeFilter = 'all';
+    let currentView = 'list'; // 'list' or 'detail'
+    let sortedEvents = [];
+
+    // ─── Helpers ──────────────────────────────────────────────────────────
+    function getStatus(event) {
+      const start = new Date(event.startDate);
+      const end = new Date(event.endDate);
+      if (now >= start && now <= end) return 'live';
+      if (now < start) return 'upcoming';
+      return 'ended';
+    }
+
+    function formatDateRange(event) {
+      const start = new Date(event.startDate);
+      const end = new Date(event.endDate);
+      const optsDate = { month: 'short', day: 'numeric', year: 'numeric' };
+      if (start.toDateString() === end.toDateString()) {
+        return start.toLocaleDateString('en-US', optsDate) + ' • ' +
+               start.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) + ' – ' +
+               end.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      }
+      return start.toLocaleDateString('en-US', optsDate) + ' – ' + end.toLocaleDateString('en-US', optsDate);
+    }
+
+    function badgeHTML(status) {
+      const labels = { live: 'LIVE', upcoming: 'UPCOMING', ended: 'ENDED' };
+      return `<span class="events-list__badge badge--${status}">${labels[status]}</span>`;
+    }
+
+    function typeLabel(type) {
+      const labels = { tournament: 'Tournament', seasonal: 'Seasonal', world: 'World Event' };
+      return `<span class="events-list__type type--${type}">${labels[type] || type}</span>`;
+    }
+
+    function renderContent(content) {
+      if (!content || !Array.isArray(content)) return '';
+      return content.map(block => {
+        if (block.type === 'text') return `<p>${block.value}</p>`;
+        if (block.type === 'heading') return `<h2>${block.value}</h2>`;
+        if (block.type === 'list') return `<ul>${block.value.map(i => `<li>${i}</li>`).join('')}</ul>`;
+        return '';
+      }).join('');
+    }
+
+    // ─── Show List View ───────────────────────────────────────────────────
+    function showListView() {
+      currentView = 'list';
+      document.getElementById('eventsFeatured').style.display = '';
+      document.getElementById('eventsList').style.display = '';
+      document.getElementById('eventsTabs').style.display = '';
+      document.getElementById('eventDetail').className = 'event-detail';
+      render();
+    }
+
+    // ─── Show Event Detail ────────────────────────────────────────────────
+    function showEvent(slug) {
+      const event = MOCK_EVENTS.find(e => e.slug === slug);
+      if (!event) return;
+      currentView = 'detail';
+
+      // Hide list elements
+      document.getElementById('eventsFeatured').style.display = 'none';
+      document.getElementById('eventsList').style.display = 'none';
+      document.getElementById('eventsTabs').style.display = 'none';
+
+      const status = getStatus(event);
+      const detailEl = document.getElementById('eventDetail');
+
+      // Find prev/next in sorted list
+      const idx = sortedEvents.findIndex(e => e.slug === slug);
+      const prev = idx > 0 ? sortedEvents[idx - 1] : null;
+      const next = idx < sortedEvents.length - 1 ? sortedEvents[idx + 1] : null;
+
+      let rewardsHTML = '';
+      if (event.rewards && event.rewards.length) {
+        const itemsHTML = event.rewards.map(r => `
+          <div class="reward-item reward-item--${r.rarity}">
+            ${r.qty > 1 ? `<span class="reward-item__qty">x${r.qty}</span>` : ''}
+            <div class="reward-item__img">${r.icon || '📦'}</div>
+            <div class="reward-item__name reward-item__name--${r.rarity}">${r.name}</div>
+            <div class="reward-item__rarity">${r.rarity}</div>
+          </div>
+        `).join('');
+        rewardsHTML = `
+          <div class="event-detail__rewards">
+            <div class="event-detail__rewards-title">🏆 Rewards</div>
+            <div class="event-detail__rewards-grid">${itemsHTML}</div>
+          </div>
+        `;
+      }
+
+      detailEl.innerHTML = `
+        <button class="event-detail__back" id="detailBack">← Back to Events</button>
+        <div class="event-detail__hero">
+          <img src="${event.image}" alt="" />
+          <div class="event-detail__hero-overlay"></div>
+          <div class="event-detail__hero-content">
+            <h1 class="event-detail__title">${event.title}</h1>
+            <div class="event-detail__meta">
+              ${badgeHTML(status)}
+              ${typeLabel(event.type)}
+              <span>${formatDateRange(event)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="event-detail__body event-detail__body--${event.type}">
+          <div class="event-detail__excerpt">${event.excerpt}</div>
+          <div class="event-detail__content">${renderContent(event.content)}</div>
+        </div>
+        ${rewardsHTML}
+        <div class="event-detail__nav">
+          <button class="event-detail__nav-btn ${prev ? '' : 'event-detail__nav-btn--disabled'}" id="detailPrev" data-slug="${prev ? prev.slug : ''}">← ${prev ? prev.title : 'Previous'}</button>
+          <button class="event-detail__nav-btn ${next ? '' : 'event-detail__nav-btn--disabled'}" id="detailNext" data-slug="${next ? next.slug : ''}">${next ? next.title : 'Next'} →</button>
+        </div>
+      `;
+
+      detailEl.className = 'event-detail event-detail--visible';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Bind detail navigation
+      document.getElementById('detailBack').addEventListener('click', showListView);
+      document.getElementById('detailPrev').addEventListener('click', function() {
+        if (this.dataset.slug) showEvent(this.dataset.slug);
+      });
+      document.getElementById('detailNext').addEventListener('click', function() {
+        if (this.dataset.slug) showEvent(this.dataset.slug);
+      });
+    }
+
+    // ─── Render List ──────────────────────────────────────────────────────
+    function render() {
+      let events = MOCK_EVENTS;
+      if (activeFilter !== 'all') {
+        events = events.filter(e => e.type === activeFilter);
+      }
+
+      // Sort: live first, then upcoming (soonest), then ended (most recent)
+      events.sort((a, b) => {
+        const sa = getStatus(a), sb = getStatus(b);
+        const order = { live: 0, upcoming: 1, ended: 2 };
+        if (order[sa] !== order[sb]) return order[sa] - order[sb];
+        if (sa === 'upcoming') return new Date(a.startDate) - new Date(b.startDate);
+        return new Date(b.endDate) - new Date(a.endDate);
+      });
+      sortedEvents = events;
+
+      // Featured: first live or first upcoming
+      const featured = events.find(e => getStatus(e) === 'live') || events.find(e => getStatus(e) === 'upcoming');
+      const featuredEl = document.getElementById('eventsFeatured');
+      const listEl = document.getElementById('eventsList');
+
+      if (featured) {
+        const status = getStatus(featured);
+        featuredEl.innerHTML = `
+          <div class="events-featured__card events-featured__card--${featured.type}" data-slug="${featured.slug}">
+            <img class="events-featured__img" src="${featured.image}" alt="" />
+            <div class="events-featured__overlay"></div>
+            <div class="events-featured__content">
+              <span class="events-featured__badge badge--${status}">${status === 'live' ? '● LIVE NOW' : 'NEXT UP'}</span>
+              <h2 class="events-featured__title">${featured.title}</h2>
+              <p class="events-featured__date">${formatDateRange(featured)}</p>
+              <p class="events-featured__excerpt">${featured.excerpt}</p>
+            </div>
+          </div>
+        `;
+      } else {
+        featuredEl.innerHTML = '';
+      }
+
+      // List (exclude featured)
+      const rest = events.filter(e => e !== featured);
+      if (!rest.length && !featured) {
+        listEl.innerHTML = '<div class="events-empty">No events in this category yet.</div>';
+        return;
+      }
+      if (!rest.length) { listEl.innerHTML = ''; return; }
+
+      listEl.innerHTML = rest.map(event => {
+        const status = getStatus(event);
+        return `
+          <div class="events-list__item events-list__item--${event.type}" data-slug="${event.slug}">
+            <img class="events-list__img" src="${event.image}" alt="" />
+            <div class="events-list__info">
+              <div class="events-list__top">
+                ${badgeHTML(status)}
+                <span class="events-list__title">${event.title}</span>
+              </div>
+              <div class="events-list__date">${formatDateRange(event)}</div>
+              <div class="events-list__excerpt">${event.excerpt}</div>
+              ${typeLabel(event.type)}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ─── Click handlers ───────────────────────────────────────────────────
+    document.addEventListener('click', (e) => {
+      // Featured card click
+      const featCard = e.target.closest('.events-featured__card[data-slug]');
+      if (featCard) { showEvent(featCard.dataset.slug); return; }
+      // List item click
+      const listItem = e.target.closest('.events-list__item[data-slug]');
+      if (listItem) { showEvent(listItem.dataset.slug); return; }
+    });
+
+    // ─── Tab clicks ───────────────────────────────────────────────────────
+    document.getElementById('eventsTabs').addEventListener('click', (e) => {
+      if (!e.target.matches('.events-tabs__btn')) return;
+      document.querySelectorAll('.events-tabs__btn').forEach(b => b.classList.remove('events-tabs__btn--active'));
+      e.target.classList.add('events-tabs__btn--active');
+      activeFilter = e.target.dataset.filter;
+      render();
+    });
+
+    // Initial render
+    render();
+  })();
+  </script>
+    });
+
+    // Initial render
+    render();
+  })();
+  </script>
+</body>
+</html>

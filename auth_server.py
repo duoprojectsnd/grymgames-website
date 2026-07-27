@@ -185,6 +185,11 @@ def universe_page():
     return send_from_directory(".", "universe.html")
 
 
+@app.route("/events.html")
+def events_page():
+    return send_from_directory(".", "events.html")
+
+
 @app.route("/article.html")
 def article_page():
     return send_from_directory(".", "article.html")

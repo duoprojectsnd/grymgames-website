@@ -9,6 +9,97 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .news-layout { max-width: 1200px; margin: 0 auto; padding: 120px 24px 80px; }
+    /* Top row: featured left + 2 stacked right */
+    .news-top { display: grid; grid-template-columns: 1.8fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .news-top__featured {
+      position: relative; border-radius: 12px; overflow: hidden; cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .news-top__featured:hover { transform: translateY(-3px); }
+    .news-top__featured-img {
+      width: 100%; height: 100%; min-height: 420px; object-fit: cover; display: block;
+    }
+    .news-top__featured-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 40%, transparent 70%);
+    }
+    .news-top__featured-content {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 28px;
+    }
+    .news-top__featured-date {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: #aaa; margin-bottom: 6px;
+    }
+    .news-top__featured-title {
+      font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: #f59e0b; line-height: 1.3;
+    }
+    .news-top__featured-excerpt {
+      font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #999; margin-top: 8px; line-height: 1.4;
+    }
+
+    /* Stacked right cards */
+    .news-top__side { display: flex; flex-direction: column; gap: 16px; }
+    .news-side-card {
+      position: relative; border-radius: 12px; overflow: hidden; flex: 1; cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .news-side-card:hover { transform: translateY(-2px); }
+    .news-side-card__img {
+      width: 100%; height: 100%; min-height: 200px; object-fit: cover; display: block;
+    }
+    .news-side-card__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 50%, transparent 80%);
+    }
+    .news-side-card__content { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px; }
+    .news-side-card__sub {
+      font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #bbb; margin-bottom: 4px;
+    }
+    .news-side-card__title {
+      font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #f59e0b; line-height: 1.3;
+    }
+
+    /* Bottom grid: 3 columns */
+    .news-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .news-grid-card {
+      position: relative; border-radius: 12px; overflow: hidden; cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .news-grid-card:hover { transform: translateY(-2px); }
+    .news-grid-card__img {
+      width: 100%; height: 220px; object-fit: cover; display: block;
+    }
+    .news-grid-card__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 50%, transparent 80%);
+    }
+    .news-grid-card__content { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px; }
+    .news-grid-card__sub {
+      font-family: 'Inter', sans-serif; font-size: 0.75rem; color: #bbb; margin-bottom: 4px;
+    }
+    .news-grid-card__title {
+      font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #f59e0b; line-height: 1.3;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .news-top { grid-template-columns: 1fr; }
+      .news-top__featured-img { min-height: 280px; }
+      .news-top__side { flex-direction: row; }
+      .news-bottom { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .news-top__side { flex-direction: column; }
+      .news-bottom { grid-template-columns: 1fr; }
+    }
+
+    /* Loading / empty states */
+    .news-loading {
+      text-align: center; color: #888; padding: 120px 24px;
+      font-family: 'Rajdhani', sans-serif; font-size: 1.1rem;
+    }
+  </style>
 </head>
 <body>
 
@@ -49,24 +140,10 @@
     </div>
   </nav>
 
-  <!-- ═══ NEWS HERO ═══ -->
-  <section class="news-hero">
-    <div class="news-hero__content">
-      <p class="section__eyebrow section__eyebrow--center">Stay Updated</p>
-      <h1 class="news-hero__title">News &amp; Updates</h1>
-      <p class="news-hero__sub">The latest from the world of OKUBI — patch notes, events, and announcements.</p>
-    </div>
-  </section>
-
-  <!-- ═══ ALL NEWS ═══ -->
-  <section class="section section--allnews">
-    <div class="container">
-      <div class="news-grid news-grid--full" id="newsGrid">
-        <!-- Loaded dynamically from /api/news -->
-        <p style="color:#888; text-align:center; grid-column:1/-1;">Loading news...</p>
-      </div>
-    </div>
-  </section>
+  <!-- ═══ NEWS CONTENT ═══ -->
+  <div class="news-layout" id="newsLayout">
+    <p class="news-loading">Loading news...</p>
+  </div>
 
   <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
@@ -110,22 +187,67 @@
   <script>
   (function() {
     fetch('/api/news').then(r => r.json()).then(items => {
-      const grid = document.getElementById('newsGrid');
-      if (!items.length) { grid.innerHTML = '<p style="color:#888;text-align:center;grid-column:1/-1;">No news yet.</p>'; return; }
-      grid.innerHTML = items.map(item => `
-        <a href="/article.html?slug=${item.slug}" class="news-card__link">
-        <article class="news-card revealed">
-          <div class="news-card__img" style="background-image:url('${item.image || ''}');"></div>
-          <div class="news-card__body">
-            <span class="news-card__date">${item.displayDate || item.date}</span>
-            <h3 class="news-card__title">${item.title}</h3>
-            <p class="news-card__excerpt">${item.excerpt}</p>
+      const layout = document.getElementById('newsLayout');
+      if (!items.length) { layout.innerHTML = '<p class="news-loading">No news yet.</p>'; return; }
+
+      let html = '';
+      const featured = items[0];
+      const side = items.slice(1, 3);
+      const rest = items.slice(3);
+
+      // Top row
+      html += '<div class="news-top">';
+
+      // Featured (big left card)
+      html += `
+        <a href="/article.html?slug=${featured.slug}" class="news-top__featured">
+          <img class="news-top__featured-img" src="${featured.image || ''}" alt="" />
+          <div class="news-top__featured-overlay"></div>
+          <div class="news-top__featured-content">
+            <div class="news-top__featured-date">${featured.displayDate || featured.date}</div>
+            <h2 class="news-top__featured-title">${featured.title}</h2>
+            <p class="news-top__featured-excerpt">${featured.excerpt}</p>
           </div>
-        </article>
         </a>
-      `).join('');
+      `;
+
+      // Side cards (stacked right)
+      html += '<div class="news-top__side">';
+      side.forEach(item => {
+        html += `
+          <a href="/article.html?slug=${item.slug}" class="news-side-card">
+            <img class="news-side-card__img" src="${item.image || ''}" alt="" />
+            <div class="news-side-card__overlay"></div>
+            <div class="news-side-card__content">
+              <div class="news-side-card__sub">${item.excerpt}</div>
+              <h3 class="news-side-card__title">${item.title}</h3>
+            </div>
+          </a>
+        `;
+      });
+      html += '</div></div>';
+
+      // Bottom grid (3 columns)
+      if (rest.length) {
+        html += '<div class="news-bottom">';
+        rest.forEach(item => {
+          html += `
+            <a href="/article.html?slug=${item.slug}" class="news-grid-card">
+              <img class="news-grid-card__img" src="${item.image || ''}" alt="" />
+              <div class="news-grid-card__overlay"></div>
+              <div class="news-grid-card__content">
+                <div class="news-grid-card__sub">${item.excerpt}</div>
+                <h3 class="news-grid-card__title">${item.title}</h3>
+              </div>
+            </a>
+          `;
+        });
+        html += '</div>';
+      }
+
+      layout.innerHTML = html;
     }).catch(() => {
-      document.getElementById('newsGrid').innerHTML = '<p style="color:#f88;text-align:center;grid-column:1/-1;">Failed to load news.</p>';
+      document.getElementById('newsLayout').innerHTML = '<p class="news-loading" style="color:#f88;">Failed to load news.</p>';
     });
   })();
   </script>
