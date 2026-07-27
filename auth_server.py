@@ -47,6 +47,11 @@ _cfg["square_environment"] = os.environ.get("SQUARE_ENVIRONMENT", _cfg.get("squa
 app = Flask(__name__, static_folder=".", static_url_path="")
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", secrets.token_hex(32))
 
+# Admin Steam IDs — only these users can post/edit/delete news
+ADMIN_STEAM_IDS = os.environ.get("ADMIN_STEAM_IDS", _cfg.get("admin_steam_ids", "")).split(",")
+ADMIN_STEAM_IDS = [s.strip() for s in ADMIN_STEAM_IDS if s.strip()]
+NEWS_TABLE = os.environ.get("NEWS_TABLE", _cfg.get("news_table", "News"))
+
 @app.after_request
 def add_no_cache(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -278,6 +283,7 @@ def auth_me():
         "avatar":     session.get("avatar", ""),
         "curr03":     str(currencies.get("curr03", currencies.get("Curr03", "0"))),
         "is_new":     session.get("is_new", False),
+        "is_admin":   session.get("steam_id") in ADMIN_STEAM_IDS,
     })
 
 
@@ -869,6 +875,80 @@ def square_webhook():
 def payment_success():
     """Square redirect fallback — just sends user back to shop."""
     return redirect("/shop.html?payment=success")
+
+
+# ─── News System (DynamoDB "News" table) ─────────────────────────────────────
+
+def _is_admin():
+    return session.get("steam_id") in ADMIN_STEAM_IDS
+
+
+@app.route("/admin-news.html")
+def admin_news_page():
+    return send_from_directory(".", "admin-news.html")
+
+
+@app.route("/api/news", methods=["GET"])
+def api_get_news():
+    """Public: return all news items sorted by date (newest first)."""
+    try:
+        resp = _dynamo().scan(TableName=NEWS_TABLE)
+        items = [_deser(i) for i in resp.get("Items", [])]
+        # Sort by date descending
+        items.sort(key=lambda x: x.get("date", ""), reverse=True)
+        return jsonify(_sanitize(items))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/news/<slug>", methods=["GET"])
+def api_get_article(slug):
+    """Public: return a single news article by slug."""
+    try:
+        resp = _dynamo().get_item(
+            TableName=NEWS_TABLE,
+            Key={"slug": {"S": slug}},
+        )
+        if "Item" not in resp:
+            return jsonify({"error": "Not found"}), 404
+        return jsonify(_sanitize(_deser(resp["Item"])))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/news", methods=["POST"])
+def api_post_news():
+    """Admin only: create or update a news article."""
+    if not _is_admin():
+        return jsonify({"error": "Unauthorized"}), 403
+
+    data = request.get_json(force=True)
+    required = ["slug", "title", "date", "category", "excerpt", "image", "content"]
+    for field in required:
+        if field not in data:
+            return jsonify({"error": f"Missing field: {field}"}), 400
+
+    item = {k: _serializer.serialize(v) for k, v in data.items()}
+    try:
+        _dynamo().put_item(TableName=NEWS_TABLE, Item=item)
+        return jsonify({"success": True, "slug": data["slug"]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/news/<slug>", methods=["DELETE"])
+def api_delete_news(slug):
+    """Admin only: delete a news article."""
+    if not _is_admin():
+        return jsonify({"error": "Unauthorized"}), 403
+    try:
+        _dynamo().delete_item(
+            TableName=NEWS_TABLE,
+            Key={"slug": {"S": slug}},
+        )
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":

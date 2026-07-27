@@ -121,172 +121,44 @@
   <script src="script.js"></script>
   <script>
   (function() {
-    /* ─── Article Data ─────────────────────────────────────────────────── */
-    var articles = {
-      'faction-war': {
-        title: 'Faction War Event: Umbra vs Sol',
-        category: 'EVENT',
-        date: 'April 10, 2026',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0/ss_2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0.1920x1080.jpg?t=1771880532',
-        content: [
-          { type: 'text', value: 'The first server-wide faction war kicks off this weekend. Choose your side and fight for territory, exclusive rewards, and faction glory. The winning faction earns a permanent monument in the central plaza and a unique weapon skin for all participants.' },
-          { type: 'heading', value: 'Event Schedule' },
-          { type: 'text', value: 'Events run Friday through Sunday with escalating objectives — territory capture, boss assassinations, and a final siege on the enemy stronghold.' },
-          { type: 'heading', value: 'Rewards' },
-          { type: 'list', value: [
-            'Winning faction: Permanent monument + exclusive weapon skin',
-            'All participants: Void Pearl bonus based on contribution',
-            'Top 10 players per faction: Legendary title and unique emote',
-            'MVP of the war: Custom nameplate visible in all arenas'
-          ]},
-          { type: 'text', value: 'Rally your allies, coordinate your attacks, and claim victory for your faction. The war begins Friday at 6PM EST.' },
-        ]
-      },
-      'new-class': {
-        title: 'New Archetype Revealed: The Invoker',
-        category: 'REVEAL',
-        date: 'April 5, 2026',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/0af0df51dd6d49ad833d1c31da54951a4fd54024/ss_0af0df51dd6d49ad833d1c31da54951a4fd54024.1920x1080.jpg?t=1771880532',
-        content: [
-          { type: 'text', value: 'Master the arcane arts with the Invoker — a ranged caster specializing in elemental devastation and crowd control. Combine fire, ice, and void elements to create devastating combo attacks.' },
-          { type: 'heading', value: 'Abilities Overview' },
-          { type: 'list', value: [
-            'Elemental Surge — Channel raw energy into a targeted AoE blast',
-            'Frost Bind — Root enemies in place with creeping ice',
-            'Void Rift — Tear open a portal that pulls enemies inward',
-            'Inferno Wave — Unleash a sweeping wall of fire across the arena',
-            'Arcane Mastery (Ultimate) — Combine all three elements for a cataclysmic burst'
-          ]},
-          { type: 'text', value: 'The Invoker joins the roster in the next major update alongside a new arena map, "The Shattered Sanctum." Stay tuned for gameplay reveals.' },
-        ]
-      },
-      'kickstarter-announce': {
-        title: 'Kickstarter Campaign Announcement',
-        category: 'ANNOUNCEMENT',
-        date: 'March 28, 2026',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1771880532',
-        content: [
-          { type: 'text', value: 'Our Kickstarter campaign is coming soon. Sign up to be notified and unlock an exclusive in-game weapon skin on day one.' },
-          { type: 'heading', value: 'Founder\'s Edition Perks' },
-          { type: 'list', value: [
-            'Exclusive Founder\'s weapon skin set',
-            '2,000 bonus Void Pearls',
-            'Beta access to all upcoming content',
-            'Name in the game credits',
-            'Unique Founder\'s title and emote'
-          ]},
-          { type: 'text', value: 'Early backers will receive Founder\'s Edition perks including unique cosmetics, bonus Void Pearls, and beta access to upcoming content. The campaign launches in April — follow us on social media for the exact date.' },
-        ]
-      },
-      'patch-031': {
-        title: 'Patch 0.3.1 — Balance & Bug Fixes',
-        category: 'PATCH NOTES',
-        date: 'March 20, 2026',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/ss_d5e9eacb3154eb00e00c06333f0508f95b6409a0.1920x1080.jpg?t=1771880532',
-        content: [
-          { type: 'heading', value: 'Balance Changes' },
-          { type: 'list', value: [
-            'Reaper dash cooldown increased from 4s to 5.5s',
-            'Guardian shield HP reduced by 15%',
-            'Berserker rage duration reduced from 8s to 6s',
-            'Pathfinder trap deploy time reduced from 1.2s to 0.8s',
-            'Tempest wind burst range increased by 10%'
-          ]},
-          { type: 'heading', value: 'Bug Fixes' },
-          { type: 'list', value: [
-            'Fixed a crash when entering the crafting menu with a full inventory',
-            'Fixed players occasionally spawning outside the arena boundary',
-            'Fixed faction points not accumulating correctly after match disconnects',
-            'Multiple performance optimizations for lower-end hardware'
-          ]},
-        ]
-      },
-      'community-spotlight': {
-        title: 'Community Spotlight: Top Plays of the Week',
-        category: 'COMMUNITY',
-        date: 'March 12, 2026',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/6aa4612bf582cd106b821c67c43e813867842ff4/ss_6aa4612bf582cd106b821c67c43e813867842ff4.1920x1080.jpg?t=1771880532',
-        content: [
-          { type: 'text', value: 'Check out the most insane aerial combos, clutch plays, and creative kills from the community this week. Submit your clips on Discord for a chance to be featured and win Void Pearls.' },
-          { type: 'heading', value: 'This Week\'s Highlights' },
-          { type: 'text', value: 'From perfectly timed Guardian counters to Reaper chain-dash multikills, the community continues to push the limits of what\'s possible in OKUBI\'s aerial combat. Every week we select the best clips from our Discord and reward the players behind them.' },
-          { type: 'text', value: 'Want to be featured? Share your best clips in the #highlights channel on our Discord server. Top picks receive 500 Void Pearls and a shoutout on our social media.' },
-        ]
-      },
-      'dev-diary-4': {
-        title: 'Dev Diary #4: Designing the Corruption System',
-        category: 'DEV DIARY',
-        date: 'March 5, 2026',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4/ss_7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4.1920x1080.jpg?t=1771880532',
-        content: [
-          { type: 'text', value: 'A deep dive into how we designed the dynamic corruption system — from server-wide spread mechanics to per-player corruption effects that warp your abilities the deeper you venture.' },
-          { type: 'heading', value: 'The Core Concept' },
-          { type: 'text', value: 'Corruption in OKUBI isn\'t just a status effect — it\'s a living system that reshapes the game world. Areas become tainted over time, spawning unique enemies and altering environmental hazards. Players who stay too long absorb corruption, which changes their abilities in unpredictable ways.' },
-          { type: 'heading', value: 'Risk vs Reward' },
-          { type: 'text', value: 'High corruption zones offer the rarest materials and most powerful gear drops, but the deeper you go, the more your character transforms. Some players embrace corruption for its power boosts, while others fight to purify themselves and maintain control.' },
-        ]
-      },
-      'alpha-recap': {
-        title: 'OKUBI Closed Alpha Recap',
-        category: 'RECAP',
-        date: 'February 25, 2026',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/1e9896257594062dc094547c53bafe2594175ed6/ss_1e9896257594062dc094547c53bafe2594175ed6.1920x1080.jpg?t=1771880532',
-        content: [
-          { type: 'text', value: 'Thank you to all 2,400 alpha testers who helped us shape the core combat loop. Here\'s what we learned, what we changed, and what\'s coming next based on your feedback.' },
-          { type: 'heading', value: 'By the Numbers' },
-          { type: 'list', value: [
-            '2,400 unique testers over 3 weekends',
-            '47,000+ matches played',
-            '1,200+ bug reports submitted',
-            '340+ feature suggestions reviewed',
-            'Average session length: 2.3 hours'
-          ]},
-          { type: 'heading', value: 'What\'s Changing' },
-          { type: 'text', value: 'Based on your feedback, we\'re overhauling the matchmaking algorithm, rebalancing all 5 archetypes, and adding a tutorial system for new players. The crafting UI is getting a complete redesign, and we\'re adding controller support in the next update.' },
-        ]
-      },
-    };
-
-    /* ─── Render ───────────────────────────────────────────────────────── */
     var params = new URLSearchParams(window.location.search);
     var slug = params.get('slug');
-    var article = articles[slug];
+    if (!slug) { window.location.href = '/news.html'; return; }
 
-    if (!article) {
-      window.location.href = '/news.html';
-      return;
-    }
+    fetch('/api/news/' + encodeURIComponent(slug))
+      .then(function(r) { if (!r.ok) throw new Error('Not found'); return r.json(); })
+      .then(function(article) {
+        document.title = 'OKUBI \u2014 ' + article.title;
+        document.getElementById('articleHeroBg').style.backgroundImage = "url('" + article.image + "')";
+        document.getElementById('articleTitle').textContent = article.title;
+        document.getElementById('articleCategory').textContent = article.category;
+        document.getElementById('articleDate').textContent = article.displayDate || article.date;
 
-    document.title = 'OKUBI — ' + article.title;
-
-    document.getElementById('articleHeroBg').style.backgroundImage = "url('" + article.image + "')";
-    document.getElementById('articleTitle').textContent = article.title;
-    document.getElementById('articleCategory').textContent = article.category;
-    document.getElementById('articleDate').textContent = article.date;
-
-    var contentEl = document.getElementById('articleContent');
-    article.content.forEach(function(block) {
-      if (block.type === 'text') {
-        var p = document.createElement('p');
-        p.className = 'article-body__text';
-        p.textContent = block.value;
-        contentEl.appendChild(p);
-      } else if (block.type === 'heading') {
-        var h2 = document.createElement('h2');
-        h2.className = 'article-body__heading';
-        h2.textContent = block.value;
-        contentEl.appendChild(h2);
-      } else if (block.type === 'list') {
-        var ul = document.createElement('ul');
-        ul.className = 'article-body__list';
-        block.value.forEach(function(item) {
-          var li = document.createElement('li');
-          li.textContent = item;
-          ul.appendChild(li);
+        var contentEl = document.getElementById('articleContent');
+        article.content.forEach(function(block) {
+          if (block.type === 'text') {
+            var p = document.createElement('p');
+            p.className = 'article-body__text';
+            p.textContent = block.value;
+            contentEl.appendChild(p);
+          } else if (block.type === 'heading') {
+            var h2 = document.createElement('h2');
+            h2.className = 'article-body__heading';
+            h2.textContent = block.value;
+            contentEl.appendChild(h2);
+          } else if (block.type === 'list') {
+            var ul = document.createElement('ul');
+            ul.className = 'article-body__list';
+            block.value.forEach(function(item) {
+              var li = document.createElement('li');
+              li.textContent = item;
+              ul.appendChild(li);
+            });
+            contentEl.appendChild(ul);
+          }
         });
-        contentEl.appendChild(ul);
-      }
-    });
+      })
+      .catch(function() { window.location.href = '/news.html'; });
   })();
   </script>
 </body>

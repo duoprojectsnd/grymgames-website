@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKUBI — Admin: Post News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin { max-width: 800px; margin: 120px auto 60px; padding: 0 24px; }
+    .admin h1 { font-family: 'Orbitron', sans-serif; color: #fff; margin-bottom: 24px; }
+    .admin__denied { color: #f44; font-size: 1.2rem; text-align: center; margin-top: 200px; }
+    .admin label { display: block; color: #aaa; font-size: 0.85rem; margin-top: 16px; margin-bottom: 4px; font-family: 'Rajdhani', sans-serif; }
+    .admin input, .admin textarea, .admin select { width: 100%; padding: 10px 14px; background: #1a1a2e; border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 0.95rem; font-family: 'Inter', sans-serif; }
+    .admin textarea { min-height: 200px; resize: vertical; }
+    .admin__hint { color: #666; font-size: 0.75rem; margin-top: 2px; }
+    .admin__btn { margin-top: 24px; padding: 12px 32px; background: linear-gradient(135deg, #7c3aed, #4f46e5); border: none; border-radius: 8px; color: #fff; font-size: 1rem; font-family: 'Rajdhani', sans-serif; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+    .admin__btn:hover { opacity: 0.85; }
+    .admin__msg { margin-top: 16px; padding: 12px; border-radius: 6px; font-size: 0.9rem; }
+    .admin__msg--ok { background: #0d3320; color: #4ade80; }
+    .admin__msg--err { background: #3b1111; color: #f87171; }
+    .admin__list { margin-top: 40px; }
+    .admin__list h2 { color: #fff; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-bottom: 12px; }
+    .admin__item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #1a1a2e; border-radius: 6px; margin-bottom: 8px; }
+    .admin__item-title { color: #ddd; font-size: 0.9rem; }
+    .admin__item-date { color: #666; font-size: 0.8rem; }
+    .admin__item-del { background: #7f1d1d; border: none; color: #fca5a5; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo"><img src="assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" /></a>
+    </div>
+  </nav>
+
+  <div class="admin" id="adminPanel" style="display:none;">
+    <h1>Post News</h1>
+
+    <label for="slug">Slug (URL-friendly ID)</label>
+    <input id="slug" placeholder="e.g. season-2-launch" />
+    <p class="admin__hint">Lowercase, hyphens only. This becomes the article URL.</p>
+
+    <label for="title">Title</label>
+    <input id="title" placeholder="Season 2 Launch!" />
+
+    <label for="category">Category</label>
+    <select id="category">
+      <option value="NEWS">NEWS</option>
+      <option value="PATCH NOTES">PATCH NOTES</option>
+      <option value="EVENT">EVENT</option>
+      <option value="REVEAL">REVEAL</option>
+      <option value="ANNOUNCEMENT">ANNOUNCEMENT</option>
+      <option value="DEV DIARY">DEV DIARY</option>
+    </select>
+
+    <label for="date">Date</label>
+    <input id="date" type="date" />
+
+    <label for="image">Image URL</label>
+    <input id="image" placeholder="https://..." />
+    <p class="admin__hint">Header image for the article. Use a Steam screenshot URL or upload to your assets/ folder.</p>
+
+    <label for="excerpt">Excerpt (short summary for the news grid)</label>
+    <input id="excerpt" placeholder="Brief 1-2 sentence summary shown on the news page." />
+
+    <label for="content">Content (article body)</label>
+    <textarea id="content" placeholder="Write your article here. Use simple formatting:
+
+## Heading
+Regular paragraph text.
+
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+
+Another paragraph."></textarea>
+    <p class="admin__hint">Use ## for headings, - for bullet lists. Blank lines separate sections.</p>
+
+    <button class="admin__btn" id="postBtn">Publish News</button>
+    <div id="msg"></div>
+
+    <div class="admin__list" id="existingNews"></div>
+  </div>
+
+  <div class="admin__denied" id="denied" style="display:none;">
+    <p>Access denied. Admin login required.</p>
+  </div>
+
+  <script>
+  (function() {
+    const adminPanel = document.getElementById('adminPanel');
+    const denied = document.getElementById('denied');
+
+    // Check if user is admin
+    fetch('/auth/me').then(r => r.json()).then(data => {
+      if (data.logged_in && data.is_admin) {
+        adminPanel.style.display = 'block';
+        loadExisting();
+      } else {
+        denied.style.display = 'block';
+      }
+    });
+
+    // Parse markdown-like content into structured array
+    function parseContent(raw) {
+      const lines = raw.split('\n');
+      const content = [];
+      let listBuffer = [];
+
+      function flushList() {
+        if (listBuffer.length) {
+          content.push({ type: 'list', value: listBuffer });
+          listBuffer = [];
+        }
+      }
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) { flushList(); continue; }
+        if (trimmed.startsWith('## ')) {
+          flushList();
+          content.push({ type: 'heading', value: trimmed.slice(3) });
+        } else if (trimmed.startsWith('- ')) {
+          listBuffer.push(trimmed.slice(2));
+        } else {
+          flushList();
+          content.push({ type: 'text', value: trimmed });
+        }
+      }
+      flushList();
+      return content;
+    }
+
+    // Format date for display
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    // Post news
+    document.getElementById('postBtn').addEventListener('click', () => {
+      const slug = document.getElementById('slug').value.trim();
+      const title = document.getElementById('title').value.trim();
+      const category = document.getElementById('category').value;
+      const date = document.getElementById('date').value;
+      const image = document.getElementById('image').value.trim();
+      const excerpt = document.getElementById('excerpt').value.trim();
+      const rawContent = document.getElementById('content').value;
+
+      if (!slug || !title || !date || !excerpt || !rawContent) {
+        showMsg('Fill in all fields.', false);
+        return;
+      }
+
+      const payload = {
+        slug, title, category, date,
+        displayDate: formatDate(date),
+        image, excerpt,
+        content: parseContent(rawContent)
+      };
+
+      fetch('/api/news', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          showMsg('Published! "' + title + '" is now live.', true);
+          // Clear form
+          document.getElementById('slug').value = '';
+          document.getElementById('title').value = '';
+          document.getElementById('excerpt').value = '';
+          document.getElementById('content').value = '';
+          loadExisting();
+        } else {
+          showMsg('Error: ' + (data.error || 'Unknown'), false);
+        }
+      })
+      .catch(err => showMsg('Network error: ' + err, false));
+    });
+
+    function showMsg(text, ok) {
+      const el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'admin__msg ' + (ok ? 'admin__msg--ok' : 'admin__msg--err');
+    }
+
+    function loadExisting() {
+      fetch('/api/news').then(r => r.json()).then(items => {
+        const container = document.getElementById('existingNews');
+        if (!items.length) { container.innerHTML = '<h2>No posts yet</h2>'; return; }
+        let html = '<h2>Existing Posts</h2>';
+        items.forEach(item => {
+          html += `<div class="admin__item">
+            <span class="admin__item-title">${item.title} <span class="admin__item-date">(${item.displayDate || item.date})</span></span>
+            <button class="admin__item-del" onclick="deletePost('${item.slug}')">Delete</button>
+          </div>`;
+        });
+        container.innerHTML = html;
+      });
+    }
+
+    window.deletePost = function(slug) {
+      if (!confirm('Delete "' + slug + '"?')) return;
+      fetch('/api/news/' + slug, { method: 'DELETE' })
+        .then(r => r.json())
+        .then(() => loadExisting());
+    };
+  })();
+  </script>
+</body>
+</html>
