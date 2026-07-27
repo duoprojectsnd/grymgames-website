@@ -397,144 +397,8 @@
   <script src="script.js"></script>
   <script>
   (function() {
-    // ─── Mock Data (will be replaced by /api/events fetch) ──────────────
-    const MOCK_EVENTS = [
-      {
-        slug: 'arena-championship-s1',
-        type: 'tournament',
-        title: 'Arena Championship — Season 1',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0/ss_2b84f5d18ba9e7d3220f66bb2452f81d0a7468e0.1920x1080.jpg?t=1771880532',
-        startDate: '2026-08-01T18:00:00Z',
-        endDate: '2026-08-01T22:00:00Z',
-        excerpt: '32-player single elimination bracket. Top 4 earn exclusive skins and Void Pearls.',
-        rewards: [
-          { name: 'Champion Blade', rarity: 'mythic', qty: 1, icon: '⚔️' },
-          { name: 'Void Pearls', rarity: 'epic', qty: 5000, icon: '💎' },
-          { name: 'Void Pearls', rarity: 'rare', qty: 3000, icon: '💎' },
-          { name: 'Arena Trophy', rarity: 'epic', qty: 1, icon: '🏆' },
-          { name: 'Champion Title', rarity: 'rare', qty: 1, icon: '👑' }
-        ],
-        content: [
-          { type: 'heading', value: 'Format' },
-          { type: 'text', value: 'Single elimination, best of 3 rounds per match. 32 players, 5 rounds to the finals.' },
-          { type: 'heading', value: 'Rules' },
-          { type: 'list', value: ['No consumables allowed', 'All archetypes permitted', 'Standard arena ruleset', 'Matches streamed on Discord'] },
-          { type: 'heading', value: 'How to Enter' },
-          { type: 'text', value: 'Sign up in the #tournaments channel on Discord before August 1st at 5PM EST. First come, first served.' }
-        ]
-      },
-      {
-        slug: 'summer-inferno',
-        type: 'seasonal',
-        title: 'Summer Inferno Festival',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/0af0df51dd6d49ad833d1c31da54951a4fd54024/ss_0af0df51dd6d49ad833d1c31da54951a4fd54024.1920x1080.jpg?t=1771880532',
-        startDate: '2026-07-20T00:00:00Z',
-        endDate: '2026-08-10T23:59:00Z',
-        excerpt: 'Limited-time fire-themed cosmetics, double XP weekends, and the Inferno Arena variant.',
-        rewards: [
-          { name: 'Inferno Greatsword', rarity: 'epic', qty: 1, icon: '🔥' },
-          { name: 'Flame Trail', rarity: 'rare', qty: 1, icon: '✨' },
-          { name: 'Ember Emote', rarity: 'uncommon', qty: 1, icon: '💃' },
-          { name: 'XP Boost Token', rarity: 'common', qty: 5, icon: '⚡' }
-        ],
-        content: [
-          { type: 'text', value: 'The Summer Inferno Festival brings the heat with exclusive fire-themed content available for a limited time.' },
-          { type: 'heading', value: 'Double XP Weekends' },
-          { type: 'text', value: 'Every weekend during the festival, earn double XP from all activities.' },
-          { type: 'heading', value: 'Inferno Arena' },
-          { type: 'text', value: 'A remixed arena with fire hazards, lava pits, and a shrinking safe zone. Available only during the event.' }
-        ]
-      },
-      {
-        slug: 'kraken-awakens',
-        type: 'world',
-        title: 'The Kraken Awakens',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/ss_d5e9eacb3154eb00e00c06333f0508f95b6409a0.1920x1080.jpg?t=1771880532',
-        startDate: '2026-08-05T20:00:00Z',
-        endDate: '2026-08-05T21:30:00Z',
-        excerpt: 'A massive world boss emerges from the Void Sea. Rally 50 players to take it down for server-first rewards.',
-        rewards: [
-          { name: 'Kraken Slayer Title', rarity: 'mythic', qty: 1, icon: '🐙' },
-          { name: 'Tentacle Spine', rarity: 'epic', qty: 1, icon: '🦴' },
-          { name: 'Void Pearls', rarity: 'rare', qty: 2000, icon: '💎' },
-          { name: 'Kraken Scale', rarity: 'uncommon', qty: 3, icon: '🛡️' },
-          { name: 'Health Potion', rarity: 'common', qty: 10, icon: '🧪' }
-        ],
-        content: [
-          { type: 'text', value: 'The ancient Kraken rises from the depths of the Void Sea. This is a one-time server event — be there or miss it forever.' },
-          { type: 'heading', value: 'Boss Mechanics' },
-          { type: 'list', value: ['Phase 1: Tentacle attacks — dodge the sweep patterns', 'Phase 2: Ink cloud — reduced visibility, watch for grabs', 'Phase 3: Enrage — DPS race, all attacks deal double damage'] },
-          { type: 'heading', value: 'Requirements' },
-          { type: 'text', value: 'Minimum level 15. Recommended: full party of 5 with at least 1 healer. Up to 50 players can participate.' }
-        ]
-      },
-      {
-        slug: 'duos-tournament-w3',
-        type: 'tournament',
-        title: 'Duos Tournament — Week 3',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/6aa4612bf582cd106b821c67c43e813867842ff4/ss_6aa4612bf582cd106b821c67c43e813867842ff4.1920x1080.jpg?t=1771880532',
-        startDate: '2026-08-08T19:00:00Z',
-        endDate: '2026-08-08T23:00:00Z',
-        excerpt: '2v2 bracket tournament. Bring your best partner and climb the leaderboard.',
-        rewards: [
-          { name: 'Duo Champions Title', rarity: 'epic', qty: 1, icon: '👑' },
-          { name: 'Void Pearls', rarity: 'rare', qty: 4000, icon: '💎' },
-          { name: 'Team Banner', rarity: 'uncommon', qty: 1, icon: '🚩' }
-        ],
-        content: [
-          { type: 'heading', value: 'Format' },
-          { type: 'text', value: '2v2 double elimination bracket. 16 teams max. Best of 3 per match.' },
-          { type: 'heading', value: 'Sign Up' },
-          { type: 'text', value: 'Register your duo in #tournaments on Discord. Both players must be present at start time.' }
-        ]
-      },
-      {
-        slug: 'christmas-2026',
-        type: 'seasonal',
-        title: 'Frostborn Celebration',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4/ss_7565960bb62dd2b6dcf468a49f6bc2aa57abe4e4.1920x1080.jpg?t=1771880532',
-        startDate: '2026-12-18T00:00:00Z',
-        endDate: '2027-01-05T23:59:00Z',
-        excerpt: 'Snow-covered arenas, holiday cosmetics, gift exchanges, and a special co-op boss fight.',
-        rewards: [
-          { name: 'Frostborn Armor', rarity: 'mythic', qty: 1, icon: '❄️' },
-          { name: 'Snowfall Effect', rarity: 'epic', qty: 1, icon: '🌨️' },
-          { name: 'Holiday Emotes', rarity: 'rare', qty: 3, icon: '🎄' },
-          { name: 'Gift Box', rarity: 'uncommon', qty: 10, icon: '🎁' },
-          { name: 'Candy Cane', rarity: 'common', qty: 25, icon: '🍬' }
-        ],
-        content: [
-          { type: 'text', value: 'Winter has come to OKUBI. All arenas are draped in snow and ice, with holiday decorations throughout.' },
-          { type: 'heading', value: 'Gift Exchange' },
-          { type: 'text', value: 'Send gifts to other players and receive mystery rewards in return. The more you give, the better your gifts become.' },
-          { type: 'heading', value: 'Frostborn Boss' },
-          { type: 'text', value: 'A special co-op boss fight against the Frost Warden. Defeat it to earn the full Frostborn armor set.' }
-        ]
-      },
-      {
-        slug: 'void-rift-incursion',
-        type: 'world',
-        title: 'Void Rift Incursion',
-        image: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/1e9896257594062dc094547c53bafe2594175ed6/ss_1e9896257594062dc094547c53bafe2594175ed6.1920x1080.jpg?t=1771880532',
-        startDate: '2026-07-25T18:00:00Z',
-        endDate: '2026-07-27T23:59:00Z',
-        excerpt: 'Void rifts have opened across all zones. Defeat waves of corrupted enemies for rare loot.',
-        rewards: [
-          { name: 'Corrupted Blade', rarity: 'epic', qty: 1, icon: '⚔️' },
-          { name: 'Void Shard', rarity: 'rare', qty: 50, icon: '🔮' },
-          { name: 'Void Pet Egg', rarity: 'epic', qty: 1, icon: '🥚' },
-          { name: 'Rift Fragment', rarity: 'uncommon', qty: 20, icon: '💠' },
-          { name: 'Mana Potion', rarity: 'common', qty: 15, icon: '🧪' }
-        ],
-        content: [
-          { type: 'text', value: 'Rifts have torn open across every zone in OKUBI. Corrupted enemies pour through in waves — survive and earn rare Void Shards.' },
-          { type: 'heading', value: 'How It Works' },
-          { type: 'list', value: ['Rifts appear every 30 minutes in random zones', 'Survive 5 waves to close the rift', 'Higher zones = harder enemies = better loot', 'Bonus shards for closing rifts with a full party'] },
-          { type: 'heading', value: 'Void Shard Shop' },
-          { type: 'text', value: 'Spend Void Shards at the temporary vendor for corrupted weapon skins, a void pet, and consumables.' }
-        ]
-      }
-    ];
+    // ─── Load events from API ───────────────────────────────────────────
+    let ALL_EVENTS = [];
 
     // ─── State ────────────────────────────────────────────────────────────
     const now = new Date();
@@ -595,7 +459,7 @@
 
     // ─── Show Event Detail ────────────────────────────────────────────────
     function showEvent(slug) {
-      const event = MOCK_EVENTS.find(e => e.slug === slug);
+      const event = ALL_EVENTS.find(e => e.slug === slug);
       if (!event) return;
       currentView = 'detail';
 
@@ -720,7 +584,7 @@
 
     // ─── Render List ──────────────────────────────────────────────────────
     function render() {
-      let events = MOCK_EVENTS;
+      let events = ALL_EVENTS;
       if (activeFilter !== 'all') {
         events = events.filter(e => e.type === activeFilter);
       }
@@ -804,14 +668,16 @@
       render();
     });
 
-    // Initial render
-    render();
-  })();
-  </script>
-    });
-
-    // Initial render
-    render();
+    // Initial fetch from API
+    fetch('/api/events')
+      .then(r => r.json())
+      .then(items => {
+        ALL_EVENTS = items;
+        render();
+      })
+      .catch(() => {
+        document.getElementById('eventsList').innerHTML = '<div class="events-empty">Failed to load events.</div>';
+      });
   })();
   </script>
 </body>
