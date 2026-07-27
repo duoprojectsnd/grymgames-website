@@ -973,6 +973,7 @@ def api_news_latest():
                 "subtitle": n.get("excerpt", ""),
                 "date": n.get("displayDate", n.get("date", "")),
                 "website": f"{SITE_URL}/article.html?slug={n.get('slug', '')}",
+                "image": n.get("image", ""),
             })
         return jsonify(result)
     except Exception as e:
