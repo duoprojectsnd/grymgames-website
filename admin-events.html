@@ -39,12 +39,16 @@
     .admin__item-btn--del { background: #7f1d1d; color: #fca5a5; }
     /* Rewards builder */
     .rewards-builder { margin-top: 8px; }
-    .rewards-builder__row { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
-    .rewards-builder__row input { flex: 1; }
-    .rewards-builder__row input:nth-child(2) { max-width: 60px; }
-    .rewards-builder__row input:nth-child(3) { max-width: 50px; }
-    .rewards-builder__add { background: #1e3a5f; border: none; color: #93c5fd; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-top: 4px; }
-    .rewards-builder__remove { background: #7f1d1d; border: none; color: #fca5a5; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    .rewards-builder__row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; padding: 10px; background: #0f0f1a; border: 1px solid #222; border-radius: 6px; }
+    .rewards-builder__field { display: flex; flex-direction: column; gap: 2px; }
+    .rewards-builder__field label { font-size: 0.65rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+    .rewards-builder__field input, .rewards-builder__field select { padding: 6px 10px; background: #1a1a2e; border: 1px solid #333; border-radius: 4px; color: #fff; font-size: 0.85rem; font-family: 'Inter', sans-serif; }
+    .rewards-builder__field--name { flex: 2; }
+    .rewards-builder__field--qty { width: 70px; }
+    .rewards-builder__field--icon { width: 60px; }
+    .rewards-builder__field--rarity { flex: 1; }
+    .rewards-builder__add { background: #1e3a5f; border: none; color: #93c5fd; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-top: 8px; }
+    .rewards-builder__remove { background: #7f1d1d; border: none; color: #fca5a5; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; flex-shrink: 0; }
     /* Conditional fields */
     .field-world-only { display: none; }
     .field-world-only--visible { display: block; }
@@ -125,10 +129,10 @@ Details about the event...
       <label>Rewards (World Events)</label>
       <div class="rewards-builder" id="rewardsBuilder">
         <div class="rewards-builder__row">
-          <input placeholder="Item name" class="rw-name" />
-          <input placeholder="Qty" type="number" class="rw-qty" value="1" />
-          <input placeholder="Icon" class="rw-icon" value="🎁" />
-          <select class="rw-rarity"><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare" selected>Rare</option><option value="epic">Epic</option><option value="mythic">Mythic</option></select>
+          <div class="rewards-builder__field rewards-builder__field--name"><label>Item ID</label><input placeholder="e.g. void_shard" class="rw-name" /></div>
+          <div class="rewards-builder__field rewards-builder__field--qty"><label>Qty</label><input type="number" class="rw-qty" value="1" /></div>
+          <div class="rewards-builder__field rewards-builder__field--icon"><label>Icon</label><input class="rw-icon" value="🎁" /></div>
+          <div class="rewards-builder__field rewards-builder__field--rarity"><label>Rarity</label><select class="rw-rarity"><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare" selected>Rare</option><option value="epic">Epic</option><option value="mythic">Mythic</option></select></div>
           <button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>
         </div>
       </div>
@@ -175,7 +179,7 @@ Details about the event...
     document.getElementById('addReward').addEventListener('click', () => {
       const row = document.createElement('div');
       row.className = 'rewards-builder__row';
-      row.innerHTML = `<input placeholder="Item name" class="rw-name" /><input placeholder="Qty" type="number" class="rw-qty" value="1" /><input placeholder="Icon" class="rw-icon" value="🎁" /><select class="rw-rarity"><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare" selected>Rare</option><option value="epic">Epic</option><option value="mythic">Mythic</option></select><button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>`;
+      row.innerHTML = `<div class="rewards-builder__field rewards-builder__field--name"><label>Item ID</label><input placeholder="e.g. void_shard" class="rw-name" /></div><div class="rewards-builder__field rewards-builder__field--qty"><label>Qty</label><input type="number" class="rw-qty" value="1" /></div><div class="rewards-builder__field rewards-builder__field--icon"><label>Icon</label><input class="rw-icon" value="🎁" /></div><div class="rewards-builder__field rewards-builder__field--rarity"><label>Rarity</label><select class="rw-rarity"><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare" selected>Rare</option><option value="epic">Epic</option><option value="mythic">Mythic</option></select></div><button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>`;
       document.getElementById('rewardsBuilder').appendChild(row);
     });
 
@@ -228,7 +232,7 @@ Details about the event...
       rewards.forEach(r => {
         const row = document.createElement('div');
         row.className = 'rewards-builder__row';
-        row.innerHTML = `<input placeholder="Item name" class="rw-name" value="${r.name || ''}" /><input placeholder="Qty" type="number" class="rw-qty" value="${r.qty || 1}" /><input placeholder="Icon" class="rw-icon" value="${r.icon || '🎁'}" /><select class="rw-rarity"><option value="common" ${r.rarity==='common'?'selected':''}>Common</option><option value="uncommon" ${r.rarity==='uncommon'?'selected':''}>Uncommon</option><option value="rare" ${r.rarity==='rare'?'selected':''}>Rare</option><option value="epic" ${r.rarity==='epic'?'selected':''}>Epic</option><option value="mythic" ${r.rarity==='mythic'?'selected':''}>Mythic</option></select><button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>`;
+        row.innerHTML = `<div class="rewards-builder__field rewards-builder__field--name"><label>Item ID</label><input placeholder="e.g. void_shard" class="rw-name" value="${r.name || ''}" /></div><div class="rewards-builder__field rewards-builder__field--qty"><label>Qty</label><input type="number" class="rw-qty" value="${r.qty || 1}" /></div><div class="rewards-builder__field rewards-builder__field--icon"><label>Icon</label><input class="rw-icon" value="${r.icon || '🎁'}" /></div><div class="rewards-builder__field rewards-builder__field--rarity"><label>Rarity</label><select class="rw-rarity"><option value="common" ${r.rarity==='common'?'selected':''}>Common</option><option value="uncommon" ${r.rarity==='uncommon'?'selected':''}>Uncommon</option><option value="rare" ${r.rarity==='rare'?'selected':''}>Rare</option><option value="epic" ${r.rarity==='epic'?'selected':''}>Epic</option><option value="mythic" ${r.rarity==='mythic'?'selected':''}>Mythic</option></select></div><button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>`;
         builder.appendChild(row);
       });
     }
