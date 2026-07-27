@@ -10,9 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .news-layout { max-width: 100%; margin: 0 auto; padding: 80px 100px 80px; }
+    .news-layout { max-width: 100%; margin: 0 auto; padding: 80px 100px 100px; }
     /* Top row: featured left + 2 stacked right */
-    .news-top { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .news-top { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px; }
     .news-top__featured {
       position: relative; border-radius: 8px; overflow: hidden; cursor: pointer;
       transition: filter 0.15s;
@@ -39,7 +39,7 @@
     }
 
     /* Stacked right cards */
-    .news-top__side { display: flex; flex-direction: column; gap: 12px; }
+    .news-top__side { display: flex; flex-direction: column; gap: 24px; }
     .news-side-card {
       position: relative; border-radius: 8px; overflow: hidden; flex: 1; cursor: pointer;
       transition: filter 0.15s;
@@ -61,14 +61,14 @@
     }
 
     /* Bottom grid: 3 columns */
-    .news-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .news-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .news-grid-card {
       position: relative; border-radius: 8px; overflow: hidden; cursor: pointer;
       transition: filter 0.15s;
     }
     .news-grid-card:hover { filter: brightness(1.1); }
     .news-grid-card__img {
-      width: 100%; height: 240px; object-fit: cover; display: block;
+      width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
     }
     .news-grid-card__overlay {
       position: absolute; inset: 0;
