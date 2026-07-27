@@ -152,115 +152,141 @@
     }
 
     /* ─── Event Detail View ────────────────────────────────────────────── */
-    .event-detail { display: none; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+    .event-detail { display: none; max-width: 800px; margin: 0 auto; padding: 100px 24px 80px; }
     .event-detail--visible { display: block; }
-    .event-detail__back {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: #888; font-family: 'Rajdhani', sans-serif; font-size: 0.9rem;
-      cursor: pointer; border: none; background: none; padding: 8px 0; margin-bottom: 20px;
-      transition: color 0.2s;
-    }
-    .event-detail__back:hover { color: #fff; }
-    .event-detail__hero {
-      width: 100%; height: 320px; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 24px;
-    }
-    .event-detail__hero img { width: 100%; height: 100%; object-fit: cover; }
-    .event-detail__hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,10,20,0.9) 0%, transparent 60%);
-    }
-    .event-detail__hero-content { position: absolute; bottom: 24px; left: 24px; right: 24px; }
-    .event-detail__title {
-      font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 8px;
-    }
-    .event-detail__meta {
-      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-      font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; color: #aaa;
-    }
-    .event-detail__body {
-      background: #12121f; border: 1px solid #1e1e30; border-radius: 12px; padding: 28px; margin-bottom: 20px;
-    }
-    .event-detail__excerpt {
-      color: #ccc; font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px;
-    }
-    .event-detail__content { color: #aaa; font-family: 'Inter', sans-serif; font-size: 0.9rem; line-height: 1.6; }
-    .event-detail__content h2 { color: #fff; font-family: 'Orbitron', sans-serif; font-size: 1rem; margin: 20px 0 8px; }
-    .event-detail__content p { margin-bottom: 10px; }
-    .event-detail__content ul { margin: 8px 0 16px 20px; }
-    .event-detail__content li { margin-bottom: 4px; }
 
-    /* Rewards panel — RPG style */
-    .event-detail__rewards {
-      background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 100%);
-      border: 1px solid #2d1f4e; border-radius: 12px; padding: 28px; margin-bottom: 20px;
+    /* Hero — full image with massive title overlay */
+    .ed-hero {
+      position: relative; border-radius: 16px; overflow: hidden; margin-bottom: 20px;
+      border: 1px solid #2a2a3a;
+    }
+    .ed-hero__img { width: 100%; height: 380px; object-fit: cover; display: block; }
+    .ed-hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%);
+    }
+    .ed-hero__content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; }
+    .ed-hero__label {
+      position: absolute; top: 20px; left: 24px;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700;
+      color: #aaa; text-transform: uppercase; letter-spacing: 2px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ed-hero__label-icon { font-size: 1rem; }
+    .ed-hero__title {
+      font-family: 'Orbitron', sans-serif; font-weight: 900;
+      font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.05;
+      color: #fff; text-transform: uppercase; margin-bottom: 14px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+    }
+    .ed-hero__badges { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .ed-hero__badge {
+      padding: 4px 12px; border-radius: 4px;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .ed-hero__date {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: #ccc;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* Body — dark panel with icon sections */
+    .ed-body {
+      border-radius: 16px; padding: 32px; margin-bottom: 20px;
+      border: 1px solid #1e1e30;
+    }
+    .ed-body__excerpt {
+      font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 500;
+      color: #ddd; line-height: 1.5; margin-bottom: 24px;
+    }
+    .ed-body__desc {
+      font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #999; line-height: 1.6; margin-bottom: 24px;
+    }
+    .ed-body__section {
+      display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px;
+      padding: 16px; background: rgba(255,255,255,0.02); border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .ed-body__section-icon {
+      width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; border: 1px solid #333;
+    }
+    .ed-body__section-icon--tournament { background: #1a1708; border-color: #3d2f0a; }
+    .ed-body__section-icon--seasonal { background: #0a1220; border-color: #1a2d4a; }
+    .ed-body__section-icon--world { background: #1a0a0a; border-color: #3d1515; }
+    .ed-body__section-text { flex: 1; }
+    .ed-body__section-title {
+      font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #fff;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .ed-body__section-desc {
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #888; line-height: 1.5;
+    }
+
+    /* Rewards — horizontal row with type-colored glow */
+    .ed-rewards {
+      background: linear-gradient(135deg, #0a0a14 0%, #0f0f1a 100%);
+      border: 1px solid #1e1e30; border-radius: 16px; padding: 28px; margin-bottom: 20px;
       position: relative; overflow: hidden;
     }
-    .event-detail__rewards::before {
-      content: ''; position: absolute; inset: 0; opacity: 0.03;
-      background: repeating-linear-gradient(45deg, #fff 0px, #fff 1px, transparent 1px, transparent 12px);
+    .ed-rewards__title {
+      font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #e2b33e;
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .event-detail__rewards-title {
-      font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #e2b33e; margin-bottom: 20px;
-      display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px;
+    .ed-rewards__title::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to right, #e2b33e33, transparent);
     }
-    .event-detail__rewards-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;
+    .ed-rewards__row {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
     }
-    .reward-item {
-      background: #0d0d18; border-radius: 10px; padding: 12px; text-align: center;
-      border: 1px solid #222; transition: transform 0.2s, box-shadow 0.2s;
-      position: relative;
+    .ed-reward {
+      display: flex; flex-direction: column; align-items: center; width: 120px;
+      transition: transform 0.2s;
     }
-    .reward-item:hover { transform: translateY(-3px); }
-    /* Rarity borders and glow */
-    .reward-item--common { border-color: #666; }
-    .reward-item--uncommon { border-color: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.1); }
-    .reward-item--rare { border-color: #3b82f6; box-shadow: 0 0 8px rgba(59,130,246,0.15); }
-    .reward-item--epic { border-color: #a855f7; box-shadow: 0 0 12px rgba(168,85,247,0.2); }
-    .reward-item--mythic { border-color: #ef4444; box-shadow: 0 0 16px rgba(239,68,68,0.25); animation: mythic-glow 2s infinite; }
-    @keyframes mythic-glow {
-      0%, 100% { box-shadow: 0 0 12px rgba(239,68,68,0.25); }
-      50% { box-shadow: 0 0 20px rgba(245,158,11,0.35); }
+    .ed-reward:hover { transform: translateY(-4px); }
+    .ed-reward__icon-wrap {
+      width: 80px; height: 80px; border-radius: 12px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; position: relative;
+      background: #0d0d18; border: 2px solid #333;
     }
-    .reward-item__img {
-      width: 56px; height: 56px; margin: 0 auto 8px; border-radius: 8px;
-      background: #1a1a2e; display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem;
+    /* Type-colored reward borders */
+    .ed-reward__icon-wrap--tournament { border-color: #f59e0b; box-shadow: 0 0 12px rgba(245,158,11,0.2), inset 0 0 12px rgba(245,158,11,0.05); }
+    .ed-reward__icon-wrap--seasonal { border-color: #3b82f6; box-shadow: 0 0 12px rgba(59,130,246,0.2), inset 0 0 12px rgba(59,130,246,0.05); }
+    .ed-reward__icon-wrap--world { border-color: #ef4444; box-shadow: 0 0 12px rgba(239,68,68,0.2), inset 0 0 12px rgba(239,68,68,0.05); }
+    .ed-reward__qty {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700; color: #fff;
+      margin-bottom: 4px;
     }
-    .reward-item__name {
-      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 600; line-height: 1.2;
-    }
-    .reward-item__name--common { color: #aaa; }
-    .reward-item__name--uncommon { color: #4ade80; }
-    .reward-item__name--rare { color: #60a5fa; }
-    .reward-item__name--epic { color: #c084fc; }
-    .reward-item__name--mythic { color: #f87171; }
-    .reward-item__qty {
-      position: absolute; top: 6px; right: 8px;
-      font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 700;
-      color: #fff; background: rgba(0,0,0,0.6); padding: 1px 6px; border-radius: 3px;
-    }
-    .reward-item__rarity {
-      font-family: 'Inter', sans-serif; font-size: 0.6rem; color: #555;
-      text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px;
+    .ed-reward__name {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 500;
+      color: #888; text-align: center; line-height: 1.2;
     }
 
-    /* Type-colored accent on detail */
-    .event-detail__body--tournament { background: linear-gradient(135deg, #1a1708 0%, #12121f 100%); border: 1px solid #3d2f0a; }
-    .event-detail__body--seasonal { background: linear-gradient(135deg, #0a1220 0%, #12121f 100%); border: 1px solid #1a2d4a; }
-    .event-detail__body--world { background: linear-gradient(135deg, #1a0a0a 0%, #12121f 100%); border: 1px solid #3d1515; }
+    /* Nav bar — full width split */
+    .ed-nav {
+      display: flex; border-radius: 12px; overflow: hidden;
+      border: 1px solid #1e1e30;
+    }
+    .ed-nav__btn {
+      flex: 1; padding: 16px 24px; background: #0d0d18; border: none;
+      font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+      color: #888; transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+    .ed-nav__btn:first-child { border-right: 1px solid #1e1e30; justify-content: flex-start; }
+    .ed-nav__btn:last-child { justify-content: flex-end; }
+    .ed-nav__btn:hover { color: #fff; background: #12121f; }
+    .ed-nav__btn--disabled { opacity: 0.3; pointer-events: none; }
+    .ed-nav__chevron { font-size: 1rem; }
 
-    /* Nav buttons */
-    .event-detail__nav {
-      display: flex; justify-content: space-between; gap: 12px; margin-top: 24px;
-    }
-    .event-detail__nav-btn {
-      padding: 10px 20px; border-radius: 8px; border: 1px solid #333;
-      background: #12121f; color: #aaa; font-family: 'Rajdhani', sans-serif;
-      font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
-    }
-    .event-detail__nav-btn:hover { border-color: #666; color: #fff; }
-    .event-detail__nav-btn--disabled { opacity: 0.3; pointer-events: none; }
+    /* Type-colored accent on detail body */
+    .ed-body--tournament { background: linear-gradient(135deg, #1a1708 0%, #0f0f1a 100%); border-color: #3d2f0a; }
+    .ed-body--seasonal { background: linear-gradient(135deg, #0a1220 0%, #0f0f1a 100%); border-color: #1a2d4a; }
+    .ed-body--world { background: linear-gradient(135deg, #1a0a0a 0%, #0f0f1a 100%); border-color: #3d1515; }
   </style>
 </head>
 <body>
@@ -586,46 +612,96 @@
       const prev = idx > 0 ? sortedEvents[idx - 1] : null;
       const next = idx < sortedEvents.length - 1 ? sortedEvents[idx + 1] : null;
 
+      // Type colors
+      const typeColors = { tournament: '#f59e0b', seasonal: '#3b82f6', world: '#ef4444' };
+      const typeIcons = { tournament: '🏆', seasonal: '❄️', world: '⚡' };
+      const typeNames = { tournament: 'Tournament', seasonal: 'Seasonal', world: 'World Event' };
+
+      // Build content sections with icons
+      let sectionsHTML = '';
+      if (event.content) {
+        let currentSection = null;
+        event.content.forEach(block => {
+          if (block.type === 'heading') {
+            if (currentSection) sectionsHTML += '</div></div>';
+            sectionsHTML += `
+              <div class="ed-body__section">
+                <div class="ed-body__section-icon ed-body__section-icon--${event.type}">${typeIcons[event.type] || '⚡'}</div>
+                <div class="ed-body__section-text">
+                  <div class="ed-body__section-title">${block.value}</div>
+            `;
+            currentSection = true;
+          } else if (block.type === 'text') {
+            if (!currentSection) {
+              // Text before any heading = description
+              sectionsHTML += `<div class="ed-body__desc">${block.value}</div>`;
+            } else {
+              sectionsHTML += `<div class="ed-body__section-desc">${block.value}</div>`;
+            }
+          } else if (block.type === 'list') {
+            const listHTML = block.value.map(i => `<div class="ed-body__section-desc">• ${i}</div>`).join('');
+            if (!currentSection) {
+              sectionsHTML += listHTML;
+            } else {
+              sectionsHTML += listHTML;
+            }
+          }
+        });
+        if (currentSection) sectionsHTML += '</div></div>';
+      }
+
+      // Rewards
       let rewardsHTML = '';
       if (event.rewards && event.rewards.length) {
         const itemsHTML = event.rewards.map(r => `
-          <div class="reward-item reward-item--${r.rarity}">
-            ${r.qty > 1 ? `<span class="reward-item__qty">x${r.qty}</span>` : ''}
-            <div class="reward-item__img">${r.icon || '📦'}</div>
-            <div class="reward-item__name reward-item__name--${r.rarity}">${r.name}</div>
-            <div class="reward-item__rarity">${r.rarity}</div>
+          <div class="ed-reward">
+            <div class="ed-reward__icon-wrap ed-reward__icon-wrap--${event.type}">
+              ${r.icon || '📦'}
+            </div>
+            <div class="ed-reward__qty">x${r.qty}</div>
+            <div class="ed-reward__name">${r.name}</div>
           </div>
         `).join('');
         rewardsHTML = `
-          <div class="event-detail__rewards">
-            <div class="event-detail__rewards-title">🏆 Rewards</div>
-            <div class="event-detail__rewards-grid">${itemsHTML}</div>
+          <div class="ed-rewards">
+            <div class="ed-rewards__title">🏆 Rewards</div>
+            <div class="ed-rewards__row">${itemsHTML}</div>
           </div>
         `;
       }
 
       detailEl.innerHTML = `
-        <button class="event-detail__back" id="detailBack">← Back to Events</button>
-        <div class="event-detail__hero">
-          <img src="${event.image}" alt="" />
-          <div class="event-detail__hero-overlay"></div>
-          <div class="event-detail__hero-content">
-            <h1 class="event-detail__title">${event.title}</h1>
-            <div class="event-detail__meta">
-              ${badgeHTML(status)}
-              ${typeLabel(event.type)}
-              <span>${formatDateRange(event)}</span>
+        <div class="ed-hero">
+          <img class="ed-hero__img" src="${event.image}" alt="" />
+          <div class="ed-hero__overlay"></div>
+          <div class="ed-hero__content">
+            <div class="ed-hero__label">
+              <span class="ed-hero__label-icon">${typeIcons[event.type] || '⚡'}</span>
+              EVENT
             </div>
+            <h1 class="ed-hero__title">${event.title}</h1>
+            <div class="ed-hero__badges">
+              <span class="ed-hero__badge badge--${status}">${status === 'live' ? '● LIVE' : status.toUpperCase()}</span>
+              <span class="ed-hero__badge" style="background:${typeColors[event.type]}22; color:${typeColors[event.type]}; border:1px solid ${typeColors[event.type]}44;">${typeNames[event.type]}</span>
+            </div>
+            <div class="ed-hero__date">📅 ${formatDateRange(event)}</div>
           </div>
         </div>
-        <div class="event-detail__body event-detail__body--${event.type}">
-          <div class="event-detail__excerpt">${event.excerpt}</div>
-          <div class="event-detail__content">${renderContent(event.content)}</div>
+
+        <div class="ed-body ed-body--${event.type}">
+          <div class="ed-body__excerpt">${event.excerpt}</div>
+          ${sectionsHTML}
         </div>
+
         ${rewardsHTML}
-        <div class="event-detail__nav">
-          <button class="event-detail__nav-btn ${prev ? '' : 'event-detail__nav-btn--disabled'}" id="detailPrev" data-slug="${prev ? prev.slug : ''}">← ${prev ? prev.title : 'Previous'}</button>
-          <button class="event-detail__nav-btn ${next ? '' : 'event-detail__nav-btn--disabled'}" id="detailNext" data-slug="${next ? next.slug : ''}">${next ? next.title : 'Next'} →</button>
+
+        <div class="ed-nav">
+          <button class="ed-nav__btn ${prev ? '' : 'ed-nav__btn--disabled'}" id="detailPrev" data-slug="${prev ? prev.slug : ''}">
+            <span class="ed-nav__chevron">‹</span> PREVIOUS
+          </button>
+          <button class="ed-nav__btn ${next ? '' : 'ed-nav__btn--disabled'}" id="detailNext" data-slug="${next ? next.slug : ''}">
+            ${next ? next.title.toUpperCase() : 'NEXT'} <span class="ed-nav__chevron">›</span>
+          </button>
         </div>
       `;
 
@@ -633,9 +709,9 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Bind detail navigation
-      document.getElementById('detailBack').addEventListener('click', showListView);
       document.getElementById('detailPrev').addEventListener('click', function() {
         if (this.dataset.slug) showEvent(this.dataset.slug);
+        else showListView();
       });
       document.getElementById('detailNext').addEventListener('click', function() {
         if (this.dataset.slug) showEvent(this.dataset.slug);

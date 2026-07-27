@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKUBI — Admin: Events</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin { max-width: 850px; margin: 120px auto 60px; padding: 0 24px; }
+    .admin h1 { font-family: 'Orbitron', sans-serif; color: #fff; margin-bottom: 24px; }
+    .admin__denied { color: #f44; font-size: 1.2rem; text-align: center; margin-top: 200px; }
+    .admin label { display: block; color: #aaa; font-size: 0.85rem; margin-top: 16px; margin-bottom: 4px; font-family: 'Rajdhani', sans-serif; }
+    .admin input, .admin textarea, .admin select { width: 100%; padding: 10px 14px; background: #1a1a2e; border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 0.95rem; font-family: 'Inter', sans-serif; }
+    .admin textarea { min-height: 160px; resize: vertical; }
+    .admin__hint { color: #666; font-size: 0.75rem; margin-top: 2px; }
+    .admin__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .admin__btn { margin-top: 24px; padding: 12px 32px; background: linear-gradient(135deg, #7c3aed, #4f46e5); border: none; border-radius: 8px; color: #fff; font-size: 1rem; font-family: 'Rajdhani', sans-serif; font-weight: 600; cursor: pointer; transition: opacity 0.2s; display: inline-block; }
+    .admin__btn:hover { opacity: 0.85; }
+    .admin__btn--secondary { background: linear-gradient(135deg, #374151, #1f2937); margin-left: 8px; }
+    .admin__btn--cancel { background: #7f1d1d; margin-left: 8px; }
+    .admin__msg { margin-top: 16px; padding: 12px; border-radius: 6px; font-size: 0.9rem; }
+    .admin__msg--ok { background: #0d3320; color: #4ade80; }
+    .admin__msg--err { background: #3b1111; color: #f87171; }
+    .admin__editing { background: #1e293b; border: 1px solid #4f46e5; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; color: #a5b4fc; font-size: 0.9rem; display: flex; align-items: center; justify-content: space-between; }
+    .admin__editing button { background: #374151; border: none; color: #d1d5db; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    .admin__list { margin-top: 40px; }
+    .admin__list h2 { color: #fff; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; margin-bottom: 12px; }
+    .admin__item { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: #1a1a2e; border-radius: 6px; margin-bottom: 8px; }
+    .admin__item-info { flex: 1; }
+    .admin__item-title { color: #ddd; font-size: 0.9rem; font-weight: 500; }
+    .admin__item-meta { color: #666; font-size: 0.75rem; margin-top: 2px; }
+    .admin__item-actions { display: flex; gap: 6px; }
+    .admin__item-btn { border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
+    .admin__item-btn--edit { background: #1e3a5f; color: #93c5fd; }
+    .admin__item-btn--preview { background: #1a3330; color: #6ee7b7; }
+    .admin__item-btn--del { background: #7f1d1d; color: #fca5a5; }
+    /* Rewards builder */
+    .rewards-builder { margin-top: 8px; }
+    .rewards-builder__row { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
+    .rewards-builder__row input { flex: 1; }
+    .rewards-builder__row input:nth-child(2) { max-width: 60px; }
+    .rewards-builder__row input:nth-child(3) { max-width: 50px; }
+    .rewards-builder__add { background: #1e3a5f; border: none; color: #93c5fd; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-top: 4px; }
+    .rewards-builder__remove { background: #7f1d1d; border: none; color: #fca5a5; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    /* Conditional fields */
+    .field-world-only { display: none; }
+    .field-world-only--visible { display: block; }
+    /* Preview */
+    .preview-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: none; overflow-y: auto; padding: 40px 20px; }
+    .preview-overlay--visible { display: block; }
+    .preview-box { max-width: 700px; margin: 0 auto; background: #0f0f1a; border: 1px solid #333; border-radius: 12px; padding: 24px; color: #ccc; font-family: 'Inter', sans-serif; }
+    .preview-box h2 { font-family: 'Orbitron', sans-serif; color: #fff; font-size: 1.3rem; margin-bottom: 12px; }
+    .preview-box__close { position: fixed; top: 16px; right: 24px; background: #374151; border: none; color: #fff; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; z-index: 10000; }
+  </style>
+</head>
+<body>
+  <nav class="nav nav--scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo"><img src="assets/okubi-logo.png" alt="OKUBI" class="nav__logo-img" /></a>
+    </div>
+  </nav>
+
+  <div class="preview-overlay" id="previewOverlay">
+    <button class="preview-box__close" id="previewClose">✕ Close</button>
+    <div class="preview-box" id="previewBox"></div>
+  </div>
+
+  <div class="admin" id="adminPanel" style="display:none;">
+    <h1 id="formTitle">Create Event</h1>
+
+    <div class="admin__editing" id="editingBanner" style="display:none;">
+      <span>Editing: <span id="editingSlug"></span></span>
+      <button id="cancelEdit">Cancel</button>
+    </div>
+
+    <label for="etype">Event Type</label>
+    <select id="etype">
+      <option value="tournament">Tournament</option>
+      <option value="seasonal">Seasonal</option>
+      <option value="world">World Event</option>
+    </select>
+
+    <label for="slug">Slug</label>
+    <input id="slug" placeholder="e.g. arena-championship-s1" />
+    <p class="admin__hint">Lowercase, hyphens. Unique ID for URL.</p>
+
+    <label for="title">Title</label>
+    <input id="title" placeholder="Arena Championship — Season 1" />
+
+    <div class="admin__row">
+      <div>
+        <label for="startDate">Start Date & Time (UTC)</label>
+        <input id="startDate" type="datetime-local" />
+      </div>
+      <div>
+        <label for="endDate">End Date & Time (UTC)</label>
+        <input id="endDate" type="datetime-local" />
+      </div>
+    </div>
+
+    <label for="image">Image URL</label>
+    <input id="image" placeholder="https://..." />
+
+    <label for="excerpt">Excerpt (short summary)</label>
+    <input id="excerpt" placeholder="32-player single elimination bracket..." />
+
+    <div class="field-world-only" id="descField">
+      <label for="description">Description (World Events only)</label>
+      <textarea id="description" placeholder="Detailed description of the world event..."></textarea>
+    </div>
+
+    <label for="content">Content (article body — optional)</label>
+    <textarea id="content" placeholder="## Format
+Details about the event...
+
+## Rules
+- Rule 1
+- Rule 2"></textarea>
+    <p class="admin__hint">Use ## for headings, - for bullets.</p>
+
+    <div class="field-world-only" id="rewardsField">
+      <label>Rewards (World Events)</label>
+      <div class="rewards-builder" id="rewardsBuilder">
+        <div class="rewards-builder__row">
+          <input placeholder="Item name" class="rw-name" />
+          <input placeholder="Qty" type="number" class="rw-qty" value="1" />
+          <input placeholder="Icon" class="rw-icon" value="🎁" />
+          <select class="rw-rarity"><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare" selected>Rare</option><option value="epic">Epic</option><option value="mythic">Mythic</option></select>
+          <button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>
+        </div>
+      </div>
+      <button class="rewards-builder__add" id="addReward">+ Add Reward</button>
+    </div>
+
+    <div style="margin-top:24px;">
+      <button class="admin__btn" id="postBtn">Publish Event</button>
+      <button class="admin__btn admin__btn--secondary" id="previewBtn">Preview</button>
+      <button class="admin__btn admin__btn--cancel" id="cancelBtn" style="display:none;">Cancel</button>
+    </div>
+    <div id="msg"></div>
+
+    <div class="admin__list" id="existingEvents"></div>
+  </div>
+
+  <div class="admin__denied" id="denied" style="display:none;">
+    <p>Access denied. Admin login required.</p>
+  </div>
+
+  <script>
+  (function() {
+    const adminPanel = document.getElementById('adminPanel');
+    const denied = document.getElementById('denied');
+    let editingSlug = null;
+    let allEvents = [];
+
+    fetch('/auth/me').then(r => r.json()).then(data => {
+      if (data.logged_in && data.is_admin) { adminPanel.style.display = 'block'; loadExisting(); }
+      else denied.style.display = 'block';
+    });
+
+    // Show/hide world-only fields based on type
+    const etypeEl = document.getElementById('etype');
+    etypeEl.addEventListener('change', updateTypeFields);
+    function updateTypeFields() {
+      const isWorld = etypeEl.value === 'world';
+      document.getElementById('descField').className = 'field-world-only' + (isWorld ? ' field-world-only--visible' : '');
+      document.getElementById('rewardsField').className = 'field-world-only' + (isWorld ? ' field-world-only--visible' : '');
+    }
+    updateTypeFields();
+
+    // Add reward row
+    document.getElementById('addReward').addEventListener('click', () => {
+      const row = document.createElement('div');
+      row.className = 'rewards-builder__row';
+      row.innerHTML = `<input placeholder="Item name" class="rw-name" /><input placeholder="Qty" type="number" class="rw-qty" value="1" /><input placeholder="Icon" class="rw-icon" value="🎁" /><select class="rw-rarity"><option value="common">Common</option><option value="uncommon">Uncommon</option><option value="rare" selected>Rare</option><option value="epic">Epic</option><option value="mythic">Mythic</option></select><button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>`;
+      document.getElementById('rewardsBuilder').appendChild(row);
+    });
+
+    function parseContent(raw) {
+      if (!raw.trim()) return [];
+      const lines = raw.split('\n');
+      const content = []; let listBuffer = [];
+      function flushList() { if (listBuffer.length) { content.push({type:'list',value:listBuffer}); listBuffer=[]; } }
+      for (const line of lines) {
+        const t = line.trim();
+        if (!t) { flushList(); continue; }
+        if (t.startsWith('## ')) { flushList(); content.push({type:'heading',value:t.slice(3)}); }
+        else if (t.startsWith('- ')) { listBuffer.push(t.slice(2)); }
+        else { flushList(); content.push({type:'text',value:t}); }
+      }
+      flushList();
+      return content;
+    }
+
+    function contentToText(content) {
+      if (!content || !Array.isArray(content)) return '';
+      return content.map(b => {
+        if (b.type === 'heading') return '## ' + b.value;
+        if (b.type === 'text') return b.value;
+        if (b.type === 'list') return b.value.map(i => '- ' + i).join('\n');
+        return '';
+      }).join('\n\n');
+    }
+
+    function getRewards() {
+      const rows = document.querySelectorAll('.rewards-builder__row');
+      const rewards = [];
+      rows.forEach(row => {
+        const name = row.querySelector('.rw-name').value.trim();
+        const qty = parseInt(row.querySelector('.rw-qty').value) || 1;
+        const icon = row.querySelector('.rw-icon').value.trim() || '🎁';
+        const rarity = row.querySelector('.rw-rarity').value;
+        if (name) rewards.push({ name, qty, icon, rarity });
+      });
+      return rewards;
+    }
+
+    function setRewards(rewards) {
+      const builder = document.getElementById('rewardsBuilder');
+      builder.innerHTML = '';
+      if (!rewards || !rewards.length) {
+        document.getElementById('addReward').click();
+        return;
+      }
+      rewards.forEach(r => {
+        const row = document.createElement('div');
+        row.className = 'rewards-builder__row';
+        row.innerHTML = `<input placeholder="Item name" class="rw-name" value="${r.name || ''}" /><input placeholder="Qty" type="number" class="rw-qty" value="${r.qty || 1}" /><input placeholder="Icon" class="rw-icon" value="${r.icon || '🎁'}" /><select class="rw-rarity"><option value="common" ${r.rarity==='common'?'selected':''}>Common</option><option value="uncommon" ${r.rarity==='uncommon'?'selected':''}>Uncommon</option><option value="rare" ${r.rarity==='rare'?'selected':''}>Rare</option><option value="epic" ${r.rarity==='epic'?'selected':''}>Epic</option><option value="mythic" ${r.rarity==='mythic'?'selected':''}>Mythic</option></select><button class="rewards-builder__remove" onclick="this.parentElement.remove()">✕</button>`;
+        builder.appendChild(row);
+      });
+    }
+
+    function buildPayload() {
+      const type = document.getElementById('etype').value;
+      const slug = document.getElementById('slug').value.trim();
+      const title = document.getElementById('title').value.trim();
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      const image = document.getElementById('image').value.trim();
+      const excerpt = document.getElementById('excerpt').value.trim();
+      const rawContent = document.getElementById('content').value;
+
+      if (!slug || !title || !startDate || !endDate || !excerpt) return null;
+
+      const payload = {
+        slug, type, title, image, excerpt,
+        startDate: startDate + ':00Z',
+        endDate: endDate + ':00Z',
+        content: parseContent(rawContent),
+      };
+
+      if (type === 'world') {
+        payload.description = document.getElementById('description').value.trim();
+        payload.rewards = getRewards();
+      }
+      return payload;
+    }
+
+    // Publish
+    document.getElementById('postBtn').addEventListener('click', () => {
+      const payload = buildPayload();
+      if (!payload) { showMsg('Fill in required fields.', false); return; }
+      fetch('/api/events', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+        .then(r => r.json()).then(data => {
+          if (data.success) { showMsg(editingSlug ? 'Saved!' : 'Published!', true); clearForm(); loadExisting(); }
+          else showMsg('Error: ' + (data.error || 'Unknown'), false);
+        }).catch(e => showMsg('Network error: ' + e, false));
+    });
+
+    // Preview
+    document.getElementById('previewBtn').addEventListener('click', () => {
+      const p = buildPayload();
+      if (!p) { showMsg('Fill fields to preview.', false); return; }
+      document.getElementById('previewBox').innerHTML = `<h2>${p.title}</h2><p><b>Type:</b> ${p.type} | <b>Start:</b> ${p.startDate} | <b>End:</b> ${p.endDate}</p><p>${p.excerpt}</p>${p.description ? '<p>'+p.description+'</p>' : ''}${p.rewards ? '<p><b>Rewards:</b> ' + p.rewards.map(r=>r.icon+' '+r.name+' x'+r.qty).join(', ') + '</p>' : ''}`;
+      document.getElementById('previewOverlay').classList.add('preview-overlay--visible');
+    });
+    document.getElementById('previewClose').addEventListener('click', () => {
+      document.getElementById('previewOverlay').classList.remove('preview-overlay--visible');
+    });
+
+    // Edit
+    function loadForEdit(slug) {
+      const item = allEvents.find(e => e.slug === slug);
+      if (!item) return;
+      editingSlug = slug;
+      document.getElementById('etype').value = item.type || 'tournament';
+      updateTypeFields();
+      document.getElementById('slug').value = item.slug;
+      document.getElementById('slug').disabled = true;
+      document.getElementById('title').value = item.title || '';
+      document.getElementById('startDate').value = (item.startDate || '').replace(':00Z','').replace('Z','');
+      document.getElementById('endDate').value = (item.endDate || '').replace(':00Z','').replace('Z','');
+      document.getElementById('image').value = item.image || '';
+      document.getElementById('excerpt').value = item.excerpt || '';
+      document.getElementById('description').value = item.description || '';
+      document.getElementById('content').value = contentToText(item.content);
+      if (item.rewards) setRewards(item.rewards);
+      document.getElementById('editingBanner').style.display = 'flex';
+      document.getElementById('editingSlug').textContent = slug;
+      document.getElementById('cancelBtn').style.display = 'inline-block';
+      document.getElementById('formTitle').textContent = 'Edit Event';
+      document.getElementById('postBtn').textContent = 'Save Changes';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function clearForm() {
+      editingSlug = null;
+      document.getElementById('slug').value = '';
+      document.getElementById('slug').disabled = false;
+      document.getElementById('title').value = '';
+      document.getElementById('startDate').value = '';
+      document.getElementById('endDate').value = '';
+      document.getElementById('image').value = '';
+      document.getElementById('excerpt').value = '';
+      document.getElementById('description').value = '';
+      document.getElementById('content').value = '';
+      setRewards([]);
+      document.getElementById('editingBanner').style.display = 'none';
+      document.getElementById('cancelBtn').style.display = 'none';
+      document.getElementById('formTitle').textContent = 'Create Event';
+      document.getElementById('postBtn').textContent = 'Publish Event';
+    }
+
+    document.getElementById('cancelBtn').addEventListener('click', clearForm);
+    document.getElementById('cancelEdit').addEventListener('click', clearForm);
+
+    function showMsg(text, ok) {
+      const el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'admin__msg ' + (ok ? 'admin__msg--ok' : 'admin__msg--err');
+    }
+
+    function loadExisting() {
+      fetch('/api/events').then(r => r.json()).then(items => {
+        allEvents = items;
+        const container = document.getElementById('existingEvents');
+        if (!items.length) { container.innerHTML = '<h2>No events yet</h2>'; return; }
+        const typeLabels = { tournament: '🏆 Tournament', seasonal: '❄️ Seasonal', world: '⚡ World' };
+        let html = '<h2>Existing Events</h2>';
+        items.forEach(item => {
+          html += `<div class="admin__item">
+            <div class="admin__item-info">
+              <span class="admin__item-title">${item.title}</span>
+              <div class="admin__item-meta">${typeLabels[item.type] || item.type} • ${item.startDate || ''} → ${item.endDate || ''} • ${item.isActive ? '🟢 LIVE' : '⏳'}</div>
+            </div>
+            <div class="admin__item-actions">
+              <button class="admin__item-btn admin__item-btn--edit" onclick="editEvent('${item.slug}')">Edit</button>
+              <button class="admin__item-btn admin__item-btn--preview" onclick="previewEvent('${item.slug}')">Preview</button>
+              <button class="admin__item-btn admin__item-btn--del" onclick="deleteEvent('${item.slug}')">Delete</button>
+            </div>
+          </div>`;
+        });
+        container.innerHTML = html;
+      });
+    }
+
+    window.editEvent = function(slug) { loadForEdit(slug); };
+    window.previewEvent = function(slug) {
+      const item = allEvents.find(e => e.slug === slug);
+      if (!item) return;
+      document.getElementById('previewBox').innerHTML = `<h2>${item.title}</h2><p><b>Type:</b> ${item.type} | <b>Active:</b> ${item.isActive ? 'YES' : 'No'} | <b>Remaining:</b> ${item.remainingSeconds}s</p><p>${item.excerpt}</p>${item.description ? '<p>'+item.description+'</p>' : ''}${item.rewards ? '<p><b>Rewards:</b> ' + item.rewards.map(r=>r.icon+' '+r.name+' x'+r.qty).join(', ') + '</p>' : ''}`;
+      document.getElementById('previewOverlay').classList.add('preview-overlay--visible');
+    };
+    window.deleteEvent = function(slug) {
+      if (!confirm('Delete "' + slug + '"?')) return;
+      fetch('/api/events/' + slug, { method: 'DELETE' }).then(r => r.json()).then(() => { loadExisting(); showMsg('Deleted.', true); });
+    };
+  })();
+  </script>
+</body>
+</html>

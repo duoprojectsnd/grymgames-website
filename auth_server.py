@@ -956,6 +956,173 @@ def api_delete_news(slug):
         return jsonify({"error": str(e)}), 500
 
 
+@app.route("/api/news/latest", methods=["GET"])
+def api_news_latest():
+    """Public: return the 3 latest news items (for UE5 game)."""
+    try:
+        resp = _dynamo().scan(TableName=NEWS_TABLE)
+        items = [_deser(i) for i in resp.get("Items", [])]
+        # Filter to news only (exclude events)
+        news = [i for i in items if i.get("type", "news") == "news"]
+        news.sort(key=lambda x: x.get("date", ""), reverse=True)
+        latest = news[:3]
+        result = []
+        for n in latest:
+            result.append({
+                "name": n.get("title", ""),
+                "subtitle": n.get("excerpt", ""),
+                "date": n.get("displayDate", n.get("date", "")),
+                "website": f"{SITE_URL}/article.html?slug={n.get('slug', '')}",
+            })
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ─── Events System ────────────────────────────────────────────────────────────
+
+from datetime import datetime, timezone
+
+
+def _get_all_events():
+    """Scan News table for event items (type != 'news')."""
+    resp = _dynamo().scan(TableName=NEWS_TABLE)
+    items = [_deser(i) for i in resp.get("Items", [])]
+    return [i for i in items if i.get("type") in ("tournament", "seasonal", "world")]
+
+
+def _compute_event_status(event):
+    """Add isActive, remainingSeconds, found to an event dict."""
+    now = datetime.now(timezone.utc)
+    start_str = event.get("startDate", "")
+    end_str = event.get("endDate", "")
+    try:
+        start = datetime.fromisoformat(start_str.replace("Z", "+00:00"))
+        end = datetime.fromisoformat(end_str.replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return {**event, "found": True, "isActive": False, "remainingSeconds": 0}
+
+    if now >= start and now <= end:
+        return {**event, "found": True, "isActive": True, "remainingSeconds": int((end - now).total_seconds())}
+    elif now < start:
+        return {**event, "found": True, "isActive": False, "remainingSeconds": int((start - now).total_seconds())}
+    else:
+        return {**event, "found": True, "isActive": False, "remainingSeconds": 0}
+
+
+def _find_current_or_next(events, event_type):
+    """Find the active event or next upcoming of a given type."""
+    now = datetime.now(timezone.utc)
+    typed = [e for e in events if e.get("type") == event_type]
+
+    # Check for active
+    for e in typed:
+        try:
+            start = datetime.fromisoformat(e.get("startDate", "").replace("Z", "+00:00"))
+            end = datetime.fromisoformat(e.get("endDate", "").replace("Z", "+00:00"))
+            if now >= start and now <= end:
+                return e
+        except (ValueError, TypeError):
+            continue
+
+    # Find next upcoming (soonest startDate in the future)
+    upcoming = []
+    for e in typed:
+        try:
+            start = datetime.fromisoformat(e.get("startDate", "").replace("Z", "+00:00"))
+            if start > now:
+                upcoming.append((start, e))
+        except (ValueError, TypeError):
+            continue
+    upcoming.sort(key=lambda x: x[0])
+    return upcoming[0][1] if upcoming else None
+
+
+@app.route("/admin-events.html")
+def admin_events_page():
+    return send_from_directory(".", "admin-events.html")
+
+
+@app.route("/api/events", methods=["GET"])
+def api_get_events():
+    """Public: return all events with computed status."""
+    try:
+        events = _get_all_events()
+        result = [_sanitize(_compute_event_status(e)) for e in events]
+        result.sort(key=lambda x: x.get("startDate", ""), reverse=True)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/events/tournament", methods=["GET"])
+def api_event_tournament():
+    """Public: return current or next upcoming tournament (for UE5)."""
+    try:
+        events = _get_all_events()
+        event = _find_current_or_next(events, "tournament")
+        if not event:
+            return jsonify({"found": False})
+        result = _compute_event_status(event)
+        result["website"] = f"{SITE_URL}/events.html?slug={event.get('slug', '')}"
+        return jsonify(_sanitize(result))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/events/world", methods=["GET"])
+def api_event_world():
+    """Public: return current or next upcoming world event (for UE5)."""
+    try:
+        events = _get_all_events()
+        event = _find_current_or_next(events, "world")
+        if not event:
+            return jsonify({"found": False})
+        result = _compute_event_status(event)
+        result["website"] = f"{SITE_URL}/events.html?slug={event.get('slug', '')}"
+        return jsonify(_sanitize(result))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/events", methods=["POST"])
+def api_post_event():
+    """Admin only: create or update an event."""
+    if not _is_admin():
+        return jsonify({"error": "Unauthorized"}), 403
+
+    data = request.get_json(force=True)
+    required = ["slug", "type", "title", "startDate", "endDate", "image", "excerpt"]
+    for field in required:
+        if field not in data:
+            return jsonify({"error": f"Missing field: {field}"}), 400
+
+    if data["type"] not in ("tournament", "seasonal", "world"):
+        return jsonify({"error": "type must be tournament, seasonal, or world"}), 400
+
+    item = {k: _serializer.serialize(v) for k, v in data.items()}
+    try:
+        _dynamo().put_item(TableName=NEWS_TABLE, Item=item)
+        return jsonify({"success": True, "slug": data["slug"]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/events/<slug>", methods=["DELETE"])
+def api_delete_event(slug):
+    """Admin only: delete an event."""
+    if not _is_admin():
+        return jsonify({"error": "Unauthorized"}), 403
+    try:
+        _dynamo().delete_item(
+            TableName=NEWS_TABLE,
+            Key={"slug": {"S": slug}},
+        )
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 if __name__ == "__main__":
     print("=== OKUBI Auth Server -- http://localhost:5000 ===")
     app.run(host="0.0.0.0", port=5000, debug=True)
