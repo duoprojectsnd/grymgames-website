@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKUBI — Mobile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #111; color: #fff; font-family: 'Inter', sans-serif; }
+
+    /* Phone frame for desktop testing */
+    .phone-frame {
+      width: 390px; height: 844px; margin: 40px auto;
+      border: 3px solid #333; border-radius: 40px;
+      overflow-y: auto; overflow-x: hidden;
+      background: #0a0a0f;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    .phone-frame::-webkit-scrollbar { width: 4px; }
+    .phone-frame::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+    /* Hero — matches desktop purple vibe */
+    .m-hero {
+      position: relative; min-height: 100%; 
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 32px 24px 40px; text-align: center;
+      background: url('assets/home/hero.png') center/cover no-repeat;
+    }
+    .m-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,15,1) 0%, rgba(10,10,15,0.7) 35%, rgba(10,10,15,0.2) 70%, transparent 100%);
+    }
+    .m-hero__content { position: relative; z-index: 2; }
+    .m-hero__logo { width: 100px; margin: 0 auto 16px; display: block; }
+    .m-hero__title {
+      font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 800;
+      color: #fff; letter-spacing: 1px; margin-bottom: 6px; line-height: 1.3;
+    }
+    .m-hero__steam {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: #888;
+      margin-bottom: 24px; letter-spacing: 1px;
+    }
+    .m-btn {
+      display: block; width: 100%; padding: 16px; border-radius: 6px;
+      text-decoration: none; text-align: center; font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;
+      margin-bottom: 10px; transition: transform 0.15s;
+    }
+    .m-btn:active { transform: scale(0.97); }
+    .m-btn--gold {
+      background: linear-gradient(135deg, #d4a853 0%, #b8860b 100%);
+      color: #000; border: none;
+    }
+    .m-btn--outline {
+      background: transparent; color: #d4a853;
+      border: 1px solid rgba(212,168,83,0.5);
+    }
+
+    /* Sections */
+    .m-section { padding: 40px 24px; border-top: 1px solid #1a1a2a; }
+    .m-section__eyebrow {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 3px; color: #d4a853; margin-bottom: 6px; text-align: center;
+    }
+    .m-section__title {
+      font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #fff;
+      margin-bottom: 14px; text-align: center;
+    }
+    .m-section__text {
+      font-size: 0.82rem; color: #999; line-height: 1.7; margin-bottom: 16px; text-align: center;
+    }
+    .m-section__img {
+      width: 100%; border-radius: 6px; margin-bottom: 16px;
+    }
+
+    /* Archetype row */
+    .m-archetypes {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 16px;
+    }
+    .m-arch {
+      text-align: center; padding: 8px 4px;
+      border-radius: 6px; border: 1px solid #1e1e30;
+      background: rgba(255,255,255,0.02);
+    }
+    .m-arch__icon { font-size: 1.4rem; margin-bottom: 4px; }
+    .m-arch__name {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.6rem; color: #aaa;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    /* Arena compact */
+    .m-arenas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+    .m-arena {
+      padding: 16px 12px; border-radius: 6px; text-align: center;
+      border: 1px solid #2a1a1a; background: rgba(192,57,43,0.05);
+    }
+    .m-arena__name {
+      font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #fff; margin-bottom: 2px;
+    }
+    .m-arena__sub {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.65rem; color: #c0392b;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* OKUBI section */
+    .m-okubi { text-align: center; }
+    .m-okubi__symbol {
+      font-size: 2rem; margin-bottom: 12px; color: #d4a853;
+    }
+
+    /* Hub features */
+    .m-hub-features { list-style: none; }
+    .m-hub-features li {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 0; border-bottom: 1px solid #1a1a2a;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: #ddd;
+    }
+    .m-hub-features li span { font-size: 1.1rem; }
+
+    /* Footer */
+    .m-footer {
+      padding: 28px 24px; text-align: center; border-top: 1px solid #1a1a2a;
+    }
+    .m-footer__logo {
+      font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #d4a853; margin-bottom: 6px;
+    }
+    .m-footer__copy { font-size: 0.65rem; color: #555; }
+    .m-footer__links { margin-top: 10px; display: flex; justify-content: center; gap: 14px; }
+    .m-footer__links a { color: #777; text-decoration: none; font-size: 0.7rem; }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+
+    <!-- Hero — mirrors desktop first page -->
+    <section class="m-hero">
+      <div class="m-hero__content">
+        <img class="m-hero__logo" src="assets/okubi-logo.png" alt="OKUBI" />
+        <h1 class="m-hero__title">A New Era of Combat</h1>
+        <p class="m-hero__steam">Steam · Unreal Engine 5</p>
+        <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--gold">Wishlist Now</a>
+        <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--outline">Kickstarter</a>
+      </div>
+    </section>
+
+    <!-- Archetypes (simplified) -->
+    <section class="m-section">
+      <p class="m-section__eyebrow">Choose Your Path</p>
+      <h2 class="m-section__title">Archetypes</h2>
+      <div class="m-archetypes">
+        <div class="m-arch"><div class="m-arch__icon">⚔</div><div class="m-arch__name">Reaper</div></div>
+        <div class="m-arch"><div class="m-arch__icon">🛡</div><div class="m-arch__name">Guardian</div></div>
+        <div class="m-arch"><div class="m-arch__icon">🔥</div><div class="m-arch__name">Berserker</div></div>
+        <div class="m-arch"><div class="m-arch__icon">🏹</div><div class="m-arch__name">Pathfinder</div></div>
+        <div class="m-arch"><div class="m-arch__icon">⚡</div><div class="m-arch__name">Tempest</div></div>
+      </div>
+      <p class="m-section__text">Five archetypes. Unique combat styles. Ground-to-air mastery.</p>
+    </section>
+
+    <!-- Arenas (simplified) -->
+    <section class="m-section">
+      <p class="m-section__eyebrow">Prove Your Worth</p>
+      <h2 class="m-section__title">The Arenas</h2>
+      <div class="m-arenas">
+        <div class="m-arena"><div class="m-arena__name">1v1</div><div class="m-arena__sub">Duel of Fates</div></div>
+        <div class="m-arena"><div class="m-arena__name">2v2</div><div class="m-arena__sub">Blood Pact</div></div>
+        <div class="m-arena"><div class="m-arena__name">3v3</div><div class="m-arena__sub">Trial of Three</div></div>
+        <div class="m-arena"><div class="m-arena__name">Wanted</div><div class="m-arena__sub">4v4 Bounty</div></div>
+      </div>
+      <p class="m-section__text">Ranked & unranked competitive combat watched by both factions.</p>
+    </section>
+
+    <!-- OKUBI -->
+    <section class="m-section m-okubi">
+      <div class="m-okubi__symbol">⟐</div>
+      <p class="m-section__eyebrow">The Entity</p>
+      <h2 class="m-section__title">Okubi is Watching</h2>
+      <p class="m-section__text">A mysterious force that triggers world events — catastrophic destruction or generous rewards. Stay alert. Adapt. Seize the moment.</p>
+    </section>
+
+    <!-- Public Hub -->
+    <section class="m-section">
+      <p class="m-section__eyebrow">Your Home Base</p>
+      <h2 class="m-section__title">The Public Hub</h2>
+      <ul class="m-hub-features">
+        <li><span>⚒</span> Craft & Upgrade Gear</li>
+        <li><span>👥</span> Meet & Squad Up</li>
+        <li><span>🍸</span> VIP Bar & Social Games</li>
+        <li><span>🎯</span> Plan Your Build</li>
+      </ul>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="m-section">
+      <p class="m-section__eyebrow">Join the Fight</p>
+      <h2 class="m-section__title">Playtest is Live</h2>
+      <p class="m-section__text">Request access on Steam. Space is limited.</p>
+      <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--gold">Wishlist Now</a>
+      <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--outline">Back on Kickstarter</a>
+    </section>
+
+    <!-- Footer -->
+    <div class="m-footer">
+      <p class="m-footer__logo">OKUBI</p>
+      <p class="m-footer__copy">&copy; 2026 Grym Games. All rights reserved.</p>
+      <div class="m-footer__links">
+        <a href="https://discord.gg/okubi" target="_blank">Discord</a>
+        <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank">Steam</a>
+        <a href="https://www.grymgames.net" target="_blank">Website</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
