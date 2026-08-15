@@ -398,12 +398,9 @@
 
   </div>
   <script>
-  // Skip black intro and loop from midpoint
+  // Skip black intro — set start time once
   const vid = document.getElementById('heroVid');
-  const START = 32;
-  vid.currentTime = START;
-  vid.addEventListener('timeupdate', () => { if (vid.currentTime < START) vid.currentTime = START; });
-  vid.addEventListener('seeked', () => { if (vid.currentTime < START) vid.currentTime = START; });
+  vid.addEventListener('loadeddata', () => { vid.currentTime = 32; }, { once: true });
 
   // Weapon arrows
   const track = document.getElementById('weaponTrack');
