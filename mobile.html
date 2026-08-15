@@ -130,6 +130,44 @@
     .m-footer__copy { font-size: 0.65rem; color: #555; }
     .m-footer__links { margin-top: 10px; display: flex; justify-content: center; gap: 14px; }
     .m-footer__links a { color: #777; text-decoration: none; font-size: 0.7rem; }
+
+    /* Section with bg image */
+    .m-section--bg {
+      position: relative; padding: 60px 24px;
+    }
+    .m-section--bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0.3;
+    }
+    .m-section--bg > * { position: relative; z-index: 2; }
+    .m-section--arena::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067'); }
+    .m-section--hub::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067'); }
+
+    /* Video */
+    .m-video { width: 100%; border-radius: 6px; margin-bottom: 16px; }
+
+    /* Email form */
+    .m-email { margin-top: 16px; }
+    .m-email__row { display: flex; gap: 8px; }
+    .m-email__input {
+      flex: 1; padding: 14px 12px; border-radius: 6px; border: 1px solid #2a2a3a;
+      background: #12121a; color: #fff; font-family: 'Inter', sans-serif; font-size: 0.8rem;
+      outline: none;
+    }
+    .m-email__input:focus { border-color: #d4a853; }
+    .m-email__input::placeholder { color: #555; }
+    .m-email__btn {
+      padding: 14px 18px; border-radius: 6px; border: none;
+      background: #d4a853; color: #000; font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+    }
+    .m-email__msg {
+      font-size: 0.7rem; color: #888; margin-top: 8px; min-height: 16px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .m-email__msg--ok { color: #4caf50; }
+    .m-email__msg--err { color: #e74c3c; }
   </style>
 </head>
 <body>
@@ -150,6 +188,7 @@
     <section class="m-section">
       <p class="m-section__eyebrow">Choose Your Path</p>
       <h2 class="m-section__title">Archetypes</h2>
+      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="Combat" />
       <div class="m-archetypes">
         <div class="m-arch"><div class="m-arch__icon">⚔</div><div class="m-arch__name">Reaper</div></div>
         <div class="m-arch"><div class="m-arch__icon">🛡</div><div class="m-arch__name">Guardian</div></div>
@@ -161,7 +200,7 @@
     </section>
 
     <!-- Arenas (simplified) -->
-    <section class="m-section">
+    <section class="m-section m-section--bg m-section--arena">
       <p class="m-section__eyebrow">Prove Your Worth</p>
       <h2 class="m-section__title">The Arenas</h2>
       <div class="m-arenas">
@@ -173,16 +212,27 @@
       <p class="m-section__text">Ranked & unranked competitive combat watched by both factions.</p>
     </section>
 
+    <!-- Flying / Video -->
+    <section class="m-section">
+      <p class="m-section__eyebrow">Take to the Skies</p>
+      <h2 class="m-section__title">Winged Combat</h2>
+      <video class="m-video" autoplay loop muted playsinline>
+        <source src="https://video.fastly.steamstatic.com/store_trailers/257015428/movie480_vp9.webm" type="video/webm" />
+      </video>
+      <p class="m-section__text">Deploy wings mid-fight. Chain ground combos into aerial strikes. No cooldown. No mount. Pure vertical freedom.</p>
+    </section>
+
     <!-- OKUBI -->
     <section class="m-section m-okubi">
       <div class="m-okubi__symbol">⟐</div>
       <p class="m-section__eyebrow">The Entity</p>
       <h2 class="m-section__title">Okubi is Watching</h2>
+      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="OKUBI" />
       <p class="m-section__text">A mysterious force that triggers world events — catastrophic destruction or generous rewards. Stay alert. Adapt. Seize the moment.</p>
     </section>
 
     <!-- Public Hub -->
-    <section class="m-section">
+    <section class="m-section m-section--bg m-section--hub">
       <p class="m-section__eyebrow">Your Home Base</p>
       <h2 class="m-section__title">The Public Hub</h2>
       <ul class="m-hub-features">
@@ -191,6 +241,20 @@
         <li><span>🍸</span> VIP Bar & Social Games</li>
         <li><span>🎯</span> Plan Your Build</li>
       </ul>
+    </section>
+
+    <!-- Email Subscribe -->
+    <section class="m-section">
+      <p class="m-section__eyebrow">Stay in the Loop</p>
+      <h2 class="m-section__title">Get Updates</h2>
+      <p class="m-section__text">Be the first to know about playtests, updates, and launch day.</p>
+      <div class="m-email">
+        <div class="m-email__row">
+          <input class="m-email__input" type="email" id="subEmail" placeholder="your@email.com" />
+          <button class="m-email__btn" id="subBtn">JOIN</button>
+        </div>
+        <p class="m-email__msg" id="subMsg"></p>
+      </div>
     </section>
 
     <!-- Final CTA -->
@@ -214,5 +278,22 @@
     </div>
 
   </div>
+  <script>
+  document.getElementById('subBtn').addEventListener('click', async () => {
+    const input = document.getElementById('subEmail');
+    const msg = document.getElementById('subMsg');
+    const email = input.value.trim();
+    if (!email) { msg.textContent = 'Enter your email'; msg.className = 'm-email__msg m-email__msg--err'; return; }
+    try {
+      const r = await fetch('/api/subscribe', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ email, source: 'mobile' })
+      });
+      const d = await r.json();
+      if (d.ok) { msg.textContent = "You're in! We'll keep you posted."; msg.className = 'm-email__msg m-email__msg--ok'; input.value = ''; }
+      else { msg.textContent = d.error || 'Something went wrong'; msg.className = 'm-email__msg m-email__msg--err'; }
+    } catch { msg.textContent = 'Network error. Try again.'; msg.className = 'm-email__msg m-email__msg--err'; }
+  });
+  </script>
 </body>
 </html>

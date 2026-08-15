@@ -51,6 +51,7 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", secrets.token_hex(32))
 ADMIN_STEAM_IDS = os.environ.get("ADMIN_STEAM_IDS", _cfg.get("admin_steam_ids", "")).split(",")
 ADMIN_STEAM_IDS = [s.strip() for s in ADMIN_STEAM_IDS if s.strip()]
 NEWS_TABLE = os.environ.get("NEWS_TABLE", _cfg.get("news_table", "News"))
+SUBS_TABLE = os.environ.get("SUBS_TABLE", _cfg.get("subs_table", "Subscribers"))
 
 @app.after_request
 def add_no_cache(response):
@@ -978,6 +979,33 @@ def api_news_latest():
                 "image": n.get("image", ""),
             })
         return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ─── Email Subscribers (waitlist/newsletter) ──────────────────────────────────
+
+@app.route("/api/subscribe", methods=["POST"])
+def api_subscribe():
+    """Public: collect an email for the waitlist."""
+    data = request.get_json(force=True)
+    email = data.get("email", "").strip().lower()
+    if not email or not re.match(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$', email):
+        return jsonify({"error": "Invalid email"}), 400
+    try:
+        from datetime import datetime, timezone
+        _dynamo().put_item(
+            TableName=SUBS_TABLE,
+            Item={
+                "email": {"S": email},
+                "subscribed_at": {"S": datetime.now(timezone.utc).isoformat()},
+                "source": {"S": data.get("source", "mobile")},
+            },
+            ConditionExpression="attribute_not_exists(email)",
+        )
+        return jsonify({"ok": True})
+    except _dynamo().exceptions.ConditionalCheckFailedException:
+        return jsonify({"ok": True})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
