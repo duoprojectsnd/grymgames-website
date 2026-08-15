@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { background: #111; color: #fff; font-family: 'Inter', sans-serif; }
+    html, body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; overflow-anchor: none; }
 
     /* No frame — full page */
     .phone-frame {
@@ -78,13 +78,9 @@
       background: #2980b9; color: #fff; border: none;
     }
 
-    /* Sticky bottom CTA bar */
+    /* Sticky bottom CTA bar — DISABLED FOR TESTING */
     .m-sticky {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-      background: rgba(10,10,15,0.95); backdrop-filter: blur(8px);
-      border-top: 1px solid #1e1e2e;
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+      display: none;
     }
     .m-sticky--visible { opacity: 1; pointer-events: auto; }
     .m-sticky__btn {
@@ -425,7 +421,8 @@
     } catch { msg.textContent = 'Network error. Try again.'; msg.className = 'm-email__msg m-email__msg--err'; }
   });
 
-  // Fade in sticky bar when archetypes section is fully visible
+  // Sticky bar disabled for testing
+  /*
   const sticky = document.getElementById('stickyBar');
   const archSection = document.getElementById('archSection');
   window.addEventListener('scroll', () => {
@@ -436,6 +433,7 @@
       sticky.classList.remove('m-sticky--visible');
     }
   });
+  */
   </script>
 </body>
 </html>
