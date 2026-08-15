@@ -899,8 +899,10 @@ def api_get_news():
     try:
         resp = _dynamo().scan(TableName=NEWS_TABLE)
         items = [_deser(i) for i in resp.get("Items", [])]
-        # Sort by date descending
         items.sort(key=lambda x: x.get("date", ""), reverse=True)
+        limit = request.args.get("limit", type=int)
+        if limit and limit > 0:
+            items = items[:limit]
         return jsonify(_sanitize(items))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
