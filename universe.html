@@ -133,6 +133,55 @@
 
   </section>
 
+  <!-- ═══ PVP ARENAS ═══ -->
+  <section class="pvp-arenas" id="pvpArenas">
+    <div class="pvp-arenas__header">
+      <p class="pvp-arenas__eyebrow">Prove Your Worth</p>
+      <h2 class="pvp-arenas__title">The Arenas</h2>
+      <p class="pvp-arenas__subtitle">Gladiatorial combat watched by both factions. Glory or death — the crowd demands blood.</p>
+    </div>
+    <div class="pvp-arenas__tabs" id="arenaTabs">
+      <button class="pvp-arenas__tab pvp-arenas__tab--active" data-arena="1v1">1v1</button>
+      <button class="pvp-arenas__tab" data-arena="2v2">2v2</button>
+      <button class="pvp-arenas__tab" data-arena="3v3">3v3</button>
+      <button class="pvp-arenas__tab" data-arena="wanted">Wanted</button>
+    </div>
+    <div class="pvp-arenas__showcase" id="arenaShowcase">
+      <div class="pvp-arenas__card pvp-arenas__card--active" data-arena="1v1">
+        <div class="pvp-arenas__card-icon">⚔</div>
+        <h3 class="pvp-arenas__card-title">Duel of Fates</h3>
+        <p class="pvp-arenas__card-desc">One challenger. One opponent. No allies, no excuses. The purest test of skill in OKUBI — raw mechanics, reads, and adaptation under the roar of the crowd.</p>
+        <div class="pvp-arenas__card-meta">
+          <span>Solo Queue</span><span>Ranked & Unranked</span><span>Best of 3</span>
+        </div>
+      </div>
+      <div class="pvp-arenas__card" data-arena="2v2">
+        <div class="pvp-arenas__card-icon">⚔⚔</div>
+        <h3 class="pvp-arenas__card-title">Blood Pact</h3>
+        <p class="pvp-arenas__card-desc">Two warriors bound by oath. Synergy between archetypes is everything — coordinate ultimates, cover each other's weaknesses, and punish the enemy's mistakes together.</p>
+        <div class="pvp-arenas__card-meta">
+          <span>Duo Queue</span><span>Ranked & Unranked</span><span>Best of 3</span>
+        </div>
+      </div>
+      <div class="pvp-arenas__card" data-arena="3v3">
+        <div class="pvp-arenas__card-icon">⚔⚔⚔</div>
+        <h3 class="pvp-arenas__card-title">Trial of Three</h3>
+        <p class="pvp-arenas__card-desc">A squad of three enters the ring. Team composition matters — tanks, DPS, and support must work in unison. The arena shifts mid-match, forcing adaptation.</p>
+        <div class="pvp-arenas__card-meta">
+          <span>Team Queue</span><span>Ranked & Unranked</span><span>Round Robin</span>
+        </div>
+      </div>
+      <div class="pvp-arenas__card" data-arena="wanted">
+        <div class="pvp-arenas__card-icon">💀</div>
+        <h3 class="pvp-arenas__card-title">Wanted</h3>
+        <p class="pvp-arenas__card-desc">4v4 with a twist — one player on each team is marked as the Bounty. Kill the Bounty to win the round. Protect yours at all costs. The Bounty rotates each round, so everyone takes the heat.</p>
+        <div class="pvp-arenas__card-meta">
+          <span>4v4</span><span>Rotating Bounty</span><span>First to 5</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ CINEMATIC DIVIDER ═══ -->
   <section class="cinematic-divider" id="cinematicDivider">
     <div class="cinematic-divider__content">
@@ -303,5 +352,77 @@
   </a>
 
   <script src="script.js"></script>
+
+  <!-- PvP Arena styles & tab logic -->
+  <style>
+    .pvp-arenas {
+      padding: 100px 80px 80px;
+      text-align: center;
+      background: linear-gradient(180deg, transparent 0%, rgba(180,50,50,0.03) 50%, transparent 100%);
+    }
+    .pvp-arenas__eyebrow {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; text-transform: uppercase;
+      letter-spacing: 3px; color: #c0392b; margin-bottom: 8px;
+    }
+    .pvp-arenas__title {
+      font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: #fff; margin-bottom: 12px;
+    }
+    .pvp-arenas__subtitle {
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #888; max-width: 560px; margin: 0 auto 48px;
+    }
+    .pvp-arenas__tabs {
+      display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap;
+    }
+    .pvp-arenas__tab {
+      font-family: 'Orbitron', sans-serif; font-size: 0.8rem; padding: 10px 28px;
+      border: 1px solid #333; border-radius: 4px; background: transparent;
+      color: #888; cursor: pointer; transition: all 0.2s;
+    }
+    .pvp-arenas__tab:hover { border-color: #c0392b; color: #eee; }
+    .pvp-arenas__tab--active {
+      border-color: #c0392b; color: #fff; background: rgba(192,57,43,0.15);
+      box-shadow: 0 0 12px rgba(192,57,43,0.3);
+    }
+    .pvp-arenas__showcase { position: relative; max-width: 640px; margin: 0 auto; min-height: 220px; }
+    .pvp-arenas__card {
+      display: none; text-align: left; padding: 36px; border-radius: 8px;
+      border: 1px solid #222; background: rgba(20,10,10,0.6);
+      animation: arenaFadeIn 0.3s ease;
+    }
+    .pvp-arenas__card--active { display: block; }
+    @keyframes arenaFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .pvp-arenas__card-icon { font-size: 1.6rem; margin-bottom: 12px; }
+    .pvp-arenas__card-title {
+      font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: #c0392b; margin-bottom: 12px;
+    }
+    .pvp-arenas__card-desc {
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #bbb; line-height: 1.6; margin-bottom: 20px;
+    }
+    .pvp-arenas__card-meta {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: #666;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .pvp-arenas__card-meta span { padding: 4px 12px; border: 1px solid #2a2a2a; border-radius: 3px; }
+    @media (max-width: 600px) {
+      .pvp-arenas { padding: 60px 20px; }
+      .pvp-arenas__card { padding: 24px; }
+    }
+  </style>
+  <script>
+  (function(){
+    const tabs = document.querySelectorAll('.pvp-arenas__tab');
+    const cards = document.querySelectorAll('.pvp-arenas__card');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const id = tab.dataset.arena;
+        tabs.forEach(t => t.classList.remove('pvp-arenas__tab--active'));
+        cards.forEach(c => c.classList.remove('pvp-arenas__card--active'));
+        tab.classList.add('pvp-arenas__tab--active');
+        document.querySelector(`.pvp-arenas__card[data-arena="${id}"]`).classList.add('pvp-arenas__card--active');
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
