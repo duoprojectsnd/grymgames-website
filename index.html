@@ -198,7 +198,7 @@
         const grid=document.getElementById('homeNewsGrid');
         if(!items.length){grid.innerHTML='';return;}
         grid.innerHTML=items.map(item=>`
-          <a href="/article.html?slug=${item.slug}" class="news-card" data-reveal>
+          <a href="/article.html?slug=${item.slug}" class="news-card revealed">
             <div class="news-card__img" style="background-image:url('${item.image||''}');"></div>
             <div class="news-card__body">
               <span class="news-card__date">${item.displayDate||item.date}</span>
