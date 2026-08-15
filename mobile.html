@@ -13,7 +13,7 @@
 
     /* Phone frame for desktop testing */
     .phone-frame {
-      width: 390px; height: 844px; margin: 40px auto;
+      width: 375px; height: 667px; margin: 40px auto;
       border: 3px solid #333; border-radius: 40px;
       overflow-y: auto; overflow-x: hidden;
       background: #0a0a0f;
@@ -25,23 +25,41 @@
     /* Hero — matches desktop purple vibe */
     .m-hero {
       position: relative; min-height: 100%; 
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 32px 24px 40px; text-align: center;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 48px 24px 36px; text-align: center;
       background: url('assets/home/hero.png') center/cover no-repeat;
     }
     .m-hero::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,10,15,1) 0%, rgba(10,10,15,0.7) 35%, rgba(10,10,15,0.2) 70%, transparent 100%);
+      background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.4) 40%, transparent 70%);
     }
     .m-hero__content { position: relative; z-index: 2; }
-    .m-hero__logo { width: 100px; margin: 0 auto 16px; display: block; }
+    .m-hero__logo { width: 160px; margin: 0 auto 16px; display: block; }
     .m-hero__title {
-      font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 800;
-      color: #fff; letter-spacing: 1px; margin-bottom: 6px; line-height: 1.3;
+      font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 800;
+      color: #d4a853; letter-spacing: 2px; margin-bottom: 6px; line-height: 1.3;
+      text-transform: uppercase; white-space: nowrap;
+      position: relative; animation: m-glitch 3s infinite;
+    }
+    @keyframes m-glitch {
+      0%, 92%, 100% { text-shadow: none; transform: none; }
+      93% { text-shadow: -2px 0 #c0392b, 2px 0 #7ecbf5; transform: translateX(-1px); }
+      94% { text-shadow: 2px 0 #c0392b, -2px 0 #7ecbf5; transform: translateX(1px); }
+      95% { text-shadow: none; transform: none; }
+      96% { text-shadow: -1px 0 #c0392b, 1px 0 #7ecbf5; transform: translateX(-1px) skewX(-0.5deg); }
+      97% { text-shadow: none; transform: none; }
+    }
+    .m-hero__video {
+      width: 100%; border-radius: 8px; margin: 16px 0;
+      border: 1px solid rgba(212,168,83,0.2);
     }
     .m-hero__steam {
-      font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; color: #888;
-      margin-bottom: 24px; letter-spacing: 1px;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; color: #666;
+      margin-bottom: 20px; letter-spacing: 1px;
+    }
+    .m-hero__sub {
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; color: #bbb;
+      margin-bottom: 6px; line-height: 1.5;
     }
     .m-btn {
       display: block; width: 100%; padding: 16px; border-radius: 6px;
@@ -51,16 +69,46 @@
     }
     .m-btn:active { transform: scale(0.97); }
     .m-btn--gold {
-      background: linear-gradient(135deg, #d4a853 0%, #b8860b 100%);
-      color: #000; border: none;
+      background: #c0392b; color: #fff; border: none;
     }
     .m-btn--outline {
       background: transparent; color: #d4a853;
       border: 1px solid rgba(212,168,83,0.5);
     }
+    .m-btn--kick {
+      background: transparent; color: #05ce78; border: 1px solid rgba(5,206,120,0.5);
+    }
+    .m-btn--blue {
+      background: #2980b9; color: #fff; border: none;
+    }
+
+    /* Sticky bottom CTA bar */
+    .m-sticky {
+      position: sticky; bottom: 0; z-index: 100;
+      padding: 12px 16px;
+      background: rgba(10,10,15,0.95); backdrop-filter: blur(8px);
+      border-top: 1px solid #1e1e2e;
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .m-sticky--visible { opacity: 1; pointer-events: auto; }
+    .m-sticky__btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 14px; border-radius: 6px; text-decoration: none;
+      font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 1px; transition: transform 0.15s;
+      background: #2980b9; color: #fff;
+      box-shadow: 0 0 12px rgba(41,128,185,0.5), 0 0 30px rgba(41,128,185,0.3);
+      animation: m-glow 2s ease-in-out infinite;
+    }
+    @keyframes m-glow {
+      0%, 100% { box-shadow: 0 0 12px rgba(41,128,185,0.5), 0 0 30px rgba(41,128,185,0.3); }
+      50% { box-shadow: 0 0 20px rgba(41,128,185,0.8), 0 0 50px rgba(41,128,185,0.4), 0 0 80px rgba(41,128,185,0.2); }
+    }
+    .m-sticky__btn:active { transform: scale(0.96); }
+    .m-sticky__btn svg { width: 16px; height: 16px; flex-shrink: 0; fill: #fff; }
 
     /* Sections */
-    .m-section { padding: 40px 24px; border-top: 1px solid #1a1a2a; }
+    .m-section { padding: 32px 24px; }
     .m-section__eyebrow {
       font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; text-transform: uppercase;
       letter-spacing: 3px; color: #d4a853; margin-bottom: 6px; text-align: center;
@@ -73,7 +121,7 @@
       font-size: 0.82rem; color: #999; line-height: 1.7; margin-bottom: 16px; text-align: center;
     }
     .m-section__img {
-      width: 100%; border-radius: 6px; margin-bottom: 16px;
+      width: 100%; border-radius: 6px; margin-bottom: 12px;
     }
 
     /* Archetype row */
@@ -115,14 +163,14 @@
     .m-hub-features { list-style: none; }
     .m-hub-features li {
       display: flex; align-items: center; gap: 10px;
-      padding: 12px 0; border-bottom: 1px solid #1a1a2a;
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
       font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: #ddd;
     }
     .m-hub-features li span { font-size: 1.1rem; }
 
     /* Footer */
     .m-footer {
-      padding: 28px 24px; text-align: center; border-top: 1px solid #1a1a2a;
+      padding: 28px 24px; text-align: center;
     }
     .m-footer__logo {
       font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #d4a853; margin-bottom: 6px;
@@ -133,7 +181,7 @@
 
     /* Section with bg image */
     .m-section--bg {
-      position: relative; padding: 60px 24px;
+      position: relative; padding: 40px 24px;
     }
     .m-section--bg::before {
       content: ''; position: absolute; inset: 0;
@@ -141,26 +189,51 @@
       opacity: 0.3;
     }
     .m-section--bg > * { position: relative; z-index: 2; }
-    .m-section--arena::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067'); }
-    .m-section--hub::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067'); }
+    .m-section--arena::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067'); opacity: 0.15; }
+    .m-section--hub::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067'); opacity: 0.15; }
 
     /* Video */
     .m-video { width: 100%; border-radius: 6px; margin-bottom: 16px; }
 
+    /* Swipeable weapon cards */
+    .m-swipe { position: relative; overflow: hidden; touch-action: pan-y; }
+    .m-swipe__track {
+      display: flex; transition: transform 0.3s ease;
+    }
+    .m-swipe__card {
+      min-width: 100%; display: flex; flex-direction: column; align-items: center;
+      padding: 24px 16px;
+    }
+    .m-swipe__icon {
+      width: 100px; height: 100px; object-fit: contain; margin-bottom: 12px;
+      filter: invert(1) brightness(0.9);
+    }
+    .m-swipe__name {
+      font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #fff;
+    }
+    .m-swipe__dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 12px;
+    }
+    .m-swipe__dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #333;
+      transition: background 0.2s;
+    }
+    .m-swipe__dot--active { background: #d4a853; }
+
     /* Email form */
     .m-email { margin-top: 16px; }
-    .m-email__row { display: flex; gap: 8px; }
+    .m-email__row { display: flex; flex-direction: column; gap: 10px; }
     .m-email__input {
-      flex: 1; padding: 14px 12px; border-radius: 6px; border: 1px solid #2a2a3a;
+      width: 100%; padding: 14px 12px; border-radius: 6px; border: 1px solid #2a2a3a;
       background: #12121a; color: #fff; font-family: 'Inter', sans-serif; font-size: 0.8rem;
       outline: none;
     }
     .m-email__input:focus { border-color: #d4a853; }
     .m-email__input::placeholder { color: #555; }
     .m-email__btn {
-      padding: 14px 18px; border-radius: 6px; border: none;
-      background: #d4a853; color: #000; font-family: 'Orbitron', sans-serif;
-      font-size: 0.65rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+      width: 100%; padding: 14px 18px; border-radius: 6px; border: none;
+      background: #c0392b; color: #fff; font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem; font-weight: 700; cursor: pointer; letter-spacing: 1px;
     }
     .m-email__msg {
       font-size: 0.7rem; color: #888; margin-top: 8px; min-height: 16px;
@@ -175,41 +248,73 @@
 
     <!-- Hero — mirrors desktop first page -->
     <section class="m-hero">
-      <div class="m-hero__content">
+      <div class="m-hero__content" style="flex:1; display:flex; align-items:flex-start; justify-content:center; padding-top:0;">
         <img class="m-hero__logo" src="assets/okubi-logo.png" alt="OKUBI" />
+      </div>
+      <div class="m-hero__content">
         <h1 class="m-hero__title">A New Era of Combat</h1>
-        <p class="m-hero__steam">Steam · Unreal Engine 5</p>
-        <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--gold">Wishlist Now</a>
-        <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--outline">Kickstarter</a>
+        <p class="m-hero__sub">Ground & aerial PvP. Wings. Combos. Arenas.</p>
+        <video class="m-hero__video" id="heroVid" autoplay loop muted playsinline>
+          <source src="https://video.fastly.steamstatic.com/store_trailers/257015428/movie480_vp9.webm" type="video/webm" />
+        </video>
+        <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--gold">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>
+          Wishlist Now
+        </a>
+        <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--kick">
+          <img src="https://cdn-icons-png.flaticon.com/512/4494/4494589.png" width="14" height="14" style="display:inline;vertical-align:middle;margin-right:4px;" alt="K" />
+          Back on Kickstarter
+        </a>
       </div>
     </section>
 
     <!-- Archetypes (simplified) -->
-    <section class="m-section">
-      <p class="m-section__eyebrow">Choose Your Path</p>
-      <h2 class="m-section__title">Archetypes</h2>
-      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="Combat" />
-      <div class="m-archetypes">
-        <div class="m-arch"><div class="m-arch__icon">⚔</div><div class="m-arch__name">Reaper</div></div>
-        <div class="m-arch"><div class="m-arch__icon">🛡</div><div class="m-arch__name">Guardian</div></div>
-        <div class="m-arch"><div class="m-arch__icon">🔥</div><div class="m-arch__name">Berserker</div></div>
-        <div class="m-arch"><div class="m-arch__icon">🏹</div><div class="m-arch__name">Pathfinder</div></div>
-        <div class="m-arch"><div class="m-arch__icon">⚡</div><div class="m-arch__name">Tempest</div></div>
+    <section class="m-section" id="archSection">
+      <p class="m-section__eyebrow">Who You Are</p>
+      <h2 class="m-section__title">Be a God Among Men</h2>
+      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="Remnant" />
+      <p class="m-section__text">You are a Remnant — a human corrupted by Gorium, sent to this planet by the government as a weapon. Now excommunicated. Abandoned. Bound to fight in arenas and deployed on rogue missions no one else survives.</p>
+    </section>
+
+    <!-- Weapons swipable -->
+    <section class="m-section" style="padding-bottom:16px;">
+      <p class="m-section__eyebrow">Weapon Based</p>
+      <h2 class="m-section__title">Pick Your Arsenal</h2>
+      <div class="m-swipe" id="weaponSwipe">
+        <div class="m-swipe__track" id="weaponTrack">
+          <div class="m-swipe__card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3143/3143639.png" class="m-swipe__icon" alt="Double Axe" />
+            <p class="m-swipe__name">Double Axe</p>
+          </div>
+          <div class="m-swipe__card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2529/2529521.png" class="m-swipe__icon" alt="Scythe" />
+            <p class="m-swipe__name">Scythe</p>
+          </div>
+          <div class="m-swipe__card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1864/1864475.png" class="m-swipe__icon" alt="Spear & Shield" />
+            <p class="m-swipe__name">Spear & Shield</p>
+          </div>
+          <div class="m-swipe__card">
+            <img src="https://cdn-icons-png.flaticon.com/512/2150/2150452.png" class="m-swipe__icon" alt="Bow" />
+            <p class="m-swipe__name">Bow</p>
+          </div>
+        </div>
+        <div class="m-swipe__dots" id="weaponDots">
+          <span class="m-swipe__dot m-swipe__dot--active"></span>
+          <span class="m-swipe__dot"></span>
+          <span class="m-swipe__dot"></span>
+          <span class="m-swipe__dot"></span>
+        </div>
       </div>
-      <p class="m-section__text">Five archetypes. Unique combat styles. Ground-to-air mastery.</p>
     </section>
 
     <!-- Arenas (simplified) -->
-    <section class="m-section m-section--bg m-section--arena">
+    <section class="m-section">
       <p class="m-section__eyebrow">Prove Your Worth</p>
-      <h2 class="m-section__title">The Arenas</h2>
-      <div class="m-arenas">
-        <div class="m-arena"><div class="m-arena__name">1v1</div><div class="m-arena__sub">Duel of Fates</div></div>
-        <div class="m-arena"><div class="m-arena__name">2v2</div><div class="m-arena__sub">Blood Pact</div></div>
-        <div class="m-arena"><div class="m-arena__name">3v3</div><div class="m-arena__sub">Trial of Three</div></div>
-        <div class="m-arena"><div class="m-arena__name">Wanted</div><div class="m-arena__sub">4v4 Bounty</div></div>
-      </div>
-      <p class="m-section__text">Ranked & unranked competitive combat watched by both factions.</p>
+      <h2 class="m-section__title">Arenas</h2>
+      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067" alt="Arenas" />
+      <p class="m-section__text">1v1 · 2v2 · 3v3 · 4v4 Wanted</p>
+      <p class="m-section__text">Ranked & unranked competitive combat watched by both factions. Multiple game modes with more coming.</p>
     </section>
 
     <!-- Flying / Video -->
@@ -227,20 +332,16 @@
       <div class="m-okubi__symbol">⟐</div>
       <p class="m-section__eyebrow">The Entity</p>
       <h2 class="m-section__title">Okubi is Watching</h2>
-      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="OKUBI" />
+      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="OKUBI" />
       <p class="m-section__text">A mysterious force that triggers world events — catastrophic destruction or generous rewards. Stay alert. Adapt. Seize the moment.</p>
     </section>
 
     <!-- Public Hub -->
-    <section class="m-section m-section--bg m-section--hub">
+    <section class="m-section">
       <p class="m-section__eyebrow">Your Home Base</p>
       <h2 class="m-section__title">The Public Hub</h2>
-      <ul class="m-hub-features">
-        <li><span>⚒</span> Craft & Upgrade Gear</li>
-        <li><span>👥</span> Meet & Squad Up</li>
-        <li><span>🍸</span> VIP Bar & Social Games</li>
-        <li><span>🎯</span> Plan Your Build</li>
-      </ul>
+      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067" alt="Public Hub" />
+      <p class="m-section__text">A social space between battles. Craft gear, upgrade your build, form squads, or unwind at the VIP bar with friends. The hub is where legends prepare.</p>
     </section>
 
     <!-- Email Subscribe -->
@@ -260,10 +361,9 @@
     <!-- Final CTA -->
     <section class="m-section">
       <p class="m-section__eyebrow">Join the Fight</p>
-      <h2 class="m-section__title">Playtest is Live</h2>
-      <p class="m-section__text">Request access on Steam. Space is limited.</p>
-      <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--gold">Wishlist Now</a>
-      <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--outline">Back on Kickstarter</a>
+      <h2 class="m-section__title">Next Playtest Coming Soon</h2>
+      <p class="m-section__text">Request access on Steam and be first in line when the gates open.</p>
+      <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--blue">Request Your Access</a>
     </section>
 
     <!-- Footer -->
@@ -277,8 +377,48 @@
       </div>
     </div>
 
+    <!-- Sticky bottom bar -->
+    <div class="m-sticky" id="stickyBar">
+      <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-sticky__btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>
+        Request Access
+      </a>
+    </div>
+
   </div>
   <script>
+  // Skip black intro and loop from midpoint
+  const vid = document.getElementById('heroVid');
+  const START = 32;
+  vid.currentTime = START;
+  vid.addEventListener('timeupdate', () => { if (vid.currentTime < START) vid.currentTime = START; });
+  vid.addEventListener('seeked', () => { if (vid.currentTime < START) vid.currentTime = START; });
+
+  // Weapon swipe
+  const track = document.getElementById('weaponTrack');
+  const dots = document.querySelectorAll('.m-swipe__dot');
+  let wIdx = 0, startX = 0, diffX = 0;
+  function goWeapon(i) {
+    wIdx = Math.max(0, Math.min(i, 3));
+    track.style.transform = `translateX(-${wIdx * 100}%)`;
+    dots.forEach((d, j) => d.classList.toggle('m-swipe__dot--active', j === wIdx));
+  }
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+  track.addEventListener('touchmove', e => { diffX = e.touches[0].clientX - startX; });
+  track.addEventListener('touchend', () => {
+    if (diffX < -40) goWeapon(wIdx + 1);
+    else if (diffX > 40) goWeapon(wIdx - 1);
+    diffX = 0;
+  });
+  // Mouse drag for desktop testing
+  track.addEventListener('mousedown', e => { startX = e.clientX; track.style.cursor = 'grabbing'; });
+  track.addEventListener('mousemove', e => { if (startX) diffX = e.clientX - startX; });
+  track.addEventListener('mouseup', () => {
+    if (diffX < -40) goWeapon(wIdx + 1);
+    else if (diffX > 40) goWeapon(wIdx - 1);
+    diffX = 0; startX = 0; track.style.cursor = '';
+  });
+
   document.getElementById('subBtn').addEventListener('click', async () => {
     const input = document.getElementById('subEmail');
     const msg = document.getElementById('subMsg');
@@ -293,6 +433,18 @@
       if (d.ok) { msg.textContent = "You're in! We'll keep you posted."; msg.className = 'm-email__msg m-email__msg--ok'; input.value = ''; }
       else { msg.textContent = d.error || 'Something went wrong'; msg.className = 'm-email__msg m-email__msg--err'; }
     } catch { msg.textContent = 'Network error. Try again.'; msg.className = 'm-email__msg m-email__msg--err'; }
+  });
+
+  // Fade in sticky bar when archetypes section is fully visible
+  const sticky = document.getElementById('stickyBar');
+  const archSection = document.getElementById('archSection');
+  const frame = document.querySelector('.phone-frame');
+  frame.addEventListener('scroll', () => {
+    if (archSection.getBoundingClientRect().top < frame.getBoundingClientRect().top + 100) {
+      sticky.classList.add('m-sticky--visible');
+    } else {
+      sticky.classList.remove('m-sticky--visible');
+    }
   });
   </script>
 </body>
