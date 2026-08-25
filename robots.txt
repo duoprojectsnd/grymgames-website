@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin-events.html
+Disallow: /admin-news.html
+
+Sitemap: https://www.grymgames.net/sitemap.xml

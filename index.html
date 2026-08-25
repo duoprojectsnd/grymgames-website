@@ -8,7 +8,87 @@
   <meta property="og:title" content="OKUBI — Forge Your Own Myth" />
   <meta property="og:description" content="Fast-paced PvP aerial combat. Powered by Unreal Engine 5." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.okubi.gg" />
+  <meta property="og:url" content="https://www.grymgames.net" />
+  <link rel="canonical" href="https://www.grymgames.net/" />
+
+  <!-- Structured Data: VideoGame -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "OKUBI",
+    "alternateName": "OKUBI Game",
+    "description": "OKUBI is a fast-paced PvP aerial combat game. Two rival nations, elite soldiers called Remnants, and a demon born from corruption. Take flight, master your archetype, and fight in gladiatorial arenas or explore hostile planets.",
+    "url": "https://www.grymgames.net",
+    "image": "https://www.grymgames.net/assets/okubi-logo.png",
+    "genre": ["Action", "PvP", "Arena Combat", "Aerial Combat"],
+    "gamePlatform": ["PC"],
+    "applicationCategory": "Game",
+    "operatingSystem": "Windows 10",
+    "author": {
+      "@type": "Organization",
+      "name": "Grym Games",
+      "url": "https://www.grymgames.net"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Grym Games"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/PreOrder",
+      "url": "https://store.steampowered.com/app/2118100/OKUBI/"
+    },
+    "trailer": {
+      "@type": "VideoObject",
+      "name": "OKUBI Official Trailer",
+      "description": "Official gameplay trailer for OKUBI — fast-paced PvP aerial combat.",
+      "thumbnailUrl": "https://www.grymgames.net/assets/okubi-logo.png",
+      "uploadDate": "2024-01-01",
+      "contentUrl": "https://www.youtube.com/watch?v=3uRD6CwtANs",
+      "embedUrl": "https://www.youtube.com/embed/3uRD6CwtANs"
+    },
+    "sameAs": [
+      "https://store.steampowered.com/app/2118100/OKUBI/",
+      "https://www.kickstarter.com/projects/grym-games/okubi",
+      "https://discord.gg/okubi"
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: WebSite with SearchAction -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "OKUBI",
+    "url": "https://www.grymgames.net",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.grymgames.net/news.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Grym Games",
+    "url": "https://www.grymgames.net",
+    "logo": "https://www.grymgames.net/assets/okubi-logo.png",
+    "sameAs": [
+      "https://store.steampowered.com/app/2118100/OKUBI/",
+      "https://www.kickstarter.com/projects/grym-games/okubi",
+      "https://discord.gg/okubi"
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -38,12 +118,13 @@
       </a>
       <!-- Right-side vertical nav (Dune style) -->
       <ul class="nav__links-vertical" id="navVertical">
-        <li><a href="/news.html">Game Updates</a></li>
-        <li><a href="/events.html">Events</a></li>
-        <li><a href="/universe.html">The Universe</a></li>
+        <li><a href="/universe.html">Universe</a></li>
+        <li><a href="/events.html" class="nav__link--disabled">Events</a></li>
         <li><a href="/roadmap.html">Roadmap</a></li>
+        <li><a href="/news.html">News</a></li>
         <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank">Media Kit</a></li>
         <li><a href="/shop.html">Shop</a></li>
+        <li><a href="/faq.html">FAQ</a></li>
       </ul>
       <div class="nav__auth" id="navAuth">
         <div class="nav__gift-hint" id="giftHint">
@@ -271,6 +352,7 @@
           <a href="/#features">Features</a>
           <a href="/roadmap.html">Roadmap</a>
           <a href="/news.html">News</a>
+          <a href="/faq.html">FAQ</a>
           <a href="/#community">Community</a>
         </div>
         <div class="footer__social">
@@ -356,5 +438,11 @@
   </button>
 
   <script src="script.js"></script>
+
+  <!-- Fixed bottom CTA -->
+  <div class="fixed-cta">
+    <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="fixed-cta__btn fixed-cta__btn--gold">Wishlist Now</a>
+    <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="fixed-cta__btn fixed-cta__btn--outline">Kickstarter</a>
+  </div>
 </body>
 </html>
