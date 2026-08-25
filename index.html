@@ -440,9 +440,77 @@
   <script src="script.js"></script>
 
   <!-- Fixed bottom CTA -->
-  <div class="fixed-cta">
+  <div class="fixed-cta fixed-cta--hidden" id="fixedCta">
     <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="fixed-cta__btn fixed-cta__btn--gold">Wishlist Now</a>
-    <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="fixed-cta__btn fixed-cta__btn--outline">Kickstarter</a>
+    <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="fixed-cta__btn fixed-cta__btn--kick">Kickstarter</a>
   </div>
+
+  <style>
+    .fixed-cta {
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.6) 100%);
+      padding: 20px 24px 28px;
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .fixed-cta--hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+    .fixed-cta__btn {
+      padding: 20px 80px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+    .fixed-cta__btn--gold {
+      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+      color: var(--bg);
+      border: 1px solid var(--gold);
+      box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(212,168,83,0.15);
+      animation: goldPulse 2.5s ease-in-out infinite;
+    }
+    .fixed-cta__btn--gold:hover {
+      background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+      box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(212,168,83,0.3);
+      transform: translateY(-2px);
+    }
+    @keyframes goldPulse {
+      0%, 100% { box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(212,168,83,0.15); }
+      50% { box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(212,168,83,0.25); }
+    }
+    .fixed-cta__btn--kick {
+      background: rgba(10,9,8,0.6);
+      color: #05c46b;
+      border: 1px solid #05c46b;
+      box-shadow: 0 0 16px rgba(5,196,107,0.2);
+      backdrop-filter: blur(10px);
+      padding: 20px 48px;
+      animation: kickPulse 2.5s ease-in-out infinite;
+    }
+    .fixed-cta__btn--kick:hover {
+      border-color: #2ecc71;
+      color: #2ecc71;
+      box-shadow: 0 0 30px rgba(5,196,107,0.35);
+      transform: translateY(-2px);
+    }
+    @keyframes kickPulse {
+      0%, 100% { box-shadow: 0 0 16px rgba(5,196,107,0.2); }
+      50% { box-shadow: 0 0 24px rgba(5,196,107,0.35); }
+    }
+  </style>
+
+  <script>
+  (function(){
+    const cta = document.getElementById('fixedCta');
+    const hero = document.getElementById('hero');
+    if (!cta || !hero) return;
+    function check() {
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      cta.classList.toggle('fixed-cta--hidden', heroBottom > 0);
+    }
+    window.addEventListener('scroll', check, { passive: true });
+    check();
+  })();
+  </script>
 </body>
 </html>
