@@ -35,6 +35,12 @@
     });
   }
 
+  // ─── Trailer Video — loop from 28s ────────────────────────────────────
+  const trailerVideo = document.getElementById('trailerVideo');
+  if (trailerVideo) {
+    trailerVideo.addEventListener('ended', () => { trailerVideo.currentTime = 28; trailerVideo.play(); });
+  }
+
   // ─── Email CTA — Slide-in ──────────────────────────────────────────────
   const emailCta = document.getElementById('emailCta');
   if (emailCta) {
