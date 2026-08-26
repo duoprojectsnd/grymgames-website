@@ -20,7 +20,7 @@
       </a>
       <ul class="nav__links-vertical" id="navVertical">
         <li><a href="/">Universe</a></li>
-        <li><a href="/events.html" class="nav__link--disabled">Events</a></li>
+        <!-- Events hidden -->
         <li><a href="/roadmap.html" class="nav__link--active">Roadmap</a></li>
         <li><a href="/news.html">News</a></li>
         <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank">Media Kit</a></li>
@@ -63,113 +63,381 @@
 
   <!-- ═══ ROADMAP TIMELINE ═══ -->
   <section class="section section--roadmap">
-    <div class="roadmap-scroll">
-      <div class="roadmap">
+    <div class="roadmap-carousel" id="roadmapCarousel">
+      <!-- Nav arrows -->
+      <button class="roadmap-nav roadmap-nav--prev" id="rmPrev">‹</button>
+      <button class="roadmap-nav roadmap-nav--next" id="rmNext">›</button>
 
-        <!-- Season bar -->
-        <div class="roadmap__seasons">
-          <div class="roadmap__season roadmap__season--winter">Winter</div>
-          <div class="roadmap__season roadmap__season--spring">Spring</div>
-          <div class="roadmap__season roadmap__season--summer">Summer</div>
-          <div class="roadmap__season roadmap__season--autumn">Autumn</div>
+      <div class="roadmap-rail" id="roadmapRail">
+
+        <!-- Phase 1: Proof of Concept -->
+        <div class="rm-card rm-card--done">
+          <span class="rm-card__badge rm-card__badge--done">Complete</span>
+          <h3 class="rm-card__title">Proof of Concept</h3><ul class="rm-card__list">
+            <li>Core Combat Prototype</li>
+            <li>2 Player Classes</li>
+            <li>Basic Movement &amp; Camera</li>
+            <li>Damage &amp; Health System</li>
+            <li>Energy Charge</li>
+            <li>Arena 1v1</li>
+            <li>Local Server System</li>
+            <li>Local Matchmaking System</li>
+          </ul>
         </div>
 
-        <!-- Timeline track -->
-        <div class="roadmap__track">
-          <div class="roadmap__line"></div>
+        <!-- Phase 2: Pre-Alpha -->
+        <div class="rm-card rm-card--done">
+          <span class="rm-card__badge rm-card__badge--done">Complete</span>
+          <h3 class="rm-card__title">Pre-Alpha</h3>
+          <ul class="rm-card__list">
+            <li>Spells FX &amp; Animations</li>
+            <li>Login Screen</li>
+            <li>Character Creation</li>
+            <li>Stun System</li>
+            <li>In-Game Menu</li>
+            <li>Public Hub v1</li>
+            <li>Arenas: 2v2, 3v3</li>
+            <li>Crafting &amp; Upgrade System</li>
+            <li>Elemental Attunements</li>
+            <li>Buff &amp; Debuff System</li>
+            <li>XP &amp; Leveling</li><li class="rm-card__playtest">▶ Closed Playtest 1</li></ul></div><!-- Phase 3: Pre-Alpha+ -->
+        <div class="rm-card rm-card--done">
+          <span class="rm-card__badge rm-card__badge--done">Complete</span>
+          <h3 class="rm-card__title">Pre-Alpha +</h3>
+          <ul class="rm-card__list">
+            <li>4 Player Classes</li>
+            <li>Wing System</li>
+            <li>NPC Combat &amp; Healthbars</li>
+            <li>Public Hub v2</li>
+            <li>Cloud Based Matchmaking v1</li>
+            <li>Cloud Based Server Deployment v1</li>
+            <li>Steam Integration</li><li class="rm-card__playtest">▶ Closed Playtest 2</li></ul></div><!-- Phase 4: Pre-Alpha++ -->
+        <div class="rm-card rm-card--done">
+          <span class="rm-card__badge rm-card__badge--done">Complete</span>
+          <h3 class="rm-card__title">Pre-Alpha ++</h3>
+          <ul class="rm-card__list">
+            <li>Faction Choose</li>
+            <li>Inventory &amp; Equipment</li>
+            <li>Items Rework</li>
+            <li>Equipment Switching</li>
+            <li>Minimap</li>
+            <li>Imbue System</li>
+            <li>Arena 1v1 Remake</li><li class="rm-card__playtest">▶ Open Playtest 1</li></ul></div><!-- Phase 5: Alpha -->
+        <div class="rm-card rm-card--done">
+          <span class="rm-card__badge rm-card__badge--done">Complete</span>
+          <h3 class="rm-card__title">Alpha</h3>
+          <ul class="rm-card__list">
+            <li>Battle Pass</li>
+            <li>Party System</li>
+            <li>World Event System v1</li>
+            <li>World Map v1</li>
+            <li>API &amp; Database</li><li class="rm-card__playtest">▶ Open Playtest 2</li></ul></div><!-- Phase 6: Alpha+ -->
+        <div class="rm-card rm-card--active">
+          <span class="rm-card__badge rm-card__badge--active">Current</span>
+          <h3 class="rm-card__title">Alpha +</h3>
+          <ul class="rm-card__list">
+            <li class="rm-card__checked">Matchmaking Update</li>
+            <li class="rm-card__checked">Upgrade &amp; Imbue</li>
+            <li class="rm-card__checked">Crafting Upgrade</li>
+            <li class="rm-card__checked">Item Remake</li>
+            <li class="rm-card__checked">Character Creation</li>
+            <li class="rm-card__checked">Faction Choose</li>
+            <li>Arena Reward System</li>
+            <li class="rm-card__playtest">▶ Open Playtest 3</li>
+          </ul>
         </div>
 
-        <!-- Milestone columns -->
-        <div class="roadmap__columns">
-
-          <!-- Q1 — Closed Alpha -->
-          <div class="roadmap__col roadmap__col--done">
-            <div class="roadmap__col-header">
-              <span class="roadmap__version">v0.1</span>
-              <h3 class="roadmap__col-title">Closed Alpha</h3>
-            </div>
-            <ul class="roadmap__items">
-              <li class="roadmap__item roadmap__item--done">Core Combat System</li>
-              <li class="roadmap__item roadmap__item--done">3 Archetypes: Reaper, Guardian, Berserker</li>
-              <li class="roadmap__item roadmap__item--done">1 Arena Map</li>
-              <li class="roadmap__item roadmap__item--done">Basic Matchmaking</li>
-              <li class="roadmap__item roadmap__item--done">Steam Integration</li>
-              <li class="roadmap__item roadmap__item--done">Feedback &amp; Bug Tracking</li>
-            </ul>
-          </div>
-
-          <!-- Q1-Q2 — Open Playtest -->
-          <div class="roadmap__col roadmap__col--active">
-            <div class="roadmap__col-header">
-              <span class="roadmap__version">v0.3</span>
-              <h3 class="roadmap__col-title">Open Playtest</h3>
-              <span class="roadmap__badge">Current</span>
-            </div>
-            <ul class="roadmap__items">
-              <li class="roadmap__item roadmap__item--done">5 Archetypes Playable</li>
-              <li class="roadmap__item roadmap__item--done">Faction System: Umbra &amp; Sol</li>
-              <li class="roadmap__item roadmap__item--done">3 Arena Maps</li>
-              <li class="roadmap__item roadmap__item--done">Ranked Matchmaking &amp; MMR</li>
-              <li class="roadmap__item roadmap__item--progress">Crafting System</li>
-              <li class="roadmap__item roadmap__item--progress">Player-Driven Economy</li>
-              <li class="roadmap__item">Cosmetic Shop &amp; Void Pearls</li>
-              <li class="roadmap__item">Faction War Events</li>
-            </ul>
-          </div>
-
-          <!-- Q3 — Early Access -->
-          <div class="roadmap__col">
-            <div class="roadmap__col-header">
-              <span class="roadmap__version">v0.5</span>
-              <h3 class="roadmap__col-title">Early Access</h3>
-            </div>
-            <ul class="roadmap__items">
-              <li class="roadmap__item">6th Archetype: The Invoker</li>
-              <li class="roadmap__item">Corruption System &amp; Tainted Zones</li>
-              <li class="roadmap__item">World Boss Events</li>
-              <li class="roadmap__item">Purification Raids (PvE)</li>
-              <li class="roadmap__item">2 New Arena Maps</li>
-              <li class="roadmap__item">Guild System</li>
-              <li class="roadmap__item">Seasonal Battle Pass</li>
-            </ul>
-          </div>
-
-          <!-- Q3-Q4 — Major Update -->
-          <div class="roadmap__col">
-            <div class="roadmap__col-header">
-              <span class="roadmap__version">v0.8</span>
-              <h3 class="roadmap__col-title">The Convergence</h3>
-            </div>
-            <ul class="roadmap__items">
-              <li class="roadmap__item">Planet Incursion Mode</li>
-              <li class="roadmap__item">Dynamic Corruption Spread</li>
-              <li class="roadmap__item">Open World Zones</li>
-              <li class="roadmap__item">Housing &amp; Strongholds</li>
-              <li class="roadmap__item">Cross-Faction Events</li>
-              <li class="roadmap__item">Tournament System</li>
-            </ul>
-          </div>
-
-          <!-- Q4+ — Full Launch -->
-          <div class="roadmap__col">
-            <div class="roadmap__col-header">
-              <span class="roadmap__version">v1.0</span>
-              <h3 class="roadmap__col-title">Full Launch</h3>
-            </div>
-            <ul class="roadmap__items">
-              <li class="roadmap__item">Complete Story Campaign</li>
-              <li class="roadmap__item">All Archetypes Finalized</li>
-              <li class="roadmap__item">Competitive Ranked Seasons</li>
-              <li class="roadmap__item">Console Port Planning</li>
-              <li class="roadmap__item">Expansion Content Roadmap</li>
-              <li class="roadmap__item">Community Modding Tools</li>
-            </ul>
-          </div>
-
+        <!-- Phase 7: Open Beta -->
+        <div class="rm-card">
+          <span class="rm-card__badge rm-card__badge--upcoming">Upcoming</span>
+          <h3 class="rm-card__title">Open Beta</h3>
+          <ul class="rm-card__list">
+            <li>Finishers</li>
+            <li>World Map v2</li>
+            <li>Player Leaderboard</li>
+            <li>Caravan System</li>
+            <li>VIP Bar</li>
+            <li>OKUBI Encounters</li>
+            <li>The Flow</li>
+            <li class="rm-card__playtest">▶ Open Playtest 4</li>
+          </ul>
         </div>
+
+        <!-- Phase 8: Early Access -->
+        <div class="rm-card">
+          <span class="rm-card__badge rm-card__badge--upcoming">Upcoming</span>
+          <h3 class="rm-card__title">Early Access</h3>
+          <ul class="rm-card__list">
+            <li>Simulator Arena</li>
+            <li>VIP Bar Minigames</li>
+            <li>Planetary Incursion</li>
+            <li>Open World Zones</li>
+            <li>Tournament System</li>
+            <li class="rm-card__playtest" style="color: var(--gold) !important;">★ Full Access</li>
+          </ul>
+        </div>
+
+        <!-- Full Release -->
+        <div class="rm-card rm-card--tbd">
+          <span class="rm-card__badge rm-card__badge--upcoming">Upcoming</span>
+          <h3 class="rm-card__title">Full Release</h3>
+          <ul class="rm-card__list">
+            <li>MMR System</li>
+            <li>Planetary Management</li>
+            <li>Auction House</li>
+            <li>World Event System v2</li>
+            <li>Outfits</li>
+            <li>Arena Bets System</li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <style>
+    .roadmap-carousel {
+      position: relative;
+      overflow: hidden;
+      padding: 20px 0 60px;
+    }
+    .roadmap-rail {
+      display: flex;
+      gap: 24px;
+      padding: 0 60px;
+      cursor: grab;
+      will-change: transform;
+      transition: none;
+      position: relative;
+    }
+    /* Single continuous bar spanning all phases */
+    .roadmap-rail::before {
+      content: '';
+      position: absolute;
+      top: -52px;
+      left: 60px;
+      width: calc(9 * 280px + 8 * 24px);
+      height: 32px;
+      background: #9a7a2e;
+      z-index: 10;
+      pointer-events: none;
+      box-shadow: 0 0 5px 5px rgba(0,0,0,0.7), 0 0 15px 10px rgba(0,0,0,0.4);
+    }
+    .roadmap-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: all 0.3s;
+    }
+    .roadmap-nav:hover { border-color: var(--gold); color: var(--gold); }
+    .roadmap-nav--prev { left: 12px; }
+    .roadmap-nav--next { right: 12px; }
+    .rm-card {
+      flex: 0 0 280px;
+      background: linear-gradient(180deg, #1a1816 0%, #1a1816 70%, transparent 100%);
+      border: none;
+      border-radius: 8px 8px 0 0;
+      padding: 32px 28px;
+      user-select: none;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+      overflow: visible;
+    }
+    /* Cards without badges get top padding to align title with badged cards */
+    .rm-card:not(.rm-card--done):not(.rm-card--active):not(:has(.rm-card__badge)) {
+      padding-top: 63px;
+    }
+    /* No dot on the bar */
+    .rm-card::after { display: none; }
+    .rm-card__playtest {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-family: var(--font-display) !important;
+      font-weight: 700 !important;
+      font-size: 0.75rem !important;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold) !important;
+    }
+    .rm-card__playtest::before { content: '' !important; }
+    .rm-card--done {
+      opacity: 1;
+      background: linear-gradient(180deg, #0f1e14 0%, #0f1e14 70%, transparent 100%);
+    }
+    .rm-card--active {
+      opacity: 1;
+      background: linear-gradient(180deg, #2a2010 0%, #2a2010 70%, transparent 100%);
+      box-shadow:
+        0 0 15px rgba(212,168,83,0.4),
+        0 0 40px rgba(212,168,83,0.2),
+        0 0 80px rgba(212,168,83,0.1),
+        inset 0 0 30px rgba(212,168,83,0.05);
+      border: 1px solid rgba(212,168,83,0.4);
+      border-bottom: none;
+      animation: activeGlow 3s ease-in-out infinite;
+    }
+    @keyframes activeGlow {
+      0%, 100% {
+        box-shadow:
+          0 0 15px rgba(212,168,83,0.4),
+          0 0 40px rgba(212,168,83,0.2),
+          0 0 80px rgba(212,168,83,0.1),
+          inset 0 0 30px rgba(212,168,83,0.05);
+        border-color: rgba(212,168,83,0.4);
+      }
+      50% {
+        box-shadow:
+          0 0 25px rgba(212,168,83,0.6),
+          0 0 60px rgba(212,168,83,0.3),
+          0 0 120px rgba(212,168,83,0.15),
+          inset 0 0 50px rgba(212,168,83,0.08);
+        border-color: rgba(212,168,83,0.7);
+      }
+    }
+    .rm-card--active::after {
+      display: block !important;
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: 8px 8px 0 0;
+      background: radial-gradient(ellipse at 50% 50%,
+        rgba(212,168,83,0.12) 0%,
+        transparent 70%);
+      filter: blur(20px);
+      animation: magicShimmer 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes magicShimmer {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    .rm-card--tbd {
+      opacity: 0.3;
+      background: linear-gradient(180deg, #141414 0%, #141414 70%, transparent 100%);
+    }
+    .rm-card__badge {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+    .rm-card__badge--done { color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
+    .rm-card__badge--active { color: var(--gold); border: 1px solid var(--gold-dim); }
+    .rm-card__badge--upcoming { color: #888; border: 1px solid rgba(255,255,255,0.15); }
+    .rm-card__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #fff;
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+    .rm-card--done .rm-card__title { color: #fff; }
+    .rm-card--active .rm-card__title { color: #fff; }
+    .rm-card__phase {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+    .rm-card--active .rm-card__phase { color: rgba(212,168,83,0.5); }
+    .rm-card__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      margin-top: 52px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rm-card__list li {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      color: #fff;
+      padding-left: 16px;
+      position: relative;
+    }
+    .rm-card__list li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: rgba(255,255,255,0.5);
+    }
+    .rm-card--done .rm-card__list li::before { content: '✓'; color: #2ecc71; font-weight: 700; }
+    .rm-card--done .rm-card__list li { color: #fff; opacity: 0.5; }
+    .rm-card--active .rm-card__list li::before { content: '›'; color: rgba(255,255,255,0.5); }
+    .rm-card__checked::before { content: '✓' !important; color: #2ecc71 !important; font-weight: 700; }
+    .rm-card__checked { opacity: 0.5; }
+    .rm-card__tbd {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.1em;
+      margin-top: 20px;
+    }
+  </style>
+
+  <script>
+  (function(){
+    var rail = document.getElementById('roadmapRail');
+    var carousel = document.getElementById('roadmapCarousel');
+    var prev = document.getElementById('rmPrev');
+    var next = document.getElementById('rmNext');
+    if (!rail || !carousel) return;
+    var isDown = false, startX = 0, startOff = 0, offsetX = 0;
+
+    function clamp(x) {
+      var max = 0;
+      var min = -(rail.scrollWidth - carousel.clientWidth + 60);
+      return Math.max(min, Math.min(max, x));
+    }
+    function setPos(x, smooth) {
+      offsetX = clamp(x);
+      rail.style.transition = smooth ? 'transform 0.4s cubic-bezier(0.16,1,0.3,1)' : 'none';
+      rail.style.transform = 'translateX('+offsetX+'px)';
+    }
+
+    // Drag
+    carousel.addEventListener('mousedown', function(e) { isDown=true; startX=e.clientX; startOff=offsetX; rail.style.transition='none'; carousel.style.cursor='grabbing'; e.preventDefault(); });
+    document.addEventListener('mousemove', function(e) { if(!isDown) return; setPos(startOff+(e.clientX-startX), false); });
+    document.addEventListener('mouseup', function() { isDown=false; carousel.style.cursor='grab'; });
+    carousel.addEventListener('touchstart', function(e) { isDown=true; startX=e.touches[0].clientX; startOff=offsetX; }, {passive:true});
+    document.addEventListener('touchmove', function(e) { if(!isDown) return; setPos(startOff+(e.touches[0].clientX-startX), false); }, {passive:true});
+    document.addEventListener('touchend', function() { isDown=false; });
+
+    // Arrows
+    prev.addEventListener('click', function() { setPos(offsetX + 320, true); });
+    next.addEventListener('click', function() { setPos(offsetX - 320, true); });
+
+    // Start at current (6th card = index 5)
+    setPos(-5 * 304 + carousel.clientWidth/2 - 140, false);
+  })();
+  </script>
 
   <!-- ═══ FOOTER ═══ -->
   <footer class="footer">

@@ -119,7 +119,7 @@
       <!-- Right-side vertical nav (Dune style) -->
       <ul class="nav__links-vertical" id="navVertical">
         <li><a href="/">Universe</a></li>
-        <li><a href="/events.html" class="nav__link--disabled">Events</a></li>
+        <!-- Events hidden -->
         <li><a href="/roadmap.html">Roadmap</a></li>
         <li><a href="/news.html">News</a></li>
         <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank">Media Kit</a></li>
@@ -194,18 +194,6 @@
         <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="hero__bar-btn hero__bar-btn--outline-gold">
           Kickstarter
         </a>
-      </div>
-      <div class="hero__social-wrap">
-        <button class="hero__bar-btn hero__bar-btn--outline" id="socialToggle">
-          Social
-        </button>
-        <div class="hero__social-dropdown" id="socialDropdown">
-          <a href="https://www.facebook.com" target="_blank">Facebook</a>
-          <a href="https://www.instagram.com" target="_blank">Instagram</a>
-          <a href="https://www.tiktok.com" target="_blank">TikTok</a>
-          <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank">Steam</a>
-          <a href="https://twitter.com" target="_blank">X</a>
-        </div>
       </div>
     </div>
   </section>
@@ -608,17 +596,15 @@
     </div>
   </section>
 
-  <!-- ═══ CORRUPTION LORE ═══ -->
+  <!-- ═══ CORRUPTION LORE (hidden) ═══ -->
+  <div style="display:none;">
   <section class="corruption" id="corruption">
     <div class="corruption__tags">
-      <button class="corruption__tag corruption__tag--active" data-corruption="tainted">OKUBI Events</button>
-      <button class="corruption__tag" data-corruption="purification">Purification Raids</button>
-      <button class="corruption__tag" data-corruption="worldboss">World Boss Events</button>
-      <button class="corruption__tag" data-corruption="spread">Dynamic Corruption Spread</button>
+      <button class="corruption__tag corruption__tag--active" data-corruption="tainted">World Events</button>
+      <button class="corruption__tag" data-corruption="spread">Corruption Status</button>
     </div>
   </section>
 
-  <!-- ═══ CORRUPTION SHOWCASE (mirrored combat layout) ═══ -->
   <section class="corruption-showcase">
     <div class="corruption-showcase__bg">
       <div class="corruption-showcase__bg-placeholder" data-slot="WORLD-BG" id="corruptionBg"></div>
@@ -626,27 +612,103 @@
     </div>
     <div class="corruption-showcase__content" data-reveal>
       <div class="corruption-showcase__text" id="corruptionShowcase">
-        <p class="corruption-showcase__eyebrow">OKUBI Events</p>
-        <h2 class="corruption-showcase__title">Chaos or Fortune</h2>
-        <p class="corruption-showcase__body">OKUBI watches every battle. When it stirs, the world reacts — spawning catastrophic events that rain destruction on entire zones, or blessing players with rare buff zones, treasure chests, and resource surges.</p>
-        <p class="corruption-showcase__body">You never know which way it'll go. Stay alert, adapt fast, and seize the moment — whether that means running for cover or racing to claim the spoils.</p>
-        <div class="corruption-showcase__stats">
-          <div class="corruption-showcase__stat">
-            <span class="corruption-showcase__stat-num">12</span>
-            <span class="corruption-showcase__stat-label">Tainted Regions</span>
-          </div>
-          <div class="corruption-showcase__stat">
-            <span class="corruption-showcase__stat-num">5</span>
-            <span class="corruption-showcase__stat-label">Corruption Tiers</span>
-          </div>
-          <div class="corruption-showcase__stat">
-            <span class="corruption-showcase__stat-num">∞</span>
-            <span class="corruption-showcase__stat-label">Shifting Threats</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
+  </div>
+
+  <!-- ═══ OKUBI EVENTS ═══ -->
+  <section id="okubiSection" style="position:relative; min-height:80vh; display:flex; align-items:center; justify-content:center; overflow:hidden; -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 10%, #000 90%, transparent 100%); mask-image:linear-gradient(180deg, transparent 0%, #000 10%, #000 90%, transparent 100%);">
+    <!-- Background image -->
+    <div id="okubiBg" style="position:absolute; inset:0; background:url('assets/lore/the_discovery.png') center/cover no-repeat; transition:opacity 0.6s, background-image 0.6s;"></div>
+    <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%);"></div>
+
+    <div style="position:relative; z-index:1; max-width:900px; margin:0 auto; padding:80px 24px; width:100%;">
+
+      <!-- Tab buttons -->
+      <div style="display:flex; justify-content:center; gap:0; border-bottom:1px solid rgba(255,255,255,0.06); margin-bottom:60px;">
+        <button class="okubi-tab okubi-tab--active" data-tab="events" onclick="showOkubiTab('events')">World Events</button>
+        <button class="okubi-tab" data-tab="corruption" onclick="showOkubiTab('corruption')">Corruption</button>
+      </div>
+
+      <!-- World Events panel -->
+      <div id="okubiEvents" class="okubi-panel okubi-panel--active">
+        <h2 style="font-family:var(--font-display); font-size:clamp(2rem,4vw,3rem); font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#fff; margin-bottom:20px; text-align:center;">Chaos or Fortune</h2>
+        <p style="font-family:var(--font-body); font-size:1rem; color:rgba(255,255,255,0.55); max-width:580px; margin:0 auto; line-height:1.9; text-align:center;">Random events triggered by OKUBI that can bless or curse an entire zone. Rare loot surges, blood moons, void rifts, safe havens — no warning, no pattern. The world shifts in an instant. Adapt or die.</p>
+      </div>
+
+      <!-- Corruption panel -->
+      <div id="okubiCorruption" class="okubi-panel">
+        <h2 style="font-family:var(--font-display); font-size:clamp(2rem,4vw,3rem); font-weight:800; text-transform:uppercase; letter-spacing:0.06em; color:#fff; margin-bottom:20px; text-align:center;">Stop It Before He Comes</h2>
+        <p style="font-family:var(--font-body); font-size:1rem; color:rgba(255,255,255,0.55); max-width:580px; margin:0 auto; line-height:1.9; text-align:center;">Corruption grows across zones over time, warping the land and empowering hostile creatures. If players don't push it back, OKUBI itself manifests — and wipes everything in its path. The balance of the world rests in every player's hands.</p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .okubi-tab {
+      font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.18em; padding: 16px 40px;
+      border: none; border-bottom: 2px solid transparent; border-radius: 0;
+      background: none; color: rgba(255,255,255,0.35);
+      cursor: pointer; transition: all 0.4s;
+    }
+    .okubi-tab:hover { color: rgba(255,255,255,0.7); }
+    .okubi-tab--active { color: #fff; border-bottom-color: var(--gold); }
+    .okubi-panel { display: none; animation: okubiFade 0.5s ease-out; }
+    .okubi-panel--active { display: block; }
+    @keyframes okubiFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .okubi-event {
+      font-family: var(--font-display); font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--ec);
+      padding: 18px 32px; border: none; border-radius: 0;
+      background: rgba(255,255,255,0.02);
+      border-left: 2px solid var(--ec);
+      pointer-events: none;
+    }
+    .corr-bar {
+      height: 3px; background: rgba(255,255,255,0.06); border-radius: 0; overflow: hidden;
+    }
+    .corr-bar__fill {
+      height: 100%; width: 0; border-radius: 0;
+      background: linear-gradient(90deg, #d4a853, #e74c3c, #8b5cf6);
+      transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .corr-ms {
+      font-family: var(--font-display); font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3); background: none; border: none;
+      border-bottom: 2px solid transparent;
+      padding: 12px 8px; cursor: pointer; transition: all 0.3s;
+    }
+    .corr-ms:hover { color: rgba(255,255,255,0.6); }
+    .corr-ms--active { color: #fff; border-bottom-color: var(--gold); }
+  </style>
+
+  <script>
+  function showOkubiTab(tab) {
+    document.getElementById('okubiEvents').classList.toggle('okubi-panel--active', tab === 'events');
+    document.getElementById('okubiCorruption').classList.toggle('okubi-panel--active', tab === 'corruption');
+    document.querySelectorAll('.okubi-tab').forEach(t => t.classList.toggle('okubi-tab--active', t.dataset.tab === tab));
+    var bg = document.getElementById('okubiBg');
+    if (bg) bg.style.backgroundImage = tab === 'events' ? "url('assets/lore/the_discovery.png')" : "url('assets/lore/the_exile.png')";
+  }
+  var corrData = [
+    { pct: 20, name: 'STIRRING', desc: 'Minor creatures grow aggressive. The land hums with dark energy.', color: '#d4a853' },
+    { pct: 40, name: 'SPREADING', desc: 'Elite corrupted beasts emerge. Environmental hazards multiply. Resources turn toxic.', color: '#e67e22' },
+    { pct: 60, name: 'CRITICAL', desc: 'Corrupted champions roam freely. Safe zones collapse. The sky splits open.', color: '#e74c3c' },
+    { pct: 80, name: 'CATASTROPHE', desc: 'The ground cracks. Corruption leaks into the air. All players are affected.', color: '#c0392b' },
+    { pct: 100, name: 'OKUBI ARRIVES', desc: 'The entity manifests. Everything faces annihilation. Fight or be consumed.', color: '#8b5cf6' }
+  ];
+  function setCorrMs(i) {
+    var ms = corrData[i];
+    document.getElementById('corrBarFill').style.width = ms.pct + '%';
+    document.getElementById('corrTitle').textContent = ms.name;
+    document.getElementById('corrTitle').style.color = ms.color;
+    document.getElementById('corrText').textContent = ms.desc;
+    document.querySelectorAll('.corr-ms').forEach(function(b, idx) { b.classList.toggle('corr-ms--active', idx === i); });
+  }
+  </script>
 
 
 
@@ -894,6 +956,117 @@
       0%, 100% { filter: drop-shadow(0 0 20px rgba(88,101,242,0.5)) drop-shadow(0 0 40px rgba(88,101,242,0.25)); transform: scale(1); }
       50% { filter: drop-shadow(0 0 30px rgba(88,101,242,0.7)) drop-shadow(0 0 60px rgba(88,101,242,0.4)); transform: scale(1.05); }
     }
+
+    /* Hero email signup */
+    .hero__email-wrap { display: none; }
+    .hero__email-corner {
+      position: absolute;
+      bottom: 100px;
+      left: 40px;
+      z-index: 5;
+      text-align: left;
+      opacity: 0;
+      animation: emailPop 0.6s cubic-bezier(0.16,1,0.3,1) 2s both;
+    }
+    .hero__email-corner::before {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: -40px;
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(ellipse at bottom left, rgba(0,0,0,0.7) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    @keyframes emailPop {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .hero__email-new {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      background: rgba(212,168,83,0.1);
+      border: 1px solid rgba(212,168,83,0.3);
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 12px;
+      animation: newPulse 2s ease-in-out infinite;
+    }
+    @keyframes newPulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(212,168,83,0.2); }
+      50% { box-shadow: 0 0 20px rgba(212,168,83,0.5); }
+    }
+    .hero__email-label {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 14px;
+    }
+    .hero__email-form {
+      display: flex;
+      gap: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212,168,83,0.12);
+      animation: emailGlow 3s ease-in-out infinite;
+    }
+    @keyframes emailGlow {
+      0%, 100% { box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212,168,83,0.12); }
+      50% { box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 0 35px rgba(212,168,83,0.25); }
+    }
+    .hero__email-input {
+      padding: 16px 20px;
+      width: 200px;
+      background: rgba(10,9,8,0.8);
+      border: 1px solid rgba(212,168,83,0.25);
+      border-right: none;
+      border-radius: 6px 0 0 6px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .hero__email-input:focus {
+      border-color: var(--gold);
+    }
+    .hero__email-input::placeholder {
+      color: rgba(255,255,255,0.35);
+    }
+    .hero__email-btn {
+      padding: 16px 22px;
+      background: var(--gold);
+      border: none;
+      border-radius: 0 6px 6px 0;
+      color: #0a0908;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero__email-btn:hover {
+      background: var(--gold-bright);
+    }
+    .hero__email-msg {
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      margin-top: 8px;
+      color: var(--gold);
+      min-height: 18px;
+    }
+
     .fixed-cta__btn--kick {
       background: rgba(10,9,8,0.6);
       color: #05c46b;
@@ -927,6 +1100,20 @@
     window.addEventListener('scroll', check, { passive: true });
     check();
   })();
+  </script>
+
+  <script>
+  // Hero email signup
+  document.getElementById('heroEmailForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('heroEmail').value;
+    const msg = document.getElementById('heroEmailMsg');
+    fetch('/api/newsletter', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email}) })
+      .then(r => r.json())
+      .then(data => { msg.textContent = data.message || 'Subscribed!'; msg.style.color = 'var(--gold)'; })
+      .catch(() => { msg.textContent = 'Subscribed! Stay tuned.'; msg.style.color = 'var(--gold)'; });
+    document.getElementById('heroEmail').value = '';
+  });
   </script>
 
   <!-- ═══ TEMPORARY PLACEHOLDER ASSETS ═══ -->
