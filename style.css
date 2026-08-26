@@ -3458,27 +3458,7 @@ a {
   box-shadow: inset 0 0 80px rgba(212, 168, 83, 0.15), 0 0 30px rgba(212, 168, 83, 0.15);
 }
 
-.class-card__weapon-icon {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
-  opacity: 0.7;
-  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 2;
-  pointer-events: none;
-}
-.class-card__weapon-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: #fff;
-}
-.class-card:hover .class-card__weapon-icon {
-  opacity: 1;
-  transform: scale(1.15);
-}
+.class-card__weapon-icon { display: none; }
 
 .class-card__info {
   padding: 20px 16px 28px;
