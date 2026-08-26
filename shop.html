@@ -2477,12 +2477,20 @@
       overlay.classList.add('item-detail-overlay--active');
       overlay.scrollTop = 0;
       document.body.style.overflow = 'hidden';
+      history.pushState({ itemOpen: true }, '');
     }
 
     function closeItemDetail() {
       document.getElementById('itemDetailOverlay').classList.remove('item-detail-overlay--active');
       document.body.style.overflow = '';
     }
+
+    window.addEventListener('popstate', (e) => {
+      const overlay = document.getElementById('itemDetailOverlay');
+      if (overlay.classList.contains('item-detail-overlay--active')) {
+        closeItemDetail();
+      }
+    });
 
     /* ── VP Detail Page ── */
     const VP_PACKS = {
