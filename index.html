@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>OKUBI — Forge Your Own Myth</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="description" content="OKUBI is a fast-paced PvP aerial combat game powered by Unreal Engine 5. Take flight, master your archetype, and forge your legacy." />
@@ -112,6 +114,12 @@
       </filter>
     </defs>
   </svg>
+
+  <script>
+  if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) && window.innerWidth < 768) {
+    window.location.replace('/mobile.html');
+  }
+  </script>
 
   <!-- ═══ NAVIGATION ═══ -->
   <nav class="nav" id="nav">
