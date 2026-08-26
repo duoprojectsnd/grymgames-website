@@ -414,7 +414,7 @@
   const dots = document.querySelectorAll('.m-swipe__dot');
   let wIdx = 0;
   function goWeapon(i) {
-    wIdx = Math.max(0, Math.min(i, 3));
+    wIdx = ((i % 4) + 4) % 4;
     track.style.transform = `translateX(-${wIdx * 100}%)`;
     dots.forEach((d, j) => d.classList.toggle('m-swipe__dot--active', j === wIdx));
   }
