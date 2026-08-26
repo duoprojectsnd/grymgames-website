@@ -3623,6 +3623,12 @@ a {
   width: 100%;
 }
 
+.class-tabs__btn--disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* ─── Tab Panels ──────────────────────────────────────────────────────── */
 .class-tab-panel {
   display: none;
