@@ -1905,7 +1905,7 @@ a {
 /* ─── Corruption Lore ─────────────────────────────────────────────────── */
 .corruption {
   background: transparent;
-  padding: 60px 24px 50px;
+  padding: 30px 24px 50px;
   position: relative;
   overflow: visible;
 }
@@ -2011,6 +2011,8 @@ a {
   justify-content: flex-start;
   overflow: hidden;
   background: var(--bg-elevated);
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
 }
 
 .corruption-showcase__bg {
@@ -2444,7 +2446,7 @@ a {
 /* ─── Cinematic Divider ────────────────────────────────────────────────── */
 .cinematic-divider {
   position: relative;
-  padding: 120px 0 80px;
+  padding: 60px 0 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2474,7 +2476,7 @@ a {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 250px;
+  margin-bottom: 125px;
 }
 
 .cinematic-divider__cta {
