@@ -82,6 +82,28 @@ _deserializer = TypeDeserializer()
 # In-memory pending email confirmations: {token: {steam_id, email, ts}}
 _pending_confirms = {}
 
+NOTIFY_EMAIL = "davidbeaulieu44@gmail.com"
+
+def _notify_admin(subject: str, body: str):
+    """Send a short notification email to the admin."""
+    try:
+        import ssl
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"] = GMAIL_USER
+        msg["To"] = NOTIFY_EMAIL
+        msg.attach(MIMEText(body, "plain"))
+        ctx = ssl.create_default_context()
+        with smtplib.SMTP("smtp.zohocloud.ca", 587, timeout=30) as server:
+            server.ehlo()
+            server.starttls(context=ctx)
+            server.ehlo()
+            server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+            server.sendmail(GMAIL_USER, NOTIFY_EMAIL, msg.as_string())
+    except Exception:
+        pass  # Don't break user flow if notification fails
+
+
 # ─── DynamoDB helpers ─────────────────────────────────────────────────────────
 def _dynamo():
     return boto3.client(
@@ -508,6 +530,7 @@ def confirm_email():
                         ":s": _serializer.serialize(stat),
                     },
                 )
+                _notify_admin("OKUBI — Gift Claimed", f"Player claimed welcome gift!\nSteam ID: {steam_id}\nEmail: {email}")
     except Exception:
         pass
 
@@ -1003,6 +1026,7 @@ def api_subscribe():
             },
             ConditionExpression="attribute_not_exists(email)",
         )
+        _notify_admin("OKUBI — New Subscriber", f"New email signup: {email}\nSource: {data.get('source', 'mobile')}")
         return jsonify({"ok": True})
     except _dynamo().exceptions.ConditionalCheckFailedException:
         return jsonify({"ok": True})

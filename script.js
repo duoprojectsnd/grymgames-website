@@ -35,6 +35,57 @@
     });
   }
 
+  // ─── Email CTA — Slide-in ──────────────────────────────────────────────
+  const emailCta = document.getElementById('emailCta');
+  if (emailCta) {
+    const emailContent = emailCta.querySelector('.email-cta__content');
+    const emailObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) emailContent.classList.add('visible');
+      });
+    }, { threshold: 0.3 });
+    emailObs.observe(emailCta);
+
+    const emailForm = document.getElementById('emailCtaForm');
+    const emailResponse = document.getElementById('emailCtaResponse');
+    if (emailForm) {
+      emailForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var input = document.getElementById('emailCtaInput');
+        if (input && input.value) {
+          emailForm.style.opacity = '0.4';
+          emailForm.style.pointerEvents = 'none';
+          fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: input.value, source: 'website-cta' })
+          })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (data.ok) {
+              emailResponse.textContent = 'You\'re in! We\'ll keep you posted.';
+            } else {
+              emailResponse.textContent = data.error || 'Something went wrong.';
+              emailResponse.style.color = '#e74c3c';
+            }
+            emailResponse.classList.add('email-cta__response--visible');
+            setTimeout(function() {
+              emailForm.style.opacity = '1';
+              emailForm.style.pointerEvents = 'auto';
+            }, 500);
+          })
+          .catch(function() {
+            emailResponse.textContent = 'Network error — try again.';
+            emailResponse.style.color = '#e74c3c';
+            emailResponse.classList.add('email-cta__response--visible');
+            emailForm.style.opacity = '1';
+            emailForm.style.pointerEvents = 'none';
+          });
+        }
+      });
+    }
+  }
+
   // ─── Founder Section — Gold Glow on Scroll ───────────────────────────
   const founderSection = document.getElementById('founderSection');
   const founderGlow = document.getElementById('founderGlow');
