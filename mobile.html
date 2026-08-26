@@ -360,15 +360,14 @@
 
     <!-- Email Subscribe -->
     <section class="m-section">
-      <p class="m-section__eyebrow">Stay in the Loop</p>
-      <h2 class="m-section__title">Get Updates</h2>
-      <p class="m-section__text">Be the first to know about playtests, updates, and launch day.</p>
+      <h2 class="m-section__title">STAY IN THE LOOP</h2>
+      <p class="m-section__text">Be the first to know about exclusive playtests, updates & dev news — straight to your inbox.</p>
       <div class="m-email">
-        <div class="m-email__row">
-          <input class="m-email__input" type="email" id="subEmail" placeholder="your@email.com" />
-          <button class="m-email__btn" id="subBtn">JOIN</button>
-        </div>
-        <p class="m-email__msg" id="subMsg"></p>
+        <form class="m-email__row" id="emailCtaForm" onsubmit="return false;">
+          <input class="m-email__input" type="email" id="emailCtaInput" placeholder="Enter your email" required />
+          <button class="m-email__btn" type="submit" id="subBtn">JOIN NOW</button>
+        </form>
+        <p class="m-email__msg" id="emailCtaResponse"></p>
       </div>
     </section>
 
@@ -413,21 +412,41 @@
   document.getElementById('weaponPrev').addEventListener('click', () => goWeapon(wIdx - 1));
   document.getElementById('weaponNext').addEventListener('click', () => goWeapon(wIdx + 1));
 
-  document.getElementById('subBtn').addEventListener('click', async () => {
-    const input = document.getElementById('subEmail');
-    const msg = document.getElementById('subMsg');
-    const email = input.value.trim();
-    if (!email) { msg.textContent = 'Enter your email'; msg.className = 'm-email__msg m-email__msg--err'; return; }
-    try {
-      const r = await fetch('/api/subscribe', {
-        method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ email, source: 'mobile' })
-      });
-      const d = await r.json();
-      if (d.ok) { msg.textContent = "You're in! We'll keep you posted."; msg.className = 'm-email__msg m-email__msg--ok'; input.value = ''; }
-      else { msg.textContent = d.error || 'Something went wrong'; msg.className = 'm-email__msg m-email__msg--err'; }
-    } catch { msg.textContent = 'Network error. Try again.'; msg.className = 'm-email__msg m-email__msg--err'; }
-  });
+  var emailForm = document.getElementById('emailCtaForm');
+  var emailResponse = document.getElementById('emailCtaResponse');
+  if (emailForm) {
+    emailForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var input = document.getElementById('emailCtaInput');
+      if (input && input.value) {
+        emailForm.style.opacity = '0.4';
+        emailForm.style.pointerEvents = 'none';
+        fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: input.value, source: 'mobile-cta' })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.ok) {
+            emailResponse.textContent = "You're in! We'll keep you posted.";
+            emailResponse.className = 'm-email__msg m-email__msg--ok';
+          } else {
+            emailResponse.textContent = data.error || 'Something went wrong.';
+            emailResponse.className = 'm-email__msg m-email__msg--err';
+          }
+          emailForm.style.opacity = '1';
+          emailForm.style.pointerEvents = 'auto';
+        })
+        .catch(function() {
+          emailResponse.textContent = 'Network error — try again.';
+          emailResponse.className = 'm-email__msg m-email__msg--err';
+          emailForm.style.opacity = '1';
+          emailForm.style.pointerEvents = 'auto';
+        });
+      }
+    });
+  }
 
   // Fade in sticky bar when archetypes section is visible
   const sticky = document.getElementById('stickyBar');
