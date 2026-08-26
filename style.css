@@ -3509,6 +3509,18 @@ a {
   color: var(--text-muted);
 }
 
+.class-card--tba {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.class-card--tba .class-card__img {
+  background: #0a0908 !important;
+}
+.class-card--tba .class-card__name {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+}
+
 /* ─── Class Detail Hero ────────────────────────────────────────────────── */
 .class-detail-hero {
   position: relative;

@@ -64,22 +64,21 @@
           .then(function(data) {
             if (data.ok) {
               emailResponse.textContent = 'You\'re in! We\'ll keep you posted.';
+              emailResponse.style.color = '#2ecc71';
             } else {
               emailResponse.textContent = data.error || 'Something went wrong.';
               emailResponse.style.color = '#e74c3c';
             }
             emailResponse.classList.add('email-cta__response--visible');
-            setTimeout(function() {
-              emailForm.style.opacity = '1';
-              emailForm.style.pointerEvents = 'auto';
-            }, 500);
+            emailForm.style.opacity = '1';
+            emailForm.style.pointerEvents = 'auto';
           })
           .catch(function() {
             emailResponse.textContent = 'Network error — try again.';
             emailResponse.style.color = '#e74c3c';
             emailResponse.classList.add('email-cta__response--visible');
             emailForm.style.opacity = '1';
-            emailForm.style.pointerEvents = 'none';
+            emailForm.style.pointerEvents = 'auto';
           });
         }
       });
