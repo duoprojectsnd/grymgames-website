@@ -780,7 +780,7 @@
         <p style="color:#888; font-family:'Rajdhani',sans-serif;">Loading news...</p>
       </div>
       <script>
-      fetch('/api/news?limit=3').then(r=>r.json()).then(items=>{
+      fetch('/api/news?limit=4').then(r=>r.json()).then(items=>{
         const grid=document.getElementById('homeNewsGrid');
         if(!items.length){grid.innerHTML='';return;}
         grid.innerHTML=items.map(item=>`
