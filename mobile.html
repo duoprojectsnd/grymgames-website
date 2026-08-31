@@ -1,493 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Analytics GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GXE203KVV0"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-GXE203KVV0', { send_page_view: true });
-    document.addEventListener('click', function(e) {
-      var t = e.target.closest('a,button');
-      if (t) gtag('event', 'click', { element: t.tagName, text: (t.textContent||'').trim().substring(0,50), href: t.href||'', class: t.className||'' });
-    });
-  </script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-GXE203KVV0',{send_page_view:true});document.addEventListener('click',function(e){var t=e.target.closest('a,button');if(t)gtag('event','click',{element:t.tagName,text:(t.textContent||'').trim().substring(0,50),href:t.href||'',class:t.className||''});});</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>OKUBI — Forge Your Own Myth</title>
+  <title>OKUBI — The Corruption Calls</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <meta name="description" content="OKUBI is a fast-paced PvP aerial combat game powered by Unreal Engine 5. Take flight, master your archetype, and forge your legacy." />
+  <meta name="description" content="OKUBI — Corrupted flesh. Stolen wings. Eternal war. Fast-paced PvP aerial combat powered by Unreal Engine 5." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { background: #0a0a0f; color: #fff; font-family: 'Inter', sans-serif; overflow-anchor: none; }
-
-    /* No frame — full page */
-    .phone-frame {
-      width: 100%; max-width: 500px; margin: 0 auto;
-      overflow-x: hidden; background: #0a0a0f;
-    }
-
-    /* Hero — matches desktop purple vibe */
-    .m-hero {
-      position: relative;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 48px 24px 36px; text-align: center;
-      background: url('assets/home/hero.png') center/cover no-repeat;
-    }
-    .m-hero::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.4) 40%, transparent 70%);
-    }
-    .m-hero__content { position: relative; z-index: 2; }
-    .m-hero__logo { width: 160px; margin: 0 auto 16px; display: block; }
-    .m-hero__title {
-      font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 800;
-      color: #d4a853; letter-spacing: 2px; margin-bottom: 6px; line-height: 1.3;
-      text-transform: uppercase; white-space: nowrap;
-      position: relative; animation: m-glitch 3s infinite;
-    }
-    @keyframes m-glitch {
-      0%, 92%, 100% { text-shadow: none; transform: none; }
-      93% { text-shadow: -2px 0 #c0392b, 2px 0 #7ecbf5; transform: translateX(-1px); }
-      94% { text-shadow: 2px 0 #c0392b, -2px 0 #7ecbf5; transform: translateX(1px); }
-      95% { text-shadow: none; transform: none; }
-      96% { text-shadow: -1px 0 #c0392b, 1px 0 #7ecbf5; transform: translateX(-1px) skewX(-0.5deg); }
-      97% { text-shadow: none; transform: none; }
-    }
-    .m-hero__video {
-      width: 100%; aspect-ratio: 16/9; border-radius: 8px; margin: 16px 0;
-      border: 1px solid rgba(212,168,83,0.2); object-fit: cover;
-      background: #000;
-    }
-    .m-hero__steam {
-      font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; color: #666;
-      margin-bottom: 20px; letter-spacing: 1px;
-    }
-    .m-hero__sub {
-      font-family: 'Inter', sans-serif; font-size: 0.82rem; color: #bbb;
-      margin-bottom: 6px; line-height: 1.5;
-    }
-    .m-btn {
-      display: block; width: 100%; padding: 16px; border-radius: 6px;
-      text-decoration: none; text-align: center; font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;
-      margin-bottom: 10px; transition: transform 0.15s;
-    }
-    .m-btn:active { transform: scale(0.97); }
-    .m-btn--gold {
-      background: #c0392b; color: #fff; border: none;
-    }
-    .m-btn--outline {
-      background: transparent; color: #d4a853;
-      border: 1px solid rgba(212,168,83,0.5);
-    }
-    .m-btn--kick {
-      background: transparent; color: #05ce78; border: 1px solid rgba(5,206,120,0.5);
-    }
-    .m-btn--blue {
-      background: #2980b9; color: #fff; border: none;
-    }
-
-    /* Sticky bottom CTA bar */
-    .m-sticky {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-      background: rgba(10,10,15,0.95); backdrop-filter: blur(8px);
-      border-top: 1px solid #1e1e2e;
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
-    }
-    .m-sticky--visible { opacity: 1; pointer-events: auto; }
-    .m-sticky__btn {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%; padding: 14px; border-radius: 6px; text-decoration: none;
-      font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700;
-      letter-spacing: 1px; transition: transform 0.15s;
-      background: #2980b9; color: #fff;
-      box-shadow: 0 0 12px rgba(41,128,185,0.5), 0 0 30px rgba(41,128,185,0.3);
-      animation: m-glow 2s ease-in-out infinite;
-    }
-    @keyframes m-glow {
-      0%, 100% { box-shadow: 0 0 12px rgba(41,128,185,0.5), 0 0 30px rgba(41,128,185,0.3); }
-      50% { box-shadow: 0 0 20px rgba(41,128,185,0.8), 0 0 50px rgba(41,128,185,0.4), 0 0 80px rgba(41,128,185,0.2); }
-    }
-    .m-sticky__btn:active { transform: scale(0.96); }
-    .m-sticky__btn svg { width: 16px; height: 16px; flex-shrink: 0; fill: #fff; }
-
-    /* Sections */
-    .m-section { padding: 32px 24px; }
-    .m-section__eyebrow {
-      font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; text-transform: uppercase;
-      letter-spacing: 3px; color: #d4a853; margin-bottom: 6px; text-align: center;
-    }
-    .m-section__title {
-      font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #fff;
-      margin-bottom: 14px; text-align: center;
-    }
-    .m-section__text {
-      font-size: 0.82rem; color: #999; line-height: 1.7; margin-bottom: 16px; text-align: center;
-    }
-    .m-section__img {
-      width: 100%; border-radius: 6px; margin-bottom: 12px;
-    }
-
-    /* Archetype row */
-    .m-archetypes {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 16px;
-    }
-    .m-arch {
-      text-align: center; padding: 8px 4px;
-      border-radius: 6px; border: 1px solid #1e1e30;
-      background: rgba(255,255,255,0.02);
-    }
-    .m-arch__icon { font-size: 1.4rem; margin-bottom: 4px; }
-    .m-arch__name {
-      font-family: 'Rajdhani', sans-serif; font-size: 0.6rem; color: #aaa;
-      text-transform: uppercase; letter-spacing: 0.5px;
-    }
-
-    /* Arena compact */
-    .m-arenas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-    .m-arena {
-      padding: 16px 12px; border-radius: 6px; text-align: center;
-      border: 1px solid #2a1a1a; background: rgba(192,57,43,0.05);
-    }
-    .m-arena__name {
-      font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: #fff; margin-bottom: 2px;
-    }
-    .m-arena__sub {
-      font-family: 'Rajdhani', sans-serif; font-size: 0.65rem; color: #c0392b;
-      text-transform: uppercase; letter-spacing: 1px;
-    }
-
-    /* OKUBI section */
-    .m-okubi { text-align: center; }
-    .m-okubi__symbol {
-      font-size: 2rem; margin-bottom: 12px; color: #d4a853;
-    }
-
-    /* Hub features */
-    .m-hub-features { list-style: none; }
-    .m-hub-features li {
-      display: flex; align-items: center; gap: 10px;
-      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; color: #ddd;
-    }
-    .m-hub-features li span { font-size: 1.1rem; }
-
-    /* Footer */
-    .m-footer {
-      padding: 28px 24px; text-align: center;
-    }
-    .m-footer__logo {
-      font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #d4a853; margin-bottom: 6px;
-    }
-    .m-footer__copy { font-size: 0.65rem; color: #555; }
-    .m-footer__links { margin-top: 10px; display: flex; justify-content: center; gap: 14px; }
-    .m-footer__links a { color: #777; text-decoration: none; font-size: 0.7rem; }
-
-    /* Section with bg image */
-    .m-section--bg {
-      position: relative; padding: 40px 24px;
-    }
-    .m-section--bg::before {
-      content: ''; position: absolute; inset: 0;
-      background-size: cover; background-position: center;
-      opacity: 0.3;
-    }
-    .m-section--bg > * { position: relative; z-index: 2; }
-    .m-section--arena::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067'); opacity: 0.15; }
-    .m-section--hub::before { background-image: url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067'); opacity: 0.15; }
-
-    /* Video */
-    .m-video { width: 100%; border-radius: 6px; margin-bottom: 16px; }
-
-    /* Swipeable weapon cards */
-    .m-swipe { position: relative; overflow: hidden; user-select: none; }
-    .m-swipe__track {
-      display: flex; transition: transform 0.3s ease;
-    }
-    .m-swipe__card {
-      min-width: 100%; display: flex; flex-direction: column; align-items: center;
-      padding: 24px 48px;
-    }
-    .m-swipe__icon {
-      width: 100px; height: 100px; object-fit: contain; margin-bottom: 12px;
-    }
-    .m-swipe__name {
-      font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: #fff;
-    }
-    .m-swipe__arrow {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 36px; height: 100px; border: none; border-radius: 4px;
-      background: rgba(212,168,83,0.15); color: #d4a853;
-      font-size: 1.4rem; cursor: pointer; z-index: 5;
-      display: flex; align-items: center; justify-content: center;
-      animation: m-arrowPulse 2s ease-in-out infinite;
-    }
-    .m-swipe__arrow--left { left: 4px; }
-    .m-swipe__arrow--right { right: 4px; }
-    @keyframes m-arrowPulse {
-      0%, 100% { opacity: 0.6; box-shadow: 0 0 8px rgba(212,168,83,0.2); }
-      50% { opacity: 1; box-shadow: 0 0 16px rgba(212,168,83,0.5); }
-    }
-    .m-swipe__dots {
-      display: flex; justify-content: center; gap: 8px; margin-top: 12px;
-    }
-    .m-swipe__dot {
-      width: 8px; height: 8px; border-radius: 50%; background: #333;
-      transition: background 0.2s;
-    }
-    .m-swipe__dot--active { background: #d4a853; }
-
-    /* Email form */
-    .m-email { margin-top: 16px; }
-    .m-email__row { display: flex; flex-direction: column; gap: 10px; }
-    .m-email__input {
-      width: 100%; padding: 14px 12px; border-radius: 6px; border: 1px solid #2a2a3a;
-      background: #12121a; color: #fff; font-family: 'Inter', sans-serif; font-size: 0.8rem;
-      outline: none;
-    }
-    .m-email__input:focus { border-color: #d4a853; }
-    .m-email__input::placeholder { color: #555; }
-    .m-email__btn {
-      width: 100%; padding: 14px 18px; border-radius: 6px; border: none;
-      background: #c0392b; color: #fff; font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem; font-weight: 700; cursor: pointer; letter-spacing: 1px;
-    }
-    .m-email__msg {
-      font-size: 0.7rem; color: #888; margin-top: 8px; min-height: 16px;
-      font-family: 'Rajdhani', sans-serif;
-    }
-    .m-email__msg--ok { color: #4caf50; }
-    .m-email__msg--err { color: #e74c3c; }
+*{margin:0;padding:0;box-sizing:border-box}html,body{background:#06050a;color:#fff;font-family:'Inter',sans-serif;overflow-anchor:none}
+.phone-frame{width:100%;max-width:500px;margin:0 auto;overflow-x:hidden;background:#06050a}
+.m-hero{position:relative;display:flex;flex-direction:column;align-items:center;padding:40px 24px 36px;text-align:center;background:url('assets/home/hero.png') center/cover no-repeat;min-height:100vh}
+.m-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#06050a 0%,rgba(6,5,10,.85) 30%,rgba(6,5,10,.4) 60%,rgba(6,5,10,.7) 100%)}
+.m-hero__content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
+.m-hero__logo{width:140px;margin-bottom:16px}
+.m-hero__play{width:64px;height:64px;border:none;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-bottom:20px;backdrop-filter:blur(4px);transition:all .3s}
+.m-hero__play:active{transform:scale(.9)}.m-hero__play svg{width:28px;height:28px;fill:rgba(255,255,255,.8);margin-left:4px}
+.m-hero__title{font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:900;color:#c0392b;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;animation:m-glitch 4s infinite}
+@keyframes m-glitch{0%,90%,100%{text-shadow:none;transform:none}91%{text-shadow:-2px 0 #c0392b,2px 0 #2d0a3e;transform:translateX(-1px)}93%{text-shadow:2px 0 #8b0000,-2px 0 #2d0a3e;transform:translateX(1px) skewX(-.5deg)}95%{text-shadow:none;transform:none}}
+.m-hero__sub{font-size:.78rem;color:#888;margin-bottom:24px;letter-spacing:.5px}
+.m-countdown{display:flex;gap:12px;margin-bottom:28px}.m-cd-block{text-align:center}
+.m-cd-num{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:800;color:#c0392b;text-shadow:0 0 20px rgba(192,57,43,.5);display:block}
+.m-cd-label{font-family:'Rajdhani',sans-serif;font-size:.55rem;color:#555;text-transform:uppercase;letter-spacing:2px}
+.m-cd-sep{font-family:'Orbitron',sans-serif;font-size:1.4rem;color:#333;padding-top:4px}
+.m-btn{display:block;width:100%;padding:15px;border-radius:6px;text-decoration:none;text-align:center;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:1px;margin-bottom:10px;transition:transform .15s}
+.m-btn:active{transform:scale(.97)}.m-btn--red{background:#8b0000;color:#fff;border:none;box-shadow:0 0 15px rgba(139,0,0,.4)}
+.m-btn--kick{background:transparent;color:#05ce78;border:1px solid rgba(5,206,120,.4)}
+.m-trailer-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);align-items:center;justify-content:center;flex-direction:column}
+.m-trailer-overlay.active{display:flex}.m-trailer-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:rgba(255,255,255,.1);border-radius:50%;color:#fff;font-size:1.2rem;cursor:pointer;z-index:1001}
+.m-trailer-iframe{width:95%;aspect-ratio:16/9;border:none;border-radius:8px}
+.m-divider{height:2px;background:linear-gradient(90deg,transparent,rgba(139,0,0,.4),rgba(45,10,62,.3),transparent);margin:0 24px}
+.m-section{padding:36px 24px}.m-section__eyebrow{font-family:'Rajdhani',sans-serif;font-size:.65rem;text-transform:uppercase;letter-spacing:3px;color:#c0392b;margin-bottom:6px;text-align:center}
+.m-section__title{font-family:'Orbitron',sans-serif;font-size:1.05rem;color:#fff;margin-bottom:14px;text-align:center}
+.m-section__text{font-size:.8rem;color:#777;line-height:1.7;margin-bottom:16px;text-align:center}
+.m-section__img{width:100%;border-radius:6px;margin-bottom:12px;border:1px solid rgba(139,0,0,.15)}
+.m-email{margin-top:8px}.m-email__row{display:flex;flex-direction:column;gap:10px}
+.m-email__input{width:100%;padding:14px 12px;border-radius:6px;border:1px solid rgba(139,0,0,.3);background:rgba(10,5,15,.8);color:#fff;font-family:'Inter',sans-serif;font-size:.8rem;outline:none}
+.m-email__input:focus{border-color:#c0392b;box-shadow:0 0 10px rgba(139,0,0,.2)}.m-email__input::placeholder{color:#444}
+.m-email__btn{width:100%;padding:14px;border-radius:6px;border:none;background:#8b0000;color:#fff;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;letter-spacing:1px;box-shadow:0 0 15px rgba(139,0,0,.3)}
+.m-email__msg{font-size:.7rem;color:#888;margin-top:8px;min-height:16px;font-family:'Rajdhani',sans-serif}.m-email__msg--ok{color:#c0392b}.m-email__msg--err{color:#e74c3c}
+.m-swipe{position:relative;overflow:hidden;user-select:none}.m-swipe__track{display:flex;transition:transform .3s ease}
+.m-swipe__card{min-width:100%;display:flex;flex-direction:column;align-items:center;padding:24px 48px}
+.m-swipe__icon{width:100px;height:100px;object-fit:contain;margin-bottom:12px}
+.m-swipe__name{font-family:'Orbitron',sans-serif;font-size:.85rem;color:#c0392b}
+.m-swipe__arrow{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:80px;border:none;border-radius:4px;background:rgba(139,0,0,.15);color:#c0392b;font-size:1.4rem;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center}
+.m-swipe__arrow--left{left:4px}.m-swipe__arrow--right{right:4px}
+.m-swipe__dots{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.m-swipe__dot{width:8px;height:8px;border-radius:50%;background:#222;transition:background .2s}.m-swipe__dot--active{background:#c0392b}
+.m-ss{position:relative;overflow:hidden}.m-ss__track{display:flex;transition:transform .3s ease}
+.m-ss__slide{min-width:100%;padding:0 8px}.m-ss__slide img{width:100%;border-radius:8px;border:1px solid rgba(139,0,0,.2)}
+.m-ss__arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:60px;border:none;border-radius:4px;background:rgba(0,0,0,.6);color:#c0392b;font-size:1.2rem;cursor:pointer;z-index:5}
+.m-ss__arrow--left{left:4px}.m-ss__arrow--right{right:4px}
+.m-ss__dots{display:flex;justify-content:center;gap:6px;margin-top:10px}.m-ss__dot{width:6px;height:6px;border-radius:50%;background:#222}.m-ss__dot--active{background:#c0392b}
+.m-okubi{text-align:center;background:linear-gradient(180deg,#06050a,#0a0510,#06050a)}
+.m-okubi__symbol{font-size:2.5rem;margin-bottom:12px;color:#c0392b;text-shadow:0 0 30px rgba(139,0,0,.6),0 0 60px rgba(45,10,62,.3);animation:m-pulse 3s ease-in-out infinite}
+@keyframes m-pulse{0%,100%{opacity:.7}50%{opacity:1;text-shadow:0 0 40px rgba(139,0,0,.8),0 0 80px rgba(45,10,62,.5)}}
+.m-faq__item{border-bottom:1px solid rgba(139,0,0,.1)}.m-faq__q{display:flex;justify-content:space-between;align-items:center;padding:16px 0;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;color:#ccc}
+.m-faq__q.active{color:#c0392b}.m-faq__arrow{font-size:.7rem;color:#555;transition:transform .3s}.m-faq__q.active .m-faq__arrow{transform:rotate(180deg);color:#c0392b}
+.m-faq__a{display:none;padding:0 0 16px;font-size:.75rem;color:#666;line-height:1.7}.m-faq__a.active{display:block}
+.m-faq__cat{font-family:'Orbitron',sans-serif;font-size:.65rem;color:#c0392b;letter-spacing:2px;text-transform:uppercase;margin-top:20px;margin-bottom:8px;padding-top:16px;border-top:1px solid rgba(139,0,0,.1)}
+.m-faq__cat:first-child{border-top:none;margin-top:0;padding-top:0}
+.m-footer{padding:28px 24px;text-align:center}.m-footer__logo{font-family:'Orbitron',sans-serif;font-size:.9rem;color:#c0392b;margin-bottom:6px}
+.m-footer__copy{font-size:.6rem;color:#333;margin-bottom:12px}.m-footer__links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.m-footer__links a{color:rgba(255,255,255,.3);transition:color .2s}.m-footer__links a:hover{color:#c0392b}
+.m-sticky{position:fixed;bottom:0;left:0;right:0;z-index:100;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(6,5,10,.95);backdrop-filter:blur(8px);border-top:1px solid rgba(139,0,0,.2);opacity:0;transition:opacity .3s;pointer-events:none}
+.m-sticky--visible{opacity:1;pointer-events:auto}
+.m-sticky__btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:6px;text-decoration:none;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:1px;background:#8b0000;color:#fff;box-shadow:0 0 15px rgba(139,0,0,.5);animation:m-glow 2.5s ease-in-out infinite}
+@keyframes m-glow{0%,100%{box-shadow:0 0 15px rgba(139,0,0,.5)}50%{box-shadow:0 0 25px rgba(139,0,0,.8),0 0 50px rgba(139,0,0,.3)}}
+.m-sticky__btn:active{transform:scale(.96)}.m-sticky__btn svg{width:16px;height:16px;flex-shrink:0;fill:#fff}
   </style>
 </head>
 <body>
-  <div class="phone-frame">
+<div class="phone-frame">
+<div class="m-trailer-overlay" id="trailerOverlay"><button class="m-trailer-close" id="trailerClose">&#10005;</button><iframe class="m-trailer-iframe" id="trailerFrame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 
-    <!-- Hero — mirrors desktop first page -->
-    <section class="m-hero">
-      <div class="m-hero__content">
-        <img class="m-hero__logo" src="assets/okubi-logo.png" alt="OKUBI" />
-        <h1 class="m-hero__title">A New Era of Combat</h1>
-        <p class="m-hero__sub">Ground & aerial PvP. Wings. Combos. Arenas.</p>
-        <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;margin:16px 0;">
-          <video id="trailerVideo" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover;">
-            <source src="https://video.fastly.steamstatic.com/store_trailers/257015428/movie480_vp9.webm#t=28" type="video/webm" />
-          </video>
-          <div style="position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(to top, rgba(10,10,15,0.95), transparent);pointer-events:none;"></div>
-        </div>
-        <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--gold">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>
-          Wishlist Now
-        </a>
-        <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--kick">
-          <img src="https://cdn-icons-png.flaticon.com/512/4494/4494589.png" width="14" height="14" style="display:inline;vertical-align:middle;margin-right:4px;" alt="K" />
-          Back on Kickstarter
-        </a>
-      </div>
-    </section>
+<section class="m-hero"><div class="m-hero__content">
+<img class="m-hero__logo" src="assets/okubi-logo.png" alt="OKUBI" />
+<button class="m-hero__play" id="playBtn" aria-label="Watch Trailer"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+<h1 class="m-hero__title">THE CORRUPTION CALLS</h1>
+<p class="m-hero__sub">Corrupted flesh. Stolen wings. Eternal war.</p>
+<div class="m-countdown" id="countdown">
+<div class="m-cd-block"><span class="m-cd-num" id="cdDays">00</span><span class="m-cd-label">Days</span></div><span class="m-cd-sep">:</span>
+<div class="m-cd-block"><span class="m-cd-num" id="cdHours">00</span><span class="m-cd-label">Hours</span></div><span class="m-cd-sep">:</span>
+<div class="m-cd-block"><span class="m-cd-num" id="cdMins">00</span><span class="m-cd-label">Min</span></div><span class="m-cd-sep">:</span>
+<div class="m-cd-block"><span class="m-cd-num" id="cdSecs">00</span><span class="m-cd-label">Sec</span></div>
+</div>
+<a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--red"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>Wishlist Now</a>
+<a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--kick">Kickstarter</a>
+</div></section>
 
-    <!-- Archetypes (simplified) -->
-    <section class="m-section" id="archSection">
-      <p class="m-section__eyebrow">Your Story</p>
-      <h2 class="m-section__title">Be a God Among Men</h2>
-      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="Remnant" />
-      <p class="m-section__text">You are a Remnant — a human corrupted by Gorium. Once used by the government for missions no one else could survive, your kind became too dangerous to control. Excommunicated and cast onto a desert world, Remnants now fight as celebrated gladiators — using their fame, wealth, and power to fund rogue missions of their own.</p>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section"><p class="m-section__eyebrow">&#x27D0; The Void Remembers</p><h2 class="m-section__title">STAY IN THE LOOP</h2><p class="m-section__text">Be the first to know about exclusive playtests, updates &amp; dev news.</p><div class="m-email"><form class="m-email__row" id="emailCtaForm" onsubmit="return false;"><input class="m-email__input" type="email" id="emailCtaInput" placeholder="Enter your email" required /><button class="m-email__btn" type="submit">JOIN NOW</button></form><p class="m-email__msg" id="emailCtaResponse"></p></div></section>
 
-    <!-- Weapons swipable -->
-    <section class="m-section" style="padding-bottom:16px;">
-      <p class="m-section__eyebrow">Weapon Based</p>
-      <h2 class="m-section__title">Pick Your Arsenal</h2>
-      <div class="m-swipe" id="weaponSwipe">
-        <button class="m-swipe__arrow m-swipe__arrow--left" id="weaponPrev">‹</button>
-        <div class="m-swipe__track" id="weaponTrack">
-          <div class="m-swipe__card">
-            <img src="assets/home/website_dual_wield_axe.png" class="m-swipe__icon" alt="Double Axe" />
-            <p class="m-swipe__name">Double Axe</p>
-          </div>
-          <div class="m-swipe__card">
-            <img src="assets/home/website_scythe.png" class="m-swipe__icon" alt="Scythe" />
-            <p class="m-swipe__name">Scythe</p>
-          </div>
-          <div class="m-swipe__card">
-            <img src="assets/home/website_spear_shield.png" class="m-swipe__icon" alt="Spear & Shield" />
-            <p class="m-swipe__name">Spear & Shield</p>
-          </div>
-          <div class="m-swipe__card">
-            <img src="assets/home/website_bow.png" class="m-swipe__icon" alt="Bow" />
-            <p class="m-swipe__name">Bow</p>
-          </div>
-        </div>
-        <button class="m-swipe__arrow m-swipe__arrow--right" id="weaponNext">›</button>
-        <div class="m-swipe__dots" id="weaponDots">
-          <span class="m-swipe__dot m-swipe__dot--active"></span>
-          <span class="m-swipe__dot"></span>
-          <span class="m-swipe__dot"></span>
-          <span class="m-swipe__dot"></span>
-        </div>
-      </div>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section" id="archSection"><p class="m-section__eyebrow">You Are Not Human Anymore</p><h2 class="m-section__title">YOU ARE THE MONSTER THEY CREATED</h2><img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="Remnant" /><p class="m-section__text">You are a Remnant &#8212; a soldier mutated by Gorium, the alien ore that started an interstellar war. Too dangerous to control, your kind was excommunicated and exiled to a desert death world. Now you fight as a gladiator &#8212; using stolen wings, corrupted power, and the roar of the crowd to survive.</p></section>
 
-    <!-- Arenas (simplified) -->
-    <section class="m-section">
-      <p class="m-section__eyebrow">Prove Your Worth</p>
-      <h2 class="m-section__title">Arenas</h2>
-      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067" alt="Arenas" />
-      <p class="m-section__text">1v1 · 2v2 · 3v3 · 4v4 Wanted</p>
-      <p class="m-section__text">Ranked & unranked competitive combat watched by both factions. Multiple game modes with more coming.</p>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section" style="padding-bottom:16px;"><p class="m-section__eyebrow">Choose Your Instrument of Death</p><h2 class="m-section__title">PICK YOUR ARSENAL</h2><div class="m-swipe" id="weaponSwipe"><button class="m-swipe__arrow m-swipe__arrow--left" id="weaponPrev">&#8249;</button><div class="m-swipe__track" id="weaponTrack"><div class="m-swipe__card"><img src="assets/home/website_dual_wield_axe.png" class="m-swipe__icon" alt="Double Axe" /><p class="m-swipe__name">Double Axe</p></div><div class="m-swipe__card"><img src="assets/home/website_scythe.png" class="m-swipe__icon" alt="Scythe" /><p class="m-swipe__name">Scythe</p></div><div class="m-swipe__card"><img src="assets/home/website_spear_shield.png" class="m-swipe__icon" alt="Spear &amp; Shield" /><p class="m-swipe__name">Spear &amp; Shield</p></div><div class="m-swipe__card"><img src="assets/home/website_bow.png" class="m-swipe__icon" alt="Bow" /><p class="m-swipe__name">Bow</p></div></div><button class="m-swipe__arrow m-swipe__arrow--right" id="weaponNext">&#8250;</button><div class="m-swipe__dots" id="weaponDots"><span class="m-swipe__dot m-swipe__dot--active"></span><span class="m-swipe__dot"></span><span class="m-swipe__dot"></span><span class="m-swipe__dot"></span></div></div></section>
 
-    <!-- Flying / Video -->
-    <section class="m-section">
-      <p class="m-section__eyebrow">Take to the Skies</p>
-      <h2 class="m-section__title">Winged Combat</h2>
-      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067" alt="Winged Combat" />
-      <p class="m-section__text">Deploy wings mid-fight. Chain ground combos into aerial strikes. No cooldown. No mount. Pure vertical freedom.</p>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section"><p class="m-section__eyebrow">The Crowd Demands Blood</p><h2 class="m-section__title">THE ARENAS</h2><img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067" alt="Arenas" /><p class="m-section__text" style="font-family:'Orbitron',sans-serif;font-size:.75rem;color:#c0392b;letter-spacing:1px;">1v1 &#183; 2v2 &#183; 3v3 &#183; 4v4 Wanted</p><p class="m-section__text">Gladiatorial combat watched by both factions. Ranked and unranked. The arena doesn&#8217;t care who you were &#8212; only what you become when the gates close behind you.</p></section>
 
-    <!-- OKUBI -->
-    <section class="m-section m-okubi">
-      <div class="m-okubi__symbol">⟐</div>
-      <p class="m-section__eyebrow">The Entity</p>
-      <h2 class="m-section__title">Okubi is Watching</h2>
-      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="OKUBI" />
-      <p class="m-section__text">A mysterious force that triggers world events — catastrophic destruction or generous rewards. Stay alert. Adapt. Seize the moment.</p>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section"><p class="m-section__eyebrow">Stolen Wings. Unnatural Power.</p><h2 class="m-section__title">WINGED COMBAT</h2><img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067" alt="Winged Combat" /><p class="m-section__text">Deploy wings mid-fight. Chain ground combos into aerial strikes. No cooldown. No mount. Pure vertical freedom &#8212; the Gorium in your blood makes the impossible feel natural.</p></section>
 
-    <!-- Public Hub -->
-    <section class="m-section">
-      <p class="m-section__eyebrow">Your Home Base</p>
-      <h2 class="m-section__title">The Public Hub</h2>
-      <img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067" alt="Public Hub" />
-      <p class="m-section__text">A social space between battles. Craft gear, upgrade your build, form squads, or unwind at the VIP bar with friends. The hub is where legends prepare.</p>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section" style="padding-bottom:20px;"><p class="m-section__eyebrow">From the Arena</p><h2 class="m-section__title">SCREENSHOTS</h2><div class="m-ss" id="ssCarousel"><button class="m-ss__arrow m-ss__arrow--left" id="ssPrev">&#8249;</button><div class="m-ss__track" id="ssTrack"><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067" alt="Screenshot 1" /></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="Screenshot 2" /></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="Screenshot 3" /></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067" alt="Screenshot 4" /></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/6aa4612bf582cd106b821c67c43e813867842ff4/ss_6aa4612bf582cd106b821c67c43e813867842ff4.1920x1080.jpg?t=1786546067" alt="Screenshot 5" /></div></div><button class="m-ss__arrow m-ss__arrow--right" id="ssNext">&#8250;</button><div class="m-ss__dots" id="ssDots"></div></div></section>
 
-    <!-- Email Subscribe -->
-    <section class="m-section">
-      <h2 class="m-section__title">STAY IN THE LOOP</h2>
-      <p class="m-section__text">Be the first to know about exclusive playtests, updates & dev news — straight to your inbox.</p>
-      <div class="m-email">
-        <form class="m-email__row" id="emailCtaForm" onsubmit="return false;">
-          <input class="m-email__input" type="email" id="emailCtaInput" placeholder="Enter your email" required />
-          <button class="m-email__btn" type="submit" id="subBtn">JOIN NOW</button>
-        </form>
-        <p class="m-email__msg" id="emailCtaResponse"></p>
-      </div>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section m-okubi"><div class="m-okubi__symbol">&#x27D0;</div><p class="m-section__eyebrow">The Entity</p><h2 class="m-section__title">OKUBI IS WATCHING</h2><img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="OKUBI" /><p class="m-section__text">It doesn&#8217;t speak. It doesn&#8217;t need to. When OKUBI moves, the world breaks &#8212; void rifts tear open, corruption spreads, and Remnants either adapt or die. Chaos or fortune. There is no warning.</p></section>
 
-    <!-- Final CTA -->
-    <section class="m-section">
-      <p class="m-section__eyebrow">Join the Fight</p>
-      <h2 class="m-section__title">Next Playtest Coming Soon</h2>
-      <p class="m-section__text">Request access on Steam and be first in line when the gates open.</p>
-      <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--blue">Request Your Access</a>
-    </section>
+<div class="m-divider"></div>
+<section class="m-section"><p class="m-section__eyebrow">The Calm Before the Storm</p><h2 class="m-section__title">THE PUBLIC HUB</h2><img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067" alt="Public Hub" /><p class="m-section__text">A social space between battles. Craft gear at the forge, upgrade your build, form squads with allies, or unwind at the VIP bar. The hub is where legends prepare.</p></section>
 
-    <!-- Footer -->
-    <div class="m-footer">
-      <p class="m-footer__logo">OKUBI</p>
-      <p class="m-footer__copy">&copy; 2026 Grym Games. All rights reserved.</p>
-      <div class="m-footer__links">
-        <a href="https://discord.gg/wazfQBht5D" target="_blank" aria-label="Discord"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
-        <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" aria-label="Steam"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg></a>
-        <a href="https://www.youtube.com/@playokubi" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-        <a href="https://x.com/playokubi" target="_blank" aria-label="X"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-        <a href="https://www.instagram.com/playokubi/" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
-        <a href="https://www.tiktok.com/@playokubi" target="_blank" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
-        <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" aria-label="Kickstarter"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7.168 16.746l-.672-2.17 4.327-3.232V4.5H9.177a2.5 2.5 0 0 0-2.5 2.5v10a2.5 2.5 0 0 0 2.5 2.5h5.646a2.5 2.5 0 0 0 2.5-2.5V7a2.5 2.5 0 0 0-2.5-2.5h-1.646v7.34l4.327 3.233-.672 2.17-3.655-2.73v4.487h-2v-4.487z"/></svg></a>
-      </div>
-    </div>
+<div class="m-divider"></div>
+<section class="m-section"><p class="m-section__eyebrow">Questions</p><h2 class="m-section__title">FAQ</h2><div class="m-faq" id="faqContainer">
+<div class="m-faq__cat">General</div>
+<div class="m-faq__item"><div class="m-faq__q">What is OKUBI?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">OKUBI is a fast-paced PvP aerial combat game. Players take flight, master unique archetypes, and compete in gladiatorial arenas that seamlessly combine ground and air combat. Think high-speed fights with full vertical freedom.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">Who is developing OKUBI?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">OKUBI is developed by a solo developer under Grym Games, focused on delivering a high-quality competitive experience with deep lore and innovative combat mechanics.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">What engine is OKUBI built on?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Unreal Engine 5, leveraging cutting-edge rendering, physics, and networking technology.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">Does OKUBI have lore?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Yes. Rich lore involving ancient factions, dynamic corruption, and a sentient entity called OKUBI that watches over every battle. The world reacts to player actions.</div></div>
+<div class="m-faq__cat">Release &amp; Platforms</div>
+<div class="m-faq__item"><div class="m-faq__q">When does OKUBI release?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Currently in active development with a live playtest on Steam. Full release date TBA.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">What platforms?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">PC (Steam) first. Console releases may follow after full PC launch.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">Is OKUBI free to play?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Final pricing TBA. The current playtest is completely free on Steam.</div></div>
+<div class="m-faq__cat">Gameplay</div>
+<div class="m-faq__item"><div class="m-faq__q">What game modes?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">1v1 Duel of Fates, 2v2 Blood Pact, 3v3 Trial of Three, 4v4 Wanted. Ranked and unranked.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">How does flying work?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Deploy wings mid-fight, no cooldown, no mount. Seamless ground-to-air combat transitions.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">What are archetypes?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">OKUBI&#8217;s class system. Each has unique abilities and combat roles &#8212; from tanks to aerial assassins.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">Is there ranked?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Yes. Competitive ranked ladder across all modes with seasonal rewards.</div></div>
+<div class="m-faq__cat">Getting Started</div>
+<div class="m-faq__item"><div class="m-faq__q">How do I join?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Visit the OKUBI Steam page, request access, download and play.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">How can I support?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Wishlist on Steam, back the Kickstarter, play and give feedback, share with your community.</div></div>
+<div class="m-faq__cat">Monetization</div>
+<div class="m-faq__item"><div class="m-faq__q">Is it pay-to-win?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">No. All purchases are cosmetic only. Skill wins matches.</div></div>
+<div class="m-faq__cat">Community</div>
+<div class="m-faq__item"><div class="m-faq__q">How do I report bugs?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Join the Discord community to report bugs and connect with the dev team.</div></div>
+<div class="m-faq__item"><div class="m-faq__q">Where to follow updates?<span class="m-faq__arrow">&#9660;</span></div><div class="m-faq__a">Steam, Discord, X, TikTok, Instagram, and the News page on our website.</div></div>
+</div></section>
 
-    <!-- Sticky bottom bar -->
-    <div class="m-sticky" id="stickyBar">
-      <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-sticky__btn">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>
-        Request Access
-      </a>
-    </div>
+<div class="m-divider"></div>
+<section class="m-section"><p class="m-section__eyebrow">There Is No Leaving</p><h2 class="m-section__title">ENTER THE ARENA</h2><p class="m-section__text">Request access on Steam. The gates open soon.</p><a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--red">Request Access</a></section>
 
-  </div>
-  <script>
-  // Trailer loop from 28s
-  var tv = document.getElementById('trailerVideo');
-  if (tv) { tv.addEventListener('ended', function() { tv.currentTime = 28; tv.play(); }); }
+<div class="m-divider"></div>
+<div class="m-footer"><p class="m-footer__logo">OKUBI</p><p class="m-footer__copy">&copy; 2026 Grym Games Inc. All rights reserved.</p><div class="m-footer__links">
+<a href="https://discord.gg/wazfQBht5D" target="_blank" aria-label="Discord"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.373-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.095 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
+<a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" aria-label="Steam"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg></a>
+<a href="https://www.youtube.com/@playokubi" target="_blank" aria-label="YouTube"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+<a href="https://x.com/playokubi" target="_blank" aria-label="X"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+<a href="https://www.instagram.com/playokubi/" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg></a>
+<a href="https://www.tiktok.com/@playokubi" target="_blank" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+<a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" aria-label="Kickstarter"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7.168 16.746l-.672-2.17 4.327-3.232V4.5H9.177a2.5 2.5 0 0 0-2.5 2.5v10a2.5 2.5 0 0 0 2.5 2.5h5.646a2.5 2.5 0 0 0 2.5-2.5V7a2.5 2.5 0 0 0-2.5-2.5h-1.646v7.34l4.327 3.233-.672 2.17-3.655-2.73v4.487h-2v-4.487z"/></svg></a>
+</div></div>
 
-  // Weapon arrows
-  const track = document.getElementById('weaponTrack');
-  const dots = document.querySelectorAll('.m-swipe__dot');
-  let wIdx = 0;
-  function goWeapon(i) {
-    wIdx = ((i % 4) + 4) % 4;
-    track.style.transform = `translateX(-${wIdx * 100}%)`;
-    dots.forEach((d, j) => d.classList.toggle('m-swipe__dot--active', j === wIdx));
-  }
-  document.getElementById('weaponPrev').addEventListener('click', () => goWeapon(wIdx - 1));
-  document.getElementById('weaponNext').addEventListener('click', () => goWeapon(wIdx + 1));
+<div class="m-sticky" id="stickyBar"><a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-sticky__btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>Request Access</a></div>
+</div>
 
-  var emailForm = document.getElementById('emailCtaForm');
-  var emailResponse = document.getElementById('emailCtaResponse');
-  if (emailForm) {
-    emailForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var input = document.getElementById('emailCtaInput');
-      if (input && input.value) {
-        emailForm.style.opacity = '0.4';
-        emailForm.style.pointerEvents = 'none';
-        fetch('/api/subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: input.value, source: 'mobile-cta' })
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          if (data.ok) {
-            emailResponse.textContent = "You're in! We'll keep you posted.";
-            emailResponse.className = 'm-email__msg m-email__msg--ok';
-          } else {
-            emailResponse.textContent = data.error || 'Something went wrong.';
-            emailResponse.className = 'm-email__msg m-email__msg--err';
-          }
-          emailForm.style.opacity = '1';
-          emailForm.style.pointerEvents = 'auto';
-        })
-        .catch(function() {
-          emailResponse.textContent = 'Network error — try again.';
-          emailResponse.className = 'm-email__msg m-email__msg--err';
-          emailForm.style.opacity = '1';
-          emailForm.style.pointerEvents = 'auto';
-        });
-      }
-    });
-  }
+<script>
+// Countdown to Sept 18, 2026 7PM EST
+!function(){var t=new Date('2026-09-18T19:00:00-04:00').getTime();function u(){var n=Date.now(),d=t-n;if(d<=0){document.getElementById('countdown').innerHTML='<span style="font-family:Orbitron;font-size:1rem;color:#c0392b;letter-spacing:2px;">THE GATE IS OPEN</span>';return}var dd=Math.floor(d/864e5),hh=Math.floor(d%864e5/36e5),mm=Math.floor(d%36e5/6e4),ss=Math.floor(d%6e4/1e3);document.getElementById('cdDays').textContent=String(dd).padStart(2,'0');document.getElementById('cdHours').textContent=String(hh).padStart(2,'0');document.getElementById('cdMins').textContent=String(mm).padStart(2,'0');document.getElementById('cdSecs').textContent=String(ss).padStart(2,'0')}u();setInterval(u,1e3)}();
 
-  // Fade in sticky bar when archetypes section is visible
-  const sticky = document.getElementById('stickyBar');
-  const archSection = document.getElementById('archSection');
-  window.addEventListener('scroll', () => {
-    const rect = archSection.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.5) {
-      sticky.classList.add('m-sticky--visible');
-    } else {
-      sticky.classList.remove('m-sticky--visible');
-    }
-  });
-  </script>
+// Trailer overlay
+document.getElementById('playBtn').addEventListener('click',function(){document.getElementById('trailerFrame').src='https://www.youtube.com/embed/3uRD6CwtANs?autoplay=1&rel=0';document.getElementById('trailerOverlay').classList.add('active');});
+document.getElementById('trailerClose').addEventListener('click',function(){document.getElementById('trailerOverlay').classList.remove('active');document.getElementById('trailerFrame').src='';});
 
-  <!-- Cookie Consent -->
-  <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#111;color:#aaa;padding:14px 24px;font-family:Inter,sans-serif;font-size:0.8rem;display:flex;align-items:center;justify-content:space-between;gap:16px;">
-    <span>We use cookies to analyze site traffic and improve your experience. By continuing, you accept our use of cookies.</span>
-    <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','1');" style="background:#d4a853;color:#0a0908;border:none;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">GOT IT</button>
-  </div>
-  <script>if(!localStorage.getItem('cookieOK'))document.getElementById('cookieBanner').style.display='flex';</script>
+// Weapon carousel
+var wT=document.getElementById('weaponTrack'),wD=document.querySelectorAll('.m-swipe__dot'),wI=0;
+function goW(i){wI=((i%4)+4)%4;wT.style.transform='translateX(-'+wI*100+'%)';wD.forEach(function(d,j){d.classList.toggle('m-swipe__dot--active',j===wI)});}
+document.getElementById('weaponPrev').addEventListener('click',function(){goW(wI-1)});
+document.getElementById('weaponNext').addEventListener('click',function(){goW(wI+1)});
+
+// Screenshots carousel
+!function(){var t=document.getElementById('ssTrack'),n=t.children.length,i=0,dc=document.getElementById('ssDots');for(var j=0;j<n;j++){var d=document.createElement('span');d.className='m-ss__dot'+(j===0?' m-ss__dot--active':'');dc.appendChild(d)}var dots=dc.children;function go(x){i=((x%n)+n)%n;t.style.transform='translateX(-'+i*100+'%)';for(var k=0;k<dots.length;k++)dots[k].classList.toggle('m-ss__dot--active',k===i)}document.getElementById('ssPrev').addEventListener('click',function(){go(i-1)});document.getElementById('ssNext').addEventListener('click',function(){go(i+1)})}();
+
+// FAQ accordion
+document.querySelectorAll('.m-faq__q').forEach(function(q){q.addEventListener('click',function(){var a=this.nextElementSibling,w=this.classList.contains('active');document.querySelectorAll('.m-faq__q').forEach(function(x){x.classList.remove('active')});document.querySelectorAll('.m-faq__a').forEach(function(x){x.classList.remove('active')});if(!w){this.classList.add('active');a.classList.add('active')}})});
+
+// Email subscribe
+var ef=document.getElementById('emailCtaForm'),er=document.getElementById('emailCtaResponse');
+if(ef)ef.addEventListener('submit',function(e){e.preventDefault();var inp=document.getElementById('emailCtaInput');if(inp&&inp.value){ef.style.opacity='.4';ef.style.pointerEvents='none';fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:inp.value,source:'mobile-dark'})}).then(function(r){return r.json()}).then(function(d){if(d.ok){er.textContent="You're in. We'll keep you posted.";er.className='m-email__msg m-email__msg--ok'}else{er.textContent=d.error||'Something went wrong.';er.className='m-email__msg m-email__msg--err'}ef.style.opacity='1';ef.style.pointerEvents='auto'}).catch(function(){er.textContent='Network error.';er.className='m-email__msg m-email__msg--err';ef.style.opacity='1';ef.style.pointerEvents='auto'})}});
+
+// Sticky bar
+var st=document.getElementById('stickyBar'),as=document.getElementById('archSection');
+window.addEventListener('scroll',function(){if(as.getBoundingClientRect().top<window.innerHeight*.5)st.classList.add('m-sticky--visible');else st.classList.remove('m-sticky--visible')});
+</script>
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#111;color:#aaa;padding:14px 24px;font-family:Inter,sans-serif;font-size:.75rem;align-items:center;justify-content:space-between;gap:12px;"><span>We use cookies to analyze traffic and improve your experience.</span><button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','1');" style="background:#8b0000;color:#fff;border:none;padding:8px 16px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:.6rem;font-weight:700;cursor:pointer;white-space:nowrap;">GOT IT</button></div>
+<script>if(!localStorage.getItem('cookieOK'))document.getElementById('cookieBanner').style.display='flex'</script>
 </body>
 </html>
