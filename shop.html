@@ -559,22 +559,19 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #fff;
-      background: linear-gradient(135deg, #7b2ff2, #9b59b6, #7b2ff2);
-      background-size: 200% 200%;
-      animation: vpBuyShimmer 3s ease infinite;
-      border: none;
+      color: #666;
+      background: #222;
+      border: 1px solid #333;
       border-radius: 5px;
       padding: 16px 48px;
-      cursor: pointer;
+      cursor: not-allowed;
       transition: all 0.3s;
-      box-shadow: 0 4px 20px rgba(123, 47, 242, 0.3);
       margin-bottom: 32px;
       min-width: 260px;
+      pointer-events: none;
     }
     .vp-detail__buy-btn:hover {
-      box-shadow: 0 6px 30px rgba(123, 47, 242, 0.5);
-      transform: translateY(-2px);
+      box-shadow: none;
     }
     .vp-detail__buy-btn:active {
       transform: translateY(0);
@@ -913,23 +910,24 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--bg);
-      background: linear-gradient(135deg, var(--gold), #b8903e);
-      border: none;
+      color: #666;
+      background: #222;
+      border: 1px solid #333;
       border-radius: 3px;
       padding: 6px 16px;
-      cursor: pointer;
+      cursor: not-allowed;
       transition: all 0.3s;
       opacity: 0;
       transform: translateY(4px);
+      pointer-events: none;
     }
     .shop-card:hover .shop-card__buy {
       opacity: 1;
       transform: translateY(0);
     }
     .shop-card__buy:hover {
-      background: linear-gradient(135deg, #e4b863, #c89e4e);
-      box-shadow: 0 4px 16px rgba(212, 168, 83, 0.3);
+      background: #222;
+      box-shadow: none;
     }
 
     .shop-card__owned {
@@ -1144,17 +1142,18 @@
       text-transform: uppercase;
       padding: 18px 64px;
       border-radius: 4px;
-      cursor: pointer;
-      border: 1px solid var(--gold);
-      color: var(--bg);
-      background: linear-gradient(135deg, var(--gold), #b8903e);
+      cursor: not-allowed;
+      border: 1px solid #333;
+      color: #666;
+      background: #222;
       transition: all 0.3s;
       margin-bottom: 16px;
       display: inline-block;
+      pointer-events: none;
     }
     .item-detail__buy-btn:hover {
-      background: linear-gradient(135deg, #e4b863, #c89e4e);
-      box-shadow: 0 4px 20px rgba(212, 168, 83, 0.35);
+      background: #222;
+      box-shadow: none;
     }
     .item-detail__buy-btn--owned {
       background: transparent;
@@ -1714,7 +1713,7 @@
           <div class="vp-detail__price-per" id="vpDetailPricePer"></div>
         </div>
         <div class="vp-detail__status" id="vpDetailStatus"></div>
-        <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Buy Now</button>
+        <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Coming Soon</button>
         <div class="vp-detail__meta">
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Currency</span><span class="vp-detail__meta-value">Void Pearls</span></div>
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Platform</span><span class="vp-detail__meta-value">All Platforms</span></div>
@@ -2472,7 +2471,7 @@
       if (owned) {
         buyWrap.innerHTML = `<button class="item-detail__buy-btn item-detail__buy-btn--owned">Owned</button>`;
       } else {
-        buyWrap.innerHTML = `<button class="item-detail__buy-btn" id="itemDetailBuyBtn">Purchase</button>`;
+        buyWrap.innerHTML = `<button class="item-detail__buy-btn" id="itemDetailBuyBtn">Coming Soon</button>`;
         document.getElementById('itemDetailBuyBtn').addEventListener('click', () => {
           if (!isLoggedIn) { showLoginModal(); return; }
           openPurchaseModal(item);
@@ -2857,7 +2856,7 @@
               </div>
               ${owned
                 ? '<span class="shop-card__owned">Owned</span>'
-                : '<button class="shop-card__buy">Purchase</button>'}
+                : '<button class="shop-card__buy">Coming Soon</button>'}
             </div>
           </div>
         </div>`;
