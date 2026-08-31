@@ -1494,8 +1494,8 @@
   <!-- Cookie Consent -->
   <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#111;color:#aaa;padding:14px 24px;font-family:Inter,sans-serif;font-size:0.8rem;display:flex;align-items:center;justify-content:space-between;gap:16px;">
     <span>We use cookies to analyze site traffic and improve your experience. By continuing, you accept our use of cookies.</span>
-    <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','1');" style="background:#d4a853;color:#0a0908;border:none;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">GOT IT</button>
+    <div style="display:flex;gap:8px;flex-shrink:0;"><button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','1');" style="background:#d4a853;color:#0a0908;border:none;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">GOT IT</button><button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','0');window['ga-disable-G-GXE203KVV0']=true;" style="background:transparent;color:#666;border:1px solid #333;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">REFUSE</button></div>
   </div>
-  <script>if(!localStorage.getItem('cookieOK'))document.getElementById('cookieBanner').style.display='flex';</script>
+  <script>if(localStorage.getItem('cookieOK')==='0')window['ga-disable-G-GXE203KVV0']=true;if(!localStorage.getItem('cookieOK'))document.getElementById('cookieBanner').style.display='flex';</script>
 </body>
 </html>
