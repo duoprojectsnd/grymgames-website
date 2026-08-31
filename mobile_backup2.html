@@ -17,20 +17,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
 *{margin:0;padding:0;box-sizing:border-box}html,body{background:#06050a;color:#fff;font-family:'Inter',sans-serif;overflow-anchor:none}
-.phone-frame{width:100%;max-width:500px;margin:0 auto;overflow-x:hidden;background:linear-gradient(180deg,#06050a 0%,#0a0508 20%,#12060a 40%,#1a0a0e 60%,#200c10 80%,#2a0e12 100%)}
-.m-hero{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 24px 16px;text-align:center;background:url('assets/home/hero.png') center/cover no-repeat}
+.phone-frame{width:100%;max-width:500px;margin:0 auto;overflow-x:hidden;background:#06050a}
+.m-hero{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 24px 36px;text-align:center;background:url('assets/home/hero.png') center/cover no-repeat;min-height:100svh}
 .m-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#06050a 0%,rgba(6,5,10,.85) 30%,rgba(6,5,10,.4) 60%,rgba(6,5,10,.7) 100%)}
 .m-hero__content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
-.m-hero__logo{width:120px;margin-bottom:40px}
+.m-hero__logo{width:140px;margin-bottom:100px}
 .m-hero__title{font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:900;color:#c0392b;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;animation:m-glitch 4s infinite}
-.m-hero__play{width:56px;height:56px;border:none;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:all .3s;margin:28px 0}
-.m-hero__play:active{transform:scale(.9)}.m-hero__play svg{width:24px;height:24px;fill:rgba(255,255,255,.8)}
+.m-hero__play{width:64px;height:64px;border:none;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:all .3s;margin:80px 0}
+.m-hero__play:active{transform:scale(.9)}.m-hero__play svg{width:28px;height:28px;fill:rgba(255,255,255,.8)}
 @keyframes m-glitch{0%,90%,100%{text-shadow:none;transform:none}91%{text-shadow:-2px 0 #c0392b,2px 0 #2d0a3e;transform:translateX(-1px)}93%{text-shadow:2px 0 #8b0000,-2px 0 #2d0a3e;transform:translateX(1px) skewX(-.5deg)}95%{text-shadow:none;transform:none}}
-.m-hero__sub{font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:900;color:#ccc;margin-bottom:10px;letter-spacing:2px}
+.m-hero__sub{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;color:#ccc;margin-bottom:16px;letter-spacing:2px}
 .m-countdown{display:flex;gap:12px;margin-bottom:0}.m-cd-block{text-align:center}
-.m-cd-num{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:800;color:#c0392b;text-shadow:0 0 20px rgba(192,57,43,.5);display:block}
-.m-cd-label{font-family:'Rajdhani',sans-serif;font-size:.55rem;color:#555;text-transform:uppercase;letter-spacing:2px}
-.m-cd-sep{font-family:'Orbitron',sans-serif;font-size:1.4rem;color:#333;padding-top:4px}
+.m-cd-num{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:800;color:#c0392b;text-shadow:0 0 20px rgba(192,57,43,.5);display:block}
+.m-cd-label{font-family:'Rajdhani',sans-serif;font-size:.65rem;color:#555;text-transform:uppercase;letter-spacing:2px}
+.m-cd-sep{font-family:'Orbitron',sans-serif;font-size:1.8rem;color:#333;padding-top:6px}
 .m-btn{display:block;width:100%;padding:18px;text-decoration:none;text-align:center;font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;margin-bottom:10px;transition:transform .15s;clip-path:polygon(0 4px,4px 0,calc(100% - 12px) 0,100% 8px,100% calc(100% - 4px),calc(100% - 6px) 100%,10px 100%,0 calc(100% - 8px))}
 .m-btn:active{transform:scale(.97)}.m-btn--red{background:#8b0000;color:#fff;border:none;box-shadow:0 0 20px rgba(139,0,0,.5),inset 0 0 30px rgba(0,0,0,.3)}
 .m-arena-strip{display:flex;width:100%;overflow:hidden}
