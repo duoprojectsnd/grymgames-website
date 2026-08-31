@@ -33,12 +33,12 @@
 .m-cd-sep{font-family:'Orbitron',sans-serif;font-size:1.8rem;color:#333;padding-top:6px}
 .m-btn{display:block;width:100%;padding:18px;text-decoration:none;text-align:center;font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;margin-bottom:10px;transition:transform .15s;clip-path:polygon(0 4px,4px 0,calc(100% - 12px) 0,100% 8px,100% calc(100% - 4px),calc(100% - 6px) 100%,10px 100%,0 calc(100% - 8px))}
 .m-btn:active{transform:scale(.97)}.m-btn--red{background:#8b0000;color:#fff;border:none;box-shadow:0 0 20px rgba(139,0,0,.5),inset 0 0 30px rgba(0,0,0,.3)}
-.m-arena-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.m-arena-card{position:relative;height:200px;border-radius:8px;overflow:hidden;background-size:cover;background-position:center}
-.m-arena-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,5,10,.3) 0%,rgba(6,5,10,.7) 100%)}
-.m-arena-card__inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1}
-.m-arena-card__title{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;letter-spacing:.1em;color:#fff;line-height:1;margin-bottom:6px}
-.m-arena-card__sub{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.m-arena-strip{display:flex;width:100%;overflow:hidden}
+.m-arena-col{position:relative;flex:1;height:280px;background-size:cover;background-position:center}
+.m-arena-col::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.2) 50%,transparent 100%)}
+.m-arena-col__text{position:absolute;bottom:12px;left:10px;z-index:1}
+.m-arena-col__title{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;color:#fff;line-height:1;margin-bottom:2px}
+.m-arena-col__sub{font-family:'Rajdhani',sans-serif;font-size:.45rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5)}
 .m-trailer-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);align-items:center;justify-content:center;flex-direction:column}
 .m-trailer-overlay.active{display:flex}.m-trailer-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:rgba(255,255,255,.1);border-radius:50%;color:#fff;font-size:1.2rem;cursor:pointer;z-index:1001}
 .m-trailer-iframe{width:95%;aspect-ratio:16/9;border:none;border-radius:8px}
@@ -113,12 +113,12 @@
 <section class="m-section" style="padding-bottom:16px;"><p class="m-section__eyebrow">Choose Your Instrument of Death</p><h2 class="m-section__title">PICK YOUR ARSENAL</h2><div class="m-swipe" id="weaponSwipe"><button class="m-swipe__arrow m-swipe__arrow--left" id="weaponPrev">&#8249;</button><div class="m-swipe__track" id="weaponTrack"><div class="m-swipe__card"><img src="assets/home/website_dual_wield_axe.png" class="m-swipe__icon" alt="Double Axe" /><p class="m-swipe__name">Double Axe</p></div><div class="m-swipe__card"><img src="assets/home/website_scythe.png" class="m-swipe__icon" alt="Scythe" /><p class="m-swipe__name">Scythe</p></div><div class="m-swipe__card"><img src="assets/home/website_spear_shield.png" class="m-swipe__icon" alt="Spear &amp; Shield" /><p class="m-swipe__name">Spear &amp; Shield</p></div><div class="m-swipe__card"><img src="assets/home/website_bow.png" class="m-swipe__icon" alt="Bow" /><p class="m-swipe__name">Bow</p></div></div><button class="m-swipe__arrow m-swipe__arrow--right" id="weaponNext">&#8250;</button><div class="m-swipe__dots" id="weaponDots"><span class="m-swipe__dot m-swipe__dot--active"></span><span class="m-swipe__dot"></span><span class="m-swipe__dot"></span><span class="m-swipe__dot"></span></div></div></section>
 
 <div class="m-divider"></div>
-<section class="m-section"><p class="m-section__eyebrow">The Crowd Demands Blood</p><h2 class="m-section__title">THE ARENAS</h2><p class="m-section__text">Gladiatorial combat watched by both factions. Glory or death &#8212; the crowd demands blood.</p>
-<div class="m-arena-grid">
-<div class="m-arena-card" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067')"><div class="m-arena-card__inner"><h3 class="m-arena-card__title">1v1</h3><p class="m-arena-card__sub">Duel of Fates</p></div></div>
-<div class="m-arena-card" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067')"><div class="m-arena-card__inner"><h3 class="m-arena-card__title">2v2</h3><p class="m-arena-card__sub">Blood Pact</p></div></div>
-<div class="m-arena-card" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067')"><div class="m-arena-card__inner"><h3 class="m-arena-card__title">3v3</h3><p class="m-arena-card__sub">Trial of Three</p></div></div>
-<div class="m-arena-card" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067')"><div class="m-arena-card__inner"><h3 class="m-arena-card__title">4v4</h3><p class="m-arena-card__sub">Wanted</p></div></div>
+<section style="padding:0;"><p class="m-section__eyebrow" style="padding-top:36px;">The Crowd Demands Blood</p><h2 class="m-section__title">THE ARENAS</h2><p class="m-section__text" style="padding:0 24px;">Gladiatorial combat watched by both factions. Glory or death &#8212; the crowd demands blood.</p>
+<div class="m-arena-strip">
+<div class="m-arena-col" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067')"><div class="m-arena-col__text"><h3 class="m-arena-col__title">1v1</h3><p class="m-arena-col__sub">Duel of Fates</p></div></div>
+<div class="m-arena-col" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067')"><div class="m-arena-col__text"><h3 class="m-arena-col__title">2v2</h3><p class="m-arena-col__sub">Blood Pact</p></div></div>
+<div class="m-arena-col" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067')"><div class="m-arena-col__text"><h3 class="m-arena-col__title">3v3</h3><p class="m-arena-col__sub">Trial of Three</p></div></div>
+<div class="m-arena-col" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067')"><div class="m-arena-col__text"><h3 class="m-arena-col__title">Wanted</h3><p class="m-arena-col__sub">4v4 Bounty Hunt</p></div></div>
 </div>
 </section>
 
