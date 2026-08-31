@@ -17,20 +17,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
 *{margin:0;padding:0;box-sizing:border-box}html,body{background:#06050a;color:#fff;font-family:'Inter',sans-serif;overflow-anchor:none}
-.phone-frame{width:100%;max-width:500px;margin:0 auto;overflow-x:hidden;background:linear-gradient(180deg,#06050a 0%,#0a0508 20%,#12060a 40%,#1a0a0e 60%,#200c10 80%,#2a0e12 100%)}
-.m-hero{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 24px 16px;text-align:center;background:url('assets/home/hero.png') center/cover no-repeat}
+.phone-frame{width:100%;max-width:500px;margin:0 auto;overflow-x:hidden;background:#06050a}
+.m-hero{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:30px 24px 36px;text-align:center;background:url('assets/home/hero.png') center/cover no-repeat;min-height:100svh}
 .m-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#06050a 0%,rgba(6,5,10,.85) 30%,rgba(6,5,10,.4) 60%,rgba(6,5,10,.7) 100%)}
 .m-hero__content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
-.m-hero__logo{width:120px;margin-bottom:40px}
+.m-hero__logo{width:140px;margin-bottom:100px}
 .m-hero__title{font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:900;color:#c0392b;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;animation:m-glitch 4s infinite}
-.m-hero__play{width:56px;height:56px;border:none;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:all .3s;margin:28px 0}
-.m-hero__play:active{transform:scale(.9)}.m-hero__play svg{width:24px;height:24px;fill:rgba(255,255,255,.8)}
+.m-hero__play{width:64px;height:64px;border:none;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:all .3s;margin:80px 0}
+.m-hero__play:active{transform:scale(.9)}.m-hero__play svg{width:28px;height:28px;fill:rgba(255,255,255,.8)}
 @keyframes m-glitch{0%,90%,100%{text-shadow:none;transform:none}91%{text-shadow:-2px 0 #c0392b,2px 0 #2d0a3e;transform:translateX(-1px)}93%{text-shadow:2px 0 #8b0000,-2px 0 #2d0a3e;transform:translateX(1px) skewX(-.5deg)}95%{text-shadow:none;transform:none}}
-.m-hero__sub{font-family:'Orbitron',sans-serif;font-size:1.2rem;font-weight:900;color:#ccc;margin-bottom:10px;letter-spacing:2px}
+.m-hero__sub{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;color:#ccc;margin-bottom:16px;letter-spacing:2px}
 .m-countdown{display:flex;gap:12px;margin-bottom:0}.m-cd-block{text-align:center}
-.m-cd-num{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:800;color:#c0392b;text-shadow:0 0 20px rgba(192,57,43,.5);display:block}
-.m-cd-label{font-family:'Rajdhani',sans-serif;font-size:.55rem;color:#555;text-transform:uppercase;letter-spacing:2px}
-.m-cd-sep{font-family:'Orbitron',sans-serif;font-size:1.4rem;color:#333;padding-top:4px}
+.m-cd-num{font-family:'Orbitron',sans-serif;font-size:2.2rem;font-weight:800;color:#c0392b;text-shadow:0 0 20px rgba(192,57,43,.5);display:block}
+.m-cd-label{font-family:'Rajdhani',sans-serif;font-size:.65rem;color:#555;text-transform:uppercase;letter-spacing:2px}
+.m-cd-sep{font-family:'Orbitron',sans-serif;font-size:1.8rem;color:#333;padding-top:6px}
 .m-btn{display:block;width:100%;padding:18px;text-decoration:none;text-align:center;font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;margin-bottom:10px;transition:transform .15s;clip-path:polygon(0 4px,4px 0,calc(100% - 12px) 0,100% 8px,100% calc(100% - 4px),calc(100% - 6px) 100%,10px 100%,0 calc(100% - 8px))}
 .m-btn:active{transform:scale(.97)}.m-btn--red{background:#8b0000;color:#fff;border:none;box-shadow:0 0 20px rgba(139,0,0,.5),inset 0 0 30px rgba(0,0,0,.3)}
 .m-arena-strip{display:flex;width:100%;overflow:hidden}
@@ -104,7 +104,6 @@
 <button class="m-hero__play" id="playBtn" aria-label="Watch Trailer"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
 <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--red">Request Access</a>
 </div></section>
-<section class="m-section" style="text-align:center;"><h2 class="m-section__title" style="font-size:1.1rem;line-height:1.6;">NO EXTRACTION. NO GUNS.<br/>NO PAY-TO-WIN.</h2><p class="m-section__text">OKUBI is pure skill and PvP. No clock, no forced extraction. Just you, your team, and the arena. Various game modes and more to come in the future.</p></section>
 <div class="m-divider"></div>
 <section class="m-section"><p class="m-section__eyebrow">&#x27D0; The Void Remembers</p><h2 class="m-section__title">STAY IN THE LOOP</h2><p class="m-section__text">Be the first to know about exclusive playtests, updates &amp; dev news.</p><div class="m-email"><form class="m-email__row" id="emailCtaForm" onsubmit="return false;"><input class="m-email__input" type="email" id="emailCtaInput" placeholder="Enter your email" required /><button class="m-email__btn" type="submit">JOIN NOW</button></form><p class="m-email__msg" id="emailCtaResponse"></p></div></section>
 
@@ -130,6 +129,8 @@
 <div class="m-divider"></div>
 <section class="m-section" style="padding-bottom:20px;"><p class="m-section__eyebrow">What Awaits You</p><h2 class="m-section__title">FEATURES</h2><div class="m-ss" id="ssCarousel"><button class="m-ss__arrow m-ss__arrow--left" id="ssPrev">&#8249;</button><div class="m-ss__track" id="ssTrack"><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="Build Your Playstyle" /><div class="m-ss__overlay"><p class="m-ss__overlay-title">Build Your Playstyle</p><p class="m-ss__overlay-desc">Choose your elements and adapt your build through a complex triggers and procs system.</p></div></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067" alt="Action-Packed Arenas" /><div class="m-ss__overlay"><p class="m-ss__overlay-title">Action-Packed Arenas</p><p class="m-ss__overlay-desc">1v1 duels, 2v2 blood pacts, 3v3 trials, and 4v4 bounty hunts. Ranked and unranked. The crowd demands blood.</p></div></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/extras/f52d7689bc063a7387a7e318ceb1ffee.avif?t=1786546067" alt="Explorable Public Hub" /><div class="m-ss__overlay"><p class="m-ss__overlay-title">Explorable Public Hub</p><p class="m-ss__overlay-desc">A social space between battles. Craft gear at the forge, upgrade your build, form squads, or unwind at the VIP bar.</p></div></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="Crafting &amp; Upgrades" /><div class="m-ss__overlay"><p class="m-ss__overlay-title">Crafting &amp; Upgrades</p><p class="m-ss__overlay-desc">Forge weapons at the anvil and enhance them with Gorium infusions. Each upgrade tier pushes your power closer to the edge of corruption.</p></div></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067" alt="Player-Driven Economy" /><div class="m-ss__overlay"><p class="m-ss__overlay-title">Player-Driven Economy</p><p class="m-ss__overlay-desc">List items on the marketplace. Buy, sell, and trade with other Remnants to build your ultimate loadout.</p></div></div><div class="m-ss__slide"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/6aa4612bf582cd106b821c67c43e813867842ff4/ss_6aa4612bf582cd106b821c67c43e813867842ff4.1920x1080.jpg?t=1786546067" alt="OKUBI" /><div class="m-ss__overlay"><p class="m-ss__overlay-title">OKUBI Is Watching You!</p><p class="m-ss__overlay-desc">The entity doesn&#8217;t speak. When OKUBI moves, the world breaks &#8212; void rifts tear open and corruption spreads.</p></div></div></div><button class="m-ss__arrow m-ss__arrow--right" id="ssNext">&#8250;</button><div class="m-ss__dots" id="ssDots"></div></div></section>
 
+<div class="m-divider"></div>
+<section class="m-section" style="text-align:center;"><h2 class="m-section__title" style="font-size:1.1rem;line-height:1.6;">NO EXTRACTION. NO GUNS.<br/>NO PAY-TO-WIN.</h2><p class="m-section__text">OKUBI is pure skill and PvP. No clock, no forced extraction. Just you, your team, and the arena. Various game modes and more to come in the future.</p></section>
 
 <!-- hidden: profession section
 <div class="m-divider"></div>
