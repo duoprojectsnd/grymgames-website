@@ -22,18 +22,29 @@
 .m-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#06050a 0%,rgba(6,5,10,.85) 30%,rgba(6,5,10,.4) 60%,rgba(6,5,10,.7) 100%)}
 .m-hero__content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:100%}
 .m-hero__logo{width:140px;margin-bottom:16px}
-.m-hero__play{width:64px;height:64px;border:none;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-bottom:20px;backdrop-filter:blur(4px);transition:all .3s}
-.m-hero__play:active{transform:scale(.9)}.m-hero__play svg{width:28px;height:28px;fill:rgba(255,255,255,.8);margin-left:4px}
 .m-hero__title{font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:900;color:#c0392b;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;animation:m-glitch 4s infinite}
+.m-hero__play{width:64px;height:64px;border:none;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(4px);transition:all .3s;margin:24px 0}
+.m-hero__play:active{transform:scale(.9)}.m-hero__play svg{width:28px;height:28px;fill:rgba(255,255,255,.8);margin-left:4px}
 @keyframes m-glitch{0%,90%,100%{text-shadow:none;transform:none}91%{text-shadow:-2px 0 #c0392b,2px 0 #2d0a3e;transform:translateX(-1px)}93%{text-shadow:2px 0 #8b0000,-2px 0 #2d0a3e;transform:translateX(1px) skewX(-.5deg)}95%{text-shadow:none;transform:none}}
-.m-hero__sub{font-size:.78rem;color:#888;margin-bottom:24px;letter-spacing:.5px}
-.m-countdown{display:flex;gap:12px;margin-bottom:28px}.m-cd-block{text-align:center}
+.m-hero__sub{font-size:.78rem;color:#888;margin-bottom:16px;letter-spacing:.5px}
+.m-countdown{display:flex;gap:12px;margin-bottom:0}.m-cd-block{text-align:center}
 .m-cd-num{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:800;color:#c0392b;text-shadow:0 0 20px rgba(192,57,43,.5);display:block}
 .m-cd-label{font-family:'Rajdhani',sans-serif;font-size:.55rem;color:#555;text-transform:uppercase;letter-spacing:2px}
 .m-cd-sep{font-family:'Orbitron',sans-serif;font-size:1.4rem;color:#333;padding-top:4px}
 .m-btn{display:block;width:100%;padding:15px;border-radius:6px;text-decoration:none;text-align:center;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:1px;margin-bottom:10px;transition:transform .15s}
 .m-btn:active{transform:scale(.97)}.m-btn--red{background:#8b0000;color:#fff;border:none;box-shadow:0 0 15px rgba(139,0,0,.4)}
-.m-btn--kick{background:transparent;color:#05ce78;border:1px solid rgba(5,206,120,.4)}
+.m-arena-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+.m-arena-tab{flex:1;padding:12px 0;border:1px solid rgba(139,0,0,.3);border-radius:6px;background:rgba(10,5,15,.6);color:#888;font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:1px;cursor:pointer;text-align:center;transition:all .25s}
+.m-arena-tab.active{background:rgba(139,0,0,.2);color:#c0392b;border-color:#c0392b;box-shadow:0 0 12px rgba(139,0,0,.3)}
+.m-arena-panel{display:none;border-radius:8px;overflow:hidden;border:1px solid rgba(139,0,0,.15);background:#0a0510}
+.m-arena-panel.active{display:block}
+.m-arena-panel__img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.m-arena-panel__body{padding:16px}
+.m-arena-panel__label{font-family:'Rajdhani',sans-serif;font-size:.6rem;text-transform:uppercase;letter-spacing:3px;color:#c0392b;margin-bottom:4px}
+.m-arena-panel__name{font-family:'Orbitron',sans-serif;font-size:.95rem;color:#fff;margin-bottom:10px}
+.m-arena-panel__desc{font-size:.78rem;color:#777;line-height:1.7;margin-bottom:14px}
+.m-arena-panel__meta{display:flex;flex-wrap:wrap;gap:8px}
+.m-arena-panel__meta span{font-family:'Rajdhani',sans-serif;font-size:.6rem;text-transform:uppercase;letter-spacing:1px;color:#555;background:rgba(139,0,0,.1);border:1px solid rgba(139,0,0,.15);border-radius:4px;padding:4px 10px}
 .m-trailer-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);align-items:center;justify-content:center;flex-direction:column}
 .m-trailer-overlay.active{display:flex}.m-trailer-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:none;background:rgba(255,255,255,.1);border-radius:50%;color:#fff;font-size:1.2rem;cursor:pointer;z-index:1001}
 .m-trailer-iframe{width:95%;aspect-ratio:16/9;border:none;border-radius:8px}
@@ -84,7 +95,6 @@
 
 <section class="m-hero"><div class="m-hero__content">
 <img class="m-hero__logo" src="assets/okubi-logo.png" alt="OKUBI" />
-<button class="m-hero__play" id="playBtn" aria-label="Watch Trailer"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
 <h1 class="m-hero__title">THE CORRUPTION CALLS</h1>
 <p class="m-hero__sub">Corrupted flesh. Stolen wings. Eternal war.</p>
 <div class="m-countdown" id="countdown">
@@ -93,11 +103,9 @@
 <div class="m-cd-block"><span class="m-cd-num" id="cdMins">00</span><span class="m-cd-label">Min</span></div><span class="m-cd-sep">:</span>
 <div class="m-cd-block"><span class="m-cd-num" id="cdSecs">00</span><span class="m-cd-label">Sec</span></div>
 </div>
-<a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--red"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>Wishlist Now</a>
-<a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="m-btn m-btn--kick">Kickstarter</a>
+<button class="m-hero__play" id="playBtn" aria-label="Watch Trailer"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+<a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="m-btn m-btn--red">Request Access</a>
 </div></section>
-
-<div class="m-divider"></div>
 <section class="m-section"><p class="m-section__eyebrow">&#x27D0; The Void Remembers</p><h2 class="m-section__title">STAY IN THE LOOP</h2><p class="m-section__text">Be the first to know about exclusive playtests, updates &amp; dev news.</p><div class="m-email"><form class="m-email__row" id="emailCtaForm" onsubmit="return false;"><input class="m-email__input" type="email" id="emailCtaInput" placeholder="Enter your email" required /><button class="m-email__btn" type="submit">JOIN NOW</button></form><p class="m-email__msg" id="emailCtaResponse"></p></div></section>
 
 <div class="m-divider"></div>
@@ -107,7 +115,30 @@
 <section class="m-section" style="padding-bottom:16px;"><p class="m-section__eyebrow">Choose Your Instrument of Death</p><h2 class="m-section__title">PICK YOUR ARSENAL</h2><div class="m-swipe" id="weaponSwipe"><button class="m-swipe__arrow m-swipe__arrow--left" id="weaponPrev">&#8249;</button><div class="m-swipe__track" id="weaponTrack"><div class="m-swipe__card"><img src="assets/home/website_dual_wield_axe.png" class="m-swipe__icon" alt="Double Axe" /><p class="m-swipe__name">Double Axe</p></div><div class="m-swipe__card"><img src="assets/home/website_scythe.png" class="m-swipe__icon" alt="Scythe" /><p class="m-swipe__name">Scythe</p></div><div class="m-swipe__card"><img src="assets/home/website_spear_shield.png" class="m-swipe__icon" alt="Spear &amp; Shield" /><p class="m-swipe__name">Spear &amp; Shield</p></div><div class="m-swipe__card"><img src="assets/home/website_bow.png" class="m-swipe__icon" alt="Bow" /><p class="m-swipe__name">Bow</p></div></div><button class="m-swipe__arrow m-swipe__arrow--right" id="weaponNext">&#8250;</button><div class="m-swipe__dots" id="weaponDots"><span class="m-swipe__dot m-swipe__dot--active"></span><span class="m-swipe__dot"></span><span class="m-swipe__dot"></span><span class="m-swipe__dot"></span></div></div></section>
 
 <div class="m-divider"></div>
-<section class="m-section"><p class="m-section__eyebrow">The Crowd Demands Blood</p><h2 class="m-section__title">THE ARENAS</h2><img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067" alt="Arenas" /><p class="m-section__text" style="font-family:'Orbitron',sans-serif;font-size:.75rem;color:#c0392b;letter-spacing:1px;">1v1 &#183; 2v2 &#183; 3v3 &#183; 4v4 Wanted</p><p class="m-section__text">Gladiatorial combat watched by both factions. Ranked and unranked. The arena doesn&#8217;t care who you were &#8212; only what you become when the gates close behind you.</p></section>
+<section class="m-section"><p class="m-section__eyebrow">The Crowd Demands Blood</p><h2 class="m-section__title">THE ARENAS</h2><p class="m-section__text">Gladiatorial combat watched by both factions. Glory or death &#8212; the crowd demands blood.</p>
+<div class="m-arena-tabs" id="arenaTabs">
+<button class="m-arena-tab active" data-arena="0">1v1</button>
+<button class="m-arena-tab" data-arena="1">2v2</button>
+<button class="m-arena-tab" data-arena="2">3v3</button>
+<button class="m-arena-tab" data-arena="3">Wanted</button>
+</div>
+<div class="m-arena-panel active" data-panel="0">
+<img class="m-arena-panel__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/9da5113383fd59e693e75b5d17daf2d0c4a0ee31/ss_9da5113383fd59e693e75b5d17daf2d0c4a0ee31.1920x1080.jpg?t=1786546067" alt="1v1" />
+<div class="m-arena-panel__body"><p class="m-arena-panel__label">1v1</p><h3 class="m-arena-panel__name">Duel of Fates</h3><p class="m-arena-panel__desc">One challenger. One opponent. No allies, no excuses. The purest test of skill in OKUBI &#8212; raw mechanics, reads, and adaptation under the roar of the crowd.</p><div class="m-arena-panel__meta"><span>Solo Queue</span><span>Ranked &amp; Unranked</span><span>Best of 3</span></div></div>
+</div>
+<div class="m-arena-panel" data-panel="1">
+<img class="m-arena-panel__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64/ss_7aa639289f97e48c1ad3ee31aa67ecb42e8b5f64.1920x1080.jpg?t=1786546067" alt="2v2" />
+<div class="m-arena-panel__body"><p class="m-arena-panel__label">2v2</p><h3 class="m-arena-panel__name">Blood Pact</h3><p class="m-arena-panel__desc">Two warriors bound by oath. Synergy between archetypes is everything &#8212; coordinate ultimates, cover each other&#8217;s weaknesses, and punish the enemy&#8217;s mistakes together.</p><div class="m-arena-panel__meta"><span>Duo Queue</span><span>Ranked &amp; Unranked</span><span>Best of 3</span></div></div>
+</div>
+<div class="m-arena-panel" data-panel="2">
+<img class="m-arena-panel__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03/ss_f0c84e2f0b15bfb64d61ebf6f6e1d5429b304f03.1920x1080.jpg?t=1786546067" alt="3v3" />
+<div class="m-arena-panel__body"><p class="m-arena-panel__label">3v3</p><h3 class="m-arena-panel__name">Trial of Three</h3><p class="m-arena-panel__desc">A squad of three enters the ring. Team composition matters &#8212; tanks, DPS, and support must work in unison. The arena shifts mid-match, forcing adaptation.</p><div class="m-arena-panel__meta"><span>Team Queue</span><span>Ranked &amp; Unranked</span><span>Round Robin</span></div></div>
+</div>
+<div class="m-arena-panel" data-panel="3">
+<img class="m-arena-panel__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067" alt="4v4" />
+<div class="m-arena-panel__body"><p class="m-arena-panel__label">4v4</p><h3 class="m-arena-panel__name">Wanted</h3><p class="m-arena-panel__desc">4v4 with a twist &#8212; one player on each team is marked as the Bounty. Kill the Bounty to win the round. Protect yours at all costs. The Bounty rotates each round, so everyone takes the heat.</p><div class="m-arena-panel__meta"><span>4v4</span><span>Rotating Bounty</span><span>First to 5</span></div></div>
+</div>
+</section>
 
 <div class="m-divider"></div>
 <section class="m-section"><p class="m-section__eyebrow">Stolen Wings. Unnatural Power.</p><h2 class="m-section__title">WINGED COMBAT</h2><img class="m-section__img" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2118100/d039b3908f89ff04fe797fba41c99328c1939dd5/ss_d039b3908f89ff04fe797fba41c99328c1939dd5.1920x1080.jpg?t=1786546067" alt="Winged Combat" /><p class="m-section__text">Deploy wings mid-fight. Chain ground combos into aerial strikes. No cooldown. No mount. Pure vertical freedom &#8212; the Gorium in your blood makes the impossible feel natural.</p></section>
@@ -171,6 +202,9 @@
 // Trailer overlay
 document.getElementById('playBtn').addEventListener('click',function(){document.getElementById('trailerFrame').src='https://www.youtube.com/embed/3uRD6CwtANs?autoplay=1&rel=0';document.getElementById('trailerOverlay').classList.add('active');});
 document.getElementById('trailerClose').addEventListener('click',function(){document.getElementById('trailerOverlay').classList.remove('active');document.getElementById('trailerFrame').src='';});
+
+// Arena tabs
+document.querySelectorAll('.m-arena-tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.m-arena-tab').forEach(function(t){t.classList.remove('active')});document.querySelectorAll('.m-arena-panel').forEach(function(p){p.classList.remove('active')});this.classList.add('active');document.querySelector('.m-arena-panel[data-panel="'+this.dataset.arena+'"]').classList.add('active')})});
 
 // Weapon carousel
 var wT=document.getElementById('weaponTrack'),wD=document.querySelectorAll('.m-swipe__dot'),wI=0;
