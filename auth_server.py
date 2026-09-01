@@ -100,8 +100,8 @@ def _notify_admin(subject: str, body: str):
             server.ehlo()
             server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
             server.sendmail(GMAIL_USER, NOTIFY_EMAIL, msg.as_string())
-    except Exception:
-        pass  # Don't break user flow if notification fails
+    except Exception as e:
+        print(f"[EMAIL ERROR] _notify_admin failed: {e}")
 
 
 # ─── DynamoDB helpers ─────────────────────────────────────────────────────────
@@ -529,8 +529,8 @@ def _send_subscriber_thankyou(to_email: str):
             server.ehlo()
             server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
             server.sendmail(GMAIL_USER, to_email, msg.as_string())
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[EMAIL ERROR] _send_subscriber_thankyou failed: {e}")
 
 
 @app.route("/auth/confirm-email")
