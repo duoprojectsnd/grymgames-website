@@ -543,8 +543,7 @@ def _send_subscriber_thankyou(to_email: str):
           <tr>
             <td align="center" style="padding: 20px 32px 0 32px;">
               <h1 style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:42px; font-weight:400; letter-spacing:0.04em; line-height:1.0; color:#ffffff; text-transform:uppercase;">
-                Thanks For<br>
-                <span style="color:#c0392b;">Signing Up!</span>
+                Thanks For <span style="color:#c0392b;">Signing Up!</span>
               </h1>
             </td>
           </tr>
