@@ -543,15 +543,15 @@ def _send_subscriber_thankyou(to_email: str):
           <tr>
             <td align="center" style="padding: 20px 32px 0 32px;">
               <h1 style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:42px; font-weight:400; letter-spacing:0.04em; line-height:1.0; color:#ffffff; text-transform:uppercase;">
-                You're<br>
-                <span style="color:#c0392b;">In.</span>
+                Thanks For<br>
+                <span style="color:#c0392b;">Signing Up!</span>
               </h1>
             </td>
           </tr>
           <tr>
             <td align="center" style="padding: 16px 40px 0 40px;">
               <p style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:400; color:#9a9ab0; line-height:1.6;">
-                Thanks for signing up. I'll keep you posted on exclusive playtests, dev updates, and everything OKUBI. The arena is being built — and you'll be among the first to enter.
+                I'll keep you posted on exclusive playtests, dev updates, and everything OKUBI. The arena is being built — and you'll be among the first to enter.
               </p>
             </td>
           </tr>
