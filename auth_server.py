@@ -366,6 +366,7 @@ def claim_welcome_gift():
 
         confirm_url = f"{SITE_URL}/auth/confirm-email?token={token}"
         _send_confirmation_email(email, confirm_url)
+        _notify_admin("OKUBI — New Email (Welcome Gift)", f"Player entered email for welcome gift!\nSteam ID: {steam_id}\nEmail: {email}\n(Awaiting confirmation click)")
         return jsonify({"ok": True, "pending": True})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -495,6 +496,41 @@ def _send_confirmation_email(to_email: str, confirm_url: str):
         server.ehlo()
         server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
         server.sendmail(GMAIL_USER, to_email, msg.as_string())
+
+
+def _send_subscriber_thankyou(to_email: str):
+    """Send a thank-you email to new subscribers."""
+    if not GMAIL_USER or not GMAIL_APP_PASSWORD:
+        return
+    try:
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = "OKUBI — You're In!"
+        msg["From"] = GMAIL_USER
+        msg["To"] = to_email
+        html = f"""\
+<html><body style="margin:0;padding:0;background:#0a0908;font-family:Arial,sans-serif;">
+<div style="max-width:500px;margin:0 auto;padding:40px 24px;text-align:center;">
+  <h1 style="font-family:Georgia,serif;font-size:24px;color:#d4a853;margin-bottom:16px;">Thanks for signing up!</h1>
+  <p style="color:#aaa;font-size:14px;line-height:1.7;margin-bottom:24px;">
+    You're now on the list. I'll keep you posted on exclusive playtests, dev updates, and everything OKUBI.
+  </p>
+  <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank"
+     style="display:inline-block;padding:14px 32px;background:#8b0000;color:#fff;text-decoration:none;border-radius:4px;font-size:13px;font-weight:bold;letter-spacing:1px;">
+    REQUEST ACCESS ON STEAM
+  </a>
+  <p style="color:#444;font-size:11px;margin-top:32px;">&copy; 2026 Grym Games Inc.</p>
+</div>
+</body></html>"""
+        msg.attach(MIMEText(html, "html"))
+        ctx = ssl.create_default_context()
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.ehlo()
+            server.starttls(context=ctx)
+            server.ehlo()
+            server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+            server.sendmail(GMAIL_USER, to_email, msg.as_string())
+    except Exception:
+        pass
 
 
 @app.route("/auth/confirm-email")
@@ -1027,6 +1063,7 @@ def api_subscribe():
             ConditionExpression="attribute_not_exists(email)",
         )
         _notify_admin("OKUBI — New Subscriber", f"New email signup: {email}\nSource: {data.get('source', 'mobile')}")
+        _send_subscriber_thankyou(email)
         return jsonify({"ok": True})
     except _dynamo().exceptions.ConditionalCheckFailedException:
         return jsonify({"ok": True})
