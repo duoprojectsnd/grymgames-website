@@ -567,6 +567,20 @@ def confirm_email():
                     },
                 )
                 _notify_admin("OKUBI — Gift Claimed", f"Player claimed welcome gift!\nSteam ID: {steam_id}\nEmail: {email}")
+        # Also add to Subscribers table
+        try:
+            from datetime import datetime, timezone
+            _dynamo().put_item(
+                TableName=SUBS_TABLE,
+                Item={
+                    "email": {"S": email.lower()},
+                    "subscribed_at": {"S": datetime.now(timezone.utc).isoformat()},
+                    "source": {"S": f"welcome-gift:{steam_id}"},
+                },
+                ConditionExpression="attribute_not_exists(email)",
+            )
+        except Exception:
+            pass
     except Exception:
         pass
 
