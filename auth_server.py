@@ -523,7 +523,7 @@ def _send_subscriber_thankyou(to_email: str):
 </body></html>"""
         msg.attach(MIMEText(html, "html"))
         ctx = ssl.create_default_context()
-        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        with smtplib.SMTP("smtp.zohocloud.ca", 587) as server:
             server.ehlo()
             server.starttls(context=ctx)
             server.ehlo()
