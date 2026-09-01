@@ -1076,8 +1076,14 @@ def api_subscribe():
             },
             ConditionExpression="attribute_not_exists(email)",
         )
-        _notify_admin("OKUBI — New Subscriber", f"New email signup: {email}\nSource: {data.get('source', 'mobile')}")
-        _send_subscriber_thankyou(email)
+        try:
+            _notify_admin("OKUBI — New Subscriber", f"New email signup: {email}\nSource: {data.get('source', 'mobile')}")
+        except Exception:
+            pass
+        try:
+            _send_subscriber_thankyou(email)
+        except Exception:
+            pass
         return jsonify({"ok": True})
     except _dynamo().exceptions.ConditionalCheckFailedException:
         return jsonify({"ok": True})
