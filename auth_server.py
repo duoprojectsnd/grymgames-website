@@ -499,7 +499,7 @@ def _send_confirmation_email(to_email: str, confirm_url: str):
 
 
 def _send_subscriber_thankyou(to_email: str):
-    """Send a thank-you email to new subscribers."""
+    """Send a styled thank-you email to new subscribers."""
     if not GMAIL_USER or not GMAIL_APP_PASSWORD:
         return
     try:
@@ -508,19 +508,82 @@ def _send_subscriber_thankyou(to_email: str):
         msg["From"] = GMAIL_USER
         msg["To"] = to_email
         html = f"""\
-<html><body style="margin:0;padding:0;background:#0a0908;font-family:Arial,sans-serif;">
-<div style="max-width:500px;margin:0 auto;padding:40px 24px;text-align:center;">
-  <h1 style="font-family:Georgia,serif;font-size:24px;color:#d4a853;margin-bottom:16px;">Thanks for signing up!</h1>
-  <p style="color:#aaa;font-size:14px;line-height:1.7;margin-bottom:24px;">
-    You're now on the list. I'll keep you posted on exclusive playtests, dev updates, and everything OKUBI.
-  </p>
-  <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank"
-     style="display:inline-block;padding:14px 32px;background:#8b0000;color:#fff;text-decoration:none;border-radius:4px;font-size:13px;font-weight:bold;letter-spacing:1px;">
-    REQUEST ACCESS ON STEAM
-  </a>
-  <p style="color:#444;font-size:11px;margin-top:32px;">&copy; 2026 Grym Games Inc.</p>
-</div>
-</body></html>"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OKUBI — You're In!</title>
+  <style type="text/css">
+    body, table, td, a {{ -webkit-text-size-adjust: 100%%; -ms-text-size-adjust: 100%%; }}
+    body {{ margin: 0; padding: 0; width: 100% !important; }}
+    a {{ text-decoration: none; }}
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#08080c;">
+  <div style="display:none; max-height:0; overflow:hidden;">You're on the list. The arena awaits.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#08080c;">
+    <tr>
+      <td align="center" style="padding: 24px 12px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#0e0e14; overflow:hidden;">
+          <tr>
+            <td style="height:3px; background: linear-gradient(90deg, #8b0000, #c0392b, #8b0000); background-size: 300% 100%;"></td>
+          </tr>
+          <tr>
+            <td style="position:relative;">
+              <a href="{SITE_URL}" target="_blank"><img src="{SITE_URL}/assets/home/hero_email.jpg" alt="OKUBI" width="600" style="display:block; width:100%%; height:auto;" /></a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 24px 0 4px 0;">
+              <a href="https://grymgames.net" target="_blank"><img src="https://i.ibb.co/KzpCwCVR/okubi-logo.png" alt="OKUBI" width="120" style="display:block; width:120px; height:auto;" /></a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 20px 32px 0 32px;">
+              <h1 style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:42px; font-weight:400; letter-spacing:0.04em; line-height:1.0; color:#ffffff; text-transform:uppercase;">
+                You're<br>
+                <span style="color:#c0392b;">In.</span>
+              </h1>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 16px 40px 0 40px;">
+              <p style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:400; color:#9a9ab0; line-height:1.6;">
+                Thanks for signing up. I'll keep you posted on exclusive playtests, dev updates, and everything OKUBI. The arena is being built — and you'll be among the first to enter.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 28px 40px 0 40px;">
+              <p style="margin:0 0 12px 0; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#9a9ab0;">
+                Don't forget to wishlist
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%%">
+                <tr>
+                  <td align="center" style="border-radius:6px; background:linear-gradient(135deg, #8b0000, #c0392b);">
+                    <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" style="display:block; padding:18px 32px; font-family:'Bebas Neue',Impact,sans-serif; font-size:18px; font-weight:400; letter-spacing:0.14em; text-transform:uppercase; color:#ffffff; text-decoration:none; text-align:center;">
+                      Wishlist on Steam
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 40px 32px 24px 32px; border-top: 1px solid #1a1a28;">
+              <p style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:11px; color:#3a3a4e;">
+                &copy; 2026 Grym Games &middot; OKUBI
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"""
         msg.attach(MIMEText(html, "html"))
         ctx = ssl.create_default_context()
         with smtplib.SMTP("smtp.zohocloud.ca", 587) as server:
