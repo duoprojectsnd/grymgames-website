@@ -5,6 +5,45 @@
 (function () {
   'use strict';
 
+  const outboundTargets = [
+    { match: /(^|\.)steampowered\.com$/i, eventName: 'steam_click', destination: 'steam' },
+    { match: /(^|\.)steamcommunity\.com$/i, eventName: 'steam_click', destination: 'steam' },
+    { match: /(^|\.)kickstarter\.com$/i, eventName: 'kickstarter_click', destination: 'kickstarter' },
+    { match: /(^|\.)discord\.gg$/i, eventName: 'discord_click', destination: 'discord' },
+    { match: /(^|\.)discord\.com$/i, eventName: 'discord_click', destination: 'discord' }
+  ];
+
+  if (!window.__okubiOutboundTrackingInstalled) {
+    window.__okubiOutboundTrackingInstalled = true;
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link || typeof gtag !== 'function') return;
+
+      let url;
+      try {
+        url = new URL(link.href);
+      } catch (error) {
+        return;
+      }
+
+      const target = outboundTargets.find((item) => item.match.test(url.hostname));
+      if (!target) return;
+
+      const label = (link.textContent || link.getAttribute('aria-label') || target.destination).trim().substring(0, 80);
+      const params = {
+        event_category: 'outbound',
+        event_label: label,
+        link_url: url.href,
+        link_domain: url.hostname,
+        destination: target.destination,
+        transport_type: 'beacon'
+      };
+
+      gtag('event', 'outbound_click', params);
+      gtag('event', target.eventName, params);
+    });
+  }
+
   // ─── Sticky Nav ────────────────────────────────────────────────────────
   const nav = document.getElementById('nav');
   const floatingCta = document.getElementById('floatingCta');
