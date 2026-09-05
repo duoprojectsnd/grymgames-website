@@ -74,28 +74,10 @@
     });
   }
 
-  // ─── Trailer Video — loop from 29s, cut 10s before end ────────────
+  // ─── Trailer Video — loop from 29s ────────────────────────────────────
   const trailerVideo = document.getElementById('trailerVideo');
   if (trailerVideo) {
-    const loopTrailer = () => { trailerVideo.currentTime = 29; trailerVideo.play(); };
-    trailerVideo.addEventListener('ended', loopTrailer);
-    trailerVideo.addEventListener('timeupdate', () => {
-      if (trailerVideo.duration && trailerVideo.currentTime >= trailerVideo.duration - 10) {
-        loopTrailer();
-      }
-    });
-  }
-
-  // ─── Email CTA background video — loop from 29s, cut 10s before end ───
-  const emailBgVideo = document.getElementById('emailCtaParallaxImg');
-  if (emailBgVideo && emailBgVideo.tagName === 'VIDEO') {
-    const loopEmailBg = () => { emailBgVideo.currentTime = 29; emailBgVideo.play(); };
-    emailBgVideo.addEventListener('ended', loopEmailBg);
-    emailBgVideo.addEventListener('timeupdate', () => {
-      if (emailBgVideo.duration && emailBgVideo.currentTime >= emailBgVideo.duration - 10) {
-        loopEmailBg();
-      }
-    });
+    trailerVideo.addEventListener('ended', () => { trailerVideo.currentTime = 29; trailerVideo.play(); });
   }
 
   // ─── Email CTA — Slide-in ──────────────────────────────────────────────

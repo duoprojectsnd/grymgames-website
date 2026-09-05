@@ -5901,13 +5901,14 @@ a {
 .email-cta__parallax {
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
-  width: 100%;
+  width: 42%;
   height: 100%;
   overflow: hidden;
   z-index: 1;
   pointer-events: none;
+  mask-image: linear-gradient(to left, #000 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent 100%);
 }
 .email-cta__parallax-img {
   position: absolute;
@@ -5923,7 +5924,8 @@ a {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 55% 70% at 25% 55%, rgba(10,9,8,0.95) 0%, rgba(10,9,8,0.75) 35%, rgba(10,9,8,0.4) 60%, rgba(10,9,8,0.15) 80%, transparent 100%);
+    radial-gradient(ellipse at center, transparent 0%, rgba(10,9,8,0.1) 100%),
+    linear-gradient(to left, transparent 5%, rgba(10,9,8,0.35) 100%);
 }
 
 /* Foreground double-chevron on top of the background, drifts horizontally on scroll */
@@ -6027,18 +6029,8 @@ a {
   font-size: 1.08rem;
   line-height: 1.65;
   color: var(--text-muted);
-  margin-bottom: 12px;
+  margin-bottom: 36px;
   max-width: 560px;
-}
-
-.email-cta__signature {
-  font-family: var(--font-heading, 'Rajdhani', sans-serif);
-  font-size: 1rem;
-  font-style: italic;
-  letter-spacing: 0.06em;
-  color: var(--gold, #d4a853);
-  margin: 0 0 32px;
-  text-shadow: 0 0 12px rgba(212,168,83,0.25);
 }
 
 .email-cta__form {
