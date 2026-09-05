@@ -6615,3 +6615,6 @@ html[lang="ja"] .lore-v2__subtitle,
 html[lang="ja"] .lore-v2__swipe-hint-text {
   font-family: 'Noto Sans JP', var(--font-body, 'Inter', sans-serif);
 }
+/* Language switcher hidden for now */
+.lang-switcher { display: none !important; }
+
