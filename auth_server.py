@@ -393,7 +393,7 @@ def _send_confirmation_email(to_email: str, confirm_url: str):
   </style>
 </head>
 <body style="margin:0; padding:0; background-color:#08080c;">
-  <div style="display:none; max-height:0; overflow:hidden;">Confirm your email to claim 500 Void Pearls!</div>
+  <div style="display:none; max-height:0; overflow:hidden;">Confirm your email to claim 500 Radiant Pearls!</div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#08080c;">
     <tr>
       <td align="center" style="padding: 24px 12px;">
@@ -426,7 +426,7 @@ def _send_confirmation_email(to_email: str, confirm_url: str):
           <tr>
             <td align="center" style="padding: 16px 40px 0 40px;">
               <p style="margin:0; font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:400; color:#9a9ab0; line-height:1.6;">
-                Click the button below to verify your email and claim your welcome gift of <strong style="color:#d4a853;">500 Void Pearls</strong>.
+                Click the button below to verify your email and claim your welcome gift of <strong style="color:#d4a853;">500 Radiant Pearls</strong>.
               </p>
             </td>
           </tr>
@@ -437,7 +437,7 @@ def _send_confirmation_email(to_email: str, confirm_url: str):
                 <tr>
                   <td align="center" style="padding: 20px 40px;">
                     <p style="margin:0; font-family:'Bebas Neue',Impact,sans-serif; font-size:36px; color:#d4a853; line-height:1;">500</p>
-                    <p style="margin:4px 0 0 0; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:#9a9ab0;">Void Pearls</p>
+                    <p style="margin:4px 0 0 0; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:#9a9ab0;">Radiant Pearls</p>
                   </td>
                 </tr>
               </table>
@@ -755,7 +755,7 @@ def shop_buy():
     curr03 = int(currencies_map.get(curr_key, {}).get("S", "0"))
 
     if curr03 < price:
-        return jsonify({"error": "Insufficient Void Pearl balance"}), 400
+        return jsonify({"error": "Insufficient Radiant Pearl balance"}), 400
 
     items_map = raw.get("Items", {}).get("M", {})
     if item_id in items_map:
@@ -789,7 +789,7 @@ def shop_buy():
     return jsonify({"success": True, "new_balance": new_balance})
 
 
-# ─── Square Checkout (Void Pearls) ───────────────────────────────────────────
+# ─── Square Checkout (Radiant Pearls) ───────────────────────────────────────────
 SQUARE_ENV = _cfg.get("square_environment", "sandbox")
 SQUARE_ACCESS_TOKEN = _cfg.get("square_access_token", "")
 SQUARE_LOCATION_ID = _cfg.get("square_location_id", "")
@@ -799,11 +799,11 @@ SQUARE_BASE_URL = (
 )
 
 VOID_PEARL_PACKS = {
-    "vp300":  {"name": "300 Void Pearls",    "pearls": 300,   "price_cents": 299},
-    "vp800":  {"name": "800 Void Pearls",    "pearls": 800,   "price_cents": 699},
-    "vp1700": {"name": "1,700 Void Pearls",  "pearls": 1700,  "price_cents": 1299},
-    "vp3500": {"name": "3,500 Void Pearls",  "pearls": 3500,  "price_cents": 2499},
-    "vp7500": {"name": "7,500 Void Pearls",  "pearls": 7500,  "price_cents": 4999},
+    "vp300":  {"name": "300 Radiant Pearls",    "pearls": 300,   "price_cents": 299},
+    "vp800":  {"name": "800 Radiant Pearls",    "pearls": 800,   "price_cents": 699},
+    "vp1700": {"name": "1,700 Radiant Pearls",  "pearls": 1700,  "price_cents": 1299},
+    "vp3500": {"name": "3,500 Radiant Pearls",  "pearls": 3500,  "price_cents": 2499},
+    "vp7500": {"name": "7,500 Radiant Pearls",  "pearls": 7500,  "price_cents": 4999},
 }
 
 
@@ -889,7 +889,7 @@ def _credit_pearls_for_order(order_id):
 
 @app.route("/auth/buy-pearls", methods=["POST"])
 def buy_pearls():
-    """Create a Square Checkout link for a Void Pearl pack."""
+    """Create a Square Checkout link for a Radiant Pearl pack."""
     if "steam_id" not in session:
         return jsonify({"error": "Not logged in"}), 401
 

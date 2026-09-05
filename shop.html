@@ -104,15 +104,15 @@
       font-family: var(--font-display);
       font-size: 0.85rem;
       font-weight: 700;
-      color: var(--purple);
+      color: #ff8340;
       padding: 6px 16px;
-      border: 1px solid rgba(180, 100, 255, 0.3);
+      border: 1px solid rgba(255, 120, 60, 0.35);
       border-radius: 4px;
-      background: rgba(180, 100, 255, 0.06);
+      background: rgba(255, 120, 60, 0.09);
     }
     .shop-bar__wallet-icon {
       font-size: 0.9rem;
-      text-shadow: 0 0 8px var(--purple-glow);
+      text-shadow: 0 0 8px rgba(255, 120, 60, 0.5);
     }
 
     .shop-bar__wallet {
@@ -286,25 +286,25 @@
     .shop-tab--gems {
       position: relative;
       overflow: visible;
-      background: linear-gradient(135deg, rgba(100,40,160,0.4), rgba(160,60,200,0.25), rgba(80,180,220,0.2), rgba(140,50,180,0.4));
+      background: linear-gradient(135deg, rgba(200,60,30,0.4), rgba(230,90,40,0.25), rgba(255,140,60,0.2), rgba(200,60,30,0.4));
       background-size: 400% 400%;
       animation: vpPearlescent 4s ease infinite;
-      border: 1px solid rgba(180, 100, 240, 0.45);
-      color: #d9b3ff;
-      text-shadow: 0 0 8px rgba(180, 100, 240, 0.4);
-      box-shadow: 0 0 12px rgba(160, 80, 220, 0.15), inset 0 0 12px rgba(160, 80, 220, 0.08);
+      border: 1px solid rgba(255, 120, 60, 0.45);
+      color: #ffcaa6;
+      text-shadow: 0 0 8px rgba(255, 120, 60, 0.4);
+      box-shadow: 0 0 12px rgba(220, 90, 40, 0.18), inset 0 0 12px rgba(220, 90, 40, 0.08);
     }
     .shop-tab--gems:hover {
-      border-color: rgba(200, 120, 255, 0.7);
-      color: #e8ccff;
-      text-shadow: 0 0 14px rgba(200, 120, 255, 0.6);
-      box-shadow: 0 0 20px rgba(160, 80, 220, 0.3), inset 0 0 16px rgba(160, 80, 220, 0.12);
+      border-color: rgba(255, 140, 80, 0.7);
+      color: #ffe0c8;
+      text-shadow: 0 0 14px rgba(255, 140, 80, 0.6);
+      box-shadow: 0 0 20px rgba(220, 90, 40, 0.35), inset 0 0 16px rgba(220, 90, 40, 0.12);
     }
     .shop-tab--gems.shop-tab--active {
-      border-color: rgba(200, 120, 255, 0.8);
-      color: #f0ddff;
-      text-shadow: 0 0 16px rgba(200, 120, 255, 0.7);
-      box-shadow: 0 0 24px rgba(160, 80, 220, 0.35), inset 0 0 18px rgba(160, 80, 220, 0.15);
+      border-color: rgba(255, 140, 80, 0.85);
+      color: #fff0dd;
+      text-shadow: 0 0 16px rgba(255, 140, 80, 0.7);
+      box-shadow: 0 0 24px rgba(220, 90, 40, 0.4), inset 0 0 18px rgba(220, 90, 40, 0.15);
     }
     @keyframes vpPearlescent {
       0%   { background-position: 0% 50%; }
@@ -377,8 +377,8 @@
       pointer-events: none;
       z-index: 10;
       font-size: 1.4rem;
-      color: #e0c0ff;
-      text-shadow: 0 0 20px rgba(180, 100, 240, 0.9), 0 0 40px rgba(140, 60, 200, 0.6);
+      color: #ffd2a8;
+      text-shadow: 0 0 20px rgba(255, 140, 70, 0.9), 0 0 40px rgba(220, 90, 40, 0.6);
       opacity: 0;
       animation: vpBurst 0.7s ease-out forwards;
     }
@@ -394,7 +394,7 @@
       inset: 0;
       z-index: 50;
       pointer-events: none;
-      background: radial-gradient(ellipse at 50% 40%, rgba(140, 60, 220, 0.18) 0%, rgba(100, 40, 180, 0.08) 40%, transparent 70%);
+      background: radial-gradient(ellipse at 50% 40%, rgba(255, 130, 60, 0.2) 0%, rgba(220, 90, 40, 0.09) 40%, transparent 70%);
       opacity: 0;
       animation: vpScreenGlow 1.4s ease-out forwards;
     }
@@ -410,10 +410,10 @@
       animation: vpCardLightUp 1.4s ease-out forwards;
     }
     @keyframes vpCardLightUp {
-      0%   { box-shadow: 0 0 0 rgba(160, 80, 240, 0); filter: brightness(1); }
-      25%  { box-shadow: 0 0 30px rgba(160, 80, 240, 0.5), 0 0 60px rgba(140, 60, 220, 0.2); filter: brightness(1.25); }
-      70%  { box-shadow: 0 0 15px rgba(160, 80, 240, 0.2); filter: brightness(1.1); }
-      100% { box-shadow: 0 0 0 rgba(160, 80, 240, 0); filter: brightness(1); }
+      0%   { box-shadow: 0 0 0 rgba(255, 130, 60, 0); filter: brightness(1); }
+      25%  { box-shadow: 0 0 30px rgba(255, 130, 60, 0.55), 0 0 60px rgba(220, 90, 40, 0.25); filter: brightness(1.25); }
+      70%  { box-shadow: 0 0 15px rgba(255, 130, 60, 0.22); filter: brightness(1.1); }
+      100% { box-shadow: 0 0 0 rgba(255, 130, 60, 0); filter: brightness(1); }
     }
 
     /* ── VP Detail Page ── */
@@ -520,7 +520,8 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--green);
+      text-shadow: 0 0 10px rgba(78, 200, 112, 0.35);
       margin-bottom: 24px;
     }
     .vp-detail__desc {
@@ -541,7 +542,8 @@
       font-family: var(--font-display);
       font-size: 1.8rem;
       font-weight: 800;
-      color: var(--beige);
+      color: #ff8340;
+      text-shadow: 0 0 12px rgba(255, 120, 60, 0.35);
     }
     .vp-detail__price-per {
       font-family: var(--font-body);
@@ -794,19 +796,34 @@
     .shop-card__image::after {
       content: '';
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 40%;
-      background: linear-gradient(transparent, var(--rarity-bg, rgba(10,9,8,0.95)));
+      left: 0; right: 0; bottom: 0;
+      height: 55%;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 30%, rgba(0,0,0,0.35) 65%, rgba(0,0,0,0) 100%);
       pointer-events: none;
     }
 
-    /* Rarity strip at top of image */
-    .shop-card__rarity-strip {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--rarity);
-      box-shadow: 0 0 12px var(--rarity);
+    /* Rarity strip disabled — no rarity indicator on cards */
+    .shop-card__rarity-strip { display: none; }
+    .shop-card--common::after,
+    .shop-card--uncommon::after,
+    .shop-card--rare::after,
+    .shop-card--epic::after,
+    .shop-card--legendary::after,
+    .shop-card--mythic::after,
+    .vp-card::after { content: none !important; display: none !important; }
+
+    /* Outfits tab — scale cards 30% larger */
+    .shop-content--outfits .shop-grid,
+    .shop-content--outfits .shop-grid--featured {
+      transform: scale(1.3);
+      transform-origin: top center;
+      margin-bottom: 160px;
+    }
+
+    /* Featured (16:9) cards — anchor image to the top instead of center-crop */
+    .shop-grid--featured .shop-card__image img,
+    .shop-set-block__featured .shop-card__image img {
+      object-position: 50% 0% !important;
     }
 
     .shop-card__placeholder {
@@ -891,10 +908,10 @@
       font-family: var(--font-display);
       font-size: 0.85rem;
       font-weight: 700;
-      color: var(--purple);
+      color: #ff8340;
     }
     .shop-card__price-icon {
-      text-shadow: 0 0 8px var(--purple-glow);
+      text-shadow: 0 0 8px rgba(255, 120, 60, 0.55);
     }
 
     .shop-card__price--old {
@@ -1119,13 +1136,13 @@
       font-family: var(--font-display);
       font-size: 2rem;
       font-weight: 700;
-      color: var(--purple);
+      color: #ff8340;
       display: flex;
       align-items: center;
       gap: 10px;
     }
     .item-detail__price-icon {
-      text-shadow: 0 0 10px var(--purple-glow);
+      text-shadow: 0 0 10px rgba(255, 120, 60, 0.55);
     }
     .item-detail__price--old {
       font-family: var(--font-display);
@@ -1650,7 +1667,7 @@
   <div class="shop-tabs-bar">
     <div class="shop-tabs">
       <!-- <button class="shop-tab shop-tab--disabled" data-cat="all">All</button> -->
-      <button class="shop-tab" data-cat="outfits">Outfits</button>
+      <button class="shop-tab shop-tab--disabled" data-cat="outfits">Outfits</button>
       <button class="shop-tab shop-tab--disabled" data-cat="weapon-skins">Weapon Skins</button>
       <button class="shop-tab shop-tab--disabled" data-cat="pets">Pets</button>
       <button class="shop-tab shop-tab--disabled" data-cat="emotes">Emotes</button>
@@ -1659,7 +1676,7 @@
       <button class="shop-tab shop-tab--disabled" data-cat="account">Account</button>
       <button class="shop-tab shop-tab--gems shop-tab--active" data-cat="gems" id="vpTab">
         <span class="vp-tab-stars"><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span></span>
-        Void Pearls
+        Radiant Pearls
         <span class="vp-tab-badge">New!</span>
       </button>
     </div>
@@ -1715,10 +1732,9 @@
         <div class="vp-detail__status" id="vpDetailStatus"></div>
         <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Coming Soon</button>
         <div class="vp-detail__meta">
-          <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Currency</span><span class="vp-detail__meta-value">Void Pearls</span></div>
+          <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Currency</span><span class="vp-detail__meta-value">Radiant Pearls</span></div>
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Platform</span><span class="vp-detail__meta-value">All Platforms</span></div>
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Refund Type</span><span class="vp-detail__meta-value">Non-Refundable</span></div>
-          <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Developer</span><span class="vp-detail__meta-value">OKUBI Studios</span></div>
         </div>
       </div>
     </div>
@@ -2086,7 +2102,7 @@
       const banner = document.createElement('div');
       if (type === 'success') {
         banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999;padding:14px 40px;background:rgba(78,200,112,0.15);border-bottom:1px solid rgba(78,200,112,0.4);color:#4ec870;font-family:var(--font-heading);font-size:0.9rem;font-weight:600;letter-spacing:0.08em;text-align:center;animation:fadeIn 0.3s ease;';
-        banner.textContent = pearls ? `${parseInt(pearls).toLocaleString()} Void Pearls added to your account!` : 'Payment successful!';
+        banner.textContent = pearls ? `${parseInt(pearls).toLocaleString()} Radiant Pearls added to your account!` : 'Payment successful!';
       } else {
         banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999;padding:14px 40px;background:rgba(232,84,84,0.15);border-bottom:1px solid rgba(232,84,84,0.4);color:#e85454;font-family:var(--font-heading);font-size:0.9rem;font-weight:600;letter-spacing:0.08em;text-align:center;animation:fadeIn 0.3s ease;';
         banner.textContent = 'Payment could not be processed. Please try again.';
@@ -2236,6 +2252,7 @@
 
     function renderShop() {
       const container = document.getElementById('shopContent');
+      container.classList.toggle('shop-content--outfits', currentCategory === 'outfits');
 
       // Sets category uses a completely different layout
       if (currentCategory === 'sets') {
@@ -2247,51 +2264,51 @@
       if (currentCategory === 'gems') {
         container.innerHTML = `
           <div style="max-width:1100px;margin:40px auto;text-align:center;">
-            <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--beige);margin-bottom:12px;">Get Void Pearls</h2>
-            <p style="color:var(--muted);font-size:0.95rem;margin-bottom:40px;line-height:1.7;">Void Pearls are the premium currency used to unlock exclusive skins, emotes, pets, and more. Choose a pack below.</p>
-            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px;align-items:start;transform:scale(1.2);transform-origin:top center;margin-bottom:80px;">
+            <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--beige);margin-bottom:20px;">Get Radiant Pearls</h2>
+            <p style="font-family:var(--font-display);font-size:.95rem;font-weight:800;letter-spacing:.18em;color:#ff5a2a;text-shadow:0 0 12px rgba(255,90,42,.5);margin-bottom:8px;">NO PAY TO WIN. ONLY COSMETICS.</p>
+            <p style="color:var(--muted);font-size:.85rem;line-height:1.7;margin-bottom:40px;max-width:720px;margin-left:auto;margin-right:auto;">Radiant Pearls are the premium currency used to unlock exclusive skins, emotes, pets, and more. Choose a pack below. No stat boosts, no gameplay advantages. Ever.</p>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px;align-items:start;transform:scale(1.56);transform-origin:top center;margin-bottom:200px;">
               <div class="shop-card shop-card--common vp-card" data-pack="vp300" style="cursor:pointer;">
-                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦</div></div>
-                <div class="shop-card__info" style="padding:16px 14px;">
-                  <div class="shop-card__name" style="font-size:1.05rem;">300 Void Pearls</div>
-                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$2.99</span></div>
+                <div class="shop-card__image" style="height:336px;position:relative;"><div class="shop-card__rarity-strip"></div><img src="assets/shop/shop_radiant_pearl_1.png" alt="300 Radiant Pearls" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /></div>
+                <div class="shop-card__info" style="padding:14px 12px;text-align:left;">
+                  <div class="shop-card__name" style="font-size:.7rem;text-align:left;">300 Radiant Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:6px;justify-content:flex-start;"><span style="font-family:var(--font-display);font-size:.75rem;font-weight:700;color:#ff8340;">$2.99</span></div>
                 </div>
               </div>
               <div class="shop-card shop-card--uncommon vp-card" data-pack="vp800" style="cursor:pointer;">
-                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦</div><span class="shop-card__tag shop-card__tag--new">+14% Extra*</span></div>
-                <div class="shop-card__info" style="padding:16px 14px;">
-                  <div class="shop-card__name" style="font-size:1.05rem;">800 Void Pearls</div>
-                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$6.99</span></div>
+                <div class="shop-card__image" style="height:336px;position:relative;"><div class="shop-card__rarity-strip"></div><img src="assets/shop/shop_radiant_pearl_2.png" alt="800 Radiant Pearls" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /><div style="position:absolute;top:10px;right:12px;font-family:var(--font-heading);font-size:.7rem;font-weight:800;letter-spacing:.16em;color:#4ec870;text-shadow:0 0 10px rgba(78,200,112,.7),0 1px 2px rgba(0,0,0,.6);z-index:3;">+14% EXTRA</div></div>
+                <div class="shop-card__info" style="padding:14px 12px;text-align:left;">
+                  <div class="shop-card__name" style="font-size:.7rem;text-align:left;"><span style="text-decoration:line-through;color:rgba(255,255,255,0.35);font-weight:500;margin-right:6px;">700</span>800 Radiant Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:6px;justify-content:flex-start;"><span style="font-family:var(--font-display);font-size:.75rem;font-weight:700;color:#ff8340;">$6.99</span></div>
                 </div>
               </div>
-              <div class="shop-card shop-card--rare vp-card" data-pack="vp1700" style="cursor:pointer;">
-                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦✦</div><span class="shop-card__tag shop-card__tag--new">+30% Extra*</span></div>
-                <div class="shop-card__info" style="padding:16px 14px;">
-                  <div class="shop-card__name" style="font-size:1.05rem;">1,700 Void Pearls</div>
-                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$12.99</span></div>
+              <div class="shop-card shop-card--rare vp-card" data-pack="vp1700" style="cursor:pointer;overflow:visible;">
+                <div class="shop-card__image" style="height:336px;position:relative;overflow:visible;"><div class="shop-card__rarity-strip"></div><img src="assets/shop/shop_radiant_pearl_3.png" alt="1,700 Radiant Pearls" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /><div style="position:absolute;top:-10px;left:-12px;background:linear-gradient(180deg,#ff2d2d 0%,#b30000 100%);color:#fff;font-family:var(--font-display,'Orbitron',sans-serif);font-size:.62rem;font-weight:900;letter-spacing:.08em;padding:5px 9px 4px;border-radius:4px;border:1px solid rgba(255,255,255,0.25);box-shadow:0 0 12px rgba(255,45,45,0.7),0 0 24px rgba(255,45,45,0.35);text-shadow:0 1px 2px rgba(0,0,0,0.5);transform:rotate(-8deg);animation:emailCtaNewPulse 1.6s ease-in-out infinite;pointer-events:none;z-index:4;">BEST SELLER</div><div style="position:absolute;top:10px;right:12px;font-family:var(--font-heading);font-size:.7rem;font-weight:800;letter-spacing:.16em;color:#4ec870;text-shadow:0 0 10px rgba(78,200,112,.7),0 1px 2px rgba(0,0,0,.6);z-index:3;">+30% EXTRA</div></div>
+                <div class="shop-card__info" style="padding:14px 12px;text-align:left;">
+                  <div class="shop-card__name" style="font-size:.7rem;text-align:left;"><span style="text-decoration:line-through;color:rgba(255,255,255,0.35);font-weight:500;margin-right:6px;">1,300</span>1,700 Radiant Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:6px;justify-content:flex-start;"><span style="font-family:var(--font-display);font-size:.75rem;font-weight:700;color:#ff8340;">$12.99</span></div>
                 </div>
               </div>
               <div class="shop-card shop-card--epic vp-card" data-pack="vp3500" style="cursor:pointer;">
-                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦✦✦</div><span class="shop-card__tag shop-card__tag--new">+40% Extra*</span></div>
-                <div class="shop-card__info" style="padding:16px 14px;">
-                  <div class="shop-card__name" style="font-size:1.05rem;">3,500 Void Pearls</div>
-                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$24.99</span></div>
+                <div class="shop-card__image" style="height:336px;position:relative;"><div class="shop-card__rarity-strip"></div><img src="assets/shop/shop_radiant_pearl_4.png" alt="3,500 Radiant Pearls" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /><div style="position:absolute;top:10px;right:12px;font-family:var(--font-heading);font-size:.7rem;font-weight:800;letter-spacing:.16em;color:#4ec870;text-shadow:0 0 10px rgba(78,200,112,.7),0 1px 2px rgba(0,0,0,.6);z-index:3;">+40% EXTRA</div></div>
+                <div class="shop-card__info" style="padding:14px 12px;text-align:left;">
+                  <div class="shop-card__name" style="font-size:.7rem;text-align:left;"><span style="text-decoration:line-through;color:rgba(255,255,255,0.35);font-weight:500;margin-right:6px;">2,500</span>3,500 Radiant Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:6px;justify-content:flex-start;"><span style="font-family:var(--font-display);font-size:.75rem;font-weight:700;color:#ff8340;">$24.99</span></div>
                 </div>
               </div>
               <div class="shop-card shop-card--mythic vp-card" data-pack="vp7500" style="cursor:pointer;">
-                <div class="shop-card__image" style="height:336px;"><div class="shop-card__rarity-strip"></div><div class="shop-card__placeholder" style="font-size:3.5rem;">✦✦✦✦✦</div><span class="shop-card__tag shop-card__tag--limited">+50% Extra*</span></div>
-                <div class="shop-card__info" style="padding:16px 14px;">
-                  <div class="shop-card__name" style="font-size:1.05rem;">7,500 Void Pearls</div>
-                  <div class="shop-card__price-row" style="margin-top:10px;"><span style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--green);">$49.99</span></div>
+                <div class="shop-card__image" style="height:336px;position:relative;"><div class="shop-card__rarity-strip"></div><img src="assets/shop/shop_radiant_pearl_5.png" alt="7,500 Radiant Pearls" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" /><div style="position:absolute;top:10px;right:12px;font-family:var(--font-heading);font-size:.7rem;font-weight:800;letter-spacing:.16em;color:#4ec870;text-shadow:0 0 10px rgba(78,200,112,.7),0 1px 2px rgba(0,0,0,.6);z-index:3;">+50% EXTRA</div></div>
+                <div class="shop-card__info" style="padding:14px 12px;text-align:left;">
+                  <div class="shop-card__name" style="font-size:.7rem;text-align:left;"><span style="text-decoration:line-through;color:rgba(255,255,255,0.35);font-weight:500;margin-right:6px;">5,000</span>7,500 Radiant Pearls</div>
+                  <div class="shop-card__price-row" style="margin-top:6px;justify-content:flex-start;"><span style="font-family:var(--font-display);font-size:.75rem;font-weight:700;color:#ff8340;">$49.99</span></div>
                 </div>
               </div>
             </div>
-            <p style="color:rgba(255,255,255,0.3);font-size:0.72rem;margin-top:20px;line-height:1.5;text-align:left;max-width:1100px;">* Extra Void Pearls percentage shown as compared to price of 300 Void Pearls pack. Void Pearls packs are non-refundable.</p>
             <div id="vpStatus" style="color:var(--muted);font-size:0.85rem;margin-top:12px;min-height:28px;"></div>
           </div>
         `;
 
-        // Attach click handlers to Void Pearl cards → open detail page
+        // Attach click handlers to Radiant Pearl cards → open detail page
         container.querySelectorAll('.vp-card').forEach(card => {
           card.addEventListener('click', () => {
             openVpDetail(card.dataset.pack);
@@ -2510,11 +2527,11 @@
 
     /* ── VP Detail Page ── */
     const VP_PACKS = {
-      vp300:  { name: '300 Void Pearls',   pearls: 300,   price: '$2.99',  bonus: '',              icons: '✦',     rarity: 'common',    badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(80,70,60,0.3), rgba(20,18,14,0.95))', color: '#9a8e7a', desc: 'A starter bundle of Void Pearls. Perfect for trying out a few items from the shop.' },
-      vp800:  { name: '800 Void Pearls',   pearls: 800,   price: '$6.99',  bonus: '+14% Extra*',  icons: '✦✦',    rarity: 'uncommon',  badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(20,60,30,0.3), rgba(10,18,12,0.95))', color: '#4ec870', desc: 'A solid pack of Void Pearls with 14% extra value. Enough to unlock a couple of your favorite skins.' },
-      vp1700: { name: '1,700 Void Pearls', pearls: 1700,  price: '$12.99', bonus: '+30% Extra*',  icons: '✦✦✦',   rarity: 'rare',      badgeText: 'Best Seller', badgeColor: '#e74c3c', gradient: 'linear-gradient(135deg, rgba(15,40,80,0.3), rgba(10,12,20,0.95))', color: '#4ea8ee', desc: 'Our most popular pack. 1,700 Void Pearls with 30% extra value. Unlock multiple premium items.' },
-      vp3500: { name: '3,500 Void Pearls', pearls: 3500,  price: '$24.99', bonus: '+40% Extra*',  icons: '✦✦✦✦',  rarity: 'epic',      badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(50,20,70,0.3), rgba(15,10,20,0.95))', color: '#c577f5', desc: 'A premium pack loaded with 3,500 Void Pearls — 40% extra value. Unlock entire armor sets and legendary items.' },
-      vp7500: { name: '7,500 Void Pearls', pearls: 7500,  price: '$49.99', bonus: '+50% Extra*',  icons: '✦✦✦✦✦', rarity: 'mythic',    badgeText: 'Best Value', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(60,15,15,0.3), rgba(18,10,10,0.95))', color: '#e85454', desc: 'The ultimate collection. 7,500 Void Pearls with 50% extra value — the absolute best for dedicated players.' },
+      vp300:  { name: '300 Radiant Pearls',   pearls: 300,   price: '$2.99',  bonus: '',              icons: '✦',     image: 'assets/shop/shop_radiant_pearl_1.png', rarity: 'common',    badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(80,70,60,0.3), rgba(20,18,14,0.95))', color: '#9a8e7a', desc: 'A starter bundle of Radiant Pearls. Perfect for trying out a few items from the shop.' },
+      vp800:  { name: '800 Radiant Pearls',   pearls: 800,   price: '$6.99',  bonus: '+14% Extra*',  icons: '✦✦',    image: 'assets/shop/shop_radiant_pearl_2.png', rarity: 'uncommon',  badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(20,60,30,0.3), rgba(10,18,12,0.95))', color: '#4ec870', desc: 'A solid pack of Radiant Pearls with 14% extra value. Enough to unlock a couple of your favorite skins.' },
+      vp1700: { name: '1,700 Radiant Pearls', pearls: 1700,  price: '$12.99', bonus: '+30% Extra*',  icons: '✦✦✦',   image: 'assets/shop/shop_radiant_pearl_3.png', rarity: 'rare',      badgeText: 'Best Seller', badgeColor: '#e74c3c', gradient: 'linear-gradient(135deg, rgba(15,40,80,0.3), rgba(10,12,20,0.95))', color: '#4ea8ee', desc: 'Our most popular pack. 1,700 Radiant Pearls with 30% extra value. Unlock multiple premium items.' },
+      vp3500: { name: '3,500 Radiant Pearls', pearls: 3500,  price: '$24.99', bonus: '+40% Extra*',  icons: '✦✦✦✦',  image: 'assets/shop/shop_radiant_pearl_4.png', rarity: 'epic',      badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(50,20,70,0.3), rgba(15,10,20,0.95))', color: '#c577f5', desc: 'A premium pack loaded with 3,500 Radiant Pearls — 40% extra value. Unlock entire armor sets and legendary items.' },
+      vp7500: { name: '7,500 Radiant Pearls', pearls: 7500,  price: '$49.99', bonus: '+50% Extra*',  icons: '✦✦✦✦✦', image: 'assets/shop/shop_radiant_pearl_5.png', rarity: 'mythic',    badgeText: 'Best Value', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(60,15,15,0.3), rgba(18,10,10,0.95))', color: '#e85454', desc: 'The ultimate collection. 7,500 Radiant Pearls with 50% extra value — the absolute best for dedicated players.' },
     };
 
     let _vpBuyHandler = null;
@@ -2524,8 +2541,13 @@
       if (!pack) return;
 
       document.getElementById('vpDetailGlow').style.background = pack.gradient;
-      document.getElementById('vpDetailIcon').textContent = pack.icons;
-      document.getElementById('vpDetailIcon').style.color = pack.color;
+      const iconEl = document.getElementById('vpDetailIcon');
+      if (pack.image) {
+        iconEl.innerHTML = `<img src="${pack.image}" alt="${pack.name}" style="width:100%;height:100%;object-fit:contain;" />`;
+      } else {
+        iconEl.textContent = pack.icons;
+        iconEl.style.color = pack.color;
+      }
       document.getElementById('vpDetailName').textContent = pack.name;
       document.getElementById('vpDetailSubtitle').textContent = pack.bonus || 'Premium Currency';
 
@@ -2884,7 +2906,7 @@
       const price = item.salePrice || item.price;
       if (playerCurr03 < price) {
         actions.innerHTML = `
-          <button class="shop-modal__btn shop-modal__btn--gems" id="modalGetGems">Get Void Pearls</button>
+          <button class="shop-modal__btn shop-modal__btn--gems" id="modalGetGems">Get Radiant Pearls</button>
           <button class="shop-modal__btn shop-modal__btn--cancel" id="modalCancelInsuf">Cancel</button>
         `;
         document.getElementById('modalGetGems').addEventListener('click', () => {
