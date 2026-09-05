@@ -1,0 +1,48 @@
+{
+  "lang": {
+    "en": "English",
+    "es": "Español",
+    "ja": "日本語",
+    "fr": "Français"
+  },
+  "nav": {
+    "universe": "Universe",
+    "roadmap": "Roadmap",
+    "news": "News",
+    "mediaKit": "Media Kit",
+    "shop": "Shop",
+    "faq": "FAQ",
+    "login": "Login",
+    "newBadge": "NEW!"
+  },
+  "hero": {
+    "playtest": "Playtest",
+    "playtestOnline": "ONLINE",
+    "playtestOffline": "OFFLINE"
+  },
+  "combat": {
+    "eyebrow": "No Extraction. No Guns. No Pay-to-Win.",
+    "title": "PURE SKILL COMBAT",
+    "body": "OKUBI is pure skill and PvP. No clock, no forced extraction. Just you, your team, and the arena. Various game modes and more to come in the future."
+  },
+  "email": {
+    "eyebrow": "A note from the dev",
+    "title": "Building Okubi Together",
+    "body": "Hey there! My name is Skeltonjohn and I'm the solo dev behind OKUBI. I want to keep the line directly open between us so join in and drop your email to get dev updates, early playtest invites, and a direct say in where the game goes next. No marketing fluff—just real progress and a front-row seat to the journey.",
+    "placeholder": "Enter your email",
+    "cta": "JOIN NOW",
+    "newBadge": "NEW!",
+    "success": "You're in! We'll keep you posted.",
+    "networkError": "Network error — try again."
+  },
+  "lore": {
+    "title": "LORE",
+    "subtitle": "The events that shaped this world",
+    "swipeHint": "Swipe left to explore the lore"
+  },
+  "cookie": {
+    "body": "We use cookies to analyze site traffic and improve your experience. By continuing, you accept our use of cookies.",
+    "accept": "GOT IT",
+    "decline": "DECLINE"
+  }
+}

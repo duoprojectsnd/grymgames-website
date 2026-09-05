@@ -108,7 +108,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -141,19 +141,32 @@
       </a>
       <!-- Right-side vertical nav (Dune style) -->
       <ul class="nav__links-vertical" id="navVertical">
-        <li><a href="/">Universe</a></li>
+        <li><a href="/" data-i18n="nav.universe">Universe</a></li>
         <!-- Events hidden -->
-        <li><a href="/roadmap.html">Roadmap</a></li>
-        <li><a href="/news.html">News</a></li>
-        <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank">Media Kit</a></li>
-        <li><a href="/shop.html">Shop</a></li>
-        <li><a href="/faq.html">FAQ</a></li>
+        <li><a href="/roadmap.html" data-i18n="nav.roadmap">Roadmap</a></li>
+        <li><a href="/news.html" data-i18n="nav.news">News</a></li>
+        <li><a href="https://drive.google.com/drive/folders/1cfloR6w46x5xEUgtgZoorzw0pTLA0Y2k?usp=sharing" target="_blank" data-i18n="nav.mediaKit">Media Kit</a></li>
+        <li><a href="/shop.html" data-i18n="nav.shop">Shop</a></li>
+        <li><a href="/faq.html" data-i18n="nav.faq">FAQ</a></li>
       </ul>
       <div class="nav__auth" id="navAuth">
+        <div class="lang-switcher" id="langSwitcher">
+          <button class="lang-switcher__btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+            <span class="lang-switcher__globe" aria-hidden="true">🌐</span>
+            <span class="lang-switcher__code" id="langCurrent">EN</span>
+            <span class="lang-switcher__caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="lang-switcher__menu" id="langMenu" role="menu">
+            <button class="lang-switcher__option" data-lang="en" role="menuitem"><span class="lang-switcher__flag">🇺🇸</span> English</button>
+            <button class="lang-switcher__option" data-lang="es" role="menuitem"><span class="lang-switcher__flag">🇪🇸</span> Español</button>
+            <button class="lang-switcher__option" data-lang="ja" role="menuitem"><span class="lang-switcher__flag">🇯🇵</span> 日本語</button>
+            <button class="lang-switcher__option" data-lang="fr" role="menuitem"><span class="lang-switcher__flag">🇫🇷</span> Français</button>
+          </div>
+        </div>
         <a href="/auth/steam/login" class="nav__login-btn" id="loginBtn">
-          <span class="nav__login-badge">NEW!</span>
+          <span class="nav__login-badge" data-i18n="nav.newBadge">NEW!</span>
           <svg class="nav__login-steam" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M11.979 0C5.678 0 .511 4.86.022 10.94l6.432 2.658a3.387 3.387 0 0 1 1.912-.588c.063 0 .125.002.188.006l2.861-4.142V8.77a4.508 4.508 0 0 1 4.502-4.502 4.508 4.508 0 0 1 4.502 4.502 4.508 4.508 0 0 1-4.502 4.502h-.105l-4.076 2.91c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396a3.406 3.406 0 0 1-3.345-2.81L.453 15.16A12.018 12.018 0 0 0 11.979 24c6.627 0 12-5.373 12-12s-5.373-12-12-12z"/></svg>
-          Login
+          <span data-i18n="nav.login">Login</span>
         </a>
         <div class="nav__profile" id="profileMenu" style="display:none;">
           <button class="nav__profile-btn" id="profileBtn">
@@ -236,14 +249,14 @@
     <div class="email-cta__glow email-cta__glow--a"></div>
     <div class="email-cta__glow email-cta__glow--b"></div>
     <div class="email-cta__content">
-      <p class="email-cta__eyebrow">A note from the dev</p>
-      <h2 class="email-cta__title">Building Okubi Together</h2>
-      <p class="email-cta__sub">Hey there! My name is Skeltonjohn and I'm the solo dev behind OKUBI. I want to keep the line directly open between us so join in and drop your email to get dev updates, early playtest invites, and a direct say in where the game goes next. No marketing fluff&mdash;just real progress and a front-row seat to the journey.</p>
+      <p class="email-cta__eyebrow" data-i18n="email.eyebrow">A note from the dev</p>
+      <h2 class="email-cta__title" data-i18n="email.title">Building Okubi Together</h2>
+      <p class="email-cta__sub" data-i18n="email.body">Hey there! My name is Skeltonjohn and I'm the solo dev behind OKUBI. I want to keep the line directly open between us so join in and drop your email to get dev updates, early playtest invites, and a direct say in where the game goes next. No marketing fluff&mdash;just real progress and a front-row seat to the journey.</p>
       <form class="email-cta__form" id="emailCtaForm">
-        <input type="email" class="email-cta__input" id="emailCtaInput" placeholder="Enter your email" required />
+        <input type="email" class="email-cta__input" id="emailCtaInput" placeholder="Enter your email" data-i18n-placeholder="email.placeholder" required />
         <button type="submit" class="email-cta__btn">
-          <span class="email-cta__btn-badge">NEW!</span>
-          JOIN NOW
+          <span class="email-cta__btn-badge" data-i18n="email.newBadge">NEW!</span>
+          <span data-i18n="email.cta">JOIN NOW</span>
         </button>
       </form>
       <p class="email-cta__response" id="emailCtaResponse"></p>
@@ -258,8 +271,8 @@
     <div class="lore-v2__bg-overlay"></div>
 
     <div class="lore-v2__header">
-      <h2 class="lore-v2__title">LORE</h2>
-      <p class="lore-v2__subtitle">The events that shaped this world</p>
+      <h2 class="lore-v2__title" data-i18n="lore.title">LORE</h2>
+      <p class="lore-v2__subtitle" data-i18n="lore.subtitle">The events that shaped this world</p>
     </div>
 
     <!-- Spacer to push detail+timeline to bottom -->
@@ -289,7 +302,7 @@
         <div class="lore-v2__swipe-hint-icon-wrap">
           <img src="assets/home/swipe_hand.png" alt="" class="lore-v2__swipe-hint-icon" />
         </div>
-        <span class="lore-v2__swipe-hint-text">Swipe left to explore the lore</span>
+        <span class="lore-v2__swipe-hint-text" data-i18n="lore.swipeHint">Swipe left to explore the lore</span>
       </div>
       <div class="lore-v2__rail" id="loreV2Rail">
         <div class="lore-v2__node lore-v2__node--active" data-idx="0"
@@ -1181,8 +1194,6 @@
     <span class="playtest-float__status playtest-float__status" id="playtestStatus" style="color:#e74c3c;">OFFLINE</span>
   </a>
 
-  <script src="script.js"></script>
-
   <!-- Flying Combat styles -->
   <style>
     .flying-combat {
@@ -1535,8 +1546,8 @@
 
   <!-- Cookie Consent -->
   <div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#111;color:#aaa;padding:14px 24px;font-family:Inter,sans-serif;font-size:0.8rem;display:flex;align-items:center;justify-content:space-between;gap:16px;">
-    <span>We use cookies to analyze site traffic and improve your experience. By continuing, you accept our use of cookies.</span>
-    <div style="display:flex;gap:8px;flex-shrink:0;"><button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','1');" style="background:#d4a853;color:#0a0908;border:none;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">GOT IT</button><button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','0');window['ga-disable-G-GXE203KVV0']=true;" style="background:transparent;color:#666;border:1px solid #333;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;">DECLINE</button></div>
+    <span data-i18n="cookie.body">We use cookies to analyze site traffic and improve your experience. By continuing, you accept our use of cookies.</span>
+    <div style="display:flex;gap:8px;flex-shrink:0;"><button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','1');" style="background:#d4a853;color:#0a0908;border:none;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;" data-i18n="cookie.accept">GOT IT</button><button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOK','0');window['ga-disable-G-GXE203KVV0']=true;" style="background:transparent;color:#666;border:1px solid #333;padding:8px 20px;border-radius:4px;font-family:Orbitron,sans-serif;font-size:0.65rem;font-weight:700;cursor:pointer;white-space:nowrap;" data-i18n="cookie.decline">DECLINE</button></div>
   </div>
   <script>if(localStorage.getItem('cookieOK')==='0')window['ga-disable-G-GXE203KVV0']=true;if(!localStorage.getItem('cookieOK'))document.getElementById('cookieBanner').style.display='flex';</script>
 </body>

@@ -6524,3 +6524,94 @@ a {
   .lore-v2__edge { width: 60px; }
   .lore-v2__chevron { font-size: 3rem; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LANGUAGE SWITCHER — Dropdown beside Login
+   ═══════════════════════════════════════════════════════════════════════════ */
+.lang-switcher {
+  position: relative;
+}
+.lang-switcher__btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s, color 0.25s;
+}
+.lang-switcher__btn:hover {
+  border-color: rgba(212, 168, 83, 0.5);
+  background: rgba(212, 168, 83, 0.08);
+  color: #fff;
+}
+.lang-switcher__globe { font-size: 0.9rem; line-height: 1; }
+.lang-switcher__caret { font-size: 0.75rem; opacity: 0.7; margin-left: 2px; }
+.lang-switcher__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 170px;
+  background: #12100e;
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.6), 0 0 20px rgba(212,168,83,0.12);
+  padding: 6px 0;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s, visibility 0s linear 0.2s, transform 0.2s;
+}
+.lang-switcher--open .lang-switcher__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.2s, visibility 0s, transform 0.2s;
+}
+.lang-switcher__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 14px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-heading, 'Rajdhani', sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.lang-switcher__option:hover {
+  background: rgba(212, 168, 83, 0.12);
+  color: #fff;
+}
+.lang-switcher__option--active {
+  color: var(--gold, #d4a853);
+  background: rgba(212, 168, 83, 0.08);
+}
+.lang-switcher__flag { font-size: 1rem; line-height: 1; }
+
+/* Japanese font stack when active */
+html[lang="ja"] body,
+html[lang="ja"] .nav__profile-btn,
+html[lang="ja"] .email-cta__title,
+html[lang="ja"] .email-cta__eyebrow,
+html[lang="ja"] .email-cta__sub,
+html[lang="ja"] .lore-v2__title,
+html[lang="ja"] .lore-v2__subtitle,
+html[lang="ja"] .lore-v2__swipe-hint-text {
+  font-family: 'Noto Sans JP', var(--font-body, 'Inter', sans-serif);
+}

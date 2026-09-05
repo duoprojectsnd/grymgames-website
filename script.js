@@ -760,3 +760,130 @@ const corruptionTags = document.querySelectorAll('.corruption__tag');
   }
 
 })();
+
+
+// ═══════════════════════════════════════════════════════════════════════════
+// I18N — Language Switcher + Translation Loader
+// ═══════════════════════════════════════════════════════════════════════════
+(function(){
+  const SUPPORTED = ['en','es','ja','fr'];
+  const DEFAULT_LANG = 'en';
+  let currentDict = {};
+
+  function getStoredLang() {
+    const s = localStorage.getItem('okubiLang');
+    if (s && SUPPORTED.includes(s)) return s;
+    return DEFAULT_LANG;
+  }
+
+  function resolveKey(dict, key) {
+    return key.split('.').reduce((o, k) => (o && o[k] !== undefined) ? o[k] : undefined, dict);
+  }
+
+  function applyTranslations(dict) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const v = resolveKey(dict, key);
+      if (v !== undefined) el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      const v = resolveKey(dict, key);
+      if (v !== undefined) el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      const v = resolveKey(dict, key);
+      if (v !== undefined) el.setAttribute('placeholder', v);
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+      const key = el.getAttribute('data-i18n-alt');
+      const v = resolveKey(dict, key);
+      if (v !== undefined) el.setAttribute('alt', v);
+    });
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+      const key = el.getAttribute('data-i18n-aria-label');
+      const v = resolveKey(dict, key);
+      if (v !== undefined) el.setAttribute('aria-label', v);
+    });
+  }
+
+  async function loadLang(lang) {
+    try {
+      const res = await fetch(`/assets/i18n/${lang}.json`, { cache: 'no-cache' });
+      if (!res.ok) throw new Error('Missing lang file');
+      const dict = await res.json();
+      // Merge with English as fallback for missing keys
+      if (lang !== DEFAULT_LANG) {
+        try {
+          const enRes = await fetch(`/assets/i18n/${DEFAULT_LANG}.json`, { cache: 'no-cache' });
+          if (enRes.ok) {
+            const enDict = await enRes.json();
+            currentDict = deepMerge(enDict, dict);
+          } else {
+            currentDict = dict;
+          }
+        } catch (_) {
+          currentDict = dict;
+        }
+      } else {
+        currentDict = dict;
+      }
+      applyTranslations(currentDict);
+      document.documentElement.setAttribute('lang', lang);
+      const codeEl = document.getElementById('langCurrent');
+      if (codeEl) codeEl.textContent = lang.toUpperCase();
+      document.querySelectorAll('.lang-switcher__option').forEach(o => {
+        o.classList.toggle('lang-switcher__option--active', o.dataset.lang === lang);
+      });
+      window.dispatchEvent(new CustomEvent('i18n:changed', { detail: { lang, dict: currentDict } }));
+    } catch (err) {
+      console.warn('i18n load failed:', err);
+    }
+  }
+
+  function deepMerge(base, over) {
+    const out = Array.isArray(base) ? [...base] : { ...base };
+    for (const k in over) {
+      if (over[k] && typeof over[k] === 'object' && !Array.isArray(over[k]) && base[k] && typeof base[k] === 'object') {
+        out[k] = deepMerge(base[k], over[k]);
+      } else {
+        out[k] = over[k];
+      }
+    }
+    return out;
+  }
+
+  window.t = function(key) { return resolveKey(currentDict, key) ?? key; };
+  window.setLang = function(lang) {
+    if (!SUPPORTED.includes(lang)) return;
+    localStorage.setItem('okubiLang', lang);
+    loadLang(lang);
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('langBtn');
+    const switcher = document.getElementById('langSwitcher');
+    if (btn && switcher) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = switcher.classList.toggle('lang-switcher--open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      document.addEventListener('click', (e) => {
+        if (!switcher.contains(e.target)) {
+          switcher.classList.remove('lang-switcher--open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      document.querySelectorAll('.lang-switcher__option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          window.setLang(opt.dataset.lang);
+          switcher.classList.remove('lang-switcher--open');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+    loadLang(getStoredLang());
+  });
+})();
