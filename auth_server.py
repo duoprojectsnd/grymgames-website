@@ -691,7 +691,6 @@ SHOP_ITEM_NAMES = {
     "acc01001":  "Champion's Wreath",
     "acc01002":  "Wanderer's Cloak",
     "acc01003":  "Duelist's Insignia",
-    "nogood001": "The Nogood",
 }
 
 SHOP_PRICES = {
@@ -703,8 +702,6 @@ SHOP_PRICES = {
     "outfit003": 1600,
     "outfit004": 2800,
     "outfit005": 5200,
-    # TEMP: QA test item — 1 pearl for internal testing
-    "nogood001": 1,
     "pet01001":  5500,
     "pet01002":  3000,
     "emote01001": 800,
@@ -855,7 +852,10 @@ VOID_PEARL_PACKS = {
     "vp3500": {"name": "3,500 Radiant Pearls",  "pearls": 3500,  "price_cents": 2499},
     "vp7500": {"name": "7,500 Radiant Pearls",  "pearls": 7500,  "price_cents": 4999},
     # Support the dev — no in-game currency
-    "coffee1": {"name": "Coffee for the dev",   "pearls": 0,     "price_cents": 100},
+    "coffee1": {"name": "Coffee for the dev",   "pearls": 0,     "price_cents": 500},
+    # Game store items (cash purchases)
+    "preorder_okubi": {"name": "Preorder OKUBI",   "pearls": 0, "price_cents": 2999},
+    "name_change":    {"name": "Change Name",      "pearls": 0, "price_cents": 499},
 }
 
 

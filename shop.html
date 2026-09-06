@@ -307,21 +307,21 @@
       box-shadow: 0 0 24px rgba(220, 90, 40, 0.4), inset 0 0 18px rgba(220, 90, 40, 0.15);
     }
     .shop-tab--support {
-      background: linear-gradient(135deg, rgba(120, 70, 40, 0.3), rgba(160, 100, 60, 0.2));
-      border: 1px solid rgba(200, 130, 80, 0.4);
-      color: #e8c9a0;
-      text-shadow: 0 0 6px rgba(200, 130, 80, 0.3);
+      background: linear-gradient(135deg, rgba(30, 100, 140, 0.3), rgba(50, 140, 180, 0.2));
+      border: 1px solid rgba(90, 190, 230, 0.45);
+      color: #b6e6ff;
+      text-shadow: 0 0 6px rgba(90, 190, 230, 0.35);
     }
     .shop-tab--support:hover {
-      border-color: rgba(220, 150, 90, 0.7);
-      color: #f5dbb5;
-      background: linear-gradient(135deg, rgba(140, 85, 50, 0.4), rgba(180, 115, 70, 0.3));
+      border-color: rgba(120, 210, 245, 0.7);
+      color: #dbf1ff;
+      background: linear-gradient(135deg, rgba(40, 120, 165, 0.4), rgba(60, 160, 200, 0.3));
     }
     .shop-tab--support.shop-tab--active {
-      border-color: rgba(220, 150, 90, 0.85);
-      color: #ffe8c8;
-      text-shadow: 0 0 12px rgba(220, 150, 90, 0.6);
-      box-shadow: 0 0 18px rgba(180, 110, 70, 0.3), inset 0 0 12px rgba(180, 110, 70, 0.15);
+      border-color: rgba(120, 210, 245, 0.85);
+      color: #eaf8ff;
+      text-shadow: 0 0 14px rgba(120, 210, 245, 0.7);
+      box-shadow: 0 0 20px rgba(70, 180, 220, 0.35), inset 0 0 14px rgba(70, 180, 220, 0.15);
     }
     @keyframes vpPearlescent {
       0%   { background-position: 0% 50%; }
@@ -1895,20 +1895,15 @@
   <!-- Category Tabs Bar -->
   <div class="shop-tabs-bar">
     <div class="shop-tabs">
-      <!-- <button class="shop-tab shop-tab--disabled" data-cat="all">All</button> -->
-      <button class="shop-tab" data-cat="outfits">Outfits</button>
-      <button class="shop-tab shop-tab--disabled" data-cat="weapon-skins">Weapon Skins</button>
-      <button class="shop-tab shop-tab--disabled" data-cat="pets">Pets</button>
-      <button class="shop-tab shop-tab--disabled" data-cat="emotes">Emotes</button>
-      <button class="shop-tab shop-tab--disabled" data-cat="accessories">Accessories</button>
-      <button class="shop-tab shop-tab--disabled" data-cat="sets">Sets</button>
-      <button class="shop-tab shop-tab--disabled" data-cat="account">Account</button>
+      <button class="shop-tab" data-cat="game">Game</button>
+      <button class="shop-tab" data-cat="subscriber">Subscriber</button>
+      <button class="shop-tab" data-cat="cosmetics">Cosmetics</button>
+      <button class="shop-tab shop-tab--support" data-cat="support">☕ Support the Dev</button>
       <button class="shop-tab shop-tab--gems shop-tab--active" data-cat="gems" id="vpTab">
         <span class="vp-tab-stars"><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span><span class="vp-tab-star"></span></span>
         Radiant Pearls
         <span class="vp-tab-badge">New!</span>
       </button>
-      <button class="shop-tab shop-tab--support" data-cat="support">☕ Support</button>
     </div>
     <div class="shop-search">
       <input type="text" class="shop-search__input" id="shopSearch" placeholder="Search items..." />
@@ -2053,18 +2048,55 @@
   <script>
     /* ── Shop Item Catalog ── */
     const SHOP_ITEMS = [
-      // TEMP: QA test item — 1 pearl, remove before launch
+      // ── Game (real-money one-off purchases) ──
       {
-        id: 'nogood001',
-        name: 'The Nogood',
-        type: 'Outfit • Test',
-        category: 'outfits',
-        rarity: 'common',
-        price: 1,
-        icon: '🧪',
+        id: 'preorder_okubi',
+        name: 'Preorder OKUBI',
+        type: 'Game • Preorder',
+        category: 'game',
+        rarity: 'legendary',
+        priceCash: 2999,  // $29.99 CAD
+        icon: '🎮',
         tag: 'new',
-        image: 'assets/home/reaper.png',
-        desc: 'A temporary test outfit used for internal QA. Costs 1 Radiant Pearl. Not part of the real catalog.',
+        image: 'assets/home/hero_email.jpg',
+        desc: 'Reserve your copy of OKUBI now. Includes early access to closed playtests, exclusive founder cosmetics, and your name in the credits.',
+        featured: false,
+      },
+      {
+        id: 'name_change',
+        name: 'Change Name',
+        type: 'Game • Utility',
+        category: 'game',
+        rarity: 'common',
+        priceCash: 499,   // $4.99 CAD
+        icon: '✎',
+        tag: '',
+        desc: 'Change your in-game display name. Applies immediately. Once per purchase.',
+        featured: false,
+      },
+      // ── Subscriptions (Coming Soon) ──
+      {
+        id: 'sub_centurion',
+        name: 'Centurion',
+        type: 'Subscription • Monthly',
+        category: 'subscriber',
+        rarity: 'epic',
+        priceCash: 999,   // $9.99 CAD / month
+        icon: '🛡',
+        tag: 'coming-soon',
+        desc: 'Monthly subscription. Includes 1,000 Radiant Pearls every month, an exclusive Centurion emblem, and a 10% shop discount.',
+        featured: false,
+      },
+      {
+        id: 'sub_imperator',
+        name: 'Imperator',
+        type: 'Subscription • Monthly',
+        category: 'subscriber',
+        rarity: 'legendary',
+        priceCash: 1999,  // $19.99 CAD / month
+        icon: '👑',
+        tag: 'coming-soon',
+        desc: 'The elite tier. Includes 2,500 Radiant Pearls monthly, exclusive Imperator armor set, priority Discord role, and 20% shop discount.',
         featured: false,
       },
       // ── Featured (16:9 banner cards) ──
@@ -2603,7 +2635,7 @@
                 <div class="shop-card__name" style="font-size:.95rem;">Coffee for the dev</div>
                 <div style="font-family:var(--font-body);font-size:.72rem;color:var(--muted);margin-top:4px;">A small tip to say thanks.</div>
                 <div class="shop-card__price-row" style="margin-top:10px;justify-content:flex-start;">
-                  <span style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:#ff8340;">$1.00 CAD</span>
+                  <span style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:#ff8340;">$5.00 CAD</span>
                 </div>
               </div>
             </div>
@@ -2677,9 +2709,15 @@
         return;
       }
 
-      let items = currentCategory === 'all'
-        ? SHOP_ITEMS
-        : SHOP_ITEMS.filter(i => i.category === currentCategory);
+      let items;
+      if (currentCategory === 'cosmetics') {
+        // Cosmetics tab combines all cosmetic sub-categories
+        items = SHOP_ITEMS.filter(i => ['outfits','weapon-skins','pets','emotes','accessories'].includes(i.category));
+      } else if (currentCategory === 'all') {
+        items = SHOP_ITEMS;
+      } else {
+        items = SHOP_ITEMS.filter(i => i.category === currentCategory);
+      }
 
       if (searchQuery) {
         items = items.filter(i => i.name.toLowerCase().includes(searchQuery));
@@ -2687,6 +2725,36 @@
 
       if (!items.length) {
         container.innerHTML = '<div class="shop-empty">No items found</div>';
+        return;
+      }
+
+      // Cosmetics tab: render each category as its own section stacked vertically
+      if (currentCategory === 'cosmetics') {
+        const groups = {
+          'outfits':      { label: 'Outfits',      items: [] },
+          'weapon-skins': { label: 'Weapon Skins', items: [] },
+          'pets':         { label: 'Pets',         items: [] },
+          'emotes':       { label: 'Emotes',       items: [] },
+          'accessories': { label: 'Accessories',  items: [] },
+        };
+        items.forEach(i => { if (groups[i.category]) groups[i.category].items.push(i); });
+        let html = '';
+        Object.entries(groups).forEach(([_, g]) => {
+          if (!g.items.length) return;
+          html += `
+            <div class="shop-section">
+              <div class="shop-section__header">
+                <span class="shop-section__title">${g.label}</span>
+                <div class="shop-section__line"></div>
+                <span class="shop-section__badge">${g.items.length} item${g.items.length === 1 ? '' : 's'}</span>
+              </div>
+              <div class="shop-grid">
+                ${g.items.map(i => cardHTML(i)).join('')}
+              </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+        bindCardEvents(container);
         return;
       }
 
@@ -2790,7 +2858,13 @@
       container.querySelectorAll('[data-item-id]').forEach(card => {
         card.addEventListener('click', () => {
           const item = findItemById(card.dataset.itemId);
-          if (item) openItemDetail(item);
+          if (!item) return;
+          // Cash items (Game, Subscriber) use the Square-based vp-detail modal
+          if (item.priceCash && VP_PACKS[item.id]) {
+            openVpDetail(item.id);
+          } else {
+            openItemDetail(item);
+          }
         });
       });
     }
@@ -2893,7 +2967,11 @@
       vp1700: { name: '1,700 Radiant Pearls', pearls: 1700,  price: '$12.99', bonus: '+30% Extra*',  icons: '✦✦✦',   image: 'assets/shop/shop_radiant_pearl_3.png', rarity: 'rare',      badgeText: 'Best Seller', badgeColor: '#e74c3c', gradient: 'linear-gradient(135deg, rgba(15,40,80,0.3), rgba(10,12,20,0.95))', color: '#4ea8ee', desc: 'Our most popular pack. 1,700 Radiant Pearls with 30% extra value. Unlock multiple premium items.' },
       vp3500: { name: '3,500 Radiant Pearls', pearls: 3500,  price: '$24.99', bonus: '+40% Extra*',  icons: '✦✦✦✦',  image: 'assets/shop/shop_radiant_pearl_4.png', rarity: 'epic',      badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(50,20,70,0.3), rgba(15,10,20,0.95))', color: '#c577f5', desc: 'A premium pack loaded with 3,500 Radiant Pearls — 40% extra value. Unlock entire armor sets and legendary items.' },
       vp7500: { name: '7,500 Radiant Pearls', pearls: 7500,  price: '$49.99', bonus: '+50% Extra*',  icons: '✦✦✦✦✦', image: 'assets/shop/shop_radiant_pearl_5.png', rarity: 'mythic',    badgeText: 'Best Value', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(60,15,15,0.3), rgba(18,10,10,0.95))', color: '#e85454', desc: 'The ultimate collection. 7,500 Radiant Pearls with 50% extra value — the absolute best for dedicated players.' },
-      coffee1: { name: 'Coffee for the dev', pearls: 0, price: '$1.00', bonus: 'Support the Dev', icons: '☕', image: null, rarity: 'common', badgeText: 'Tip', badgeColor: '#c8823a', gradient: 'linear-gradient(135deg, rgba(120,70,40,0.35), rgba(50,30,15,0.95))', color: '#e8c9a0', desc: 'OKUBI is built by a solo dev. A small tip goes a long way to fuel late-night coding sessions. No in-game reward — just my genuine thanks.' },
+      coffee1: { name: 'Coffee for the dev', pearls: 0, price: '$5.00', bonus: 'Support the Dev', icons: '☕', image: null, rarity: 'common', badgeText: 'Tip', badgeColor: '#c8823a', gradient: 'linear-gradient(135deg, rgba(120,70,40,0.35), rgba(50,30,15,0.95))', color: '#e8c9a0', desc: 'OKUBI is built by a solo dev. A small tip goes a long way to fuel late-night coding sessions. No in-game reward — just my genuine thanks.' },
+      preorder_okubi: { name: 'Preorder OKUBI', pearls: 0, price: '$29.99', bonus: 'Founder Access', icons: '🎮', image: null, rarity: 'legendary', badgeText: 'Preorder', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(200,160,80,0.35), rgba(60,40,15,0.95))', color: '#f0d089', desc: 'Reserve your copy of OKUBI now. Includes early access to closed playtests, exclusive founder cosmetics, and your name in the credits.' },
+      name_change: { name: 'Change Name', pearls: 0, price: '$4.99', bonus: 'Instant Rename', icons: '✎', image: null, rarity: 'common', badgeText: 'Utility', badgeColor: '#7a8a9a', gradient: 'linear-gradient(135deg, rgba(80,90,110,0.35), rgba(30,35,45,0.95))', color: '#c8d4e0', desc: 'Change your in-game display name. Applies immediately. Once per purchase.' },
+      sub_centurion: { name: 'Centurion', pearls: 0, price: '$9.99', bonus: 'Coming Soon — Monthly', icons: '🛡', image: null, rarity: 'epic', badgeText: 'Coming Soon', badgeColor: '#c577f5', gradient: 'linear-gradient(135deg, rgba(140,60,180,0.35), rgba(35,20,55,0.95))', color: '#c577f5', desc: 'Monthly subscription. Includes 1,000 Radiant Pearls every month, an exclusive Centurion emblem, and a 10% shop discount.' },
+      sub_imperator: { name: 'Imperator', pearls: 0, price: '$19.99', bonus: 'Coming Soon — Monthly', icons: '👑', image: null, rarity: 'legendary', badgeText: 'Coming Soon', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(220,150,60,0.35), rgba(60,40,15,0.95))', color: '#f0d089', desc: 'The elite tier. Includes 2,500 Radiant Pearls monthly, exclusive Imperator armor set, priority Discord role, and 20% shop discount.' },
     };
 
     let _vpBuyHandler = null;
@@ -2979,8 +3057,18 @@
           });
       };
       btn.addEventListener('click', _vpBuyHandler);
-      btn.textContent = 'Buy Now';
-      btn.style.pointerEvents = '';
+      // Subscriptions are not yet available for purchase — show Coming Soon and disable click
+      if (packId === 'sub_centurion' || packId === 'sub_imperator') {
+        btn.textContent = 'Coming Soon';
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.55';
+        btn.style.cursor = 'not-allowed';
+      } else {
+        btn.textContent = 'Buy Now';
+        btn.style.pointerEvents = '';
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+      }
 
       document.getElementById('vpDetailOverlay').classList.add('vp-detail-overlay--active');
       document.getElementById('vpDetailOverlay').scrollTop = 0;
@@ -3319,12 +3407,20 @@
 
     function cardHTML(item) {
       const owned = playerItems[item.id];
+      const isCash = !!item.priceCash;
       const effectivePrice = item.salePrice || item.price;
       const tagHTML = item.tag
-        ? `<div class="shop-card__tag shop-card__tag--${item.tag}">${item.tag}</div>`
+        ? `<div class="shop-card__tag shop-card__tag--${item.tag}">${item.tag === 'coming-soon' ? 'Coming Soon' : item.tag}</div>`
         : '';
       const setColor = getSetColorForItem(item);
       const bgStyle = setColor ? `style="--rarity-bg: ${hexToRgba(setColor, 0.92)}"` : '';
+
+      const priceHTML = isCash
+        ? `<span class="shop-card__price" style="color:#fff;text-shadow:none;">$${(item.priceCash / 100).toFixed(2)} CAD</span>`
+        : `<span class="shop-card__price">
+             <span class="shop-card__price-icon">✦</span> ${effectivePrice.toLocaleString()}
+           </span>
+           ${item.salePrice ? `<span class="shop-card__price--old">${item.price.toLocaleString()}</span>` : ''}`;
 
       return `
         <div class="shop-card shop-card--${item.rarity}" data-item-id="${item.id}" ${bgStyle}>
@@ -3338,10 +3434,7 @@
             <div class="shop-card__type">${item.type}</div>
             <div class="shop-card__price-row">
               <div style="display:flex;align-items:center;gap:8px;">
-                <span class="shop-card__price">
-                  <span class="shop-card__price-icon">✦</span> ${effectivePrice.toLocaleString()}
-                </span>
-                ${item.salePrice ? `<span class="shop-card__price--old">${item.price.toLocaleString()}</span>` : ''}
+                ${priceHTML}
               </div>
               ${owned
                 ? '<span class="shop-card__owned">Owned</span>'
