@@ -881,6 +881,7 @@ def _credit_pearls_for_order(order_id):
         timeout=15,
     )
     if resp.status_code != 200:
+        print(f"[ORDER-LOOKUP] {order_id} → HTTP {resp.status_code} body={resp.text[:400]}")
         return False, "order_not_found"
 
     order_data = resp.json().get("order", {})
@@ -889,6 +890,10 @@ def _credit_pearls_for_order(order_id):
     pack_id = metadata.get("pack_id", "")
 
     if not steam_id or pack_id not in VOID_PEARL_PACKS:
+        # Log the actual state so we can debug subscription/webhook mismatches
+        print(f"[ORDER-LOOKUP] {order_id} invalid_metadata. state={order_data.get('state')} "
+              f"total={order_data.get('total_money')} metadata={metadata} "
+              f"has_tenders={bool(order_data.get('tenders'))} subscription_id={order_data.get('subscription_id')}")
         return False, "invalid_metadata"
 
     # Already claimed?
