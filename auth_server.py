@@ -855,7 +855,6 @@ VOID_PEARL_PACKS = {
     "coffee1": {"name": "Coffee for the dev",   "pearls": 0,     "price_cents": 500},
     # Game store items (cash purchases)
     "preorder_okubi": {"name": "Preorder OKUBI",   "pearls": 0, "price_cents": 2999},
-    "name_change":    {"name": "Change Name",      "pearls": 0, "price_cents": 499},
 }
 
 

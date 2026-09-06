@@ -2063,15 +2063,16 @@
         featured: false,
       },
       {
-        id: 'name_change',
-        name: 'Change Name',
-        type: 'Game • Utility',
+        id: 'become_supporter',
+        name: 'Become a Supporter',
+        type: 'Game • Monthly Subscription',
         category: 'game',
-        rarity: 'common',
-        priceCash: 499,   // $4.99 CAD
-        icon: '✎',
-        tag: '',
-        desc: 'Change your in-game display name. Applies immediately. Once per purchase.',
+        rarity: 'epic',
+        priceCash: 500,   // $5.00/month CAD
+        interval: 'monthly',
+        icon: '💙',
+        tag: 'new',
+        desc: 'Support ongoing OKUBI development with a small monthly contribution. Get an exclusive Supporter badge on your profile, priority Discord role, and my heartfelt thanks. Cancel anytime.',
         featured: false,
       },
       // ── Subscriptions (Coming Soon) ──
@@ -2969,7 +2970,7 @@
       vp7500: { name: '7,500 Radiant Pearls', pearls: 7500,  price: '$49.99', bonus: '+50% Extra*',  icons: '✦✦✦✦✦', image: 'assets/shop/shop_radiant_pearl_5.png', rarity: 'mythic',    badgeText: 'Best Value', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(60,15,15,0.3), rgba(18,10,10,0.95))', color: '#e85454', desc: 'The ultimate collection. 7,500 Radiant Pearls with 50% extra value — the absolute best for dedicated players.' },
       coffee1: { name: 'Coffee for the dev', pearls: 0, price: '$5.00', bonus: 'Support the Dev', icons: '☕', image: null, rarity: 'common', badgeText: 'Tip', badgeColor: '#c8823a', gradient: 'linear-gradient(135deg, rgba(120,70,40,0.35), rgba(50,30,15,0.95))', color: '#e8c9a0', desc: 'OKUBI is built by a solo dev. A small tip goes a long way to fuel late-night coding sessions. No in-game reward — just my genuine thanks.' },
       preorder_okubi: { name: 'Preorder OKUBI', pearls: 0, price: '$29.99', bonus: 'Founder Access', icons: '🎮', image: null, rarity: 'legendary', badgeText: 'Preorder', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(200,160,80,0.35), rgba(60,40,15,0.95))', color: '#f0d089', desc: 'Reserve your copy of OKUBI now. Includes early access to closed playtests, exclusive founder cosmetics, and your name in the credits.' },
-      name_change: { name: 'Change Name', pearls: 0, price: '$4.99', bonus: 'Instant Rename', icons: '✎', image: null, rarity: 'common', badgeText: 'Utility', badgeColor: '#7a8a9a', gradient: 'linear-gradient(135deg, rgba(80,90,110,0.35), rgba(30,35,45,0.95))', color: '#c8d4e0', desc: 'Change your in-game display name. Applies immediately. Once per purchase.' },
+      become_supporter: { name: 'Become a Supporter', pearls: 0, price: '$5.00', interval: 'monthly', bonus: 'Monthly Subscription', icons: '💙', image: null, rarity: 'epic', badgeText: 'Monthly', badgeColor: '#4ea8ee', gradient: 'linear-gradient(135deg, rgba(78,168,238,0.35), rgba(20,45,80,0.95))', color: '#88c8ff', desc: 'Support ongoing OKUBI development with a small monthly contribution. Get an exclusive Supporter badge on your profile, priority Discord role, and my heartfelt thanks. Cancel anytime.' },
       sub_centurion: { name: 'Centurion', pearls: 0, price: '$9.99', bonus: 'Coming Soon — Monthly', icons: '🛡', image: null, rarity: 'epic', badgeText: 'Coming Soon', badgeColor: '#c577f5', gradient: 'linear-gradient(135deg, rgba(140,60,180,0.35), rgba(35,20,55,0.95))', color: '#c577f5', desc: 'Monthly subscription. Includes 1,000 Radiant Pearls every month, an exclusive Centurion emblem, and a 10% shop discount.' },
       sub_imperator: { name: 'Imperator', pearls: 0, price: '$19.99', bonus: 'Coming Soon — Monthly', icons: '👑', image: null, rarity: 'legendary', badgeText: 'Coming Soon', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(220,150,60,0.35), rgba(60,40,15,0.95))', color: '#f0d089', desc: 'The elite tier. Includes 2,500 Radiant Pearls monthly, exclusive Imperator armor set, priority Discord role, and 20% shop discount.' },
     };
@@ -3002,7 +3003,7 @@
       }
 
       document.getElementById('vpDetailDesc').textContent = pack.desc;
-      document.getElementById('vpDetailPrice').textContent = pack.price;
+      document.getElementById('vpDetailPrice').textContent = pack.interval === 'monthly' ? `${pack.price} / month` : pack.price;
 
       const pricePerEl = document.getElementById('vpDetailPricePer');
       if (pack.pearls > 0) {
@@ -3057,8 +3058,8 @@
           });
       };
       btn.addEventListener('click', _vpBuyHandler);
-      // Subscriptions are not yet available for purchase — show Coming Soon and disable click
-      if (packId === 'sub_centurion' || packId === 'sub_imperator') {
+      // Subscriptions and Become a Supporter are not yet available for purchase — show Coming Soon and disable click
+      if (packId === 'sub_centurion' || packId === 'sub_imperator' || packId === 'become_supporter') {
         btn.textContent = 'Coming Soon';
         btn.style.pointerEvents = 'none';
         btn.style.opacity = '0.55';
