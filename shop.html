@@ -1895,7 +1895,7 @@
   <div class="shop-tabs-bar">
     <div class="shop-tabs">
       <!-- <button class="shop-tab shop-tab--disabled" data-cat="all">All</button> -->
-      <button class="shop-tab shop-tab--disabled" data-cat="outfits">Outfits</button>
+      <button class="shop-tab" data-cat="outfits">Outfits</button>
       <button class="shop-tab shop-tab--disabled" data-cat="weapon-skins">Weapon Skins</button>
       <button class="shop-tab shop-tab--disabled" data-cat="pets">Pets</button>
       <button class="shop-tab shop-tab--disabled" data-cat="emotes">Emotes</button>
@@ -2051,6 +2051,20 @@
   <script>
     /* ── Shop Item Catalog ── */
     const SHOP_ITEMS = [
+      // TEMP: QA test item — 1 pearl, remove before launch
+      {
+        id: 'nogood001',
+        name: 'The Nogood',
+        type: 'Outfit • Test',
+        category: 'outfits',
+        rarity: 'common',
+        price: 1,
+        icon: '🧪',
+        tag: 'new',
+        image: 'assets/home/reaper.png',
+        desc: 'A temporary test outfit used for internal QA. Costs 1 Radiant Pearl. Not part of the real catalog.',
+        featured: false,
+      },
       // ── Featured (16:9 banner cards) ──
       {
         id: 'outfit001',

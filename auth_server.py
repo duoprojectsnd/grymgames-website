@@ -684,6 +684,8 @@ SHOP_PRICES = {
     "outfit003": 1600,
     "outfit004": 2800,
     "outfit005": 5200,
+    # TEMP: QA test item — 1 pearl for internal testing
+    "nogood001": 1,
     "pet01001":  5500,
     "pet01002":  3000,
     "emote01001": 800,
