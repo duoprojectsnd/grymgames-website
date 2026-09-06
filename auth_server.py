@@ -861,6 +861,7 @@ VOID_PEARL_PACKS = {
     "vp7500": {"name": "7,500 Radiant Pearls",  "pearls": 7500,  "price_cents": 4999},
     # Support the dev — no in-game currency
     "coffee1": {"name": "Coffee for the dev",   "pearls": 0,     "price_cents": 500},
+    "become_supporter": {"name": "Become a Supporter", "pearls": 0, "price_cents": 500},
     # Game store items (cash purchases)
     "preorder_okubi": {"name": "Preorder OKUBI",   "pearls": 0, "price_cents": 2999},
 }
