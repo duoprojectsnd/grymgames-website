@@ -2296,42 +2296,13 @@
                 </div>
               </div>
             </div>
-            <div id="supportStatus" style="color:var(--muted);font-size:0.85rem;margin-top:20px;min-height:28px;"></div>
           </div>
         `;
 
         const card = container.querySelector('.vp-card[data-pack="coffee1"]');
-        const status = document.getElementById('supportStatus');
         if (card) {
           card.addEventListener('click', () => {
-            if (!isLoggedIn) { showLoginModal(); return; }
-            card.style.opacity = '0.6';
-            card.style.pointerEvents = 'none';
-            status.textContent = 'Creating checkout...';
-            status.style.color = 'var(--beige)';
-            fetch('/auth/buy-pearls', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ pack_id: 'coffee1' }),
-            })
-              .then(r => r.json())
-              .then(data => {
-                if (data.checkout_url) {
-                  if (data.order_id) localStorage.setItem('pending_vp_order', data.order_id);
-                  window.location.href = data.checkout_url;
-                } else {
-                  status.textContent = data.error || 'Failed to create checkout';
-                  status.style.color = 'var(--red)';
-                  card.style.opacity = '1';
-                  card.style.pointerEvents = '';
-                }
-              })
-              .catch(() => {
-                status.textContent = 'Network error. Try again.';
-                status.style.color = 'var(--red)';
-                card.style.opacity = '1';
-                card.style.pointerEvents = '';
-              });
+            openVpDetail('coffee1');
           });
         }
         return;
@@ -2609,6 +2580,7 @@
       vp1700: { name: '1,700 Radiant Pearls', pearls: 1700,  price: '$12.99', bonus: '+30% Extra*',  icons: '✦✦✦',   image: 'assets/shop/shop_radiant_pearl_3.png', rarity: 'rare',      badgeText: 'Best Seller', badgeColor: '#e74c3c', gradient: 'linear-gradient(135deg, rgba(15,40,80,0.3), rgba(10,12,20,0.95))', color: '#4ea8ee', desc: 'Our most popular pack. 1,700 Radiant Pearls with 30% extra value. Unlock multiple premium items.' },
       vp3500: { name: '3,500 Radiant Pearls', pearls: 3500,  price: '$24.99', bonus: '+40% Extra*',  icons: '✦✦✦✦',  image: 'assets/shop/shop_radiant_pearl_4.png', rarity: 'epic',      badgeText: '', badgeColor: '', gradient: 'linear-gradient(135deg, rgba(50,20,70,0.3), rgba(15,10,20,0.95))', color: '#c577f5', desc: 'A premium pack loaded with 3,500 Radiant Pearls — 40% extra value. Unlock entire armor sets and legendary items.' },
       vp7500: { name: '7,500 Radiant Pearls', pearls: 7500,  price: '$49.99', bonus: '+50% Extra*',  icons: '✦✦✦✦✦', image: 'assets/shop/shop_radiant_pearl_5.png', rarity: 'mythic',    badgeText: 'Best Value', badgeColor: '#d4a853', gradient: 'linear-gradient(135deg, rgba(60,15,15,0.3), rgba(18,10,10,0.95))', color: '#e85454', desc: 'The ultimate collection. 7,500 Radiant Pearls with 50% extra value — the absolute best for dedicated players.' },
+      coffee1: { name: 'Coffee for the dev', pearls: 0, price: '$1.00', bonus: 'Support the Dev', icons: '☕', image: null, rarity: 'common', badgeText: 'Tip', badgeColor: '#c8823a', gradient: 'linear-gradient(135deg, rgba(120,70,40,0.35), rgba(50,30,15,0.95))', color: '#e8c9a0', desc: 'OKUBI is built by a solo dev. A small tip goes a long way to fuel late-night coding sessions. No in-game reward — just my genuine thanks.' },
     };
 
     let _vpBuyHandler = null;
@@ -2641,8 +2613,19 @@
       document.getElementById('vpDetailDesc').textContent = pack.desc;
       document.getElementById('vpDetailPrice').textContent = pack.price;
 
-      const perPearl = (parseFloat(pack.price.replace('$','')) / pack.pearls * 100).toFixed(2);
-      document.getElementById('vpDetailPricePer').textContent = `${perPearl}¢ per pearl`;
+      const pricePerEl = document.getElementById('vpDetailPricePer');
+      if (pack.pearls > 0) {
+        const perPearl = (parseFloat(pack.price.replace('$','')) / pack.pearls * 100).toFixed(2);
+        pricePerEl.textContent = `${perPearl}¢ per pearl`;
+        pricePerEl.style.display = '';
+      } else {
+        pricePerEl.textContent = '';
+        pricePerEl.style.display = 'none';
+      }
+
+      // Currency meta row — hide for tips (no pearls)
+      const currencyRow = document.querySelector('#vpDetailOverlay .vp-detail__meta-row');
+      if (currencyRow) currencyRow.style.display = pack.pearls > 0 ? '' : 'none';
 
       const status = document.getElementById('vpDetailStatus');
       status.textContent = '';
