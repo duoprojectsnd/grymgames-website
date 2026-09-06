@@ -381,9 +381,15 @@
           if (data.curr03 && curr03El) {
             curr03El.textContent = '✦ ' + Number(data.curr03).toLocaleString();
           }
+        } else {
+          // Not logged in — reveal the login button now that we've confirmed
+          loginBtn.style.visibility = 'visible';
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        // Auth check failed — assume not logged in and show login button
+        loginBtn.style.visibility = 'visible';
+      });
 
     if (profileBtn) {
       profileBtn.addEventListener('click', (e) => {
