@@ -208,7 +208,7 @@
     }
     .purchase-row {
       display: grid;
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1fr auto;
       gap: 20px;
       align-items: center;
       padding: 14px 18px;
@@ -240,25 +240,18 @@
       color: rgba(255,255,255,0.4);
       letter-spacing: 0.06em;
     }
-    .purchase-row__reward {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #4ec870;
-      text-shadow: 0 0 8px rgba(78,200,112,0.3);
-      white-space: nowrap;
-    }
-    .purchase-row__reward--none {
-      color: rgba(255,255,255,0.3);
-      text-shadow: none;
-    }
     .purchase-row__price {
       font-family: 'Orbitron', sans-serif;
       font-size: 0.95rem;
       font-weight: 800;
-      color: #ff8340;
-      text-shadow: 0 0 8px rgba(255,120,60,0.25);
       white-space: nowrap;
+    }
+    .purchase-row__price--cash {
+      color: #fff;
+    }
+    .purchase-row__price--pearl {
+      color: #ff8340;
+      text-shadow: 0 0 8px rgba(255,120,60,0.35);
     }
 
     .stat-card {
@@ -663,9 +656,14 @@
       });
 
       // Load purchase history
-      function centsToPrice(cents, currency) {
-        const dollars = (cents / 100).toFixed(2);
-        return `$${dollars} ${currency || 'CAD'}`;
+      function formatPrice(p) {
+        if (p.currency === 'PEARL') {
+          const amount = (p.pearl_price || 0);
+          const unit = amount === 1 ? 'Radiant Pearl' : 'Radiant Pearls';
+          return `<span class="purchase-row__price purchase-row__price--pearl">✦ ${amount.toLocaleString()} ${unit}</span>`;
+        }
+        const dollars = ((p.price_cents || 0) / 100).toFixed(2);
+        return `<span class="purchase-row__price purchase-row__price--cash">$${dollars} ${p.currency || 'CAD'}</span>`;
       }
       function formatDate(iso) {
         if (!iso) return '';
@@ -686,17 +684,13 @@
             return;
           }
           list.innerHTML = purchases.map(p => {
-            const reward = p.pearls_added > 0
-              ? `+${p.pearls_added.toLocaleString()} ✦`
-              : '<span class="purchase-row__reward--none">—</span>';
             return `
               <div class="purchase-row">
                 <div class="purchase-row__info">
                   <div class="purchase-row__name">${p.pack_name || p.pack_id || 'Purchase'}</div>
                   <div class="purchase-row__meta">${formatDate(p.timestamp)} · Order ${(p.order_id || '').slice(0,8).toUpperCase()}</div>
                 </div>
-                <div class="purchase-row__reward">${reward}</div>
-                <div class="purchase-row__price">${centsToPrice(p.price_cents, p.currency)}</div>
+                ${formatPrice(p)}
               </div>
             `;
           }).join('');

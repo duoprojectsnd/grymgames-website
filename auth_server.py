@@ -675,6 +675,25 @@ def auth_profile():
 
 
 # ─── Shop endpoints ──────────────────────────────────────────────────────────
+SHOP_ITEM_NAMES = {
+    "outfit001": "Shadow Sovereign",
+    "outfit002": "Storm Vanguard",
+    "outfit003": "Frostborn Herald",
+    "outfit004": "Emerald Sentinel",
+    "outfit005": "Golden Legionnaire",
+    "weap01001": "Crimson Eclipse",
+    "weap01002": "Voidbreaker",
+    "weap01003": "Rebel's Edge",
+    "pet01001":  "Shadowfeather",
+    "pet01002":  "Ember Whelp",
+    "emote01001": "Battle Cry",
+    "emote01002": "Victory Pose",
+    "acc01001":  "Champion's Wreath",
+    "acc01002":  "Wanderer's Cloak",
+    "acc01003":  "Duelist's Insignia",
+    "nogood001": "The Nogood",
+}
+
 SHOP_PRICES = {
     "weap01001": 2500,
     "weap01002": 1800,
@@ -789,6 +808,33 @@ def shop_buy():
         )
 
     print(f"[SHOP] {steam_id} bought {item_id} for {price} VP (balance: {new_balance})")
+
+    # Record purchase in DynamoDB purchase history (pearl-currency purchase)
+    try:
+        from datetime import datetime, timezone
+        purchase_record = {
+            "M": {
+                "order_id": {"S": f"SHOP-{secrets.token_hex(6).upper()}"},
+                "pack_id": {"S": item_id},
+                "pack_name": {"S": SHOP_ITEM_NAMES.get(item_id, item_id)},
+                "price_cents": {"N": "0"},
+                "pearl_price": {"N": str(price)},
+                "currency": {"S": "PEARL"},
+                "pearls_added": {"N": "0"},
+                "timestamp": {"S": datetime.now(timezone.utc).isoformat()},
+            }
+        }
+        dynamo.update_item(
+            TableName=table, Key=key,
+            UpdateExpression="SET Purchases = list_append(if_not_exists(Purchases, :empty), :p)",
+            ExpressionAttributeValues={
+                ":empty": {"L": []},
+                ":p": {"L": [purchase_record]},
+            },
+        )
+    except Exception as e:
+        print(f"[PURCHASE-HISTORY] Failed to record item buy: {e}")
+
     return jsonify({"success": True, "new_balance": new_balance})
 
 
@@ -944,6 +990,7 @@ def purchase_history():
             "pack_id": m.get("pack_id", {}).get("S", ""),
             "pack_name": m.get("pack_name", {}).get("S", ""),
             "price_cents": int(m.get("price_cents", {}).get("N", "0")),
+            "pearl_price": int(m.get("pearl_price", {}).get("N", "0")),
             "currency": m.get("currency", {}).get("S", "CAD"),
             "pearls_added": int(m.get("pearls_added", {}).get("N", "0")),
             "timestamp": m.get("timestamp", {}).get("S", ""),
