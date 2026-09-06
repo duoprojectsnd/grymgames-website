@@ -3058,12 +3058,50 @@
           });
       };
       btn.addEventListener('click', _vpBuyHandler);
-      // Subscriptions and Become a Supporter are not yet available for purchase — show Coming Soon and disable click
-      if (packId === 'sub_centurion' || packId === 'sub_imperator' || packId === 'become_supporter') {
+      // Subscriber tab items are still placeholders — only real subscription is Become a Supporter
+      if (packId === 'sub_centurion' || packId === 'sub_imperator') {
         btn.textContent = 'Coming Soon';
         btn.style.pointerEvents = 'none';
         btn.style.opacity = '0.55';
         btn.style.cursor = 'not-allowed';
+      } else if (packId === 'become_supporter') {
+        // Rewire click handler to hit the subscription endpoint
+        btn.removeEventListener('click', _vpBuyHandler);
+        _vpBuyHandler = () => {
+          if (!isLoggedIn) { showLoginModal(); return; }
+          btn.textContent = 'Processing...';
+          btn.style.pointerEvents = 'none';
+          status.textContent = 'Creating subscription...';
+          status.style.color = 'var(--beige)';
+          fetch('/auth/subscribe-supporter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          })
+            .then(r => r.json())
+            .then(data => {
+              if (data.checkout_url) {
+                if (data.order_id) localStorage.setItem('pending_vp_order', data.order_id);
+                localStorage.setItem('pending_vp_pack', 'become_supporter');
+                window.location.href = data.checkout_url;
+              } else {
+                status.textContent = data.error || 'Failed to create subscription';
+                status.style.color = 'var(--red)';
+                btn.textContent = 'Become a Supporter';
+                btn.style.pointerEvents = '';
+              }
+            })
+            .catch(() => {
+              status.textContent = 'Network error. Try again.';
+              status.style.color = 'var(--red)';
+              btn.textContent = 'Become a Supporter';
+              btn.style.pointerEvents = '';
+            });
+        };
+        btn.addEventListener('click', _vpBuyHandler);
+        btn.textContent = 'Become a Supporter';
+        btn.style.pointerEvents = '';
+        btn.style.opacity = '';
+        btn.style.cursor = '';
       } else {
         btn.textContent = 'Buy Now';
         btn.style.pointerEvents = '';

@@ -44,6 +44,7 @@ _cfg["square_location_id"] = os.environ.get("SQUARE_LOCATION_ID", _cfg.get("squa
 _cfg["square_application_id"] = os.environ.get("SQUARE_APPLICATION_ID", _cfg.get("square_application_id", ""))
 _cfg["square_environment"] = os.environ.get("SQUARE_ENVIRONMENT", _cfg.get("square_environment", "sandbox"))
 _cfg["square_webhook_signature_key"] = os.environ.get("SQUARE_WEBHOOK_SIGNATURE_KEY", _cfg.get("square_webhook_signature_key", ""))
+_cfg["square_supporter_plan_variation_id"] = os.environ.get("SQUARE_SUPPORTER_PLAN_VARIATION_ID", _cfg.get("square_supporter_plan_variation_id", "SFUFPPOXTENRQIHCRWZVUPSI"))
 
 app = Flask(__name__, static_folder=".", static_url_path="")
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", secrets.token_hex(32))
@@ -844,6 +845,7 @@ SQUARE_BASE_URL = (
     else "https://connect.squareup.com"
 )
 SQUARE_WEBHOOK_SIGNATURE_KEY = _cfg.get("square_webhook_signature_key", "")
+SQUARE_SUPPORTER_PLAN_VARIATION_ID = _cfg.get("square_supporter_plan_variation_id", "SFUFPPOXTENRQIHCRWZVUPSI")
 
 VOID_PEARL_PACKS = {
     "vp300":  {"name": "300 Radiant Pearls",    "pearls": 300,   "price_cents": 299},
@@ -1057,6 +1059,59 @@ def buy_pearls():
     checkout_url = result.get("payment_link", {}).get("url", "")
     order_id = result.get("payment_link", {}).get("order_id", "")
 
+    return jsonify({"checkout_url": checkout_url, "order_id": order_id})
+
+
+@app.route("/auth/subscribe-supporter", methods=["POST"])
+def subscribe_supporter():
+    """Create a Square Checkout link that subscribes the user to the Supporter plan."""
+    if "steam_id" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+
+    if not SQUARE_SUPPORTER_PLAN_VARIATION_ID:
+        return jsonify({"error": "Supporter plan not configured"}), 503
+
+    idempotency_key = secrets.token_hex(16)
+    payload = {
+        "idempotency_key": idempotency_key,
+        "order": {
+            "location_id": SQUARE_LOCATION_ID,
+            "line_items": [
+                {
+                    "quantity": "1",
+                    "catalog_object_id": SQUARE_SUPPORTER_PLAN_VARIATION_ID,
+                }
+            ],
+            "metadata": {
+                "steam_id": session["steam_id"],
+                "pack_id": "become_supporter",
+                "subscription": "supporter_monthly",
+            },
+        },
+        "checkout_options": {
+            "redirect_url": request.host_url.rstrip("/") + "/payment/success",
+            "accepted_payment_methods": {"apple_pay": True, "google_pay": True},
+        },
+    }
+
+    headers = {
+        "Square-Version": "2024-12-18",
+        "Authorization": f"Bearer {SQUARE_ACCESS_TOKEN}",
+        "Content-Type": "application/json",
+    }
+    resp = requests.post(
+        f"{SQUARE_BASE_URL}/v2/online-checkout/payment-links",
+        json=payload,
+        headers=headers,
+        timeout=15,
+    )
+
+    if resp.status_code not in (200, 201):
+        return jsonify({"error": "Payment service error", "detail": resp.text}), 502
+
+    result = resp.json()
+    checkout_url = result.get("payment_link", {}).get("url", "")
+    order_id = result.get("payment_link", {}).get("order_id", "")
     return jsonify({"checkout_url": checkout_url, "order_id": order_id})
 
 
