@@ -254,6 +254,227 @@
       text-shadow: 0 0 8px rgba(255,120,60,0.35);
     }
 
+    /* ── Subscription Panel ── */
+    .subscription-panel__loading,
+    .subscription-panel__none {
+      padding: 40px 24px;
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+    }
+    .subscription-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      gap: 16px;
+      align-items: center;
+      padding: 18px 20px;
+      border: 1px solid rgba(78, 168, 238, 0.25);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(78,168,238,0.06), rgba(255,255,255,0.02));
+      margin-bottom: 12px;
+    }
+    .subscription-card__icon {
+      font-size: 1.9rem;
+      line-height: 1;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(78,168,238,0.12);
+      border-radius: 50%;
+    }
+    .subscription-card__info { min-width: 0; }
+    .subscription-card__name {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .subscription-card__meta {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .subscription-card__status {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+    .subscription-card__status--active {
+      color: #4ec870;
+      background: rgba(78,200,112,0.14);
+      border: 1px solid rgba(78,200,112,0.35);
+    }
+    .subscription-card__status--canceled {
+      color: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .subscription-card__menu-wrap {
+      position: relative;
+    }
+    .subscription-card__menu-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.55);
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: color 0.2s, background 0.2s;
+    }
+    .subscription-card__menu-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+    .subscription-card__menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      min-width: 190px;
+      background: #12100e;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+      padding: 6px 0;
+      z-index: 100;
+      display: none;
+    }
+    .subscription-card__menu--open { display: block; }
+    .subscription-card__menu-item {
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.85);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .subscription-card__menu-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .subscription-card__menu-item--danger { color: #e85454; }
+    .subscription-card__menu-item--danger:hover { background: rgba(232,84,84,0.1); }
+    .subscription-card__menu-item--disabled { color: rgba(255,255,255,0.3); cursor: not-allowed; }
+    .subscription-card__menu-item--disabled:hover { background: transparent; color: rgba(255,255,255,0.3); }
+
+    /* Cancel modal */
+    .cancel-sub-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .cancel-sub-modal--open { display: flex; animation: fadeIn 0.3s ease; }
+    .cancel-sub-modal__bg {
+      position: absolute; inset: 0;
+      background: rgba(5,8,6,0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .cancel-sub-modal__card {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 28px;
+      border-radius: 10px;
+      background: #18130f;
+      border: 1px solid rgba(232,84,84,0.35);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 40px rgba(232,84,84,0.15);
+    }
+    .cancel-sub-modal__title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .cancel-sub-modal__body {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.7);
+      margin: 0 0 18px;
+      line-height: 1.55;
+    }
+    .cancel-sub-modal__body strong { color: #e85454; font-weight: 700; }
+    .cancel-sub-modal__input {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(0,0,0,0.5);
+      border: 1.5px solid rgba(255,255,255,0.14);
+      border-radius: 5px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.25s;
+    }
+    .cancel-sub-modal__input:focus { border-color: #e85454; }
+    .cancel-sub-modal__error {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.78rem;
+      color: #e85454;
+      margin: 8px 0 0;
+      min-height: 18px;
+    }
+    .cancel-sub-modal__actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .cancel-sub-modal__btn {
+      flex: 1;
+      padding: 12px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cancel-sub-modal__btn--secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .cancel-sub-modal__btn--secondary:hover {
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+    }
+    .cancel-sub-modal__btn--danger {
+      background: linear-gradient(135deg, #e85454, #b03030);
+      color: #fff;
+      border: 1px solid rgba(232,84,84,0.6);
+    }
+    .cancel-sub-modal__btn--danger:hover:not(:disabled) {
+      box-shadow: 0 0 22px rgba(232,84,84,0.55);
+      transform: translateY(-1px);
+    }
+    .cancel-sub-modal__btn--danger:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
     .stat-card {
       padding: 20px;
       background: #141210;
@@ -521,7 +742,7 @@
       <div class="account-tabs">
         <div class="account-tabs__bar">
           <button class="account-tab account-tab--active" data-tab="purchases">Purchase History</button>
-          <button class="account-tab account-tab--disabled" data-tab="subscriptions" disabled>Subscriptions</button>
+          <button class="account-tab" data-tab="subscriptions">Subscriptions</button>
           <button class="account-tab account-tab--disabled" data-tab="redeem" disabled>Redeem Code</button>
         </div>
 
@@ -532,7 +753,9 @@
         </div>
 
         <div class="account-tab-content" id="tabSubscriptions">
-          <div class="account-tab__empty">Subscriptions are coming soon. Stay tuned!</div>
+          <div id="subscriptionContent" class="subscription-panel">
+            <div class="subscription-panel__loading">Loading…</div>
+          </div>
         </div>
 
         <div class="account-tab-content" id="tabRedeem">
@@ -540,6 +763,21 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Cancel Subscription Modal -->
+  <div class="cancel-sub-modal" id="cancelSubModal">
+    <div class="cancel-sub-modal__bg"></div>
+    <div class="cancel-sub-modal__card">
+      <h3 class="cancel-sub-modal__title">Cancel Subscription?</h3>
+      <p class="cancel-sub-modal__body">You'll keep access until the end of your current billing period. To confirm, type <strong>cancel</strong> below.</p>
+      <input type="text" class="cancel-sub-modal__input" id="cancelSubInput" placeholder="type cancel" autocomplete="off" />
+      <p class="cancel-sub-modal__error" id="cancelSubError"></p>
+      <div class="cancel-sub-modal__actions">
+        <button class="cancel-sub-modal__btn cancel-sub-modal__btn--secondary" id="cancelSubDismiss">Keep Subscription</button>
+        <button class="cancel-sub-modal__btn cancel-sub-modal__btn--danger" id="cancelSubConfirm" disabled>Confirm Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -702,6 +940,119 @@
             list.innerHTML = '<div class="purchase-history__empty">Could not load purchases. Try again later.</div>';
           }
         });
+    })();
+  </script>
+
+  <!-- Subscription Panel Logic -->
+  <script>
+    (function(){
+      const subContent = document.getElementById('subscriptionContent');
+      const cancelModal = document.getElementById('cancelSubModal');
+      const cancelInput = document.getElementById('cancelSubInput');
+      const cancelError = document.getElementById('cancelSubError');
+      const cancelConfirm = document.getElementById('cancelSubConfirm');
+      const cancelDismiss = document.getElementById('cancelSubDismiss');
+
+      function renderNone() {
+        subContent.innerHTML = '<div class="subscription-panel__none">You don\'t have any active subscription.<br/>Head to the shop to become a Supporter.</div>';
+      }
+      function renderSub(sub) {
+        const isActive = sub.status === 'ACTIVE';
+        const startedShort = sub.started_at ? new Date(sub.started_at).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' }) : '—';
+        subContent.innerHTML = `
+          <div class="subscription-card">
+            <div class="subscription-card__icon">💙</div>
+            <div class="subscription-card__info">
+              <div class="subscription-card__name">${sub.name}</div>
+              <div class="subscription-card__meta">Started ${startedShort}${sub.canceled_at ? ' · Ends at period end' : ''}</div>
+            </div>
+            <div class="subscription-card__status ${isActive ? 'subscription-card__status--active' : 'subscription-card__status--canceled'}">${sub.status}</div>
+            <div class="subscription-card__menu-wrap">
+              <button class="subscription-card__menu-btn" id="subMenuBtn" aria-label="Options">⋯</button>
+              <div class="subscription-card__menu" id="subMenu">
+                <button class="subscription-card__menu-item subscription-card__menu-item--disabled" title="Upgrade coming soon" disabled>Upgrade subscription</button>
+                <button class="subscription-card__menu-item subscription-card__menu-item--danger" id="subCancelMenuItem" ${isActive ? '' : 'disabled'}>Cancel subscription</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const menuBtn = document.getElementById('subMenuBtn');
+        const menu = document.getElementById('subMenu');
+        menuBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          menu.classList.toggle('subscription-card__menu--open');
+        });
+        document.addEventListener('click', (e) => {
+          if (!menu.contains(e.target) && e.target !== menuBtn) {
+            menu.classList.remove('subscription-card__menu--open');
+          }
+        });
+
+        if (isActive) {
+          document.getElementById('subCancelMenuItem').addEventListener('click', () => {
+            menu.classList.remove('subscription-card__menu--open');
+            openCancelModal();
+          });
+        }
+      }
+
+      function openCancelModal() {
+        cancelInput.value = '';
+        cancelError.textContent = '';
+        cancelConfirm.disabled = true;
+        cancelModal.classList.add('cancel-sub-modal--open');
+        setTimeout(() => cancelInput.focus(), 100);
+      }
+      function closeCancelModal() {
+        cancelModal.classList.remove('cancel-sub-modal--open');
+      }
+      cancelDismiss.addEventListener('click', closeCancelModal);
+      cancelModal.querySelector('.cancel-sub-modal__bg').addEventListener('click', closeCancelModal);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && cancelModal.classList.contains('cancel-sub-modal--open')) closeCancelModal();
+      });
+      cancelInput.addEventListener('input', () => {
+        cancelConfirm.disabled = cancelInput.value.trim().toLowerCase() !== 'cancel';
+        cancelError.textContent = '';
+      });
+      cancelConfirm.addEventListener('click', () => {
+        if (cancelInput.value.trim().toLowerCase() !== 'cancel') return;
+        cancelConfirm.disabled = true;
+        cancelConfirm.textContent = 'Cancelling…';
+        fetch('/auth/cancel-subscription', { method: 'POST' })
+          .then(r => r.json().then(d => ({ ok: r.ok, data: d })))
+          .then(({ ok, data }) => {
+            if (ok && data.success) {
+              closeCancelModal();
+              loadSubscription();  // refresh
+            } else {
+              cancelError.textContent = data.error || 'Cancellation failed. Try again.';
+              cancelConfirm.disabled = false;
+              cancelConfirm.textContent = 'Confirm Cancel';
+            }
+          })
+          .catch(() => {
+            cancelError.textContent = 'Network error. Try again.';
+            cancelConfirm.disabled = false;
+            cancelConfirm.textContent = 'Confirm Cancel';
+          });
+      });
+
+      function loadSubscription() {
+        subContent.innerHTML = '<div class="subscription-panel__loading">Loading…</div>';
+        fetch('/api/subscription')
+          .then(r => r.ok ? r.json() : Promise.reject(r.status))
+          .then(data => {
+            if (data.subscription) renderSub(data.subscription);
+            else renderNone();
+          })
+          .catch(err => {
+            if (err === 401) subContent.innerHTML = '<div class="subscription-panel__none">Please log in to view your subscription.</div>';
+            else renderNone();
+          });
+      }
+      loadSubscription();
     })();
   </script>
 

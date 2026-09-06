@@ -970,7 +970,120 @@ def _credit_pearls_for_order(order_id):
         print(f"[PURCHASE-HISTORY] Failed to record: {e}")
 
     print(f"[CREDIT] {pearls_to_add} pearls -> {steam_id} (order {order_id})")
+
+    # If this order was a subscription checkout, save the subscription to DynamoDB
+    try:
+        subscription_id = order_data.get("subscription_id", "")
+        pack_id_meta = metadata.get("pack_id", "")
+        if subscription_id and pack_id_meta == "become_supporter":
+            _save_subscription(steam_id, subscription_id, "Supporter", order_id)
+    except Exception as e:
+        print(f"[SUBSCRIPTION] Failed to save on order {order_id}: {e}")
+
     return True, f"{pearls_to_add}"
+
+
+def _save_subscription(steam_id, subscription_id, name, order_id=""):
+    """Persist subscription info to the user's DynamoDB record."""
+    from datetime import datetime, timezone
+    sub_record = {
+        "M": {
+            "name": {"S": name},
+            "status": {"S": "ACTIVE"},
+            "subscription_id": {"S": subscription_id},
+            "started_at": {"S": datetime.now(timezone.utc).isoformat()},
+            "order_id": {"S": order_id},
+        }
+    }
+    _dynamo().update_item(
+        TableName=_cfg["table_name"],
+        Key={"steamID": {"S": steam_id}},
+        UpdateExpression="SET Subscription = :s",
+        ExpressionAttributeValues={":s": sub_record},
+    )
+    print(f"[SUBSCRIPTION] {steam_id} -> {name} (id: {subscription_id})")
+
+
+@app.route("/api/subscription", methods=["GET"])
+def get_subscription():
+    """Return the logged-in user's current subscription (or none)."""
+    if "steam_id" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+    steam_id = session["steam_id"]
+    try:
+        item = _dynamo().get_item(
+            TableName=_cfg["table_name"],
+            Key={"steamID": {"S": steam_id}},
+        ).get("Item", {})
+        sub = item.get("Subscription", {}).get("M", {})
+        if not sub:
+            return jsonify({"subscription": None})
+        return jsonify({
+            "subscription": {
+                "name": sub.get("name", {}).get("S", ""),
+                "status": sub.get("status", {}).get("S", ""),
+                "subscription_id": sub.get("subscription_id", {}).get("S", ""),
+                "started_at": sub.get("started_at", {}).get("S", ""),
+                "canceled_at": sub.get("canceled_at", {}).get("S", ""),
+            }
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/auth/cancel-subscription", methods=["POST"])
+def cancel_subscription():
+    """Cancel the user's active subscription via Square API and update DynamoDB."""
+    if "steam_id" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+    steam_id = session["steam_id"]
+
+    # Load subscription from DynamoDB
+    try:
+        item = _dynamo().get_item(
+            TableName=_cfg["table_name"],
+            Key={"steamID": {"S": steam_id}},
+        ).get("Item", {})
+        sub = item.get("Subscription", {}).get("M", {})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    if not sub:
+        return jsonify({"error": "No active subscription"}), 404
+
+    subscription_id = sub.get("subscription_id", {}).get("S", "")
+    if not subscription_id:
+        return jsonify({"error": "Subscription ID missing"}), 500
+
+    # Call Square to cancel
+    headers = {
+        "Square-Version": "2024-12-18",
+        "Authorization": f"Bearer {SQUARE_ACCESS_TOKEN}",
+        "Content-Type": "application/json",
+    }
+    resp = requests.post(
+        f"{SQUARE_BASE_URL}/v2/subscriptions/{subscription_id}/cancel",
+        headers=headers,
+        timeout=15,
+    )
+    if resp.status_code not in (200, 201):
+        print(f"[CANCEL-SUB] Square rejected. Status={resp.status_code} body={resp.text}")
+        return jsonify({"error": "Cancellation failed", "detail": resp.text}), 502
+
+    # Mark canceled in DynamoDB
+    from datetime import datetime, timezone
+    _dynamo().update_item(
+        TableName=_cfg["table_name"],
+        Key={"steamID": {"S": steam_id}},
+        UpdateExpression="SET Subscription.#s = :canceled, Subscription.canceled_at = :ts",
+        ExpressionAttributeNames={"#s": "status"},
+        ExpressionAttributeValues={
+            ":canceled": {"S": "CANCELED"},
+            ":ts": {"S": datetime.now(timezone.utc).isoformat()},
+        },
+    )
+    print(f"[CANCEL-SUB] {steam_id} canceled subscription {subscription_id}")
+    return jsonify({"success": True})
 
 
 @app.route("/api/purchase-history", methods=["GET"])
@@ -1194,6 +1307,48 @@ def square_webhook():
 
     event_type = event.get("type", "")
     print(f"[WEBHOOK] Received event: {event_type}")
+
+    # Subscription lifecycle events — mark active/canceled in DynamoDB
+    if event_type in ("subscription.created", "subscription.updated"):
+        sub_obj = event.get("data", {}).get("object", {}).get("subscription", {})
+        sub_id = sub_obj.get("id", "")
+        sub_status = sub_obj.get("status", "")  # ACTIVE, CANCELED, PAUSED, DEACTIVATED
+        if not sub_id:
+            print("[WEBHOOK] Subscription event missing id")
+            return "", 200
+
+        # Find the user with this subscription_id by scanning (small user base — OK for now)
+        try:
+            scan = _dynamo().scan(
+                TableName=_cfg["table_name"],
+                FilterExpression="Subscription.subscription_id = :sid",
+                ExpressionAttributeValues={":sid": {"S": sub_id}},
+            )
+            found_users = scan.get("Items", [])
+            if not found_users:
+                print(f"[WEBHOOK] No user found with subscription {sub_id} (may be newly created — will link on redirect)")
+                return "", 200
+
+            from datetime import datetime, timezone
+            for u in found_users:
+                sid = u.get("steamID", {}).get("S", "")
+                update_expr = "SET Subscription.#s = :st"
+                expr_names = {"#s": "status"}
+                expr_values = {":st": {"S": sub_status}}
+                if sub_status in ("CANCELED", "DEACTIVATED"):
+                    update_expr += ", Subscription.canceled_at = :ts"
+                    expr_values[":ts"] = {"S": datetime.now(timezone.utc).isoformat()}
+                _dynamo().update_item(
+                    TableName=_cfg["table_name"],
+                    Key={"steamID": {"S": sid}},
+                    UpdateExpression=update_expr,
+                    ExpressionAttributeNames=expr_names,
+                    ExpressionAttributeValues=expr_values,
+                )
+                print(f"[WEBHOOK] Updated subscription for {sid} → {sub_status}")
+        except Exception as e:
+            print(f"[WEBHOOK] Subscription lookup/update failed: {e}")
+        return "", 200
 
     if event_type not in ("payment.updated", "payment.created", "order.updated", "payment.completed"):
         return "", 200
