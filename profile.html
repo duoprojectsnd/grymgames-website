@@ -143,6 +143,124 @@
       margin-bottom: 40px;
     }
 
+    /* ── Account Tabs (Purchase History, Subscriptions, etc.) ── */
+    .account-tabs {
+      margin-top: 40px;
+    }
+    .account-tabs__bar {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid rgba(212, 168, 83, 0.15);
+      margin-bottom: 24px;
+    }
+    .account-tab {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 12px 20px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .account-tab:hover:not(.account-tab--disabled) {
+      color: #fff;
+    }
+    .account-tab--active {
+      color: #d4a853;
+      border-bottom-color: #d4a853;
+    }
+    .account-tab--disabled {
+      color: rgba(255,255,255,0.25);
+      cursor: not-allowed;
+    }
+    .account-tab-content {
+      display: none;
+    }
+    .account-tab-content--active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .account-tab__empty {
+      padding: 40px 24px;
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: 8px;
+    }
+
+    /* Purchase list rows */
+    .purchase-history__loading,
+    .purchase-history__empty {
+      padding: 40px 24px;
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+    }
+    .purchase-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 20px;
+      align-items: center;
+      padding: 14px 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 10px;
+      transition: background 0.2s;
+    }
+    .purchase-row:hover {
+      background: rgba(255,255,255,0.04);
+    }
+    .purchase-row__info {
+      min-width: 0;
+    }
+    .purchase-row__name {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .purchase-row__meta {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.06em;
+    }
+    .purchase-row__reward {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #4ec870;
+      text-shadow: 0 0 8px rgba(78,200,112,0.3);
+      white-space: nowrap;
+    }
+    .purchase-row__reward--none {
+      color: rgba(255,255,255,0.3);
+      text-shadow: none;
+    }
+    .purchase-row__price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ff8340;
+      text-shadow: 0 0 8px rgba(255,120,60,0.25);
+      white-space: nowrap;
+    }
+
     .stat-card {
       padding: 20px;
       background: #141210;
@@ -396,6 +514,29 @@
       <div class="profile-section-title">Overview</div>
       <div class="stats-grid" id="statsGrid"></div>
 
+      <!-- Account Tabs -->
+      <div class="account-tabs">
+        <div class="account-tabs__bar">
+          <button class="account-tab account-tab--active" data-tab="purchases">Purchase History</button>
+          <button class="account-tab account-tab--disabled" data-tab="subscriptions" disabled>Subscriptions</button>
+          <button class="account-tab account-tab--disabled" data-tab="redeem" disabled>Redeem Code</button>
+        </div>
+
+        <div class="account-tab-content account-tab-content--active" id="tabPurchases">
+          <div id="purchaseHistoryList" class="purchase-history">
+            <div class="purchase-history__loading">Loading purchases…</div>
+          </div>
+        </div>
+
+        <div class="account-tab-content" id="tabSubscriptions">
+          <div class="account-tab__empty">Subscriptions are coming soon. Stay tuned!</div>
+        </div>
+
+        <div class="account-tab-content" id="tabRedeem">
+          <div class="account-tab__empty">Promo code redemption is coming soon.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -494,6 +635,70 @@
 
       })
       .catch(() => {});
+  </script>
+
+  <!-- Account Tabs Logic -->
+  <script>
+    (function(){
+      // Tab switching (only active tabs)
+      document.querySelectorAll('.account-tab').forEach(tab => {
+        if (tab.classList.contains('account-tab--disabled')) return;
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('account-tab--active'));
+          document.querySelectorAll('.account-tab-content').forEach(c => c.classList.remove('account-tab-content--active'));
+          tab.classList.add('account-tab--active');
+          const target = document.getElementById('tab' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1));
+          if (target) target.classList.add('account-tab-content--active');
+        });
+      });
+
+      // Load purchase history
+      function centsToPrice(cents, currency) {
+        const dollars = (cents / 100).toFixed(2);
+        return `$${dollars} ${currency || 'CAD'}`;
+      }
+      function formatDate(iso) {
+        if (!iso) return '';
+        try {
+          const d = new Date(iso);
+          return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+               + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        } catch (_) { return iso; }
+      }
+
+      const list = document.getElementById('purchaseHistoryList');
+      fetch('/api/purchase-history')
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => {
+          const purchases = data.purchases || [];
+          if (!purchases.length) {
+            list.innerHTML = '<div class="purchase-history__empty">No purchases yet.<br/>When you buy anything from the shop, it will appear here.</div>';
+            return;
+          }
+          list.innerHTML = purchases.map(p => {
+            const reward = p.pearls_added > 0
+              ? `+${p.pearls_added.toLocaleString()} ✦`
+              : '<span class="purchase-row__reward--none">—</span>';
+            return `
+              <div class="purchase-row">
+                <div class="purchase-row__info">
+                  <div class="purchase-row__name">${p.pack_name || p.pack_id || 'Purchase'}</div>
+                  <div class="purchase-row__meta">${formatDate(p.timestamp)} · Order ${(p.order_id || '').slice(0,8).toUpperCase()}</div>
+                </div>
+                <div class="purchase-row__reward">${reward}</div>
+                <div class="purchase-row__price">${centsToPrice(p.price_cents, p.currency)}</div>
+              </div>
+            `;
+          }).join('');
+        })
+        .catch(err => {
+          if (err === 401) {
+            list.innerHTML = '<div class="purchase-history__empty">Please log in to view your purchase history.</div>';
+          } else {
+            list.innerHTML = '<div class="purchase-history__empty">Could not load purchases. Try again later.</div>';
+          }
+        });
+    })();
   </script>
 
   <!-- Cookie Consent -->

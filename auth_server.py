@@ -887,8 +887,68 @@ def _credit_pearls_for_order(order_id):
     except Exception:
         pass
 
+    # Record purchase in DynamoDB purchase history
+    try:
+        from datetime import datetime, timezone
+        pack_info = VOID_PEARL_PACKS.get(pack_id, {})
+        purchase_record = {
+            "M": {
+                "order_id": {"S": order_id},
+                "pack_id": {"S": pack_id},
+                "pack_name": {"S": pack_info.get("name", pack_id)},
+                "price_cents": {"N": str(pack_info.get("price_cents", 0))},
+                "currency": {"S": "CAD"},
+                "pearls_added": {"N": str(pearls_to_add)},
+                "timestamp": {"S": datetime.now(timezone.utc).isoformat()},
+            }
+        }
+        _dynamo().update_item(
+            TableName=_cfg["table_name"],
+            Key={"steamID": {"S": steam_id}},
+            UpdateExpression="SET Purchases = list_append(if_not_exists(Purchases, :empty), :p)",
+            ExpressionAttributeValues={
+                ":empty": {"L": []},
+                ":p": {"L": [purchase_record]},
+            },
+        )
+    except Exception as e:
+        print(f"[PURCHASE-HISTORY] Failed to record: {e}")
+
     print(f"[CREDIT] {pearls_to_add} pearls -> {steam_id} (order {order_id})")
     return True, f"{pearls_to_add}"
+
+
+@app.route("/api/purchase-history", methods=["GET"])
+def purchase_history():
+    """Return the logged-in user's purchase history from DynamoDB."""
+    if "steam_id" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+    steam_id = session["steam_id"]
+
+    try:
+        item = _dynamo().get_item(
+            TableName=_cfg["table_name"],
+            Key={"steamID": {"S": steam_id}},
+        ).get("Item", {})
+        purchases_raw = item.get("Purchases", {}).get("L", [])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    purchases = []
+    for p in purchases_raw:
+        m = p.get("M", {})
+        purchases.append({
+            "order_id": m.get("order_id", {}).get("S", ""),
+            "pack_id": m.get("pack_id", {}).get("S", ""),
+            "pack_name": m.get("pack_name", {}).get("S", ""),
+            "price_cents": int(m.get("price_cents", {}).get("N", "0")),
+            "currency": m.get("currency", {}).get("S", "CAD"),
+            "pearls_added": int(m.get("pearls_added", {}).get("N", "0")),
+            "timestamp": m.get("timestamp", {}).get("S", ""),
+        })
+    # Newest first
+    purchases.sort(key=lambda x: x["timestamp"], reverse=True)
+    return jsonify({"purchases": purchases})
 
 
 @app.route("/auth/buy-pearls", methods=["POST"])

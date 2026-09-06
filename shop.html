@@ -1884,7 +1884,7 @@
         </button>
         <div class="shop-bar__profile-dropdown" id="shopProfileDropdown">
           <span class="shop-bar__profile-name" id="shopProfileName"></span>
-          <a href="/profile.html" class="shop-bar__profile-link">Character</a>
+          <a href="/profile.html" class="shop-bar__profile-link">Profile</a>
           <a href="/auth/steam/logout" class="shop-bar__profile-link">Logout</a>
         </div>
       </div>
@@ -1959,10 +1959,7 @@
           <div class="vp-detail__price-per" id="vpDetailPricePer"></div>
         </div>
         <div class="vp-detail__status" id="vpDetailStatus"></div>
-        <div style="display:flex;gap:12px;align-items:center;">
-          <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Buy Now</button>
-          <button type="button" id="vpDetailPreviewBtn" title="TEMP: preview success page" style="padding:10px 16px;font-family:var(--font-heading);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;background:transparent;border:1px dashed #444;border-radius:4px;cursor:pointer;">🧪 Preview success</button>
-        </div>
+        <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Buy Now</button>
         <div class="vp-detail__meta">
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Currency</span><span class="vp-detail__meta-value">Radiant Pearls</span></div>
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Platform</span><span class="vp-detail__meta-value">All Platforms</span></div>
@@ -3038,11 +3035,7 @@
       }
     });
 
-    // TEMP: Preview button on the detail modal — remove before final launch
-    document.getElementById('vpDetailPreviewBtn').addEventListener('click', () => {
-      showPurchaseSuccess({ packId: _lastPreviewedPack });
-    });
-    // Track which pack the detail modal is showing
+    // Track which pack the detail modal is showing so success view knows what to render
     const _origOpenVpDetail = openVpDetail;
     openVpDetail = function(packId) {
       _lastPreviewedPack = packId;
