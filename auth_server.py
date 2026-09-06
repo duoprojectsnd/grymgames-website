@@ -808,8 +808,6 @@ VOID_PEARL_PACKS = {
     "vp1700": {"name": "1,700 Radiant Pearls",  "pearls": 1700,  "price_cents": 1299},
     "vp3500": {"name": "3,500 Radiant Pearls",  "pearls": 3500,  "price_cents": 2499},
     "vp7500": {"name": "7,500 Radiant Pearls",  "pearls": 7500,  "price_cents": 4999},
-    # TEMP: cheap test pack for QA
-    "vp_test": {"name": "300 Radiant Pearls (Test)", "pearls": 300, "price_cents": 100},
     # Support the dev — no in-game currency
     "coffee1": {"name": "Coffee for the dev",   "pearls": 0,     "price_cents": 100},
 }
