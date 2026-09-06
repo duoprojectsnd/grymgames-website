@@ -2065,8 +2065,8 @@
       {
         id: 'become_supporter',
         name: 'Become a Supporter',
-        type: 'Game • Monthly Subscription',
-        category: 'game',
+        type: 'Support • Monthly Subscription',
+        category: 'support',
         rarity: 'epic',
         priceCash: 500,   // $5.00/month CAD
         interval: 'monthly',
@@ -2625,30 +2625,44 @@
       // Support category — tips for the dev
       if (currentCategory === 'support') {
         container.innerHTML = `
-          <div style="max-width:720px;margin:60px auto;text-align:center;padding:0 24px;">
+          <div style="max-width:900px;margin:60px auto;text-align:center;padding:0 24px;">
             <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--beige);margin-bottom:12px;">Support the Dev</h2>
-            <p style="color:var(--muted);font-size:0.95rem;margin-bottom:40px;line-height:1.7;">OKUBI is built by a solo dev. If you like what you see and want to help fuel late-night coding sessions, a small tip goes a long way. Thank you!</p>
-            <div class="shop-card shop-card--common vp-card" data-pack="coffee1" style="cursor:pointer;max-width:320px;margin:0 auto;">
-              <div class="shop-card__image" style="height:280px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#3a2818 0%,#1a120c 100%);">
-                <span style="font-size:8rem;line-height:1;">☕</span>
+            <p style="color:var(--muted);font-size:0.95rem;margin-bottom:40px;line-height:1.7;">OKUBI is built by a solo dev. If you like what you see and want to help fuel late-night coding sessions, a small tip or a monthly subscription goes a long way. Thank you!</p>
+
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:720px;margin:0 auto;">
+              <div class="shop-card shop-card--common vp-card" data-pack="coffee1" style="cursor:pointer;">
+                <div class="shop-card__image" style="height:220px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#3a2818 0%,#1a120c 100%);">
+                  <span style="font-size:6rem;line-height:1;">☕</span>
+                </div>
+                <div class="shop-card__info" style="padding:16px 14px;text-align:left;">
+                  <div class="shop-card__name" style="font-size:.95rem;">Coffee for the dev</div>
+                  <div style="font-family:var(--font-body);font-size:.72rem;color:var(--muted);margin-top:4px;">A one-time tip.</div>
+                  <div class="shop-card__price-row" style="margin-top:10px;justify-content:flex-start;">
+                    <span style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:#ff8340;">$5.00 CAD</span>
+                  </div>
+                </div>
               </div>
-              <div class="shop-card__info" style="padding:16px 14px;text-align:left;">
-                <div class="shop-card__name" style="font-size:.95rem;">Coffee for the dev</div>
-                <div style="font-family:var(--font-body);font-size:.72rem;color:var(--muted);margin-top:4px;">A small tip to say thanks.</div>
-                <div class="shop-card__price-row" style="margin-top:10px;justify-content:flex-start;">
-                  <span style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:#ff8340;">$5.00 CAD</span>
+
+              <div class="shop-card shop-card--epic vp-card" data-pack="become_supporter" style="cursor:pointer;">
+                <div class="shop-card__image" style="height:220px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#0f1830 0%,#050912 100%);">
+                  <span style="font-size:6rem;line-height:1;">💙</span>
+                </div>
+                <div class="shop-card__info" style="padding:16px 14px;text-align:left;">
+                  <div class="shop-card__name" style="font-size:.95rem;">Become a Supporter</div>
+                  <div style="font-family:var(--font-body);font-size:.72rem;color:var(--muted);margin-top:4px;">Monthly subscription.</div>
+                  <div class="shop-card__price-row" style="margin-top:10px;justify-content:flex-start;">
+                    <span style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:#ff8340;">$5.00 / month</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         `;
 
-        const card = container.querySelector('.vp-card[data-pack="coffee1"]');
-        if (card) {
-          card.addEventListener('click', () => {
-            openVpDetail('coffee1');
-          });
-        }
+        const coffeeCard = container.querySelector('.vp-card[data-pack="coffee1"]');
+        if (coffeeCard) coffeeCard.addEventListener('click', () => openVpDetail('coffee1'));
+        const supCard = container.querySelector('.vp-card[data-pack="become_supporter"]');
+        if (supCard) supCard.addEventListener('click', () => openVpDetail('become_supporter'));
         return;
       }
 
