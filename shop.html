@@ -2403,6 +2403,25 @@
     }
 
     function claimPendingPearls(orderId) {
+      // Shared success handler — used for both fresh claims and already-claimed orders
+      function celebrate(pearlsAdded) {
+        localStorage.removeItem('pending_vp_order');
+        const purchasedPack = localStorage.getItem('pending_vp_pack') || (pearlsAdded > 0 ? findPackByPearls(pearlsAdded) : 'coffee1');
+        localStorage.removeItem('pending_vp_pack');
+        if (typeof showPurchaseSuccess === 'function' && VP_PACKS[purchasedPack]) {
+          showPurchaseSuccess({ packId: purchasedPack, orderId: orderId });
+        } else {
+          showPaymentBanner('success', String(pearlsAdded));
+        }
+        // Refresh balance
+        fetch('/auth/me').then(r => r.json()).then(u => {
+          if (u.currencies) {
+            const vpEl = document.getElementById('vpBalance');
+            if (vpEl) vpEl.textContent = parseInt(u.currencies.curr03 || u.currencies.Curr03 || 0).toLocaleString();
+          }
+        }).catch(() => {});
+      }
+
       fetch('/auth/claim-pearls', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -2411,34 +2430,28 @@
         .then(r => r.json().then(d => ({ status: r.status, data: d })))
         .then(({ status, data }) => {
           if (data.success) {
-            // Pearls credited!
-            localStorage.removeItem('pending_vp_order');
-            // Figure out which pack was purchased so success view can show the right item
-            const purchasedPack = localStorage.getItem('pending_vp_pack') || (data.pearls > 0 ? findPackByPearls(data.pearls) : 'coffee1');
-            localStorage.removeItem('pending_vp_pack');
-            if (typeof showPurchaseSuccess === 'function' && VP_PACKS[purchasedPack]) {
-              showPurchaseSuccess({ packId: purchasedPack, orderId: orderId });
-            } else {
-              showPaymentBanner('success', String(data.pearls));
-            }
-            // Refresh balance display
-            fetch('/auth/me').then(r => r.json()).then(u => {
-              if (u.currencies) {
-                const vpEl = document.getElementById('vpBalance');
-                if (vpEl) vpEl.textContent = parseInt(u.currencies.curr03 || u.currencies.Curr03 || 0).toLocaleString();
-              }
-            }).catch(() => {});
+            celebrate(data.pearls || 0);
           } else if (data.status === 'already_claimed') {
-            localStorage.removeItem('pending_vp_order');
+            // Webhook already credited — still celebrate! Guess pearls from the stored pack.
+            const stashedPack = localStorage.getItem('pending_vp_pack');
+            const pearlsGuess = (stashedPack && VP_PACKS[stashedPack]) ? VP_PACKS[stashedPack].pearls : 0;
+            celebrate(pearlsGuess);
           } else if (data.status === 'pending') {
             // Payment not done yet — keep in localStorage for next load
             console.log('VP order still pending payment');
           } else {
-            // Some other error — remove to avoid infinite retries
+            // Some other error — remove to avoid infinite retries, show generic success (payment did go through)
+            console.warn('claim-pearls returned error:', data);
             localStorage.removeItem('pending_vp_order');
+            localStorage.removeItem('pending_vp_pack');
+            showPaymentBanner('success', '');
           }
         })
-        .catch(() => {});
+        .catch((err) => {
+          console.error('claim-pearls network error:', err);
+          // Network failed — but payment likely succeeded. Fall back to banner.
+          showPaymentBanner('success', '');
+        });
     }
 
     /* ── Render state ── */
