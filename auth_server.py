@@ -47,6 +47,7 @@ _cfg["square_webhook_signature_key"] = os.environ.get("SQUARE_WEBHOOK_SIGNATURE_
 _cfg["square_supporter_plan_variation_id"] = os.environ.get("SQUARE_SUPPORTER_PLAN_VARIATION_ID", _cfg.get("square_supporter_plan_variation_id", "SFUFPPOXTENRQIHCRWZVUPSI"))
 _cfg["square_supporter_item_variation_id"] = os.environ.get("SQUARE_SUPPORTER_ITEM_VARIATION_ID", _cfg.get("square_supporter_item_variation_id", "2QXQFGYTQGUOUGCECWBP673G"))
 _cfg["square_supporter_plan_id"] = os.environ.get("SQUARE_SUPPORTER_PLAN_ID", _cfg.get("square_supporter_plan_id", "EQ4HVMFTTKCXX6OEZNEPAGNS"))
+_cfg["square_tax_ids"] = os.environ.get("SQUARE_TAX_IDS", _cfg.get("square_tax_ids", "ISZ4ZCDVQRN6ND27YWFMLDU4,XA4WL5IKQJQF4BPQFS4HCQ3F"))
 
 app = Flask(__name__, static_folder=".", static_url_path="")
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", secrets.token_hex(32))
@@ -850,6 +851,7 @@ SQUARE_WEBHOOK_SIGNATURE_KEY = _cfg.get("square_webhook_signature_key", "")
 SQUARE_SUPPORTER_PLAN_VARIATION_ID = _cfg.get("square_supporter_plan_variation_id", "SFUFPPOXTENRQIHCRWZVUPSI")
 SQUARE_SUPPORTER_ITEM_VARIATION_ID = _cfg.get("square_supporter_item_variation_id", "2QXQFGYTQGUOUGCECWBP673G")
 SQUARE_SUPPORTER_PLAN_ID = _cfg.get("square_supporter_plan_id", "EQ4HVMFTTKCXX6OEZNEPAGNS")
+SQUARE_TAX_IDS = [t.strip() for t in _cfg.get("square_tax_ids", "").split(",") if t.strip()]
 
 VOID_PEARL_PACKS = {
     "vp300":  {"name": "300 Radiant Pearls",    "pearls": 300,   "price_cents": 299},
@@ -1033,6 +1035,7 @@ def buy_pearls():
                     },
                 }
             ],
+            "taxes": [{"catalog_object_id": tid, "scope": "ORDER"} for tid in SQUARE_TAX_IDS],
             "metadata": {
                 "steam_id": session["steam_id"],
                 "pack_id": pack_id,
