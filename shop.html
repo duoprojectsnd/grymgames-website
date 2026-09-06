@@ -2413,13 +2413,15 @@
         } else {
           showPaymentBanner('success', String(pearlsAdded));
         }
-        // Refresh balance
-        fetch('/auth/me').then(r => r.json()).then(u => {
-          if (u.currencies) {
-            const vpEl = document.getElementById('vpBalance');
-            if (vpEl) vpEl.textContent = parseInt(u.currencies.curr03 || u.currencies.Curr03 || 0).toLocaleString();
-          }
-        }).catch(() => {});
+        // Refresh balance only if pearls were actually added (skip for tips like Coffee)
+        if (pearlsAdded > 0) {
+          fetch('/auth/me').then(r => r.json()).then(u => {
+            if (u.currencies) {
+              const vpEl = document.getElementById('vpBalance');
+              if (vpEl) vpEl.textContent = parseInt(u.currencies.curr03 || u.currencies.Curr03 || 0).toLocaleString();
+            }
+          }).catch(() => {});
+        }
       }
 
       fetch('/auth/claim-pearls', {

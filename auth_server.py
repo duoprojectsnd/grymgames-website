@@ -847,28 +847,28 @@ def _credit_pearls_for_order(order_id):
 
     pearls_to_add = VOID_PEARL_PACKS[pack_id]["pearls"]
 
-    # Read current balance
-    try:
-        item = _dynamo().get_item(
+    if pearls_to_add > 0:
+        # Read current balance and credit
+        try:
+            item = _dynamo().get_item(
+                TableName=_cfg["table_name"],
+                Key={"steamID": {"S": steam_id}},
+            ).get("Item", {})
+            currencies_map = item.get("Currencies", {}).get("M", {})
+            curr_key = "curr03" if "curr03" in currencies_map else "Curr03"
+            current = int(currencies_map.get(curr_key, {}).get("S", "0"))
+        except Exception:
+            curr_key = "curr03"
+            current = 0
+
+        new_balance = current + pearls_to_add
+        _dynamo().update_item(
             TableName=_cfg["table_name"],
             Key={"steamID": {"S": steam_id}},
-        ).get("Item", {})
-        currencies_map = item.get("Currencies", {}).get("M", {})
-        curr_key = "curr03" if "curr03" in currencies_map else "Curr03"
-        current = int(currencies_map.get(curr_key, {}).get("S", "0"))
-    except Exception:
-        curr_key = "curr03"
-        current = 0
-
-    new_balance = current + pearls_to_add
-
-    _dynamo().update_item(
-        TableName=_cfg["table_name"],
-        Key={"steamID": {"S": steam_id}},
-        UpdateExpression="SET Currencies.#ck = :nb",
-        ExpressionAttributeNames={"#ck": curr_key},
-        ExpressionAttributeValues={":nb": {"S": str(new_balance)}},
-    )
+            UpdateExpression="SET Currencies.#ck = :nb",
+            ExpressionAttributeNames={"#ck": curr_key},
+            ExpressionAttributeValues={":nb": {"S": str(new_balance)}},
+        )
 
     # Mark claimed in Square
     try:
