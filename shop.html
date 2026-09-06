@@ -3132,6 +3132,11 @@
             playerCurr03 = data.new_balance;
             document.getElementById('walletAmount').textContent = playerCurr03.toLocaleString();
             playerItems[item.id] = '1';
+            // Swap the buy button to Owned immediately
+            const buyWrap = document.getElementById('itemDetailBuyWrap');
+            if (buyWrap) {
+              buyWrap.innerHTML = `<button class="item-detail__buy-btn item-detail__buy-btn--owned">Owned</button>`;
+            }
             setTimeout(() => {
               closeItemDetail();
               renderShop();
@@ -3454,6 +3459,11 @@
             playerCurr03 = data.new_balance;
             document.getElementById('walletAmount').textContent = playerCurr03.toLocaleString();
             playerItems[itemId] = '1';
+            // Immediately update the item detail buy button to Owned
+            const buyWrap = document.getElementById('itemDetailBuyWrap');
+            if (buyWrap) {
+              buyWrap.innerHTML = `<button class="item-detail__buy-btn item-detail__buy-btn--owned">Owned</button>`;
+            }
             setTimeout(() => {
               modal.classList.remove('shop-modal-overlay--active');
               renderShop();
