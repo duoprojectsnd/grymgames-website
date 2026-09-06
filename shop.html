@@ -306,6 +306,23 @@
       text-shadow: 0 0 16px rgba(255, 140, 80, 0.7);
       box-shadow: 0 0 24px rgba(220, 90, 40, 0.4), inset 0 0 18px rgba(220, 90, 40, 0.15);
     }
+    .shop-tab--support {
+      background: linear-gradient(135deg, rgba(120, 70, 40, 0.3), rgba(160, 100, 60, 0.2));
+      border: 1px solid rgba(200, 130, 80, 0.4);
+      color: #e8c9a0;
+      text-shadow: 0 0 6px rgba(200, 130, 80, 0.3);
+    }
+    .shop-tab--support:hover {
+      border-color: rgba(220, 150, 90, 0.7);
+      color: #f5dbb5;
+      background: linear-gradient(135deg, rgba(140, 85, 50, 0.4), rgba(180, 115, 70, 0.3));
+    }
+    .shop-tab--support.shop-tab--active {
+      border-color: rgba(220, 150, 90, 0.85);
+      color: #ffe8c8;
+      text-shadow: 0 0 12px rgba(220, 150, 90, 0.6);
+      box-shadow: 0 0 18px rgba(180, 110, 70, 0.3), inset 0 0 12px rgba(180, 110, 70, 0.15);
+    }
     @keyframes vpPearlescent {
       0%   { background-position: 0% 50%; }
       25%  { background-position: 100% 0%; }
@@ -1679,6 +1696,7 @@
         Radiant Pearls
         <span class="vp-tab-badge">New!</span>
       </button>
+      <button class="shop-tab shop-tab--support" data-cat="support">☕ Support</button>
     </div>
     <div class="shop-search">
       <input type="text" class="shop-search__input" id="shopSearch" placeholder="Search items..." />
@@ -1730,7 +1748,7 @@
           <div class="vp-detail__price-per" id="vpDetailPricePer"></div>
         </div>
         <div class="vp-detail__status" id="vpDetailStatus"></div>
-        <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Coming Soon</button>
+        <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Buy Now</button>
         <div class="vp-detail__meta">
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Currency</span><span class="vp-detail__meta-value">Radiant Pearls</span></div>
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Platform</span><span class="vp-detail__meta-value">All Platforms</span></div>
@@ -2257,6 +2275,65 @@
       // Sets category uses a completely different layout
       if (currentCategory === 'sets') {
         renderSetsView(container);
+        return;
+      }
+
+      // Support category — tips for the dev
+      if (currentCategory === 'support') {
+        container.innerHTML = `
+          <div style="max-width:720px;margin:60px auto;text-align:center;padding:0 24px;">
+            <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--beige);margin-bottom:12px;">Support the Dev</h2>
+            <p style="color:var(--muted);font-size:0.95rem;margin-bottom:40px;line-height:1.7;">OKUBI is built by a solo dev. If you like what you see and want to help fuel late-night coding sessions, a small tip goes a long way. Thank you!</p>
+            <div class="shop-card shop-card--common vp-card" data-pack="coffee1" style="cursor:pointer;max-width:320px;margin:0 auto;">
+              <div class="shop-card__image" style="height:280px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#3a2818 0%,#1a120c 100%);">
+                <span style="font-size:8rem;line-height:1;">☕</span>
+              </div>
+              <div class="shop-card__info" style="padding:16px 14px;text-align:left;">
+                <div class="shop-card__name" style="font-size:.95rem;">Coffee for the dev</div>
+                <div style="font-family:var(--font-body);font-size:.72rem;color:var(--muted);margin-top:4px;">A small tip to say thanks.</div>
+                <div class="shop-card__price-row" style="margin-top:10px;justify-content:flex-start;">
+                  <span style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:#ff8340;">$1.00 CAD</span>
+                </div>
+              </div>
+            </div>
+            <div id="supportStatus" style="color:var(--muted);font-size:0.85rem;margin-top:20px;min-height:28px;"></div>
+          </div>
+        `;
+
+        const card = container.querySelector('.vp-card[data-pack="coffee1"]');
+        const status = document.getElementById('supportStatus');
+        if (card) {
+          card.addEventListener('click', () => {
+            if (!isLoggedIn) { showLoginModal(); return; }
+            card.style.opacity = '0.6';
+            card.style.pointerEvents = 'none';
+            status.textContent = 'Creating checkout...';
+            status.style.color = 'var(--beige)';
+            fetch('/auth/buy-pearls', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ pack_id: 'coffee1' }),
+            })
+              .then(r => r.json())
+              .then(data => {
+                if (data.checkout_url) {
+                  if (data.order_id) localStorage.setItem('pending_vp_order', data.order_id);
+                  window.location.href = data.checkout_url;
+                } else {
+                  status.textContent = data.error || 'Failed to create checkout';
+                  status.style.color = 'var(--red)';
+                  card.style.opacity = '1';
+                  card.style.pointerEvents = '';
+                }
+              })
+              .catch(() => {
+                status.textContent = 'Network error. Try again.';
+                status.style.color = 'var(--red)';
+                card.style.opacity = '1';
+                card.style.pointerEvents = '';
+              });
+          });
+        }
         return;
       }
 
