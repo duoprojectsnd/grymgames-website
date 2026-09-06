@@ -991,7 +991,7 @@ def claim_pearls():
         return jsonify({"error": detail}), 400
 
 
-@app.route("/webhook/square", methods=["POST"])
+@app.route("/webhook/square", methods=["POST"], strict_slashes=False)
 def square_webhook():
     """
     Square sends payment.completed events here.
