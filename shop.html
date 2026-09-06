@@ -1526,11 +1526,12 @@
       font-family: var(--font-display);
       font-size: 1.2rem;
       font-weight: 700;
-      color: var(--purple);
+      color: #ff8340;
+      text-shadow: 0 0 10px rgba(255, 120, 60, 0.35);
       margin-bottom: 24px;
     }
     .shop-modal__price-icon {
-      text-shadow: 0 0 10px var(--purple-glow);
+      text-shadow: 0 0 10px rgba(255, 120, 60, 0.55);
     }
 
     .shop-modal__actions {
@@ -1930,6 +1931,7 @@
       <div class="shop-modal__price">
         <span class="shop-modal__price-icon">✦</span>
         <span id="modalPrice">0</span>
+        <span id="modalPriceUnit">Radiant Pearls</span>
       </div>
       <div class="shop-modal__actions" id="modalActions">
         <button class="shop-modal__btn shop-modal__btn--confirm" id="modalConfirm">Purchase</button>
@@ -2845,9 +2847,10 @@
 
       // Price
       const effectivePrice = item.salePrice || item.price;
+      const priceUnit = effectivePrice === 1 ? 'Radiant Pearl' : 'Radiant Pearls';
       document.getElementById('itemDetailPriceRow').innerHTML = `
         <span class="item-detail__price">
-          <span class="item-detail__price-icon">✦</span> ${effectivePrice.toLocaleString()}
+          <span class="item-detail__price-icon">✦</span> ${effectivePrice.toLocaleString()} ${priceUnit}
         </span>
         ${item.salePrice ? `<span class="item-detail__price--old">${item.price.toLocaleString()}</span>` : ''}
       `;
@@ -2858,7 +2861,7 @@
       if (owned) {
         buyWrap.innerHTML = `<button class="item-detail__buy-btn item-detail__buy-btn--owned">Owned</button>`;
       } else {
-        buyWrap.innerHTML = `<button class="item-detail__buy-btn" id="itemDetailBuyBtn">Coming Soon</button>`;
+        buyWrap.innerHTML = `<button class="item-detail__buy-btn" id="itemDetailBuyBtn">Buy Now</button>`;
         document.getElementById('itemDetailBuyBtn').addEventListener('click', () => {
           if (!isLoggedIn) { showLoginModal(); return; }
           openPurchaseModal(item);
@@ -3369,7 +3372,9 @@
       document.getElementById('modalIcon').textContent = item.icon;
       document.getElementById('modalTitle').textContent = item.name;
       document.getElementById('modalDesc').textContent = item.desc;
-      document.getElementById('modalPrice').textContent = (item.salePrice || item.price).toLocaleString();
+      const modalPriceVal = item.salePrice || item.price;
+      document.getElementById('modalPrice').textContent = modalPriceVal.toLocaleString();
+      document.getElementById('modalPriceUnit').textContent = modalPriceVal === 1 ? 'Radiant Pearl' : 'Radiant Pearls';
 
       const result = document.getElementById('modalResult');
       result.style.display = 'none';
