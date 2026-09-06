@@ -4,7 +4,7 @@ Handles Steam OpenID authentication and links Steam IDs to DynamoDB.
 Run: python auth_server.py
 """
 
-import os, json, copy, re, secrets, smtplib, ssl, hashlib, time
+import os, json, copy, re, secrets, smtplib, ssl, hashlib, hmac, base64, time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from decimal import Decimal
@@ -43,6 +43,7 @@ _cfg["square_access_token"] = os.environ.get("SQUARE_ACCESS_TOKEN", _cfg.get("sq
 _cfg["square_location_id"] = os.environ.get("SQUARE_LOCATION_ID", _cfg.get("square_location_id", ""))
 _cfg["square_application_id"] = os.environ.get("SQUARE_APPLICATION_ID", _cfg.get("square_application_id", ""))
 _cfg["square_environment"] = os.environ.get("SQUARE_ENVIRONMENT", _cfg.get("square_environment", "sandbox"))
+_cfg["square_webhook_signature_key"] = os.environ.get("SQUARE_WEBHOOK_SIGNATURE_KEY", _cfg.get("square_webhook_signature_key", ""))
 
 app = Flask(__name__, static_folder=".", static_url_path="")
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", secrets.token_hex(32))
@@ -797,6 +798,7 @@ SQUARE_BASE_URL = (
     "https://connect.squareupsandbox.com" if SQUARE_ENV == "sandbox"
     else "https://connect.squareup.com"
 )
+SQUARE_WEBHOOK_SIGNATURE_KEY = _cfg.get("square_webhook_signature_key", "")
 
 VOID_PEARL_PACKS = {
     "vp300":  {"name": "300 Radiant Pearls",    "pearls": 300,   "price_cents": 299},
@@ -994,18 +996,39 @@ def square_webhook():
     """
     Square sends payment.completed events here.
     Credits pearls server-side — no client involvement needed.
+    Verifies HMAC-SHA256 signature so only real Square webhooks are accepted.
     """
-    event = request.get_json(force=True)
+    raw_body = request.get_data(as_text=True)
+    signature = request.headers.get("x-square-hmacsha256-signature", "")
+    webhook_url = request.url  # Full URL Square used to reach us
+
+    if SQUARE_WEBHOOK_SIGNATURE_KEY:
+        payload = (webhook_url + raw_body).encode("utf-8")
+        key = SQUARE_WEBHOOK_SIGNATURE_KEY.encode("utf-8")
+        computed = base64.b64encode(hmac.new(key, payload, hashlib.sha256).digest()).decode()
+        if not hmac.compare_digest(computed, signature):
+            print(f"[WEBHOOK] Signature mismatch. url={webhook_url} got={signature[:12]}... expected={computed[:12]}...")
+            return jsonify({"error": "invalid signature"}), 403
+    else:
+        print("[WEBHOOK] WARNING: no SQUARE_WEBHOOK_SIGNATURE_KEY set — skipping verification")
+
+    try:
+        event = json.loads(raw_body) if raw_body else {}
+    except Exception:
+        return jsonify({"error": "invalid json"}), 400
+
     event_type = event.get("type", "")
     print(f"[WEBHOOK] Received event: {event_type}")
 
-    if event_type != "payment.completed":
+    if event_type not in ("payment.updated", "payment.created", "order.updated", "payment.completed"):
         return "", 200
 
-    payment = event.get("data", {}).get("object", {}).get("payment", {})
-    order_id = payment.get("order_id", "")
+    # Extract order_id from either payment or order events
+    obj = event.get("data", {}).get("object", {})
+    payment = obj.get("payment", {})
+    order_id = payment.get("order_id", "") or obj.get("order_updated", {}).get("order_id", "") or obj.get("order", {}).get("id", "")
     if not order_id:
-        print("[WEBHOOK] No order_id in payment event")
+        print("[WEBHOOK] No order_id in event")
         return "", 200
 
     success, detail = _credit_pearls_for_order(order_id)
