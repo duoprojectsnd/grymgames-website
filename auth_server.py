@@ -45,6 +45,8 @@ _cfg["square_application_id"] = os.environ.get("SQUARE_APPLICATION_ID", _cfg.get
 _cfg["square_environment"] = os.environ.get("SQUARE_ENVIRONMENT", _cfg.get("square_environment", "sandbox"))
 _cfg["square_webhook_signature_key"] = os.environ.get("SQUARE_WEBHOOK_SIGNATURE_KEY", _cfg.get("square_webhook_signature_key", ""))
 _cfg["square_supporter_plan_variation_id"] = os.environ.get("SQUARE_SUPPORTER_PLAN_VARIATION_ID", _cfg.get("square_supporter_plan_variation_id", "SFUFPPOXTENRQIHCRWZVUPSI"))
+_cfg["square_supporter_item_variation_id"] = os.environ.get("SQUARE_SUPPORTER_ITEM_VARIATION_ID", _cfg.get("square_supporter_item_variation_id", "2QXQFGYTQGUOUGCECWBP673G"))
+_cfg["square_supporter_plan_id"] = os.environ.get("SQUARE_SUPPORTER_PLAN_ID", _cfg.get("square_supporter_plan_id", "EQ4HVMFTTKCXX6OEZNEPAGNS"))
 
 app = Flask(__name__, static_folder=".", static_url_path="")
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", secrets.token_hex(32))
@@ -846,6 +848,8 @@ SQUARE_BASE_URL = (
 )
 SQUARE_WEBHOOK_SIGNATURE_KEY = _cfg.get("square_webhook_signature_key", "")
 SQUARE_SUPPORTER_PLAN_VARIATION_ID = _cfg.get("square_supporter_plan_variation_id", "SFUFPPOXTENRQIHCRWZVUPSI")
+SQUARE_SUPPORTER_ITEM_VARIATION_ID = _cfg.get("square_supporter_item_variation_id", "2QXQFGYTQGUOUGCECWBP673G")
+SQUARE_SUPPORTER_PLAN_ID = _cfg.get("square_supporter_plan_id", "EQ4HVMFTTKCXX6OEZNEPAGNS")
 
 VOID_PEARL_PACKS = {
     "vp300":  {"name": "300 Radiant Pearls",    "pearls": 300,   "price_cents": 299},
@@ -1068,7 +1072,7 @@ def subscribe_supporter():
     if "steam_id" not in session:
         return jsonify({"error": "Not logged in"}), 401
 
-    if not SQUARE_SUPPORTER_PLAN_VARIATION_ID:
+    if not SQUARE_SUPPORTER_ITEM_VARIATION_ID or not SQUARE_SUPPORTER_PLAN_ID:
         return jsonify({"error": "Supporter plan not configured"}), 503
 
     idempotency_key = secrets.token_hex(16)
@@ -1079,7 +1083,7 @@ def subscribe_supporter():
             "line_items": [
                 {
                     "quantity": "1",
-                    "catalog_object_id": SQUARE_SUPPORTER_PLAN_VARIATION_ID,
+                    "catalog_object_id": SQUARE_SUPPORTER_ITEM_VARIATION_ID,
                 }
             ],
             "metadata": {
@@ -1089,6 +1093,7 @@ def subscribe_supporter():
             },
         },
         "checkout_options": {
+            "subscription_plan_id": SQUARE_SUPPORTER_PLAN_ID,
             "redirect_url": request.host_url.rstrip("/") + "/payment/success",
             "accepted_payment_methods": {"apple_pay": True, "google_pay": True},
         },
