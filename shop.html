@@ -2359,19 +2359,26 @@
     (function checkPaymentResult() {
       const params = new URLSearchParams(window.location.search);
       const payment = params.get('payment');
-      if (payment === 'success') {
-        const pearls = params.get('pearls') || '';
-        showPaymentBanner('success', pearls);
-        window.history.replaceState({}, '', '/shop.html');
-      } else if (payment === 'error') {
+      const pendingOrder = localStorage.getItem('pending_vp_order');
+
+      if (payment === 'error') {
         showPaymentBanner('error');
         window.history.replaceState({}, '', '/shop.html');
+        return;
       }
 
-      // Auto-claim: check for pending VP order in localStorage
-      const pendingOrder = localStorage.getItem('pending_vp_order');
-      if (pendingOrder) {
-        claimPendingPearls(pendingOrder);
+      if (payment === 'success' || pendingOrder) {
+        // Always clear URL param so it doesn't retrigger
+        if (payment) window.history.replaceState({}, '', '/shop.html');
+
+        if (pendingOrder) {
+          // Server-side claim will resolve into success modal (or fallback banner)
+          claimPendingPearls(pendingOrder);
+        } else if (payment === 'success') {
+          // No pending order in localStorage — server already credited via webhook
+          // Best we can do is show the generic banner
+          showPaymentBanner('success', params.get('pearls') || '');
+        }
       }
     })();
 
