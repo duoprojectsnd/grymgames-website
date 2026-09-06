@@ -884,6 +884,9 @@ const corruptionTags = document.querySelectorAll('.corruption__tag');
         });
       });
     }
-    loadLang(getStoredLang());
+    // Switcher hidden — force English for now (clears any previously stored language)
+    localStorage.removeItem('okubiLang');
+    document.documentElement.setAttribute('lang', 'en');
+    loadLang('en');
   });
 })();
