@@ -578,22 +578,26 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #666;
-      background: #222;
-      border: 1px solid #333;
+      color: #0a0908;
+      background: linear-gradient(135deg, #d4a853 0%, #e8bc5a 50%, #d4a853 100%);
+      background-size: 200% 100%;
+      border: 1px solid rgba(212, 168, 83, 0.8);
       border-radius: 5px;
       padding: 16px 48px;
-      cursor: not-allowed;
+      cursor: pointer;
       transition: all 0.3s;
       margin-bottom: 32px;
       min-width: 260px;
-      pointer-events: none;
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.35);
+      animation: vpBuyShimmer 3s ease-in-out infinite;
     }
     .vp-detail__buy-btn:hover {
-      box-shadow: none;
+      box-shadow: 0 0 30px rgba(212, 168, 83, 0.65);
+      transform: translateY(-1px);
     }
     .vp-detail__buy-btn:active {
       transform: translateY(0);
+      box-shadow: 0 0 15px rgba(212, 168, 83, 0.5);
     }
     @keyframes vpBuyShimmer {
       0% { background-position: 0% 50%; }
@@ -1176,18 +1180,18 @@
       text-transform: uppercase;
       padding: 18px 64px;
       border-radius: 4px;
-      cursor: not-allowed;
-      border: 1px solid #333;
-      color: #666;
-      background: #222;
+      cursor: pointer;
+      border: 1px solid rgba(212, 168, 83, 0.8);
+      color: #0a0908;
+      background: linear-gradient(135deg, #d4a853 0%, #e8bc5a 50%, #d4a853 100%);
       transition: all 0.3s;
       margin-bottom: 16px;
       display: inline-block;
-      pointer-events: none;
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.35);
     }
     .item-detail__buy-btn:hover {
-      background: #222;
-      box-shadow: none;
+      box-shadow: 0 0 30px rgba(212, 168, 83, 0.65);
+      transform: translateY(-1px);
     }
     .item-detail__buy-btn--owned {
       background: transparent;
