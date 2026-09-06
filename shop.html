@@ -443,6 +443,213 @@
       overflow-y: auto;
     }
     .vp-detail-overlay--active { display: block; }
+
+    /* ── Purchase Success Overlay ── */
+    .purchase-success {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .purchase-success--active { display: flex; animation: fadeIn 0.35s ease; }
+    .purchase-success__bg {
+      position: absolute;
+      inset: 0;
+      background: rgba(5, 8, 6, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .purchase-success__card {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      padding: 40px 32px 28px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #18130f 0%, #0d0a08 100%);
+      border: 1px solid rgba(78, 200, 112, 0.35);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(78, 200, 112, 0.18);
+      text-align: center;
+      animation: successPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes successPop {
+      from { transform: translateY(20px) scale(0.94); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .purchase-success__check {
+      margin: 0 auto 18px;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 0 18px rgba(78, 200, 112, 0.55));
+    }
+    .purchase-success__check-ring {
+      stroke-dasharray: 176;
+      stroke-dashoffset: 176;
+      animation: successRing 0.6s ease-out 0.1s forwards;
+    }
+    .purchase-success__check-tick {
+      stroke-dasharray: 40;
+      stroke-dashoffset: 40;
+      animation: successTick 0.35s ease-out 0.55s forwards;
+    }
+    @keyframes successRing { to { stroke-dashoffset: 0; } }
+    @keyframes successTick { to { stroke-dashoffset: 0; } }
+    .purchase-success__eyebrow {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #4ec870;
+      margin: 0 0 6px;
+      text-shadow: 0 0 12px rgba(78, 200, 112, 0.35);
+    }
+    .purchase-success__title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 8px;
+      line-height: 1.15;
+    }
+    .purchase-success__sub {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0 0 24px;
+      line-height: 1.5;
+    }
+    .purchase-success__item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+    .purchase-success__item-icon {
+      font-size: 2.2rem;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .purchase-success__item-icon img { width: 48px; height: 48px; object-fit: contain; }
+    .purchase-success__item-info { flex: 1; min-width: 0; }
+    .purchase-success__item-name {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+    .purchase-success__item-detail {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .purchase-success__item-price {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ff8340;
+      flex-shrink: 0;
+    }
+    .purchase-success__reward {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(78, 200, 112, 0.08);
+      border: 1px solid rgba(78, 200, 112, 0.3);
+      border-radius: 6px;
+      margin-bottom: 22px;
+    }
+    .purchase-success__reward-label {
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(78, 200, 112, 0.75);
+    }
+    .purchase-success__reward-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 800;
+      color: #4ec870;
+      text-shadow: 0 0 10px rgba(78, 200, 112, 0.4);
+    }
+    .purchase-success__meta {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 14px;
+      margin-bottom: 20px;
+    }
+    .purchase-success__meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 4px 0;
+    }
+    .purchase-success__meta-row span:last-child { color: rgba(255, 255, 255, 0.85); }
+    .purchase-success__actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .purchase-success__btn {
+      flex: 1;
+      padding: 14px;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .purchase-success__btn--primary {
+      background: linear-gradient(135deg, #d4a853 0%, #e8bc5a 100%);
+      color: #0a0908;
+      border: 1px solid rgba(212, 168, 83, 0.8);
+      box-shadow: 0 0 20px rgba(212, 168, 83, 0.35);
+    }
+    .purchase-success__btn--primary:hover {
+      box-shadow: 0 0 30px rgba(212, 168, 83, 0.6);
+      transform: translateY(-1px);
+    }
+    .purchase-success__btn--ghost {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .purchase-success__btn--ghost:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+    .purchase-success__note {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.4);
+      margin: 0;
+      line-height: 1.5;
+    }
     .vp-detail__back {
       position: fixed;
       top: 20px;
@@ -1752,13 +1959,64 @@
           <div class="vp-detail__price-per" id="vpDetailPricePer"></div>
         </div>
         <div class="vp-detail__status" id="vpDetailStatus"></div>
-        <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Buy Now</button>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <button class="vp-detail__buy-btn" id="vpDetailBuyBtn">Buy Now</button>
+          <button type="button" id="vpDetailPreviewBtn" title="TEMP: preview success page" style="padding:10px 16px;font-family:var(--font-heading);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;background:transparent;border:1px dashed #444;border-radius:4px;cursor:pointer;">🧪 Preview success</button>
+        </div>
         <div class="vp-detail__meta">
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Currency</span><span class="vp-detail__meta-value">Radiant Pearls</span></div>
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Platform</span><span class="vp-detail__meta-value">All Platforms</span></div>
           <div class="vp-detail__meta-row"><span class="vp-detail__meta-label">Refund Type</span><span class="vp-detail__meta-value">Non-Refundable</span></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Purchase Success Overlay -->
+  <div class="purchase-success" id="purchaseSuccess" aria-hidden="true">
+    <div class="purchase-success__bg"></div>
+    <div class="purchase-success__card">
+      <div class="purchase-success__check">
+        <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+          <circle cx="32" cy="32" r="28" fill="none" stroke="#4ec870" stroke-width="3" class="purchase-success__check-ring" />
+          <path d="M20 33 L28 41 L44 24" fill="none" stroke="#4ec870" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="purchase-success__check-tick" />
+        </svg>
+      </div>
+      <p class="purchase-success__eyebrow">Payment Successful</p>
+      <h2 class="purchase-success__title" id="successTitle">Thank you!</h2>
+      <p class="purchase-success__sub" id="successSub">Your purchase has been confirmed.</p>
+
+      <div class="purchase-success__item">
+        <div class="purchase-success__item-icon" id="successItemIcon">☕</div>
+        <div class="purchase-success__item-info">
+          <div class="purchase-success__item-name" id="successItemName">Coffee for the dev</div>
+          <div class="purchase-success__item-detail" id="successItemDetail">Support tip</div>
+        </div>
+        <div class="purchase-success__item-price" id="successItemPrice">$1.00 CAD</div>
+      </div>
+
+      <div class="purchase-success__reward" id="successReward" style="display:none;">
+        <span class="purchase-success__reward-label">Added to your account</span>
+        <span class="purchase-success__reward-value" id="successRewardValue">+0 Radiant Pearls</span>
+      </div>
+
+      <div class="purchase-success__meta">
+        <div class="purchase-success__meta-row">
+          <span>Order ID</span>
+          <span id="successOrderId" style="font-family:monospace;">—</span>
+        </div>
+        <div class="purchase-success__meta-row">
+          <span>Date</span>
+          <span id="successDate">—</span>
+        </div>
+      </div>
+
+      <div class="purchase-success__actions">
+        <button class="purchase-success__btn purchase-success__btn--primary" id="successContinueBtn">Continue</button>
+        <button class="purchase-success__btn purchase-success__btn--ghost" id="successReceiptBtn" style="display:none;">View Receipt</button>
+      </div>
+
+      <p class="purchase-success__note">A receipt has been sent to your Square-registered email. Thanks for supporting OKUBI!</p>
     </div>
   </div>
 
@@ -2133,6 +2391,13 @@
       setTimeout(() => banner.remove(), 6000);
     }
 
+    function findPackByPearls(pearls) {
+      for (const k in VP_PACKS) {
+        if (VP_PACKS[k].pearls === pearls) return k;
+      }
+      return null;
+    }
+
     function claimPendingPearls(orderId) {
       fetch('/auth/claim-pearls', {
         method: 'POST',
@@ -2144,7 +2409,14 @@
           if (data.success) {
             // Pearls credited!
             localStorage.removeItem('pending_vp_order');
-            showPaymentBanner('success', String(data.pearls));
+            // Figure out which pack was purchased so success view can show the right item
+            const purchasedPack = localStorage.getItem('pending_vp_pack') || (data.pearls > 0 ? findPackByPearls(data.pearls) : 'coffee1');
+            localStorage.removeItem('pending_vp_pack');
+            if (typeof showPurchaseSuccess === 'function' && VP_PACKS[purchasedPack]) {
+              showPurchaseSuccess({ packId: purchasedPack, orderId: orderId });
+            } else {
+              showPaymentBanner('success', String(data.pearls));
+            }
             // Refresh balance display
             fetch('/auth/me').then(r => r.json()).then(u => {
               if (u.currencies) {
@@ -2653,6 +2925,7 @@
           .then(data => {
             if (data.checkout_url) {
               if (data.order_id) localStorage.setItem('pending_vp_order', data.order_id);
+              localStorage.setItem('pending_vp_pack', packId);
               window.location.href = data.checkout_url;
             } else {
               status.textContent = data.error || 'Failed to create checkout';
@@ -2683,6 +2956,98 @@
     }
 
     document.getElementById('vpDetailBack').addEventListener('click', closeVpDetail);
+
+    // ── Purchase Success View ─────────────────────────────────────────────
+    let _lastPreviewedPack = 'coffee1';
+    function showPurchaseSuccess(opts) {
+      const packId = opts.packId || _lastPreviewedPack;
+      const pack = VP_PACKS[packId];
+      if (!pack) return;
+
+      const isCoffee = packId === 'coffee1';
+      const isPearls = pack.pearls > 0;
+
+      const iconEl = document.getElementById('successItemIcon');
+      if (pack.image) {
+        iconEl.innerHTML = `<img src="${pack.image}" alt="" />`;
+      } else {
+        iconEl.textContent = pack.icons || '✓';
+        iconEl.style.color = pack.color || '#fff';
+      }
+
+      document.getElementById('successItemName').textContent = pack.name;
+      document.getElementById('successItemDetail').textContent = isCoffee ? 'Dev support tip' : 'One-time purchase';
+      document.getElementById('successItemPrice').textContent = `${pack.price} CAD`;
+
+      const title = document.getElementById('successTitle');
+      const sub = document.getElementById('successSub');
+      if (isCoffee) {
+        title.textContent = 'Thanks for the coffee!';
+        sub.textContent = 'That means the world to me. Now back to building — powered by caffeine. ☕';
+      } else if (isPearls) {
+        title.textContent = 'Purchase complete';
+        sub.textContent = `Your ${pack.name} pack is ready to spend in the shop.`;
+      } else {
+        title.textContent = 'Thank you!';
+        sub.textContent = 'Your purchase has been confirmed.';
+      }
+
+      const reward = document.getElementById('successReward');
+      if (isPearls) {
+        reward.style.display = '';
+        document.getElementById('successRewardValue').textContent = `+${pack.pearls.toLocaleString()} Radiant Pearls`;
+      } else {
+        reward.style.display = 'none';
+      }
+
+      document.getElementById('successOrderId').textContent = opts.orderId
+        ? opts.orderId.slice(0, 8).toUpperCase() + '…'
+        : 'PREVIEW01';
+      document.getElementById('successDate').textContent = new Date().toLocaleString(undefined, {
+        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+
+      const receiptBtn = document.getElementById('successReceiptBtn');
+      if (opts.receiptUrl) {
+        receiptBtn.style.display = '';
+        receiptBtn.onclick = () => window.open(opts.receiptUrl, '_blank');
+      } else {
+        receiptBtn.style.display = 'none';
+      }
+
+      document.getElementById('purchaseSuccess').classList.add('purchase-success--active');
+      document.getElementById('purchaseSuccess').setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      _lastPreviewedPack = packId;
+    }
+    function closePurchaseSuccess() {
+      document.getElementById('purchaseSuccess').classList.remove('purchase-success--active');
+      document.getElementById('purchaseSuccess').setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // Also close the detail overlay if it was open
+      const overlay = document.getElementById('vpDetailOverlay');
+      if (overlay && overlay.classList.contains('vp-detail-overlay--active')) closeVpDetail();
+    }
+    document.getElementById('successContinueBtn').addEventListener('click', closePurchaseSuccess);
+    document.getElementById('purchaseSuccess').addEventListener('click', (e) => {
+      if (e.target.id === 'purchaseSuccess' || e.target.classList.contains('purchase-success__bg')) closePurchaseSuccess();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('purchaseSuccess').classList.contains('purchase-success--active')) {
+        closePurchaseSuccess();
+      }
+    });
+
+    // TEMP: Preview button on the detail modal — remove before final launch
+    document.getElementById('vpDetailPreviewBtn').addEventListener('click', () => {
+      showPurchaseSuccess({ packId: _lastPreviewedPack });
+    });
+    // Track which pack the detail modal is showing
+    const _origOpenVpDetail = openVpDetail;
+    openVpDetail = function(packId) {
+      _lastPreviewedPack = packId;
+      _origOpenVpDetail(packId);
+    };
 
     document.getElementById('itemDetailClose').addEventListener('click', closeItemDetail);
     document.getElementById('itemDetailOverlay').addEventListener('click', (e) => {
