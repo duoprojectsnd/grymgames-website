@@ -1107,6 +1107,9 @@ def subscribe_supporter():
     )
 
     if resp.status_code not in (200, 201):
+        print(f"[SUPPORTER-SUB] Square rejected checkout. Status={resp.status_code}")
+        print(f"[SUPPORTER-SUB] Request payload: {json.dumps(payload)}")
+        print(f"[SUPPORTER-SUB] Square response: {resp.text}")
         return jsonify({"error": "Payment service error", "detail": resp.text}), 502
 
     result = resp.json()
