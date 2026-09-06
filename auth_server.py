@@ -1096,7 +1096,7 @@ def subscribe_supporter():
             },
         },
         "checkout_options": {
-            "subscription_plan_id": SQUARE_SUPPORTER_PLAN_ID,
+            "subscription_plan_id": SQUARE_SUPPORTER_PLAN_VARIATION_ID,
             "redirect_url": request.host_url.rstrip("/") + "/payment/success",
             "accepted_payment_methods": {"apple_pay": True, "google_pay": True},
         },
