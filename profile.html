@@ -448,10 +448,19 @@
       text-shadow: 0 0 10px rgba(180,100,255,0.6), 0 0 20px rgba(180,100,255,0.3);
       animation: purpleGlow 2s ease-in-out infinite alternate;
     }
+    .currency-orb__icon--orange {
+      color: #ff8340;
+      text-shadow: 0 0 10px rgba(255,120,60,0.6), 0 0 20px rgba(255,120,60,0.3);
+      animation: orangeGlow 2s ease-in-out infinite alternate;
+    }
 
     @keyframes purpleGlow {
       from { text-shadow: 0 0 10px rgba(180,100,255,0.5), 0 0 20px rgba(180,100,255,0.25); }
       to   { text-shadow: 0 0 14px rgba(180,100,255,0.7), 0 0 28px rgba(180,100,255,0.35), 0 0 4px rgba(255,255,255,0.15); }
+    }
+    @keyframes orangeGlow {
+      from { text-shadow: 0 0 10px rgba(255,120,60,0.5), 0 0 20px rgba(255,120,60,0.25); }
+      to   { text-shadow: 0 0 14px rgba(255,120,60,0.75), 0 0 28px rgba(255,120,60,0.4), 0 0 4px rgba(255,255,255,0.15); }
     }
 
     .currency-orb__value {
@@ -463,6 +472,7 @@
     .currency-orb__value--blue { color: #4ea8ee; }
     .currency-orb__value--red { color: #e85454; }
     .currency-orb__value--purple { color: #c577f5; }
+    .currency-orb__value--orange { color: #ff8340; }
 
     .forging-info__exp {
       font-family: 'Rajdhani', sans-serif;
@@ -614,12 +624,12 @@
 
         // Currencies → orbs in forging bar
         const CURR_ORB = {
-          curr01: { circle: 'blue',   value: 'blue',   label: 'Curr01' },
+          curr01: { circle: 'purple', value: 'purple', label: 'Curr01' },
           curr02: { circle: 'red',    value: 'red',    label: 'Curr02' },
-          curr03: { circle: 'purple', value: 'purple', label: 'Curr03' },
-          Curr01: { circle: 'blue',   value: 'blue',   label: 'Curr01' },
+          curr03: { circle: 'orange', value: 'orange', label: 'Curr03' },
+          Curr01: { circle: 'purple', value: 'purple', label: 'Curr01' },
           Curr02: { circle: 'red',    value: 'red',    label: 'Curr02' },
-          Curr03: { circle: 'purple', value: 'purple', label: 'Curr03' },
+          Curr03: { circle: 'orange', value: 'orange', label: 'Curr03' },
         };
         if (data.currencies && Object.keys(data.currencies).length) {
           const orbContainer = document.getElementById('currencyOrbs');
