@@ -1089,6 +1089,7 @@ def subscribe_supporter():
                     "catalog_object_id": SQUARE_SUPPORTER_ITEM_VARIATION_ID,
                 }
             ],
+            "taxes": [{"catalog_object_id": tid, "scope": "ORDER"} for tid in SQUARE_TAX_IDS],
             "metadata": {
                 "steam_id": session["steam_id"],
                 "pack_id": "become_supporter",
