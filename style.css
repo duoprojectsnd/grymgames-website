@@ -127,24 +127,6 @@ a {
   transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
 }
 
-.nav::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  background: linear-gradient(180deg,
-    rgba(240, 212, 138, 0.55) 0%,
-    rgba(212, 168, 83, 0.28) 40%,
-    rgba(212, 168, 83, 0.08) 75%,
-    transparent 100%);
-  z-index: 0;
-}
-
-.nav__inner { position: relative; z-index: 1; }
-
 .nav--scrolled {
   background: var(--bg-glass);
   backdrop-filter: blur(20px) saturate(1.3);
