@@ -691,8 +691,8 @@ a {
   justify-content: center;
   margin-top: 32px;
   width: 100%;
-  opacity: 0;
-  animation: fadeUp 1s 1s forwards;
+  transform: scale(0.85);
+  transform-origin: top center;
 }
 .hero__playtest-title {
   font-family: var(--font-display, 'Orbitron', sans-serif);
@@ -704,6 +704,8 @@ a {
   margin-bottom: 18px;
   line-height: 1;
   white-space: nowrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.9s forwards;
   text-shadow:
     0 0 22px rgba(192, 57, 43, 0.6),
     0 0 60px rgba(192, 57, 43, 0.35),
@@ -716,6 +718,8 @@ a {
   color: rgba(230, 230, 230, 0.95);
   letter-spacing: 0.18em;
   margin-bottom: clamp(24px, 4vh, 60px);
+  opacity: 0;
+  animation: fadeUp 0.8s 2.1s forwards;
   text-shadow: 0 0 18px rgba(212, 168, 83, 0.35);
 }
 .hero__countdown {
@@ -724,6 +728,8 @@ a {
   justify-content: center;
   gap: clamp(10px, 2.5vw, 40px);
   flex-wrap: nowrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 2.5s forwards;
 }
 .hero__cd-block {
   display: flex;
