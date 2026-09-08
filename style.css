@@ -133,16 +133,17 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  bottom: 0;
   pointer-events: none;
   background: linear-gradient(180deg,
-    var(--gold-bright) 0%,
-    var(--gold) 40%,
-    rgba(212, 168, 83, 0.35) 80%,
+    rgba(240, 212, 138, 0.55) 0%,
+    rgba(212, 168, 83, 0.28) 40%,
+    rgba(212, 168, 83, 0.08) 75%,
     transparent 100%);
-  box-shadow: 0 0 14px rgba(240, 212, 138, 0.45);
-  z-index: 1;
+  z-index: 0;
 }
+
+.nav__inner { position: relative; z-index: 1; }
 
 .nav--scrolled {
   background: var(--bg-glass);
