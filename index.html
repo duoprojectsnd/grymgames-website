@@ -215,13 +215,28 @@
         </svg>
         <span class="hero__steam-text">Steam</span>
       </div>
+
+      <!-- Alpha Playtest Banner + Countdown -->
+      <div class="hero__playtest">
+        <div class="hero__playtest-title">ALPHA PLAYTEST</div>
+        <div class="hero__playtest-date">Sep 18th&#8211;20th</div>
+        <div class="hero__countdown" id="heroCountdown">
+          <div class="hero__cd-block"><span class="hero__cd-num" id="hcdDays">00</span><span class="hero__cd-label">Days</span></div>
+          <span class="hero__cd-sep">:</span>
+          <div class="hero__cd-block"><span class="hero__cd-num" id="hcdHours">00</span><span class="hero__cd-label">Hours</span></div>
+          <span class="hero__cd-sep">:</span>
+          <div class="hero__cd-block"><span class="hero__cd-num" id="hcdMins">00</span><span class="hero__cd-label">Min</span></div>
+          <span class="hero__cd-sep">:</span>
+          <div class="hero__cd-block"><span class="hero__cd-num" id="hcdSecs">00</span><span class="hero__cd-label">Sec</span></div>
+        </div>
+      </div>
     </div>
 
     <!-- Bottom action bar -->
     <div class="hero__bottom-bar">
       <div class="hero__bar-center-placeholder" id="heroCtaPlaceholder">
         <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="hero__bar-btn hero__bar-btn--gold">
-          Wishlist Now
+          Request Access
         </a>
         <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="hero__bar-btn hero__bar-btn--outline-gold">
           Kickstarter
@@ -970,9 +985,40 @@
 
   <script src="script.js"></script>
 
+  <!-- Alpha Playtest Countdown -->
+  <script>
+  (function(){
+    var target = new Date('2026-09-18T19:00:00-04:00').getTime();
+    var elDays = document.getElementById('hcdDays');
+    var elHours = document.getElementById('hcdHours');
+    var elMins  = document.getElementById('hcdMins');
+    var elSecs  = document.getElementById('hcdSecs');
+    var container = document.getElementById('heroCountdown');
+    if (!elDays) return;
+    function pad(n){ return n < 10 ? '0' + n : String(n); }
+    function tick() {
+      var d = target - Date.now();
+      if (d <= 0) {
+        container.innerHTML = '<span style="font-family:var(--font-display,Orbitron);font-size:1.15rem;color:#c0392b;letter-spacing:0.2em;font-weight:900;text-shadow:0 0 14px rgba(192,57,43,.5);">THE GATES ARE OPEN</span>';
+        return;
+      }
+      var days  = Math.floor(d / 86400000);
+      var hours = Math.floor((d % 86400000) / 3600000);
+      var mins  = Math.floor((d % 3600000) / 60000);
+      var secs  = Math.floor((d % 60000) / 1000);
+      elDays.textContent  = pad(days);
+      elHours.textContent = pad(hours);
+      elMins.textContent  = pad(mins);
+      elSecs.textContent  = pad(secs);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+  </script>
+
   <!-- Fixed bottom CTA -->
   <div class="fixed-cta fixed-cta--hidden" id="fixedCta">
-    <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="fixed-cta__btn fixed-cta__btn--gold">Wishlist Now</a>
+    <a href="https://store.steampowered.com/app/2118100/OKUBI/" target="_blank" class="fixed-cta__btn fixed-cta__btn--gold">Request Access</a>
     <a href="https://www.kickstarter.com/projects/grym-games/okubi" target="_blank" class="fixed-cta__btn fixed-cta__btn--kick">Kickstarter</a>
   </div>
 
