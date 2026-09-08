@@ -665,7 +665,7 @@ a {
   justify-content: center;
   gap: 10px;
   opacity: 0;
-  animation: fadeUp 0.8s 0s forwards;
+  animation: fadeUp 0.8s 0.5s forwards;
 }
 
 .hero__steam-icon {
@@ -705,7 +705,7 @@ a {
   line-height: 1;
   white-space: nowrap;
   opacity: 0;
-  animation: fadeUp 0.8s 0.8s forwards;
+  animation: fadeUp 0.8s 1.3s forwards;
   text-shadow:
     0 0 22px rgba(192, 57, 43, 0.6),
     0 0 60px rgba(192, 57, 43, 0.35),
@@ -719,7 +719,7 @@ a {
   letter-spacing: 0.18em;
   margin-bottom: clamp(24px, 4vh, 60px);
   opacity: 0;
-  animation: fadeUp 0.8s 1.0s forwards;
+  animation: fadeUp 0.8s 1.5s forwards;
   text-shadow: 0 0 18px rgba(212, 168, 83, 0.35);
 }
 .hero__countdown {
@@ -729,7 +729,7 @@ a {
   gap: clamp(10px, 2.5vw, 40px);
   flex-wrap: nowrap;
   opacity: 0;
-  animation: fadeUp 0.8s 1.4s forwards;
+  animation: fadeUp 0.8s 1.9s forwards;
 }
 .hero__cd-block {
   display: flex;
