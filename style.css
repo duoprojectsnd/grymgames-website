@@ -696,7 +696,7 @@ a {
 }
 .hero__playtest-title {
   font-family: var(--font-display, 'Orbitron', sans-serif);
-  font-size: clamp(2.1rem, 7vw, 7rem);
+  font-size: clamp(1.05rem, 3.5vw, 3.5rem);
   font-weight: 900;
   color: #c0392b;
   letter-spacing: 0.15em;
