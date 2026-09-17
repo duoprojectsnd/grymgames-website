@@ -100,7 +100,7 @@
 <section class="m-hero"><div class="m-hero__content">
 <img class="m-hero__logo" src="assets/okubi-logo.png" alt="OKUBI" />
 <h1 class="m-hero__title">ALPHA PLAYTEST</h1>
-<p class="m-hero__sub">Sep 18th&#8211;20th</p>
+<p class="m-hero__sub">Fri Sep 18 &middot; 6:30&nbsp;PM &rarr; Sun Sep 20 &middot; 6:30&nbsp;PM ET</p>
 <div class="m-countdown" id="countdown">
 <div class="m-cd-block"><span class="m-cd-num" id="cdDays">00</span><span class="m-cd-label">Days</span></div><span class="m-cd-sep">:</span>
 <div class="m-cd-block"><span class="m-cd-num" id="cdHours">00</span><span class="m-cd-label">Hours</span></div><span class="m-cd-sep">:</span>
@@ -193,8 +193,8 @@
 </div>
 
 <script>
-// Countdown to Sept 18, 2026 7PM EST
-!function(){var t=new Date('2026-09-18T19:00:00-04:00').getTime();function u(){var n=Date.now(),d=t-n;if(d<=0){document.getElementById('countdown').innerHTML='<span style="font-family:Orbitron;font-size:1rem;color:#c0392b;letter-spacing:2px;">THE GATE IS OPEN</span>';return}var dd=Math.floor(d/864e5),hh=Math.floor(d%864e5/36e5),mm=Math.floor(d%36e5/6e4),ss=Math.floor(d%6e4/1e3);document.getElementById('cdDays').textContent=String(dd).padStart(2,'0');document.getElementById('cdHours').textContent=String(hh).padStart(2,'0');document.getElementById('cdMins').textContent=String(mm).padStart(2,'0');document.getElementById('cdSecs').textContent=String(ss).padStart(2,'0')}u();setInterval(u,1e3)}();
+// Countdown to Alpha Playtest (Fri Sep 18 6:30 PM ET -> Sun Sep 20 6:30 PM ET)
+!function(){var s=new Date('2026-09-18T18:30:00-04:00').getTime(),e=new Date('2026-09-20T18:30:00-04:00').getTime();function big(t,c){document.getElementById('countdown').innerHTML='<span style="font-family:Orbitron;font-size:0.95rem;color:'+c+';letter-spacing:2px;font-weight:900;text-shadow:0 0 12px '+c+';">'+t+'</span>'}function u(){var n=Date.now();if(n>=e){big('PLAYTEST ENDED','#888');return}if(n>=s){big('&#9679; LIVE NOW &middot; ENDS SUN 6:30 PM ET','#2ecc71');return}var d=s-n,dd=Math.floor(d/864e5),hh=Math.floor(d%864e5/36e5),mm=Math.floor(d%36e5/6e4),ss=Math.floor(d%6e4/1e3);document.getElementById('cdDays').textContent=String(dd).padStart(2,'0');document.getElementById('cdHours').textContent=String(hh).padStart(2,'0');document.getElementById('cdMins').textContent=String(mm).padStart(2,'0');document.getElementById('cdSecs').textContent=String(ss).padStart(2,'0')}u();setInterval(u,1e3)}();
 
 // Trailer overlay
 document.getElementById('playBtn').addEventListener('click',function(){document.getElementById('trailerFrame').src='https://www.youtube.com/embed/3uRD6CwtANs?autoplay=1&rel=0';document.getElementById('trailerOverlay').classList.add('active');});

@@ -230,7 +230,7 @@
       <!-- Alpha Playtest Banner + Countdown -->
       <div class="hero__playtest">
         <div class="hero__playtest-title">ALPHA PLAYTEST</div>
-        <div class="hero__playtest-date">Sep 18th&#8211;20th</div>
+        <div class="hero__playtest-date">Fri Sep 18 &middot; 6:30&nbsp;PM &rarr; Sun Sep 20 &middot; 6:30&nbsp;PM ET</div>
         <div class="hero__countdown" id="heroCountdown">
           <div class="hero__cd-block"><span class="hero__cd-num glitch" id="hcdDays" data-text="00">00</span><span class="hero__cd-label">Days</span></div>
           <span class="hero__cd-sep">:</span>
@@ -1037,7 +1037,8 @@
   <!-- Alpha Playtest Countdown -->
   <script>
   (function(){
-    var target = new Date('2026-09-18T19:00:00-04:00').getTime();
+    var startAt = new Date('2026-09-18T18:30:00-04:00').getTime();
+    var endAt   = new Date('2026-09-20T18:30:00-04:00').getTime();
     var elDays = document.getElementById('hcdDays');
     var elHours = document.getElementById('hcdHours');
     var elMins  = document.getElementById('hcdMins');
@@ -1046,12 +1047,20 @@
     if (!elDays) return;
     function pad(n){ return n < 10 ? '0' + n : String(n); }
     function set(el, v){ el.textContent = v; el.setAttribute('data-text', v); }
+    function bigMsg(text, color){
+      container.innerHTML = '<span style="font-family:var(--font-display,Orbitron);font-size:1.4rem;color:'+color+';letter-spacing:0.22em;font-weight:900;text-shadow:0 0 18px '+color+';">'+text+'</span>';
+    }
     function tick() {
-      var d = target - Date.now();
-      if (d <= 0) {
-        container.innerHTML = '<span style="font-family:var(--font-display,Orbitron);font-size:1.15rem;color:#c0392b;letter-spacing:0.2em;font-weight:900;text-shadow:0 0 14px rgba(192,57,43,.5);">THE GATES ARE OPEN</span>';
+      var now = Date.now();
+      if (now >= endAt) {
+        bigMsg('PLAYTEST ENDED', '#888');
         return;
       }
+      if (now >= startAt) {
+        bigMsg('&#9679; LIVE NOW &middot; ENDS SUN 6:30 PM ET', '#2ecc71');
+        return;
+      }
+      var d = startAt - now;
       var days  = Math.floor(d / 86400000);
       var hours = Math.floor((d % 86400000) / 3600000);
       var mins  = Math.floor((d % 3600000) / 60000);
